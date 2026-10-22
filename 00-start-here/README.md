@@ -2,25 +2,40 @@
 
 **Goal:** get your computer ready and understand how this roadmap works. Time: 20 minutes.
 
+> New to AI? Good. This roadmap assumes you know basic Python (variables, functions, lists, loops) and nothing about AI. Every term is explained the first time it appears.
+
 ## How the roadmap works
-Each folder is one step. Do them in order.
 
-| Step | Folder | You will learn | You will run |
+There are **7 learning phases** with **100 topics**, plus interview prep and projects. Each topic is one short page. Do the phases in order. Inside a phase, do the topics in order.
+
+| Phase | Folder | You will learn | Level |
 |---|---|---|---|
-| 1 | [01-llm-basics](../01-llm-basics) | tokens, context, temperature, hallucination | `sampling_demo.py` |
-| 2 | [02-rag](../02-rag) | chunking, embeddings, retrieval, citations | `mini_rag.py` |
-| 3 | [03-agents](../03-agents) | the agent loop, tool design, safety limits | `agent.py` |
-| 4 | [04-mcp](../04-mcp) | the Model Context Protocol, building a server | `hello-mcp-server` |
-| 5 | [05-evaluation](../05-evaluation) | measuring quality (hit@k, MRR) | `eval_harness.py` |
-| 6 | [06-production](../06-production) | cost, latency, security, monitoring | checklist |
-| 7 | [07-interview-prep](../07-interview-prep) | 47 questions with answers | out loud practice |
-| 8 | [08-projects](../08-projects) | portfolio projects to build | your own repo |
+| 1 | [01-rag-foundations](../01-rag-foundations/README.md) | embeddings, chunking, vector search, BM25, hybrid search | Beginner |
+| 2 | [02-advanced-rag](../02-advanced-rag/README.md) | reranking, query rewriting, HyDE, GraphRAG, RAG evaluation | Intermediate → Advanced |
+| 3 | [03-llm-concepts](../03-llm-concepts/README.md) | transformers, attention, KV cache, sampling, prompting | Beginner → Advanced |
+| 4 | [04-agentic-ai](../04-agentic-ai/README.md) | tool calling, ReAct, memory, multi-agent, guardrails | Intermediate |
+| 5 | [05-frameworks](../05-frameworks/README.md) | LangChain, LangGraph, LlamaIndex, CrewAI, AutoGen, DSPy and more | Intermediate |
+| 6 | [06-mcp](../06-mcp/README.md) | Model Context Protocol: servers, clients, tools, resources, prompts | Intermediate → Advanced |
+| 7 | [07-production-ai](../07-production-ai/README.md) | FastAPI, Docker, Kubernetes, queues, monitoring, security, cost | Advanced |
+| — | [08-interview-prep](../08-interview-prep/README.md) | questions with answers | Practice |
+| — | [09-projects](../09-projects/README.md) | portfolio projects to build | Practice |
 
-Every lesson has the same shape: **Goal → Big idea → Run it → Try it → Checkpoint → Next.**
+**Why RAG before LLM internals?** You can build useful things with RAG on day one. Phase 3 then explains *why* the model behaves the way it does. If you prefer theory first, do Phase 3 before Phase 1. Both orders work.
+
+## Every topic page has the same shape
+
+1. **In one line**: a definition you can quote in an interview
+2. **Explain it like I'm new**: an everyday analogy
+3. **How it works**: steps plus a diagram
+4. **Code example**: small, runnable Python
+5. **When to use it / when not to**
+6. **Common mistakes**
+7. **Interview questions** with hidden answers
+8. **Go deeper**: links to the original paper or official docs
 
 ## Setup (one time)
 
-### Python (steps 1, 2, 3, 5)
+### Python (phases 1–5 and 7)
 ```bash
 python --version                       # 3.10 or newer
 python -m venv .venv
@@ -28,25 +43,34 @@ source .venv/bin/activate              # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 pytest                                 # all green = your setup works
 ```
+All demos in `code/` folders use only the Python standard library. They run offline with no API key.
 
-### Node.js (step 4)
+### Node.js (phase 6)
 ```bash
 node --version                         # 18 or newer
 ```
 
-### Optional: a Claude API key
-Everything runs **without** an API key (offline demos use scripted or extractive answers). Add a key to see real model output:
+### Optional: a model API key
+Some demos can call a real model if you set a key. Everything still works without one.
 ```bash
 export ANTHROPIC_API_KEY=your_key      # Windows PowerShell: $env:ANTHROPIC_API_KEY="your_key"
 ```
 
 ## How to learn from this
-1. Read the lesson. Run the code. Change one thing. Run again.
-2. Do the **Try it** exercises. They are the actual learning.
-3. Answer the **Checkpoint** questions without looking.
-4. Keep notes in your own words. Explaining is how you find gaps.
+1. Read one topic. Run its code. Change one number. Run it again.
+2. Answer the interview questions **out loud** before opening the answers.
+3. At the end of each phase, take the checkpoint quiz in the phase README.
+4. Tick the topic in the [main checklist](../README.md#-the-full-checklist) on your fork.
+5. Build one project from [09-projects](../09-projects/README.md) after Phase 4. Building is where it sticks.
 
-**Next:** [01 · LLM basics](../01-llm-basics/README.md)
+## Suggested pace
+| Pace | Time per day | Finish in |
+|---|---|---|
+| Relaxed | 30 min (1 topic) | about 4 months |
+| Steady | 1 hour (2 topics) | about 2 months |
+| Intensive | 3 hours | about 3 weeks |
+
+**Next:** [Phase 1 · RAG Foundations](../01-rag-foundations/README.md)
 
 ---
 
