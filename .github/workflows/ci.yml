@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: pytest -q
+
+  mcp-example:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 04-mcp/code/hello-mcp-server
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: 04-mcp/code/hello-mcp-server/package-lock.json
+      - run: npm ci
+      - run: npm run build
+
+  svg-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate SVG diagrams
+        run: |
+          python - <<'PY'
+          import glob, xml.etree.ElementTree as ET
+          files = sorted(glob.glob("assets/*.svg"))
+          assert files, "no SVG files found"
+          for f in files:
+              ET.parse(f)
+              print("valid", f)
+          PY

@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If this roadmap helped you, please cite it."
+title: "AI Engineer Roadmap"
+authors:
+  - family-names: "Pathak"
+    given-names: "Saurabh"
+    alias: "techsaurabh-394"
+repository-code: "https://github.com/techsaurabh-394/ai-engineer-roadmap"
+license: MIT

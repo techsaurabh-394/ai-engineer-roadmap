@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="340" viewBox="0 0 1200 340" role="img" aria-label="Learning path: LLM basics, RAG, Agents, MCP, Evaluation, Production, Interview prep, Projects">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1020"/><stop offset="1" stop-color="#241552"/></linearGradient><linearGradient id="ac" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6ea8fe"/><stop offset="1" stop-color="#c084fc"/></linearGradient></defs>
+<style>
+text{font-family:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif}
+@keyframes pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
+.s{transform-box:fill-box;transform-origin:center;animation:pop .5s ease-out both}
+@keyframes flow{to{stroke-dashoffset:-40}}
+.path{animation:flow 1.6s linear infinite}
+</style>
+<rect width="1200" height="340" rx="18" fill="url(#bg)"/>
+<text x="600" y="44" text-anchor="middle" font-size="24" font-weight="800" fill="#fff">Your learning path</text>
+<polyline points="90,130 236,210 381,130 527,210 673,130 819,210 964,130 1110,210" fill="none" stroke="#3a4170" stroke-width="5" stroke-linejoin="round"/>
+<polyline class="path" points="90,130 236,210 381,130 527,210 673,130 819,210 964,130 1110,210" fill="none" stroke="#6ea8fe" stroke-width="3" stroke-dasharray="10 10" stroke-linejoin="round"/>
+<g class="s" style="animation-delay:0.30s"><circle cx="90" cy="130" r="26" fill="url(#ac)"/><text x="90" y="137" text-anchor="middle" font-size="21" font-weight="800" fill="#0b1020">1</text><text x="90" y="182" text-anchor="middle" font-size="16" font-weight="600" fill="#e6e8ee">LLM basics</text></g>
+<g class="s" style="animation-delay:0.65s"><circle cx="236" cy="210" r="26" fill="url(#ac)"/><text x="236" y="217" text-anchor="middle" font-size="21" font-weight="800" fill="#0b1020">2</text><text x="236" y="170" text-anchor="middle" font-size="16" font-weight="600" fill="#e6e8ee">RAG</text></g>
+<g class="s" style="animation-delay:1.00s"><circle cx="381" cy="130" r="26" fill="url(#ac)"/><text x="381" y="137" text-anchor="middle" font-size="21" font-weight="800" fill="#0b1020">3</text><text x="381" y="182" text-anchor="middle" font-size="16" font-weight="600" fill="#e6e8ee">Agents</text></g>
+<g class="s" style="animation-delay:1.35s"><circle cx="527" cy="210" r="26" fill="url(#ac)"/><text x="527" y="217" text-anchor="middle" font-size="21" font-weight="800" fill="#0b1020">4</text><text x="527" y="170" text-anchor="middle" font-size="16" font-weight="600" fill="#e6e8ee">MCP</text></g>
+<g class="s" style="animation-delay:1.70s"><circle cx="673" cy="130" r="26" fill="url(#ac)"/><text x="673" y="137" text-anchor="middle" font-size="21" font-weight="800" fill="#0b1020">5</text><text x="673" y="182" text-anchor="middle" font-size="16" font-weight="600" fill="#e6e8ee">Evaluation</text></g>
+<g class="s" style="animation-delay:2.05s"><circle cx="819" cy="210" r="26" fill="url(#ac)"/><text x="819" y="217" text-anchor="middle" font-size="21" font-weight="800" fill="#0b1020">6</text><text x="819" y="170" text-anchor="middle" font-size="16" font-weight="600" fill="#e6e8ee">Production</text></g>
+<g class="s" style="animation-delay:2.40s"><circle cx="964" cy="130" r="26" fill="url(#ac)"/><text x="964" y="137" text-anchor="middle" font-size="21" font-weight="800" fill="#0b1020">7</text><text x="964" y="182" text-anchor="middle" font-size="16" font-weight="600" fill="#e6e8ee">Interview prep</text></g>
+<g class="s" style="animation-delay:2.75s"><circle cx="1110" cy="210" r="26" fill="url(#ac)"/><text x="1110" y="217" text-anchor="middle" font-size="21" font-weight="800" fill="#0b1020">8</text><text x="1110" y="170" text-anchor="middle" font-size="16" font-weight="600" fill="#e6e8ee">Projects</text></g>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="300" viewBox="0 0 900 300" role="img" aria-label="MCP architecture: host app with MCP client connects to MCP servers that expose tools to data and services">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1020"/><stop offset="1" stop-color="#241552"/></linearGradient><linearGradient id="ac" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6ea8fe"/><stop offset="1" stop-color="#c084fc"/></linearGradient><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8b93a7"/></marker></defs>
+<style>text{font-family:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif}.t{font-size:16px;font-weight:700;fill:#fff}.u{font-size:12px;fill:#aab2c8}
+@keyframes dash{to{stroke-dashoffset:-24}}.ln{stroke:#6ea8fe;stroke-width:2.5;stroke-dasharray:6 6;animation:dash 1s linear infinite;fill:none}</style>
+<rect width="900" height="300" rx="18" fill="url(#bg)"/>
+<text x="450" y="36" text-anchor="middle" font-size="20" font-weight="800" fill="#fff">MCP: one protocol, many tools</text>
+<g fill="#1b2150" stroke="#4a549a" stroke-width="1.5"><rect x="40" y="90" width="200" height="120" rx="14"/><rect x="340" y="70" width="220" height="70" rx="14"/><rect x="340" y="160" width="220" height="70" rx="14"/><rect x="660" y="70" width="200" height="70" rx="14"/><rect x="660" y="160" width="200" height="70" rx="14"/></g>
+<g text-anchor="middle"><text class="t" x="140" y="132">Host app</text><text class="u" x="140" y="152">Claude Desktop, IDE…</text><text class="u" x="140" y="172">contains the MCP client</text>
+<text class="t" x="450" y="100">MCP server: notes</text><text class="u" x="450" y="120">tools · resources · prompts</text>
+<text class="t" x="450" y="190">MCP server: database</text><text class="u" x="450" y="210">tools · resources · prompts</text>
+<text class="t" x="760" y="100">Files / Notes</text><text class="u" x="760" y="120">your local data</text>
+<text class="t" x="760" y="190">APIs / SQL</text><text class="u" x="760" y="210">your services</text></g>
+<g marker-end="url(#ar)"><path class="ln" d="M242 130 L338 105"/><path class="ln" d="M242 170 L338 195"/><path class="ln" d="M562 105 L658 105"/><path class="ln" d="M562 195 L658 195"/></g>
+<text x="290" y="270" class="u">JSON-RPC messages over stdio or HTTP</text>
+</svg>

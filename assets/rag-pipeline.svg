@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="300" viewBox="0 0 1000 300" role="img" aria-label="RAG pipeline: documents, chunks, embeddings, vector index, retrieval, LLM answer with citations">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1020"/><stop offset="1" stop-color="#241552"/></linearGradient><linearGradient id="ac" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6ea8fe"/><stop offset="1" stop-color="#c084fc"/></linearGradient><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8b93a7"/></marker></defs>
+<style>text{font-family:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif}.t{font-size:15px;font-weight:700;fill:#fff}.u{font-size:12px;fill:#aab2c8}
+@keyframes dash{to{stroke-dashoffset:-24}}.ln{stroke:#6ea8fe;stroke-width:2.5;stroke-dasharray:6 6;animation:dash 1s linear infinite}</style>
+<rect width="1000" height="300" rx="18" fill="url(#bg)"/>
+<text x="500" y="36" text-anchor="middle" font-size="20" font-weight="800" fill="#fff">RAG: how a question becomes a cited answer</text>
+<g fill="#1b2150" stroke="#4a549a" stroke-width="1.5">
+<rect x="30" y="90" width="120" height="64" rx="12"/><rect x="190" y="90" width="120" height="64" rx="12"/><rect x="350" y="90" width="120" height="64" rx="12"/><rect x="510" y="90" width="120" height="64" rx="12"/><rect x="670" y="90" width="120" height="64" rx="12"/><rect x="830" y="90" width="140" height="64" rx="12"/></g>
+<g text-anchor="middle"><text class="t" x="90" y="118">Documents</text><text class="u" x="90" y="138">PDF · TXT · MD</text>
+<text class="t" x="250" y="118">Chunks</text><text class="u" x="250" y="138">+ page numbers</text>
+<text class="t" x="410" y="118">Embeddings</text><text class="u" x="410" y="138">text → vectors</text>
+<text class="t" x="570" y="118">Index</text><text class="u" x="570" y="138">search by meaning</text>
+<text class="t" x="730" y="118">Retrieve</text><text class="u" x="730" y="138">top-k + rerank</text>
+<text class="t" x="900" y="118">LLM answer</text><text class="u" x="900" y="138">cites [1] [2]</text></g>
+<g marker-end="url(#ar)"><line class="ln" x1="152" y1="122" x2="188" y2="122"/><line class="ln" x1="312" y1="122" x2="348" y2="122"/><line class="ln" x1="472" y1="122" x2="508" y2="122"/><line class="ln" x1="632" y1="122" x2="668" y2="122"/><line class="ln" x1="792" y1="122" x2="828" y2="122"/></g>
+<rect x="670" y="200" width="300" height="44" rx="22" fill="#241552" stroke="#c084fc"/><text x="820" y="228" text-anchor="middle" class="t">❓ User question</text>
+<path d="M820 200 V160" stroke="#c084fc" stroke-width="2.5" stroke-dasharray="6 6" fill="none" marker-end="url(#ar)" style="animation:dash 1s linear infinite"/>
+<text x="150" y="226" class="u">Ingestion (once per document)</text><path d="M30 236 H620" stroke="#4a549a" stroke-dasharray="3 5"/>
+<text x="150" y="262" class="u">Query time (every question)</text><path d="M30 272 H620" stroke="#c084fc" stroke-dasharray="3 5" opacity=".6"/>
+</svg>
