@@ -57,7 +57,7 @@ server.registerResource(
   async (uri) => ({ contents: [{ uri: uri.href, text: "Hello from a resource." }] })
 );
 ```
-Python FastMCP equivalent:
+Python equivalent (`mcp` 2.x `MCPServer`, called `FastMCP` in 1.x):
 ```python
 @mcp.resource("notes://welcome")
 def welcome() -> str:

@@ -60,7 +60,7 @@ server.registerPrompt(
   })
 );
 ```
-Python FastMCP:
+Python (`mcp` 2.x `MCPServer`, called `FastMCP` in 1.x):
 ```python
 @mcp.prompt()
 def summarize(text: str) -> str:

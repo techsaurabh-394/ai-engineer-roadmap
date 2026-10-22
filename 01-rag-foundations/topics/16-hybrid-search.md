@@ -70,7 +70,7 @@ Run: `cd 01-rag-foundations/code && python rag_bm25.py "rotate refresh token"`
 **In real projects** (LangChain, `pip install langchain langchain-community rank_bm25`):
 
 ```python
-from langchain.retrievers import EnsembleRetriever
+from langchain_classic.retrievers import EnsembleRetriever   # LangChain 1.x; older: langchain.retrievers
 from langchain_community.retrievers import BM25Retriever
 
 bm25 = BM25Retriever.from_texts(chunks); bm25.k = 5

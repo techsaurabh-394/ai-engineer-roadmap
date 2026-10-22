@@ -54,11 +54,13 @@ console.error("hello-mcp-server running on stdio"); // stderr, not stdout
 
 The Python version that runs offline is [`code/mcp_mini_jsonrpc.py`](../code/mcp_mini_jsonrpc.py). Its `MiniMcpServer.handle()` takes one JSON string and returns one JSON string (or `None` for notifications).
 
+> **SDK version note.** I ran this snippet against the official `mcp` Python package, version 2.3.0 (`pip install mcp`). In 1.x versions the same class was called `FastMCP` and lived in `mcp.server.fastmcp`. The decorators (`@tool()`, `@resource()`, `@prompt()`) are the same. If you pin `mcp<2`, use `from mcp.server.fastmcp import FastMCP`. Check the [SDK docs](https://github.com/modelcontextprotocol/python-sdk) for your version.
+
 **In real projects** (official `mcp` Python SDK):
 ```python
-from mcp.server.fastmcp import FastMCP
+from mcp.server.mcpserver import MCPServer
 
-mcp = FastMCP("hello")
+mcp = MCPServer("hello")
 
 @mcp.tool()
 def add_numbers(a: float, b: float) -> float:

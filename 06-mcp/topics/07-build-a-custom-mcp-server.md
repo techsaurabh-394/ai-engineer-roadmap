@@ -73,11 +73,11 @@ python -m pytest -q 06-mcp/code
 ```
 **Step G: connect.** Use the `claude_desktop_config.json` from [topic 03](03-mcp-client.md). You can also try the official MCP Inspector (see the [docs](https://modelcontextprotocol.io/)).
 
-**In real projects** (Python FastMCP):
+**In real projects** (Python `MCPServer`, called `FastMCP` in `mcp` 1.x):
 ```python
-from mcp.server.fastmcp import FastMCP
+from mcp.server.mcpserver import MCPServer
 
-mcp = FastMCP("notes")
+mcp = MCPServer("notes")
 notes: dict[str, str] = {}
 
 @mcp.tool()

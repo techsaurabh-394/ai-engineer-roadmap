@@ -61,8 +61,8 @@ def retrieve_parents(question, children, parents, search, k=3):
 **In real projects** (LangChain, with any vector store and embeddings you already use):
 
 ```python
-from langchain.retrievers import ParentDocumentRetriever
-from langchain.storage import InMemoryStore
+from langchain_classic.retrievers import ParentDocumentRetriever   # LangChain 1.x; older: langchain.retrievers
+from langchain_core.stores import InMemoryStore
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 retriever = ParentDocumentRetriever(
