@@ -1,6 +1,6 @@
 # 08 · Interview prep
 
-**Goal:** turn what you built into answers you can say out loud. 47 questions across five files. Time: 5 days at one file per day.
+**Goal:** turn what you built into answers you can say out loud. 43 questions plus 4 system-design prompts across five files. Time: 5 days at one file per day.
 
 | Day | File | Questions |
 |---|---|---|
@@ -9,6 +9,8 @@
 | 3 | [AI agents and MCP](03-agents-and-mcp.md) | 12 |
 | 4 | [Evaluation and production](04-evaluation-and-production.md) | 8 |
 | 5 | [System design prompts](05-system-design.md) | 4 |
+
+![A one-week plan across the five files](../assets/interview-roadmap.svg)
 
 ## How to practise
 1. Read the question. Answer **out loud** for 60 seconds. Then read the answer.
@@ -20,7 +22,7 @@
 Answers are short on purpose. Where a topic moves fast (for example MCP transports), the answer tells you to check the current documentation.
 
 ## Even more questions
-Every one of the **100 topic pages** ends with 3 interview questions and hidden answers. That's 300 more questions, sorted by topic. Use them to review a phase the day before an interview.
+Every one of the **100 topic pages** ends with 3 interview questions and hidden answers. That's 300 more questions, sorted by topic (checked by script). Use them to review a phase the day before an interview.
 
 **Next:** [09 · Projects](../09-projects/README.md)
 

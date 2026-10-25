@@ -48,7 +48,7 @@ Tip: if you only have one afternoon, read 1, 6, 12, 18 and 20. That covers the c
 
 ## How to run the code
 
-Everything in [`code/`](code/) is offline, standard-library Python. No API keys, no pip installs beyond `pytest`.
+Everything in [`code/`](code/) is offline, standard-library Python. No API keys, no pip installs beyond `pytest`. (Snippets in topic pages that use `sentence-transformers` and similar packages are marked with their `pip install` line.)
 
 ```bash
 # from the repo root

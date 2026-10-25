@@ -42,7 +42,7 @@ A language model reads **tokens** (pieces of words) and predicts the next token,
 If you are short on time, read 01, 08, 09, 11, 13, 14 first. Come back to the rest later.
 
 ## Run the code
-Everything is offline: standard-library Python, no API key, no downloads.
+The demos in `code/` are offline, standard-library Python: no API key, no downloads. Snippets in topic pages that use `torch`, `transformers`, `openai` or `anthropic` need those packages and are marked with `pip install`.
 
 ```bash
 # from the repo root

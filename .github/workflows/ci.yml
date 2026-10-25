@@ -45,3 +45,28 @@ jobs:
               ET.parse(f)
               print("valid", f)
           PY
+
+  local-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check links to local files in Markdown
+        run: |
+          python - <<'PY'
+          import os, re, subprocess, sys, urllib.parse
+          files = [f for f in subprocess.run(["git", "ls-files", "*.md"], capture_output=True, text=True, check=True).stdout.split("\n") if f]
+          bad = []
+          for f in files:
+              text = re.sub(r"```.*?```", "", open(f, encoding="utf-8").read(), flags=re.S)
+              for m in re.finditer(r"\]\(([^)\s]+)\)|(?:src|href)=\"([^\"]+)\"", text):
+                  u = m.group(1) or m.group(2)
+                  if u.startswith(("http", "mailto:", "#")):
+                      continue
+                  p = urllib.parse.unquote(u.split("#")[0])
+                  if p and not os.path.exists(os.path.normpath(os.path.join(os.path.dirname(f), p))):
+                      bad.append(f + " -> " + u)
+          print("checked", len(files), "markdown files")
+          for b in bad:
+              print("BROKEN:", b)
+          sys.exit(1 if bad else 0)
+          PY

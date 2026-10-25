@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 590" width="880" height="590" role="img" aria-labelledby="t d" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+<title id="t">How RAG, agents, MCP, the LLM, frameworks and production fit together</title>
+<desc id="d">A user question goes to the agent loop (Phase 4). The agent asks RAG (Phases 1 and 2) when it needs facts and MCP tools (Phase 6) when it needs to act. Both feed the LLM (Phase 3), which answers back to the agent, which returns the answer. Frameworks (Phase 5) wire it together and production (Phase 7) runs, secures and monitors it.</desc>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2DD4BF"/></marker><marker id="aa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#FBBF24"/></marker></defs>
+<rect width="880" height="590" rx="16" fill="#0D1117"/>
+<text x="440" y="38" font-size="22" fill="#E6EDF3" font-weight="700" text-anchor="middle">The big picture: how the pieces fit together</text>
+<rect x="30" y="90" width="200" height="70" rx="12" fill="#161B22" stroke="#2DD4BF" stroke-width="2"/>
+<text x="130" y="120" font-size="17" fill="#E6EDF3" font-weight="700" text-anchor="middle">User question</text>
+<text x="130" y="144" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">what you ask</text>
+<rect x="340" y="76" width="200" height="100" rx="12" fill="#161B22" stroke="#FBBF24" stroke-width="2.5"/>
+<text x="440" y="112" font-size="19" fill="#E6EDF3" font-weight="700" text-anchor="middle">Agent loop</text>
+<text x="440" y="138" font-size="15" fill="#FBBF24" font-weight="700" text-anchor="middle">Phase 4</text>
+<text x="440" y="160" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">picks the next step</text>
+<rect x="650" y="90" width="200" height="70" rx="12" fill="#161B22" stroke="#2DD4BF" stroke-width="2"/>
+<text x="750" y="120" font-size="17" fill="#E6EDF3" font-weight="700" text-anchor="middle">Answer</text>
+<text x="750" y="144" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">back to you</text>
+<line x1="230" y1="125" x2="340" y2="125" stroke="#2DD4BF" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="540" y1="125" x2="650" y2="125" stroke="#2DD4BF" stroke-width="2.5" marker-end="url(#ah)"/>
+<rect x="30" y="290" width="220" height="100" rx="12" fill="#161B22" stroke="#2DD4BF" stroke-width="2"/>
+<text x="140" y="326" font-size="19" fill="#E6EDF3" font-weight="700" text-anchor="middle">RAG</text>
+<text x="140" y="350" font-size="15" fill="#2DD4BF" font-weight="700" text-anchor="middle">Phases 1 and 2</text>
+<text x="140" y="372" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">finds facts in documents</text>
+<rect x="630" y="290" width="220" height="100" rx="12" fill="#161B22" stroke="#2DD4BF" stroke-width="2"/>
+<text x="740" y="326" font-size="19" fill="#E6EDF3" font-weight="700" text-anchor="middle">MCP tools</text>
+<text x="740" y="350" font-size="15" fill="#2DD4BF" font-weight="700" text-anchor="middle">Phase 6</text>
+<text x="740" y="372" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">lets the AI act</text>
+<rect x="340" y="290" width="200" height="100" rx="12" fill="#161B22" stroke="#FBBF24" stroke-width="2"/>
+<text x="440" y="326" font-size="19" fill="#E6EDF3" font-weight="700" text-anchor="middle">LLM</text>
+<text x="440" y="350" font-size="15" fill="#FBBF24" font-weight="700" text-anchor="middle">Phase 3</text>
+<text x="440" y="372" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">reads and writes text</text>
+<line x1="380" y1="176" x2="170" y2="290" stroke="#2DD4BF" stroke-width="2.5" marker-end="url(#ah)"/>
+<text x="215" y="222" font-size="14.5" fill="#2DD4BF" font-weight="700" text-anchor="end">needs facts</text>
+<line x1="500" y1="176" x2="710" y2="290" stroke="#2DD4BF" stroke-width="2.5" marker-end="url(#ah)"/>
+<text x="665" y="222" font-size="14.5" fill="#2DD4BF" font-weight="700" text-anchor="start">needs to act</text>
+<line x1="250" y1="340" x2="340" y2="340" stroke="#2DD4BF" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="630" y1="340" x2="540" y2="340" stroke="#2DD4BF" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="440" y1="290" x2="440" y2="178" stroke="#FBBF24" stroke-width="2.5" marker-end="url(#aa)"/>
+<text x="452" y="238" font-size="14.5" fill="#FBBF24" font-weight="700" text-anchor="start">reply</text>
+<rect x="30" y="430" width="820" height="52" rx="12" fill="#0D1117" stroke="#2DD4BF" stroke-width="1.5" stroke-dasharray="6 6"/>
+<text x="440" y="462" font-size="15.5" fill="#E6EDF3" font-weight="600" text-anchor="middle">Phase 5 · Frameworks (LangChain, LangGraph, ...) wire these pieces together</text>
+<rect x="30" y="500" width="820" height="52" rx="12" fill="#0D1117" stroke="#FBBF24" stroke-width="1.5" stroke-dasharray="6 6"/>
+<text x="440" y="532" font-size="15.5" fill="#E6EDF3" font-weight="600" text-anchor="middle">Phase 7 · Production runs, secures and monitors the whole system</text>
+<text x="440" y="578" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">Phase 8 is interview prep and phase 9 is projects, on top of all of this.</text>
+</svg>

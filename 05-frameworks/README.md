@@ -76,7 +76,7 @@ python -m pytest -q 05-frameworks/code
 | [fw_mini_graph.py](code/fw_mini_graph.py) | State-machine runner with nodes, edges and conditional routing (LangGraph's idea) |
 | [fw_mini_chain.py](code/fw_mini_chain.py) | Pipe-style chain with `\|` (LCEL's idea) |
 
-No network, API keys or installs are needed beyond pytest.
+No network, API keys or installs are needed beyond pytest. The real framework snippets in the topic pages (LangChain, LangGraph, LlamaIndex, DSPy and others) need their own `pip install` and, for hosted models, an API key.
 
 ## Phase checkpoint quiz
 

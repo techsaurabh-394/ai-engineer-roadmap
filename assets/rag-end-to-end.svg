@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 640" width="880" height="640" role="img" aria-labelledby="t d" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+<title id="t">RAG end to end, as done by mini_rag.py</title>
+<desc id="d">Seven stages: documents, chunking, embeddings, vector search, retrieval, prompt, answer with citations. Based on the real demo 01-rag-foundations/code/mini_rag.py.</desc>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2DD4BF"/></marker><marker id="aa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#FBBF24"/></marker></defs>
+<rect width="880" height="640" rx="16" fill="#0D1117"/>
+<text x="440" y="38" font-size="22" fill="#E6EDF3" font-weight="700" text-anchor="middle">RAG end to end (the real stages in mini_rag.py)</text>
+<text x="440" y="62" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle" font-family="SFMono-Regular,Menlo,Consolas,monospace">Run: python 01-rag-foundations/code/mini_rag.py "Why use multi-stage builds?"</text>
+<text x="30" y="100" font-size="16" fill="#2DD4BF" font-weight="700" text-anchor="start">A. Prepare, once at start-up</text>
+<rect x="30" y="112" width="260" height="138" rx="12" fill="#161B22" stroke="#2DD4BF" stroke-width="2"/>
+<circle cx="58" cy="140" r="16" fill="#2DD4BF"/>
+<text x="58" y="145.6" font-size="16" fill="#0D1117" font-weight="700" text-anchor="middle">1</text>
+<text x="84" y="146" font-size="18" fill="#E6EDF3" font-weight="700" text-anchor="start">Documents</text>
+<text x="160" y="176" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">3 built-in sample texts:</text>
+<text x="160" y="196" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">docker.txt, caching.txt,</text>
+<text x="160" y="216" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">auth.txt</text>
+<line x1="290" y1="181" x2="320" y2="181" stroke="#2DD4BF" stroke-width="2.5" marker-end="url(#ah)"/>
+<rect x="320" y="112" width="260" height="138" rx="12" fill="#161B22" stroke="#2DD4BF" stroke-width="2"/>
+<circle cx="348" cy="140" r="16" fill="#2DD4BF"/>
+<text x="348" y="145.6" font-size="16" fill="#0D1117" font-weight="700" text-anchor="middle">2</text>
+<text x="374" y="146" font-size="18" fill="#E6EDF3" font-weight="700" text-anchor="start">Chunking</text>
+<text x="450" y="176" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">Split into sentences, then</text>
+<text x="450" y="196" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">pack sentences into chunks of</text>
+<text x="450" y="216" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">about 300 characters</text>
+<line x1="580" y1="181" x2="610" y2="181" stroke="#2DD4BF" stroke-width="2.5" marker-end="url(#ah)"/>
+<rect x="610" y="112" width="260" height="138" rx="12" fill="#161B22" stroke="#2DD4BF" stroke-width="2"/>
+<circle cx="638" cy="140" r="16" fill="#2DD4BF"/>
+<text x="638" y="145.6" font-size="16" fill="#0D1117" font-weight="700" text-anchor="middle">3</text>
+<text x="664" y="146" font-size="18" fill="#E6EDF3" font-weight="700" text-anchor="start">Embeddings</text>
+<text x="740" y="176" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">Hashed TF-IDF vectors (2048</text>
+<text x="740" y="196" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">buckets). A simple stand-in</text>
+<text x="740" y="216" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">for a real embedding model</text>
+<text x="850" y="270" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="end">vectors stay in memory</text>
+<text x="30" y="304" font-size="16" fill="#FBBF24" font-weight="700" text-anchor="start">B. Answer a question, every time</text>
+<rect x="30" y="318" width="190" height="176" rx="12" fill="#161B22" stroke="#FBBF24" stroke-width="2"/>
+<circle cx="56" cy="346" r="16" fill="#FBBF24"/>
+<text x="56" y="351.6" font-size="16" fill="#0D1117" font-weight="700" text-anchor="middle">4</text>
+<text x="80" y="352" font-size="17" fill="#E6EDF3" font-weight="700" text-anchor="start">Vector search</text>
+<text x="125" y="384" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">Score every chunk</text>
+<text x="125" y="404" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">against the question</text>
+<text x="125" y="424" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">(cosine similarity)</text>
+<line x1="220" y1="406" x2="237" y2="406" stroke="#FBBF24" stroke-width="2.5" marker-end="url(#aa)"/>
+<rect x="237" y="318" width="190" height="176" rx="12" fill="#161B22" stroke="#FBBF24" stroke-width="2"/>
+<circle cx="263" cy="346" r="16" fill="#FBBF24"/>
+<text x="263" y="351.6" font-size="16" fill="#0D1117" font-weight="700" text-anchor="middle">5</text>
+<text x="287" y="352" font-size="17" fill="#E6EDF3" font-weight="700" text-anchor="start">Retrieval</text>
+<text x="332" y="384" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">Keep the top 2 chunks</text>
+<text x="332" y="404" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">that score above 0</text>
+<line x1="427" y1="406" x2="444" y2="406" stroke="#FBBF24" stroke-width="2.5" marker-end="url(#aa)"/>
+<rect x="444" y="318" width="190" height="176" rx="12" fill="#161B22" stroke="#FBBF24" stroke-width="2"/>
+<circle cx="470" cy="346" r="16" fill="#FBBF24"/>
+<text x="470" y="351.6" font-size="16" fill="#0D1117" font-weight="700" text-anchor="middle">6</text>
+<text x="494" y="352" font-size="17" fill="#E6EDF3" font-weight="700" text-anchor="start">Prompt</text>
+<text x="539" y="384" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">Number the sources</text>
+<text x="539" y="404" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">like [1] (docker.txt)</text>
+<text x="539" y="424" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">and add the question</text>
+<line x1="634" y1="406" x2="651" y2="406" stroke="#FBBF24" stroke-width="2.5" marker-end="url(#aa)"/>
+<rect x="651" y="318" width="190" height="176" rx="12" fill="#161B22" stroke="#FBBF24" stroke-width="2"/>
+<circle cx="677" cy="346" r="16" fill="#FBBF24"/>
+<text x="677" y="351.6" font-size="16" fill="#0D1117" font-weight="700" text-anchor="middle">7</text>
+<text x="701" y="352" font-size="17" fill="#E6EDF3" font-weight="700" text-anchor="start">Answer</text>
+<text x="746" y="384" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">With</text>
+<text x="746" y="404" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">ANTHROPIC_API_KEY,</text>
+<text x="746" y="424" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">Claude answers and</text>
+<text x="746" y="444" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">cites [1]. Offline it</text>
+<text x="746" y="464" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">prints the best</text>
+<text x="746" y="484" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">passage</text>
+<rect x="30" y="510" width="820" height="56" rx="12" fill="#161B22" stroke="#161B22" stroke-width="1.5" stroke-dasharray="6 6"/>
+<text x="440" y="534" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">Real output (offline run):</text>
+<text x="440" y="556" font-size="14" fill="#E6EDF3" font-weight="400" text-anchor="middle" font-family="SFMono-Regular,Menlo,Consolas,monospace">[1] (docker.txt) Multi-stage builds compile an application in one stage and copy only ...</text>
+<text x="440" y="596" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">If nothing matches, the demo says: I could not find that in the documents.</text>
+<text x="440" y="620" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">The same loop is explained step by step in Phase 1, topic 1 (What is RAG?).</text>
+</svg>

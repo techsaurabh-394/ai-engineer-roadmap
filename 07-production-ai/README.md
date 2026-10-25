@@ -28,8 +28,12 @@
 
 **Learning order:** read 01 to 15 in order. Topics 1–3 give you a running, packaged service. 4–6 add speed and background work. 7–10 add visibility and change control. 11–14 add safety and cost control. 15 puts it all together.
 
+## The topics, grouped
+
+![Phase 7 topics grouped by concern](../assets/production-checklist.svg)
+
 ## How to run the code
-All demos are offline, use only the standard library, and need no API key. From the repo root:
+The five demos in `code/` are offline, use only the standard library, and need no API key, Docker, Redis or Kubernetes: they are small in-process stand-ins for the real tools. The Dockerfile, Kubernetes YAML and the FastAPI, Redis, Celery and MLflow snippets in the topic pages need those tools installed to run for real. From the repo root:
 
 ```bash
 python -m pytest -q 07-production-ai/code

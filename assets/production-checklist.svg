@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 560" width="880" height="560" role="img" aria-labelledby="t d" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+<title id="t">Phase 7 production checklist, grouped</title>
+<desc id="d">The 15 Phase 7 topics grouped: deployment (FastAPI for AI, Docker, Kubernetes, Deploy a Production AI Application), speed and background work (Redis, Celery, RabbitMQ), experiments and change control (MLflow, Prompt Versioning), observability (Monitoring, Observability, LangSmith), security (AI Security, Guardrails) and cost (Cost Optimization).</desc>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2DD4BF"/></marker><marker id="aa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#FBBF24"/></marker></defs>
+<rect width="880" height="560" rx="16" fill="#0D1117"/>
+<text x="440" y="38" font-size="22" fill="#E6EDF3" font-weight="700" text-anchor="middle">Phase 7: production checklist, grouped</text>
+<rect x="30" y="64" width="410" height="120" rx="12" fill="#161B22" stroke="#2DD4BF" stroke-width="2"/>
+<text x="235" y="96" font-size="18" fill="#2DD4BF" font-weight="700" text-anchor="middle">Deployment</text>
+<text x="235" y="126" font-size="15.5" fill="#E6EDF3" font-weight="400" text-anchor="middle">FastAPI for AI</text>
+<text x="235" y="150" font-size="15.5" fill="#E6EDF3" font-weight="400" text-anchor="middle">Docker · Kubernetes</text>
+<text x="235" y="174" font-size="15.5" fill="#E6EDF3" font-weight="400" text-anchor="middle">Deploy a Production AI Application</text>
+<rect x="460" y="64" width="410" height="120" rx="12" fill="#161B22" stroke="#2DD4BF" stroke-width="2"/>
+<text x="665" y="96" font-size="18" fill="#2DD4BF" font-weight="700" text-anchor="middle">Speed and background work</text>
+<text x="665" y="126" font-size="15.5" fill="#E6EDF3" font-weight="400" text-anchor="middle">Redis · Celery · RabbitMQ</text>
+<rect x="30" y="202" width="410" height="120" rx="12" fill="#161B22" stroke="#FBBF24" stroke-width="2"/>
+<text x="235" y="234" font-size="18" fill="#FBBF24" font-weight="700" text-anchor="middle">Experiments and change control</text>
+<text x="235" y="264" font-size="15.5" fill="#E6EDF3" font-weight="400" text-anchor="middle">MLflow</text>
+<text x="235" y="288" font-size="15.5" fill="#E6EDF3" font-weight="400" text-anchor="middle">Prompt Versioning</text>
+<rect x="460" y="202" width="410" height="120" rx="12" fill="#161B22" stroke="#FBBF24" stroke-width="2"/>
+<text x="665" y="234" font-size="18" fill="#FBBF24" font-weight="700" text-anchor="middle">Observability</text>
+<text x="665" y="264" font-size="15.5" fill="#E6EDF3" font-weight="400" text-anchor="middle">Monitoring · Observability</text>
+<text x="665" y="288" font-size="15.5" fill="#E6EDF3" font-weight="400" text-anchor="middle">LangSmith</text>
+<rect x="30" y="340" width="410" height="120" rx="12" fill="#161B22" stroke="#2DD4BF" stroke-width="2"/>
+<text x="235" y="372" font-size="18" fill="#2DD4BF" font-weight="700" text-anchor="middle">Security</text>
+<text x="235" y="402" font-size="15.5" fill="#E6EDF3" font-weight="400" text-anchor="middle">AI Security</text>
+<text x="235" y="426" font-size="15.5" fill="#E6EDF3" font-weight="400" text-anchor="middle">Guardrails</text>
+<rect x="460" y="340" width="410" height="120" rx="12" fill="#161B22" stroke="#FBBF24" stroke-width="2"/>
+<text x="665" y="372" font-size="18" fill="#FBBF24" font-weight="700" text-anchor="middle">Cost</text>
+<text x="665" y="402" font-size="15.5" fill="#E6EDF3" font-weight="400" text-anchor="middle">Cost Optimization</text>
+<rect x="30" y="482" width="820" height="52" rx="12" fill="#161B22" stroke="#161B22" stroke-width="1.5" stroke-dasharray="6 6"/>
+<text x="440" y="504" font-size="14.5" fill="#E6EDF3" font-weight="600" text-anchor="middle">Phase 7 has 15 topics, all shown above.</text>
+<text x="440" y="524" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">Evaluation basics are taught earlier: RAG Evaluation (Phase 2) and Agent Evaluation (Phase 4).</text>
+</svg>

@@ -48,8 +48,12 @@ The model never runs anything itself. It *asks*; your code *acts*. That is where
 
 Short on time? Read 01, 02, 04, 07, 12, 16 first.
 
+## Workflow or agent?
+
+![Decision guide: plain workflow or agent](../assets/agent-vs-workflow.svg)
+
 ## Run the code
-Everything runs offline with scripted models: standard-library Python, no API key.
+The demos run offline with scripted models: standard-library Python, no API key. `agent.py` can use real Claude tool use if you `pip install anthropic` and set `ANTHROPIC_API_KEY`.
 
 ```bash
 # from the repo root

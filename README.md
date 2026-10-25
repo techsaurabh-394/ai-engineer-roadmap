@@ -2,72 +2,112 @@
   <img src="assets/banner.svg" alt="AI Engineer Roadmap by Saurabh Pathak" width="100%"/>
 </p>
 
+<h1 align="center">AI Engineer Roadmap</h1>
+
+<p align="center"><b>Learn RAG, LLMs, AI agents, frameworks, MCP and production AI step by step, with runnable code, diagrams and interview questions.</b></p>
+
 <p align="center">
-  <a href="https://github.com/techsaurabh-394/ai-engineer-roadmap/stargazers"><img src="https://img.shields.io/github/stars/techsaurabh-394/ai-engineer-roadmap?style=for-the-badge&logo=github&color=6ea8fe" alt="Stars"/></a>
-  <a href="https://github.com/techsaurabh-394/ai-engineer-roadmap/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/techsaurabh-394/ai-engineer-roadmap/ci.yml?style=for-the-badge&label=CI" alt="CI"/></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="MIT"/></a>
-  <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen?style=for-the-badge" alt="PRs welcome"/></a>
-  <a href="https://buymeacoffee.com/saurabhdev"><img src="https://img.shields.io/badge/Buy_Me_A_Coffee-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black" alt="Buy me a coffee"/></a>
+  <a href="https://github.com/techsaurabh-394/ai-engineer-roadmap/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/techsaurabh-394/ai-engineer-roadmap/ci.yml?style=flat&label=CI" alt="CI status"/></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green?style=flat" alt="MIT license"/></a>
+  <img src="https://img.shields.io/badge/python-3.10%2B-3776AB?style=flat&logo=python&logoColor=white" alt="Python 3.10 or newer"/>
+  <img src="https://img.shields.io/badge/topics-100-2DD4BF?style=flat" alt="100 topics"/>
+  <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat" alt="PRs welcome"/></a>
+  <a href="https://github.com/techsaurabh-394/ai-engineer-roadmap"><img src="https://img.shields.io/github/stars/techsaurabh-394/ai-engineer-roadmap?style=flat&logo=github&color=6ea8fe" alt="GitHub stars"/></a>
+  <a href="https://github.com/techsaurabh-394/ai-engineer-roadmap/commits/main"><img src="https://img.shields.io/github/last-commit/techsaurabh-394/ai-engineer-roadmap?style=flat" alt="Last commit"/></a>
 </p>
 
-# AI Engineer Roadmap: RAG, LLMs, AI Agents, Frameworks, MCP and Production
+**100 topics in 7 phases**, each explained in plain English with an everyday analogy, a diagram, Python code, 3 interview questions and links to the original papers or official docs. If you know basic Python, you can start today. The demo scripts run offline with no API key.
 
-**Learn AI engineering from zero to production.** 100 topics in 7 phases, each explained in plain English with an everyday analogy, a diagram, runnable Python, interview questions and links to the original papers.
+![The 7 phases from zero to production, with topic counts](assets/learning-path.svg)
 
-If you know basic Python, you can start today. No API key is needed: every demo runs offline.
+## Start in 5 minutes
 
-![Learning path](assets/roadmap.svg)
+You need Python 3.10 or newer (CI runs 3.12) and git.
+
+```bash
+git clone https://github.com/techsaurabh-394/ai-engineer-roadmap.git
+cd ai-engineer-roadmap
+python3 -m venv .venv && source .venv/bin/activate      # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+pytest -q                                                # all green = ready
+python 01-rag-foundations/code/mini_rag.py "Why use multi-stage builds?"
+```
+
+The last command runs a complete (tiny) RAG pipeline offline. This is its real output:
+
+```text
+[1] (docker.txt) Multi-stage builds compile an application in one stage and copy only the final artifact into a small runtime image. This keeps production images small and reduces the attack surface. Docker Compose describes several services in one YAML file and starts them together.
+```
+
+It chunked three sample documents, scored them against your question and printed the best passage with a citation. Set `ANTHROPIC_API_KEY` (and `pip install anthropic`) and Claude writes the answer from the retrieved passages instead. Next, open [00-start-here](00-start-here/README.md), then [topic 1: What is RAG?](01-rag-foundations/topics/01-what-is-rag.md).
 
 ## Who is this for?
 - **Beginners** who keep hearing "RAG", "agents" and "MCP" and want to finally understand them
 - **Developers** moving into AI engineering who want a structured path instead of random tutorials
-- **Job seekers** who need to explain these topics in interviews (every topic has 3 questions with answers)
+- **Job seekers** who need to explain these topics in interviews (every topic ends with 3 questions and answers, and there is a separate [interview-prep](08-interview-prep/README.md) folder)
 
-## The three ideas behind everything
+## Pick your path
+
+| You are... | Start here | Then |
+|---|---|---|
+| Complete beginner | [00 Start here](00-start-here/README.md), then [What is RAG?](01-rag-foundations/topics/01-what-is-rag.md) and Phase 1 in order | Phases 3, 4, 6 |
+| Know Python, new to AI | [What is RAG?](01-rag-foundations/topics/01-what-is-rag.md), then [What is an AI Agent?](04-agentic-ai/topics/01-what-is-an-ai-agent.md) | Phases 2, 5, 6, 7 |
+| Building a RAG app now | [What is RAG?](01-rag-foundations/topics/01-what-is-rag.md), then [Reranking](02-advanced-rag/topics/01-reranking.md) | Phase 7 |
+| Building agents or MCP servers | [What is an AI Agent?](04-agentic-ai/topics/01-what-is-an-ai-agent.md), then [Model Context Protocol](06-mcp/topics/01-model-context-protocol.md) | Phases 5, 7 |
+| Interview in a week | [08 Interview prep](08-interview-prep/README.md) | The "Interview questions" at the end of each topic |
+
+New to the whole thing? Read [How to study this repo](docs/how-to-study.md) and keep the [glossary](docs/glossary.md) open.
+
+## The big picture
+
+How the pieces fit together (the number is the phase that teaches it):
+
+![A user question goes to the agent loop, which uses RAG for facts and MCP tools for actions, both feeding the LLM. Frameworks wire it together and production runs it.](assets/big-picture.svg)
+
+The three core ideas, in more detail:
+
 <table>
 <tr>
-<td width="33%"><b>RAG</b><br/>Give the model your documents and make it cite them.<br/><img src="assets/rag-pipeline.svg" alt="RAG"/></td>
-<td width="33%"><b>Agents</b><br/>Let the model choose tools in a loop, with limits.<br/><img src="assets/agent-loop.svg" alt="Agent loop"/></td>
-<td width="33%"><b>MCP</b><br/>One standard way to connect AI apps to tools.<br/><img src="assets/mcp-architecture.svg" alt="MCP"/></td>
+<td width="33%"><b>RAG</b><br/>Give the model your documents and make it cite them.<br/><img src="assets/rag-pipeline.svg" alt="RAG pipeline: documents, chunks, embeddings, index, retrieve, LLM answer with citations"/></td>
+<td width="33%"><b>Agents</b><br/>Let the model choose tools in a loop, with limits.<br/><img src="assets/agent-loop.svg" alt="Agent loop: think, act, observe, decide"/></td>
+<td width="33%"><b>MCP</b><br/>One standard way to connect AI apps to tools.<br/><img src="assets/mcp-architecture.svg" alt="MCP architecture: host app with client, MCP servers, local data and APIs"/></td>
 </tr>
 </table>
 
-## How the pieces fit together
-```mermaid
-flowchart LR
-    U[User question] --> A[Agent loop<br/>Phase 4]
-    A -->|needs facts| R[RAG<br/>Phases 1-2]
-    A -->|needs to act| M[MCP tools<br/>Phase 6]
-    R --> L[LLM<br/>Phase 3]
-    M --> L
-    L --> A
-    A --> O[Answer]
-    F[Frameworks<br/>Phase 5] -.wire it together.-> A
-    P[Production<br/>Phase 7] -.runs, secures, monitors.-> A
-```
+More diagrams: [RAG end to end](assets/rag-end-to-end.svg) · [workflow or agent?](assets/agent-vs-workflow.svg) · [interview in a week](assets/interview-roadmap.svg) · [production checklist](assets/production-checklist.svg)
 
-## Pick your path
-| You are... | Start here | Then |
+## What you'll need
+
+Every phase works with Python. The scripts in each `code/` folder use only the standard library and run offline. The table shows what the *extra* snippets in the topic pages need if you want to run them too.
+
+| Phase | Demos in `code/` | Extra snippets in topic pages need |
 |---|---|---|
-| Complete beginner | [00 Start here](00-start-here/README.md), then Phase 1 in order | Phases 3, 4, 6 |
-| Know Python, new to AI | Phase 1, then Phase 4 | Phases 2, 5, 6, 7 |
-| Building a RAG app now | Phases 1 and 2 | Phase 7 |
-| Building agents or MCP servers | Phases 4 and 6 | Phases 5, 7 |
-| Interview in a week | [08 Interview prep](08-interview-prep/README.md) | The "Interview questions" in each topic |
+| 1 RAG Foundations | Python only, offline | `sentence-transformers`, `chromadb`, `qdrant-client`, `faiss`, `hnswlib`, `numpy`, LangChain packages (each marked with `pip install`) |
+| 2 Advanced RAG | Python only, offline | `sentence-transformers` |
+| 3 LLM Concepts | Python only, offline | `torch`, `transformers`, plus `openai` or `anthropic` and an API key |
+| 4 Agentic AI | Python only, offline (scripted model) | `anthropic` or `openai` with an API key, `langgraph` |
+| 5 Frameworks | Python only, offline (from-scratch versions) | `langchain`, `langgraph`, `llama-index`, `dspy`, OpenAI Agents SDK, and API keys for hosted models |
+| 6 MCP | Python toy, offline. TypeScript server: **Node.js 18+** (CI uses 22), `npm ci`, `npm run build` | the `mcp` Python package for the snippets |
+| 7 Production AI | Python only, offline: small in-process stand-ins, **no Docker, Redis or Kubernetes needed** | `fastapi`, `pydantic`, `redis`, `celery`, `mlflow`, and Docker or Kubernetes to run the Dockerfile and YAML for real |
 
-## Quick start
-```bash
-git clone https://github.com/techsaurabh-394/ai-engineer-roadmap.git
-cd ai-engineer-roadmap
-python -m venv .venv && source .venv/bin/activate      # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-pytest                                                  # all green = ready
-python 01-rag-foundations/code/mini_rag.py "Why use multi-stage builds?"
-```
-Then open [00-start-here](00-start-here/README.md).
+An API key is never required. `mini_rag.py` and `agent.py` can use Claude when `ANTHROPIC_API_KEY` is set, and fall back to an offline mode otherwise.
 
-## 📋 The full checklist
-Legend: 🟢 beginner · 🟡 intermediate · 🔴 advanced. Fork the repo and tick the boxes as you learn.
+## The full checklist
+
+Legend: 🟢 beginner · 🟡 intermediate · 🔴 advanced.
+
+**Progress.** Fork the repo, tick the boxes as you learn (edit this file on GitHub or locally) and update the **Done** column. The totals below are the number of topics in each phase.
+
+| Phase | Topics | 🟢 | 🟡 | 🔴 | Done |
+|---|---|---|---|---|---|
+| 1 RAG Foundations | 20 | 10 | 8 | 2 | 0 / 20 |
+| 2 Advanced RAG | 20 | 0 | 10 | 10 | 0 / 20 |
+| 3 LLM Concepts | 14 | 5 | 8 | 1 | 0 / 14 |
+| 4 Agentic AI | 16 | 5 | 8 | 3 | 0 / 16 |
+| 5 Frameworks | 8 | 2 | 4 | 2 | 0 / 8 |
+| 6 MCP | 7 | 2 | 4 | 1 | 0 / 7 |
+| 7 Production AI | 15 | 2 | 12 | 1 | 0 / 15 |
+| **Total** | **100** | **26** | **54** | **20** | **0 / 100** |
 
 ### Phase 1 — RAG Foundations
 
@@ -207,16 +247,20 @@ Legend: 🟢 beginner · 🟡 intermediate · 🔴 advanced. Fork the repo and t
 ## Extras
 | Folder | What is inside |
 |---|---|
-| [08-interview-prep](08-interview-prep/README.md) | 47 curated questions plus 4 system-design prompts |
+| [08-interview-prep](08-interview-prep/README.md) | 43 curated questions plus 4 system-design prompts, in 5 files |
 | [09-projects](09-projects/README.md) | Portfolio project ideas from beginner to advanced |
-| `*/code/` | Runnable, tested demos for every phase (standard library only) |
+| [docs/how-to-study.md](docs/how-to-study.md) | A study routine: pace, and what to do for each topic |
+| [docs/glossary.md](docs/glossary.md) | Plain-English definitions of the key terms |
+| `*/code/` | Runnable, tested demos for every phase (see "What you'll need") |
+
+Interview questions in total: **300** at the end of the 100 topic pages (3 each), plus the 43 + 4 in `08-interview-prep`.
 
 ## What makes this different
 - **Plain English first.** Every term is defined where it first appears.
-- **Everything runs.** Demos have tests, and CI runs them on every push.
+- **Everything runs.** Demo scripts have tests, and CI runs them on every push.
 - **Basic to hard in one place.** From "what is a token" to GraphRAG, Kubernetes and prompt-injection defence.
 - **Honest trade-offs.** Each topic says when *not* to use the technique.
-- **Primary sources.** Links go to the original paper or official docs.
+- **Primary sources.** Each topic links to the original paper or official docs.
 
 ## Repository map
 ```
@@ -231,23 +275,26 @@ ai-engineer-roadmap/
 ├── 07-production-ai/     15 topics + code/
 ├── 08-interview-prep/    questions and answers
 ├── 09-projects/          projects to build and share
-├── assets/               animated SVG diagrams
+├── assets/               SVG diagrams
+├── docs/                 study guide and glossary
 └── .github/workflows/    CI, link check, stale-issue cleanup
 ```
 
 ## Automated checks
-Every push runs the Python tests for all phases, builds the MCP example, and validates the SVG diagrams. A weekly job checks that links in the docs still work.
+Every push and pull request runs the Python tests for all phases, builds the TypeScript MCP example, validates the SVG diagrams and checks that links to local files in Markdown pages are not broken. A separate link-check workflow checks external links; it runs on pull requests that change Markdown and every Monday, and it reports problems without failing the build.
 
 ## Contributing
-Found a mistake or want a topic added? Read [CONTRIBUTING.md](CONTRIBUTING.md) and open a pull request. Corrections are very welcome.
+Found a mistake or want a topic added? Read [CONTRIBUTING.md](CONTRIBUTING.md) and open a pull request. Corrections are very welcome. See also the [changelog](CHANGELOG.md).
 
 ## Related projects by the author
 | Project | What it is |
 |---|---|
 | [rag-docs-chat](https://github.com/techsaurabh-394/rag-docs-chat) | PDF chat with cited answers and an evaluation script |
-| [mcp-notes-server](https://github.com/techsaurabh-394/mcp-notes-server) | MCP server with 4 typed tools |
+| [mcp-notes-server](https://github.com/techsaurabh-394/mcp-notes-server) | MCP server with 6 typed tools, resources and a prompt |
 | [claude-skills](https://github.com/techsaurabh-394/claude-skills) | Reusable Claude Skills for SEO/GEO, blogging and MCP |
 | [mernstackdev.com](https://mernstackdev.com) | Developer blog on React, Node.js and AI engineering |
+
+If this is useful, a star helps others find it.
 
 ---
 
