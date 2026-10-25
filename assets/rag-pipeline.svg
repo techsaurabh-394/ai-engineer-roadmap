@@ -1,7 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="300" viewBox="0 0 1000 300" role="img" aria-label="RAG pipeline: documents, chunks, embeddings, vector index, retrieval, LLM answer with citations">
+<title>RAG pipeline</title>
+<desc>Ingestion path: documents, chunks, embeddings, index. Query path: user question, retrieve top-k and rerank, LLM answer with citations.</desc>
 <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1020"/><stop offset="1" stop-color="#241552"/></linearGradient><linearGradient id="ac" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6ea8fe"/><stop offset="1" stop-color="#c084fc"/></linearGradient><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8b93a7"/></marker></defs>
 <style>text{font-family:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif}.t{font-size:15px;font-weight:700;fill:#fff}.u{font-size:12px;fill:#aab2c8}
-@keyframes dash{to{stroke-dashoffset:-24}}.ln{stroke:#6ea8fe;stroke-width:2.5;stroke-dasharray:6 6;animation:dash 1s linear infinite}</style>
+@keyframes dash{to{stroke-dashoffset:-24}}.ln{stroke:#6ea8fe;stroke-width:2.5;stroke-dasharray:6 6;animation:dash 1s linear infinite}@media (prefers-reduced-motion:reduce){*{animation:none !important}}</style>
 <rect width="1000" height="300" rx="18" fill="url(#bg)"/>
 <text x="500" y="36" text-anchor="middle" font-size="20" font-weight="800" fill="#fff">RAG: how a question becomes a cited answer</text>
 <g fill="#1b2150" stroke="#4a549a" stroke-width="1.5">

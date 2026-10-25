@@ -7,3 +7,12 @@ authors:
     alias: "techsaurabh-394"
 repository-code: "https://github.com/techsaurabh-394/ai-engineer-roadmap"
 license: MIT
+url: "https://github.com/techsaurabh-394/ai-engineer-roadmap"
+abstract: "A free, beginner-friendly learning roadmap for AI engineering: 100 topics in 7 phases covering RAG, advanced RAG, LLM concepts, agents, frameworks, the Model Context Protocol and production AI, with runnable Python demos, interview questions and links to primary sources."
+keywords:
+  - ai-engineering
+  - rag
+  - llm
+  - agents
+  - mcp
+  - learning

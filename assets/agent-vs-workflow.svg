@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 560" width="880" height="560" role="img" aria-labelledby="t d" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+<title id="t">Workflow or agent: which should you build?</title>
+<desc id="d">Ask whether you can list the steps in advance. If yes, use a plain workflow where your code decides the steps. If no, use an agent where the model decides the next step in a loop, with limits. Start with the simplest design that works.</desc>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2DD4BF"/></marker><marker id="aa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#FBBF24"/></marker></defs>
+<rect width="880" height="560" rx="16" fill="#0D1117"/>
+<text x="440" y="38" font-size="22" fill="#E6EDF3" font-weight="700" text-anchor="middle">Workflow or agent? Start with the simpler one</text>
+<rect x="240" y="64" width="400" height="64" rx="12" fill="#161B22" stroke="#FBBF24" stroke-width="2.5"/>
+<text x="440" y="92" font-size="18" fill="#E6EDF3" font-weight="700" text-anchor="middle">Can you list the steps in advance?</text>
+<text x="440" y="114" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">Think of the task you want to automate</text>
+<line x1="340" y1="128" x2="220" y2="178" stroke="#2DD4BF" stroke-width="2.5" marker-end="url(#ah)"/>
+<text x="262" y="160" font-size="16" fill="#2DD4BF" font-weight="700" text-anchor="end">Yes</text>
+<line x1="540" y1="128" x2="660" y2="178" stroke="#FBBF24" stroke-width="2.5" marker-end="url(#aa)"/>
+<text x="618" y="160" font-size="16" fill="#FBBF24" font-weight="700" text-anchor="start">No</text>
+<rect x="30" y="180" width="400" height="290" rx="12" fill="#161B22" stroke="#2DD4BF" stroke-width="2.5"/>
+<text x="230" y="214" font-size="21" fill="#2DD4BF" font-weight="700" text-anchor="middle">Plain workflow</text>
+<text x="230" y="238" font-size="15" fill="#E6EDF3" font-weight="600" text-anchor="middle">your code decides the steps</text>
+<text x="230" y="276" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle">Use it when the steps are known</text>
+<text x="230" y="300" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle">and stable.</text>
+<text x="230" y="324" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle"></text>
+<text x="230" y="348" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle">Cheaper, faster and easier to test.</text>
+<text x="230" y="372" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle"></text>
+<text x="230" y="396" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle">Example: a fixed RAG pipeline that</text>
+<text x="230" y="420" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle">chunks, retrieves, then answers,</text>
+<text x="230" y="444" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle">the same way every time.</text>
+<rect x="450" y="180" width="400" height="290" rx="12" fill="#161B22" stroke="#FBBF24" stroke-width="2.5"/>
+<text x="650" y="214" font-size="21" fill="#FBBF24" font-weight="700" text-anchor="middle">Agent</text>
+<text x="650" y="238" font-size="15" fill="#E6EDF3" font-weight="600" text-anchor="middle">the model decides the next step</text>
+<text x="650" y="276" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle">Use it when the path depends on what</text>
+<text x="650" y="300" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle">each step finds, and you cannot</text>
+<text x="650" y="324" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle">list the steps up front.</text>
+<text x="650" y="348" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle"></text>
+<text x="650" y="372" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle">Costs more and is harder to test, so</text>
+<text x="650" y="396" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle">add limits: a step cap, a small set</text>
+<text x="650" y="420" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle">of tools, and a human check for</text>
+<text x="650" y="444" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle">risky actions.</text>
+<rect x="30" y="490" width="820" height="50" rx="12" fill="#161B22" stroke="#161B22" stroke-width="1.5" stroke-dasharray="6 6"/>
+<text x="440" y="520" font-size="16" fill="#E6EDF3" font-weight="600" text-anchor="middle">Rule of thumb: add autonomy only where it earns its cost.</text>
+</svg>

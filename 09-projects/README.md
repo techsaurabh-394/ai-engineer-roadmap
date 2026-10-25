@@ -6,7 +6,7 @@
 | Project | What it shows | Skills |
 |---|---|---|
 | [rag-docs-chat](https://github.com/techsaurabh-394/rag-docs-chat) | PDF chat with cited answers, API, UI, evaluation script | RAG, FastAPI, evaluation |
-| [mcp-notes-server](https://github.com/techsaurabh-394/mcp-notes-server) | A real MCP server with 4 typed tools and tests | MCP, TypeScript |
+| [mcp-notes-server](https://github.com/techsaurabh-394/mcp-notes-server) | A real MCP server with 6 typed tools, resources, a prompt and tests | MCP, TypeScript |
 | [claude-skills](https://github.com/techsaurabh-394/claude-skills) | Reusable Claude Skills for SEO/GEO, blogging and MCP | Prompt engineering |
 
 ## Build your own (pick one, finish it)

@@ -55,8 +55,12 @@ Read the topics in number order. They build on each other in five blocks:
 
 After each block, run the matching code file below and change a number to see what happens.
 
+## The whole pipeline at a glance
+
+![RAG end to end, matching mini_rag.py](../assets/rag-end-to-end.svg)
+
 ## Run the code
-Everything in `code/` runs offline with the Python standard library. No API key, no downloads. Only the tests need `pytest`.
+Every demo in `code/` runs offline with the Python standard library: no downloads. Only the tests need `pytest`. `mini_rag.py` calls Claude only if you set `ANTHROPIC_API_KEY` (and `pip install anthropic`); without a key it prints the best passage.
 
 ```bash
 cd 01-rag-foundations/code

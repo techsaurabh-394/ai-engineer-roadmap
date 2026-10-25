@@ -1,9 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="700" height="360" viewBox="0 0 700 360" role="img" aria-label="Agent loop: think, act with a tool, observe, repeat until done">
+<title>The agent loop</title>
+<desc>Four steps in a loop: think, act by calling a tool, observe the result, decide whether to stop or repeat. Stops when finished or at a maximum step count.</desc>
 <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1020"/><stop offset="1" stop-color="#241552"/></linearGradient><linearGradient id="ac" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6ea8fe"/><stop offset="1" stop-color="#c084fc"/></linearGradient><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8b93a7"/></marker></defs>
 <style>text{font-family:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif}.t{font-size:17px;font-weight:700;fill:#fff}.u{font-size:12px;fill:#aab2c8}
 @keyframes spin{to{stroke-dashoffset:-40}}.ring{stroke:#6ea8fe;stroke-width:3;stroke-dasharray:10 10;fill:none;animation:spin 1.4s linear infinite}
 @keyframes glow{0%,100%{opacity:.45}25%{opacity:1}}
-.n1{animation:glow 4s infinite}.n2{animation:glow 4s 1s infinite}.n3{animation:glow 4s 2s infinite}.n4{animation:glow 4s 3s infinite}</style>
+.n1{animation:glow 4s infinite}.n2{animation:glow 4s 1s infinite}.n3{animation:glow 4s 2s infinite}.n4{animation:glow 4s 3s infinite}@media (prefers-reduced-motion:reduce){*{animation:none !important}}</style>
 <rect width="700" height="360" rx="18" fill="url(#bg)"/>
 <text x="350" y="38" text-anchor="middle" font-size="20" font-weight="800" fill="#fff">The agent loop</text>
 <ellipse class="ring" cx="350" cy="195" rx="210" ry="105"/>

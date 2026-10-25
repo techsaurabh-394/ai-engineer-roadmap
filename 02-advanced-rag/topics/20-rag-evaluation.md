@@ -72,7 +72,7 @@ def faithfulness(answer, contexts, threshold=0.6):
 **In real projects** use RAGAS or DeepEval. Both build an evaluation dataset of samples (question, retrieved contexts, answer, optional reference), choose metrics, and call an evaluate function that uses a judge LLM you configure. Their APIs have changed across major versions (for example, field names and metric classes), so copy the current quick-start from the official docs rather than older blog posts:
 
 - RAGAS: https://docs.ragas.io/
-- DeepEval: https://deepeval.com/docs/ — it also integrates with pytest so metrics can run as test cases in CI.
+- DeepEval: https://deepeval.com/docs/getting-started — it also integrates with pytest so metrics can run as test cases in CI.
 
 ## When to use it / when not to
 
@@ -111,7 +111,7 @@ Keep a versioned golden set. On every PR run cheap deterministic checks (hit@k, 
 
 - [RAGAS: Automated Evaluation of Retrieval Augmented Generation (Es et al.)](https://arxiv.org/abs/2309.15217)
 - [RAGAS documentation](https://docs.ragas.io/)
-- [DeepEval documentation](https://deepeval.com/docs/)
+- [DeepEval documentation](https://deepeval.com/docs/getting-started)
 
 More interview answers: [Interview prep — evaluation and production](../../08-interview-prep/04-evaluation-and-production.md).
 

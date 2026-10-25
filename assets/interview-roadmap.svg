@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 560" width="880" height="560" role="img" aria-labelledby="t d" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+<title id="t">One week of interview prep with 08-interview-prep</title>
+<desc id="d">Five days, one file per day: LLM fundamentals 10 questions, RAG 13, AI agents and MCP 12, evaluation and production 8, and 4 system-design prompts. Total 43 questions plus 4 prompts.</desc>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2DD4BF"/></marker><marker id="aa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#FBBF24"/></marker></defs>
+<rect width="880" height="560" rx="16" fill="#0D1117"/>
+<text x="440" y="38" font-size="22" fill="#E6EDF3" font-weight="700" text-anchor="middle">Interview in a week: one file per day</text>
+<text x="440" y="62" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle" font-family="SFMono-Regular,Menlo,Consolas,monospace">Folder: 08-interview-prep</text>
+<rect x="30" y="82" width="154" height="170" rx="12" fill="#161B22" stroke="#2DD4BF" stroke-width="2"/>
+<text x="107" y="112" font-size="18" fill="#2DD4BF" font-weight="700" text-anchor="middle">Day 1</text>
+<text x="107" y="144" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">LLM</text>
+<text x="107" y="164" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">fundamentals</text>
+<text x="107" y="224" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle">10 questions</text>
+<line x1="184" y1="167" x2="196" y2="167" stroke="#2DD4BF" stroke-width="2.5" marker-end="url(#ah)"/>
+<rect x="196" y="82" width="154" height="170" rx="12" fill="#161B22" stroke="#2DD4BF" stroke-width="2"/>
+<text x="273" y="112" font-size="18" fill="#2DD4BF" font-weight="700" text-anchor="middle">Day 2</text>
+<text x="273" y="144" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">RAG</text>
+<text x="273" y="224" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle">13 questions</text>
+<line x1="350" y1="167" x2="362" y2="167" stroke="#2DD4BF" stroke-width="2.5" marker-end="url(#ah)"/>
+<rect x="362" y="82" width="154" height="170" rx="12" fill="#161B22" stroke="#2DD4BF" stroke-width="2"/>
+<text x="439" y="112" font-size="18" fill="#2DD4BF" font-weight="700" text-anchor="middle">Day 3</text>
+<text x="439" y="144" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">AI agents and</text>
+<text x="439" y="164" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">MCP</text>
+<text x="439" y="224" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle">12 questions</text>
+<line x1="516" y1="167" x2="528" y2="167" stroke="#2DD4BF" stroke-width="2.5" marker-end="url(#ah)"/>
+<rect x="528" y="82" width="154" height="170" rx="12" fill="#161B22" stroke="#2DD4BF" stroke-width="2"/>
+<text x="605" y="112" font-size="18" fill="#2DD4BF" font-weight="700" text-anchor="middle">Day 4</text>
+<text x="605" y="144" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Evaluation and</text>
+<text x="605" y="164" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">production</text>
+<text x="605" y="224" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle">8 questions</text>
+<line x1="682" y1="167" x2="694" y2="167" stroke="#2DD4BF" stroke-width="2.5" marker-end="url(#ah)"/>
+<rect x="694" y="82" width="154" height="170" rx="12" fill="#161B22" stroke="#FBBF24" stroke-width="2"/>
+<text x="771" y="112" font-size="18" fill="#FBBF24" font-weight="700" text-anchor="middle">Day 5</text>
+<text x="771" y="144" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">System design</text>
+<text x="771" y="164" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">prompts</text>
+<text x="771" y="224" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle">4 prompts</text>
+<rect x="30" y="276" width="820" height="120" rx="12" fill="#161B22" stroke="#2DD4BF" stroke-width="1.5"/>
+<text x="50" y="306" font-size="17" fill="#2DD4BF" font-weight="700" text-anchor="start">How to practise each day</text>
+<text x="50" y="334" font-size="15" fill="#E6EDF3" font-weight="400" text-anchor="start">1. Read a question and answer out loud for 60 seconds. Then read the answer.</text>
+<text x="50" y="358" font-size="15" fill="#E6EDF3" font-weight="400" text-anchor="start">2. For each answer, prepare one example from something you built.</text>
+<text x="50" y="382" font-size="15" fill="#E6EDF3" font-weight="400" text-anchor="start">3. Day 5: do each system-design prompt in 10 to 15 minutes, with a friend or a timer.</text>
+<rect x="30" y="414" width="400" height="92" rx="12" fill="#161B22" stroke="#FBBF24" stroke-width="1.5"/>
+<text x="230" y="444" font-size="16" fill="#FBBF24" font-weight="700" text-anchor="middle">Day before the interview</text>
+<text x="230" y="468" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">Re-read the 3 questions at the end of each</text>
+<text x="230" y="488" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">topic page in one phase.</text>
+<rect x="450" y="414" width="400" height="92" rx="12" fill="#161B22" stroke="#FBBF24" stroke-width="1.5"/>
+<text x="650" y="444" font-size="16" fill="#FBBF24" font-weight="700" text-anchor="middle">Total in 08-interview-prep</text>
+<text x="650" y="468" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">43 questions plus 4 system-design prompts,</text>
+<text x="650" y="488" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">in 5 files.</text>
+<text x="440" y="540" font-size="14.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">Answers are short on purpose. Check current docs where a topic moves fast.</text>
+</svg>

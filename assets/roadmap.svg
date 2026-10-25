@@ -1,4 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="340" viewBox="0 0 1200 340" role="img" aria-label="Learning path: RAG Basics, Advanced RAG, LLM Concepts, Agentic AI, Frameworks, MCP, Production, Interview, Projects">
+<title>Learning path overview</title>
+<desc>Animated overview of the learning path: RAG basics, advanced RAG, LLM concepts, agentic AI, frameworks, MCP, production, interview prep and projects.</desc>
 <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1020"/><stop offset="1" stop-color="#241552"/></linearGradient><linearGradient id="ac" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6ea8fe"/><stop offset="1" stop-color="#c084fc"/></linearGradient></defs>
 <style>
 text{font-family:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif}
@@ -6,7 +8,7 @@ text{font-family:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-
 .s{transform-box:fill-box;transform-origin:center;animation:pop .5s ease-out both}
 @keyframes flow{to{stroke-dashoffset:-40}}
 .path{animation:flow 1.6s linear infinite}
-</style>
+@media (prefers-reduced-motion:reduce){*{animation:none !important}}</style>
 <rect width="1200" height="340" rx="18" fill="url(#bg)"/>
 <text x="600" y="44" text-anchor="middle" font-size="24" font-weight="800" fill="#fff">Your learning path: basic to advanced</text>
 <polyline points="80,130 210,210 340,130 470,210 600,130 730,210 860,130 990,210 1120,130" fill="none" stroke="#3a4170" stroke-width="5" stroke-linejoin="round"/>

@@ -6,6 +6,8 @@
 
 ## How the roadmap works
 
+![Animated overview of the learning path](../assets/roadmap.svg)
+
 There are **7 learning phases** with **100 topics**, plus interview prep and projects. Each topic is one short page. Do the phases in order. Inside a phase, do the topics in order.
 
 | Phase | Folder | You will learn | Level |
@@ -35,19 +37,19 @@ There are **7 learning phases** with **100 topics**, plus interview prep and pro
 
 ## Setup (one time)
 
-### Python (phases 1–5 and 7)
+### Python (all phases except the TypeScript server in phase 6)
 ```bash
-python --version                       # 3.10 or newer
+python --version                       # 3.10 or newer recommended (CI runs 3.12)
 python -m venv .venv
 source .venv/bin/activate              # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 pytest                                 # all green = your setup works
 ```
-All demos in `code/` folders use only the Python standard library. They run offline with no API key.
+The demo scripts in `code/` folders use only the Python standard library and run offline with no API key. `pip install -r requirements.txt` adds `pytest` (to run the tests) and the optional `anthropic` package (used only if you set `ANTHROPIC_API_KEY`). Code snippets inside topic pages that mention `pip install` (LangChain, FAISS, FastAPI and similar) need those packages; the [what-you-need table](../README.md#what-youll-need) lists which phases.
 
-### Node.js (phase 6)
+### Node.js (only for the TypeScript MCP server in phase 6)
 ```bash
-node --version                         # 18 or newer
+node --version                         # 18 or newer (CI builds it on Node 22)
 ```
 
 ### Optional: a model API key
@@ -60,7 +62,7 @@ export ANTHROPIC_API_KEY=your_key      # Windows PowerShell: $env:ANTHROPIC_API_
 1. Read one topic. Run its code. Change one number. Run it again.
 2. Answer the interview questions **out loud** before opening the answers.
 3. At the end of each phase, take the checkpoint quiz in the phase README.
-4. Tick the topic in the [main checklist](../README.md#-the-full-checklist) on your fork.
+4. Tick the topic in the [main checklist](../README.md#the-full-checklist) on your fork.
 5. Build one project from [09-projects](../09-projects/README.md) after Phase 4. Building is where it sticks.
 
 ## Suggested pace
