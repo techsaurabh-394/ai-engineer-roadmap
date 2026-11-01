@@ -32,12 +32,13 @@ A language model reads **tokens** (pieces of words) and predicts the next token,
 | 12 | Beam Search | Intermediate | [12-beam-search.md](topics/12-beam-search.md) |
 | 13 | Hallucination | Intermediate | [13-hallucination.md](topics/13-hallucination.md) |
 | 14 | Prompt Engineering | Beginner | [14-prompt-engineering.md](topics/14-prompt-engineering.md) |
+| 15 | Fine-Tuning | Intermediate | [15-fine-tuning.md](topics/15-fine-tuning.md) |
 
 ## Learning order
 1. **How the model is built (01-06).** Start with the [Transformer Architecture](topics/01-transformer-architecture.md) overview, then zoom into attention (02-03), word order (04), and the two main model shapes (05-06).
 2. **How it runs (07-08).** The [KV Cache](topics/07-kv-cache.md) explains why generation is fast; the [Context Window](topics/08-context-window.md) explains limits and cost.
 3. **How it picks words (09-12).** Temperature, top-k, top-p, and beam search. Run the code while reading.
-4. **How to use it well (13-14).** Why models make things up, and how to write prompts that work.
+4. **How to use it well (13-15).** Why models make things up, how to write prompts that work, and when fine-tuning is (and is not) the right tool.
 
 If you are short on time, read 01, 08, 09, 11, 13, 14 first. Come back to the rest later.
 
@@ -49,6 +50,7 @@ The demos in `code/` are offline, standard-library Python: no API key, no downlo
 python 03-llm-concepts/code/sampling_demo.py    # temperature + top-p on real-looking logits
 python 03-llm-concepts/code/llm_attention.py    # attention, causal mask, multi-head split, positional encoding
 python 03-llm-concepts/code/llm_decoding.py     # greedy vs beam vs top-k vs top-p, KV-cache cost
+python 03-llm-concepts/code/llm_finetune_data.py  # clean and split a tiny fine-tuning dataset
 
 python -m pytest -q 03-llm-concepts/code        # run the tests (needs: pip install pytest)
 ```
@@ -58,6 +60,7 @@ python -m pytest -q 03-llm-concepts/code        # run the tests (needs: pip inst
 | [`sampling_demo.py`](code/sampling_demo.py) | softmax with temperature, top-p filter | 09, 11 |
 | [`llm_attention.py`](code/llm_attention.py) | scaled dot-product attention, causal mask, multi-head split/merge, sinusoidal positions | 01-06 |
 | [`llm_decoding.py`](code/llm_decoding.py) | greedy, top-k, top-p, temperature, beam search on a toy table, KV-cache counting | 05, 07, 09-12 |
+| [`llm_finetune_data.py`](code/llm_finetune_data.py) | drop empty and duplicate rows, hold out a validation set, write JSONL | 15 |
 
 ## Try it
 1. In `sampling_demo.py`, change `LOGITS` so "banana" has the highest score. What does the model now "believe"?
@@ -71,7 +74,7 @@ python -m pytest -q 03-llm-concepts/code        # run the tests (needs: pip inst
 |---|---|
 | Better instructions or format | Prompting (start here, it's cheapest) |
 | Knowledge the model lacks (your documents, recent facts), with citations | RAG ([Phase 1](../01-rag-foundations/README.md), [Phase 2](../02-advanced-rag/README.md)) |
-| A consistent style or behaviour, or a small model good at a narrow task | Fine-tuning |
+| A consistent style or behaviour, or a small model good at a narrow task | Fine-tuning ([topic 15](topics/15-fine-tuning.md)) |
 
 ## Phase checkpoint quiz
 Try to answer before opening each answer.

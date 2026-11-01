@@ -124,4 +124,4 @@ Untrusted content containing instructions that the model follows. Defences: mark
 - [Chain-of-Thought Prompting Elicits Reasoning in Large Language Models (Wei et al., 2022)](https://arxiv.org/abs/2201.11903)
 - [Language Models are Few-Shot Learners (Brown et al., 2020)](https://arxiv.org/abs/2005.14165)
 
-**Prev:** [Hallucination](13-hallucination.md) · **Next:** [Phase 4 · Agentic AI](../../04-agentic-ai/README.md) · **Back to phase:** [Phase 3](../README.md)
+**Prev:** [Hallucination](13-hallucination.md) · **Next:** [Fine-Tuning](15-fine-tuning.md) · **Back to phase:** [Phase 3](../README.md)

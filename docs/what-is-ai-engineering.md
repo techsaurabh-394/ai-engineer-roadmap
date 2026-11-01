@@ -38,7 +38,7 @@ This is the first design question on almost every project. Try them in this orde
 | The model lacks facts about your data, or you need citations | **RAG** (retrieval-augmented generation) | Look up the right passages and hand them to the model |
 | You need a consistent style or a small model that does one narrow task well | **Fine-tuning** | Train a little more on your examples. Needs good data |
 
-Fine-tuning is not covered in this roadmap. Learn prompting and RAG first, since they solve most first projects.
+Read [Fine-Tuning](../03-llm-concepts/topics/15-fine-tuning.md) for what it is and how to check your data before paying to train. Learn prompting and RAG first, since they solve most first projects.
 
 ## One request, step by step
 Here is what happens when someone asks a company chatbot, "What is your refund policy?"

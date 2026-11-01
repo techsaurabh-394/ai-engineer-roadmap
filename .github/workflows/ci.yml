@@ -70,3 +70,15 @@ jobs:
               print("BROKEN:", b)
           sys.exit(1 if bad else 0)
           PY
+
+  learning-paths-fresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: docs/learning-paths.md must match the topic pages
+        run: |
+          python scripts/gen_learning_paths.py
+          git diff --exit-code docs/learning-paths.md || (echo "Run: python scripts/gen_learning_paths.py and commit the result" && exit 1)
