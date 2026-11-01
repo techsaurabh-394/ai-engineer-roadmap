@@ -56,6 +56,8 @@ It chunked three sample documents, scored them against your question and printed
 | Building agents or MCP servers | [What is an AI Agent?](04-agentic-ai/topics/01-what-is-an-ai-agent.md), then [Model Context Protocol](06-mcp/topics/01-model-context-protocol.md) | Phases 5, 7 |
 | Interview in a week | [08 Interview prep](08-interview-prep/README.md) | The "Interview questions" at the end of each topic |
 
+**Not sure where to start?** Read [What is AI engineering?](docs/what-is-ai-engineering.md) (5 minutes, no code), then pick a day-by-day plan in [Learning paths](docs/learning-paths.md) (RAG app, agents and MCP, the full 8 weeks, or interview week). When you finish a phase, test yourself with [Practice](docs/practice.md).
+
 New to the whole thing? Read [How to study this repo](docs/how-to-study.md) and keep the [glossary](docs/glossary.md) open.
 
 ## The big picture
@@ -249,6 +251,9 @@ Legend: 🟢 beginner · 🟡 intermediate · 🔴 advanced.
 |---|---|
 | [08-interview-prep](08-interview-prep/README.md) | 43 curated questions plus 4 system-design prompts, in 5 files |
 | [09-projects](09-projects/README.md) | Portfolio project ideas from beginner to advanced |
+| [docs/what-is-ai-engineering.md](docs/what-is-ai-engineering.md) | A 5-minute, no-code explanation of the whole field for complete beginners |
+| [docs/learning-paths.md](docs/learning-paths.md) | Four day-by-day plans with reading times: RAG app, agents and MCP, all 100 topics in 8 weeks, interview week |
+| [docs/practice.md](docs/practice.md) | 47 practice questions with answers: warm-up, calculations, run-the-demo and design scenarios, plus build challenges |
 | [docs/how-to-study.md](docs/how-to-study.md) | A study routine: pace, and what to do for each topic |
 | [docs/glossary.md](docs/glossary.md) | Plain-English definitions of the key terms |
 | `*/code/` | Runnable, tested demos for every phase (see "What you'll need") |
@@ -276,7 +281,7 @@ ai-engineer-roadmap/
 ├── 08-interview-prep/    questions and answers
 ├── 09-projects/          projects to build and share
 ├── assets/               SVG diagrams
-├── docs/                 study guide and glossary
+├── docs/                 what is AI engineering, learning paths, practice questions, study guide, glossary
 └── .github/workflows/    CI, link check, stale-issue cleanup
 ```
 

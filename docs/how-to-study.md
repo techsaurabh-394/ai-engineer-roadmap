@@ -5,7 +5,9 @@ This guide turns the roadmap into a routine you can actually follow. Nothing her
 ## 1. Set up once (20 minutes)
 Follow [00-start-here](../00-start-here/README.md): create a virtual environment, run `pip install -r requirements.txt`, and run `pytest -q`. Node.js is only needed for the TypeScript server in Phase 6.
 
-## 2. Pick a pace
+## 2. Pick a plan and a pace
+Not sure what to read first? [Learning paths](learning-paths.md) has day-by-day plans for four goals. New to the field? Read [What is AI engineering?](what-is-ai-engineering.md) first.
+
 These are the paces suggested in [00-start-here](../00-start-here/README.md#suggested-pace):
 
 | Pace | Time per day | Finish in |
@@ -29,6 +31,7 @@ Every topic page has the same shape, so use the same routine each time:
 Some topics show code that needs extra packages (for example LangChain or FastAPI). Those snippets are marked with `pip install`. The scripts in `code/` folders never need them. The [what-you'll-need table](../README.md#what-youll-need) lists what each phase uses.
 
 ## 4. At the end of each phase
+- Do the matching part of the [practice questions](practice.md) (Part 2 for Phases 1 and 2, Part 3 for Phase 3, Part 4 for Phases 4 to 6, Part 5 for Phase 7).
 - Take the checkpoint quiz in the phase README.
 - Look up any term you hesitated on in the [glossary](glossary.md).
 - Update the progress table in the README on your fork.
