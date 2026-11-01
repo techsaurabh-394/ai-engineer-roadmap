@@ -6,6 +6,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Thi
 ## [Unreleased]
 
 ### Added
+- `docs/what-is-ai-engineering.md`: a 5-minute, no-code introduction for complete beginners.
+- `docs/learning-paths.md`: four day-by-day plans (RAG app, agents and MCP, full 8 weeks, interview week). Reading times are summed from the topic pages (725 minutes for all 101 topics).
+- `docs/practice.md`: 47 practice questions with answers (warm-up, RAG, LLM concepts, agents and MCP, production, calculations, run-the-demo, design scenarios) plus build challenges. Every number was computed with code.
+- Seven new glossary terms (fine-tuning, hit@k, MRR, RRF, ANN, stride, rate limit).
+- Topic 15 in Phase 3: [Fine-Tuning](03-llm-concepts/topics/15-fine-tuning.md), with a standard-library demo that checks a fine-tuning dataset (`llm_finetune_data.py`) and 8 tests. The roadmap now has 101 topics and 303 topic interview questions.
+- `scripts/gen_learning_paths.py`, which regenerates `docs/learning-paths.md`, and a CI job that fails when the committed page is out of date.
 - Six new SVG diagrams in `assets/`: learning path, big picture, RAG end to end, workflow vs agent, interview roadmap, production checklist.
 - `docs/how-to-study.md` and `docs/glossary.md`.
 - Issue templates for new topic ideas and broken links.

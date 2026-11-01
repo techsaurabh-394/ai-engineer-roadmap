@@ -4,11 +4,13 @@
 
 > New to AI? Good. This roadmap assumes you know basic Python (variables, functions, lists, loops) and nothing about AI. Every term is explained the first time it appears.
 
+> **Brand new?** Read [What is AI engineering?](../docs/what-is-ai-engineering.md) first (5 minutes, no code). Then choose a day-by-day plan in [Learning paths](../docs/learning-paths.md).
+
 ## How the roadmap works
 
 ![Animated overview of the learning path](../assets/roadmap.svg)
 
-There are **7 learning phases** with **100 topics**, plus interview prep and projects. Each topic is one short page. Do the phases in order. Inside a phase, do the topics in order.
+There are **7 learning phases** with **101 topics**, plus interview prep and projects. Each topic is one short page. Do the phases in order. Inside a phase, do the topics in order.
 
 | Phase | Folder | You will learn | Level |
 |---|---|---|---|
@@ -71,6 +73,8 @@ export ANTHROPIC_API_KEY=your_key      # Windows PowerShell: $env:ANTHROPIC_API_
 | Relaxed | 30 min (1 topic) | about 4 months |
 | Steady | 1 hour (2 topics) | about 2 months |
 | Intensive | 3 hours | about 3 weeks |
+
+Test yourself any time with the [practice questions](../docs/practice.md).
 
 **Next:** [Phase 1 · RAG Foundations](../01-rag-foundations/README.md)
 

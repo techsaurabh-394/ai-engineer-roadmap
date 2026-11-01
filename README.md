@@ -10,13 +10,13 @@
   <a href="https://github.com/techsaurabh-394/ai-engineer-roadmap/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/techsaurabh-394/ai-engineer-roadmap/ci.yml?style=flat&label=CI" alt="CI status"/></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green?style=flat" alt="MIT license"/></a>
   <img src="https://img.shields.io/badge/python-3.10%2B-3776AB?style=flat&logo=python&logoColor=white" alt="Python 3.10 or newer"/>
-  <img src="https://img.shields.io/badge/topics-100-2DD4BF?style=flat" alt="100 topics"/>
+  <img src="https://img.shields.io/badge/topics-101-2DD4BF?style=flat" alt="101 topics"/>
   <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat" alt="PRs welcome"/></a>
   <a href="https://github.com/techsaurabh-394/ai-engineer-roadmap"><img src="https://img.shields.io/github/stars/techsaurabh-394/ai-engineer-roadmap?style=flat&logo=github&color=6ea8fe" alt="GitHub stars"/></a>
   <a href="https://github.com/techsaurabh-394/ai-engineer-roadmap/commits/main"><img src="https://img.shields.io/github/last-commit/techsaurabh-394/ai-engineer-roadmap?style=flat" alt="Last commit"/></a>
 </p>
 
-**100 topics in 7 phases**, each explained in plain English with an everyday analogy, a diagram, Python code, 3 interview questions and links to the original papers or official docs. If you know basic Python, you can start today. The demo scripts run offline with no API key.
+**101 topics in 7 phases**, each explained in plain English with an everyday analogy, a diagram, Python code, 3 interview questions and links to the original papers or official docs. If you know basic Python, you can start today. The demo scripts run offline with no API key.
 
 ![The 7 phases from zero to production, with topic counts](assets/learning-path.svg)
 
@@ -55,6 +55,8 @@ It chunked three sample documents, scored them against your question and printed
 | Building a RAG app now | [What is RAG?](01-rag-foundations/topics/01-what-is-rag.md), then [Reranking](02-advanced-rag/topics/01-reranking.md) | Phase 7 |
 | Building agents or MCP servers | [What is an AI Agent?](04-agentic-ai/topics/01-what-is-an-ai-agent.md), then [Model Context Protocol](06-mcp/topics/01-model-context-protocol.md) | Phases 5, 7 |
 | Interview in a week | [08 Interview prep](08-interview-prep/README.md) | The "Interview questions" at the end of each topic |
+
+**Not sure where to start?** Read [What is AI engineering?](docs/what-is-ai-engineering.md) (5 minutes, no code), then pick a day-by-day plan in [Learning paths](docs/learning-paths.md) (RAG app, agents and MCP, the full 8 weeks, or interview week). When you finish a phase, test yourself with [Practice](docs/practice.md).
 
 New to the whole thing? Read [How to study this repo](docs/how-to-study.md) and keep the [glossary](docs/glossary.md) open.
 
@@ -102,12 +104,12 @@ Legend: 🟢 beginner · 🟡 intermediate · 🔴 advanced.
 |---|---|---|---|---|---|
 | 1 RAG Foundations | 20 | 10 | 8 | 2 | 0 / 20 |
 | 2 Advanced RAG | 20 | 0 | 10 | 10 | 0 / 20 |
-| 3 LLM Concepts | 14 | 5 | 8 | 1 | 0 / 14 |
+| 3 LLM Concepts | 15 | 5 | 9 | 1 | 0 / 15 |
 | 4 Agentic AI | 16 | 5 | 8 | 3 | 0 / 16 |
 | 5 Frameworks | 8 | 2 | 4 | 2 | 0 / 8 |
 | 6 MCP | 7 | 2 | 4 | 1 | 0 / 7 |
 | 7 Production AI | 15 | 2 | 12 | 1 | 0 / 15 |
-| **Total** | **100** | **26** | **54** | **20** | **0 / 100** |
+| **Total** | **101** | **26** | **55** | **20** | **0 / 101** |
 
 ### Phase 1 — RAG Foundations
 
@@ -177,6 +179,7 @@ Legend: 🟢 beginner · 🟡 intermediate · 🔴 advanced.
 - [ ] 🟡 [Beam Search](03-llm-concepts/topics/12-beam-search.md)
 - [ ] 🟡 [Hallucination](03-llm-concepts/topics/13-hallucination.md)
 - [ ] 🟢 [Prompt Engineering](03-llm-concepts/topics/14-prompt-engineering.md)
+- [ ] 🟡 [Fine-Tuning](03-llm-concepts/topics/15-fine-tuning.md)
 
 ### Phase 4 — Agentic AI
 
@@ -249,11 +252,14 @@ Legend: 🟢 beginner · 🟡 intermediate · 🔴 advanced.
 |---|---|
 | [08-interview-prep](08-interview-prep/README.md) | 43 curated questions plus 4 system-design prompts, in 5 files |
 | [09-projects](09-projects/README.md) | Portfolio project ideas from beginner to advanced |
+| [docs/what-is-ai-engineering.md](docs/what-is-ai-engineering.md) | A 5-minute, no-code explanation of the whole field for complete beginners |
+| [docs/learning-paths.md](docs/learning-paths.md) | Four day-by-day plans with reading times: RAG app, agents and MCP, all 101 topics in 8 weeks, interview week |
+| [docs/practice.md](docs/practice.md) | 48 practice questions with answers: warm-up, calculations, run-the-demo and design scenarios, plus build challenges |
 | [docs/how-to-study.md](docs/how-to-study.md) | A study routine: pace, and what to do for each topic |
 | [docs/glossary.md](docs/glossary.md) | Plain-English definitions of the key terms |
 | `*/code/` | Runnable, tested demos for every phase (see "What you'll need") |
 
-Interview questions in total: **300** at the end of the 100 topic pages (3 each), plus the 43 + 4 in `08-interview-prep`.
+Interview questions in total: **303** at the end of the 101 topic pages (3 each), plus the 43 + 4 in `08-interview-prep`.
 
 ## What makes this different
 - **Plain English first.** Every term is defined where it first appears.
@@ -268,7 +274,7 @@ ai-engineer-roadmap/
 ├── 00-start-here/        setup and how to learn
 ├── 01-rag-foundations/   20 topics + code/
 ├── 02-advanced-rag/      20 topics + code/
-├── 03-llm-concepts/      14 topics + code/
+├── 03-llm-concepts/      15 topics + code/
 ├── 04-agentic-ai/        16 topics + code/
 ├── 05-frameworks/        8 topics + code/
 ├── 06-mcp/               7 topics + code/ (incl. a TypeScript MCP server)
@@ -276,7 +282,7 @@ ai-engineer-roadmap/
 ├── 08-interview-prep/    questions and answers
 ├── 09-projects/          projects to build and share
 ├── assets/               SVG diagrams
-├── docs/                 study guide and glossary
+├── docs/                 what is AI engineering, learning paths, practice questions, study guide, glossary
 └── .github/workflows/    CI, link check, stale-issue cleanup
 ```
 
