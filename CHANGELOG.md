@@ -6,6 +6,11 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Thi
 ## [Unreleased]
 
 ### Added
+- Six new topics, from basic to advanced, each with an offline standard-library demo and tests (the roadmap now has 107 topics and 321 topic interview questions):
+  - Phase 3: [Calling an LLM API](03-llm-concepts/topics/16-calling-an-llm-api.md) (beginner), [Structured Outputs](03-llm-concepts/topics/17-structured-outputs.md) and [Quantization](03-llm-concepts/topics/18-quantization.md) (intermediate), [LoRA and PEFT](03-llm-concepts/topics/19-lora-and-peft.md) and [Inference Serving and Batching](03-llm-concepts/topics/20-inference-serving-and-batching.md) (advanced).
+  - Phase 2: [LLM-as-a-Judge](02-advanced-rag/topics/21-llm-as-a-judge.md) (advanced).
+- Path E in `docs/learning-paths.md`: an 8-day "LLM builder" route from the first API call to serving. `scripts/gen_learning_paths.py` now reads the topic counts and phase sizes from the files instead of hard-coding them.
+- Seven glossary terms (backoff, structured output, quantization, LoRA, continuous batching, LLM-as-a-judge, Cohen's kappa).
 - `docs/what-is-ai-engineering.md`: a 5-minute, no-code introduction for complete beginners.
 - `docs/learning-paths.md`: four day-by-day plans (RAG app, agents and MCP, full 8 weeks, interview week). Reading times are summed from the topic pages (725 minutes for all 101 topics).
 - `docs/practice.md`: 47 practice questions with answers (warm-up, RAG, LLM concepts, agents and MCP, production, calculations, run-the-demo, design scenarios) plus build challenges. Every number was computed with code.

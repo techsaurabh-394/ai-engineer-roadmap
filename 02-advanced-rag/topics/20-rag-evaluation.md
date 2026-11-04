@@ -115,4 +115,4 @@ Keep a versioned golden set. On every PR run cheap deterministic checks (hit@k, 
 
 More interview answers: [Interview prep — evaluation and production](../../08-interview-prep/04-evaluation-and-production.md).
 
-**Prev:** [Streaming Retrieval](19-streaming-retrieval.md) · **Next:** [Phase 3 — LLM Concepts](../../03-llm-concepts/README.md) · **Back to phase:** [Phase 2](../README.md)
+**Prev:** [Streaming Retrieval](19-streaming-retrieval.md) · **Next:** [LLM-as-a-Judge](21-llm-as-a-judge.md) · **Back to phase:** [Phase 2](../README.md)

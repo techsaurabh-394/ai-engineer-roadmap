@@ -11,6 +11,10 @@ for f in sorted(glob.glob('0[1-7]-*/topics/*.md')):
     assert m, f
     ph = int(f[:2]); n = int(os.path.basename(f)[:2])
     T[(ph, n)] = (t.split('\n')[0][2:], m.group(1), int(m.group(2)), f)
+N = len(T)
+PH = {}
+for (ph, n) in T:
+    PH[ph] = max(PH.get(ph, 0), n)
 ICON = {'Beginner': '🟢', 'Intermediate': '🟡', 'Advanced': '🔴'}
 
 def row(ph, n):
@@ -57,23 +61,34 @@ B = [
  ("8-10", [], "Build: a small MCP server for an API you use, with one tool that needs approval. See [mcp-safe-actions](https://github.com/techsaurabh-394/mcp-safe-actions)."),
 ]
 CW = [
- ("Week 1", [(1,n) for n in range(1,21)], "Phase 1. Do the checkpoint quiz in the phase README."),
- ("Week 2", [(2,n) for n in range(1,21)], "Phase 2. Run every script in `02-advanced-rag/code/`."),
- ("Week 3", [(3,n) for n in range(1,16)], "Phase 3. Run `llm_attention.py`, `llm_decoding.py`, `sampling_demo.py` and `llm_finetune_data.py`."),
- ("Week 4", [(4,n) for n in range(1,17)], "Phase 4. Run the four agent scripts."),
- ("Week 5", [(5,n) for n in range(1,9)], "Phase 5. Run `fw_mini_chain.py` and `fw_mini_graph.py`, then read the framework comparison."),
- ("Week 6", [(6,n) for n in range(1,8)], "Phase 6. Build the TypeScript server."),
- ("Week 7", [(7,n) for n in range(1,16)], "Phase 7. Run the five `prod_*.py` scripts."),
+ ("Week 1", [(1,n) for n in range(1,PH[1]+1)], "Phase 1. Do the checkpoint quiz in the phase README."),
+ ("Week 2", [(2,n) for n in range(1,PH[2]+1)], "Phase 2. Run every script in `02-advanced-rag/code/`, including `adv_llm_judge.py`."),
+ ("Week 3", [(3,n) for n in range(1,PH[3]+1)], "Phase 3. Run `llm_attention.py`, `llm_decoding.py`, `sampling_demo.py`, `llm_finetune_data.py`, `llm_api_basics.py`, `llm_structured.py`, `llm_quantize.py`, `llm_lora_math.py` and `llm_serving_sim.py`."),
+ ("Week 4", [(4,n) for n in range(1,PH[4]+1)], "Phase 4. Run the four agent scripts."),
+ ("Week 5", [(5,n) for n in range(1,PH[5]+1)], "Phase 5. Run `fw_mini_chain.py` and `fw_mini_graph.py`, then read the framework comparison."),
+ ("Week 6", [(6,n) for n in range(1,PH[6]+1)], "Phase 6. Build the TypeScript server."),
+ ("Week 7", [(7,n) for n in range(1,PH[7]+1)], "Phase 7. Run the five `prod_*.py` scripts."),
  ("Week 8", [], "Do [08-interview-prep](../08-interview-prep/README.md) and finish one project from [09-projects](../09-projects/README.md)."),
 ]
-sa, ta = table(A); sb, tb = table(B); sc, tc = table(CW)
+E = [
+ ("1", [(3,16),(3,9)], "Run `python 03-llm-concepts/code/llm_api_basics.py`. Change the failure count and watch the retry waits double."),
+ ("2", [(3,17)], "Run `python 03-llm-concepts/code/llm_structured.py`. Break the schema on purpose and read the error messages the repair loop sends back."),
+ ("3", [(3,14),(3,13)], "Write a prompt for one task of yours, then list three ways the answer could be confidently wrong."),
+ ("4", [(3,15)], "Run `python 03-llm-concepts/code/llm_finetune_data.py`. Decide: would prompting or RAG solve your task first?"),
+ ("5", [(3,18)], "Run `python 03-llm-concepts/code/llm_quantize.py`. Compare 8-bit and 4-bit error, then find the outlier demo."),
+ ("6", [(3,19)], "Run `python 03-llm-concepts/code/llm_lora_math.py`. Check the 4x4 example by hand."),
+ ("7", [(3,20),(3,7)], "Run `python 03-llm-concepts/code/llm_serving_sim.py`. Change the request lengths until static and continuous batching tie."),
+ ("8", [(2,20),(2,21)], "Run `python 02-advanced-rag/code/adv_llm_judge.py`. Swap the answer order and see which judge changes its mind."),
+]
+sa, ta = table(A); sb, tb = table(B); sc, tc = table(CW); se, te = table(E)
 total = sum(v[2] for v in T.values())
-assert len(T) == 101, len(T)
+assert N == sum(PH_COUNT := [sum(1 for k in T if k[0] == p) for p in PH]), N
+assert all(sum(1 for k in T if k[0] == p) == PH[p] for p in PH), 'topic numbers must be 1..N with no gaps'
 assert tc == total, (tc, total)
 
 doc = f"""# Learning paths
 
-Pick the path that matches what you want to do. Every time below is the **reading time** printed on the topic page, added up by a script from the repo, plus time for running code. The number of topics is 101 and the total reading time is **{total} minutes (about {total/60:.0f} hours)**. Running code and building the project take longer than reading.
+Pick the path that matches what you want to do. Every time below is the **reading time** printed on the topic page, added up by a script from the repo, plus time for running code. The number of topics is {N} and the total reading time is **{total} minutes (about {total/60:.0f} hours)**. Running code and building the project take longer than reading.
 
 | I want to... | Path | Time |
 |---|---|---|
@@ -81,6 +96,7 @@ Pick the path that matches what you want to do. Every time below is the **readin
 | Build agents and MCP tools | [Path B: agents and MCP](#path-b-build-agents-and-mcp-tools-in-2-weeks) | 2 weeks, about 1 hour a day |
 | Learn everything | [Path C: full roadmap](#path-c-the-full-roadmap-in-8-weeks) | 8 weeks |
 | Prepare for an interview | [Path D: interview week](#path-d-interview-in-one-week) | 1 week |
+| Build with LLM APIs, from first call to serving | [Path E: LLM builder](#path-e-llm-builder-from-first-call-to-serving) | 8 days, about 1 hour a day |
 
 Not sure? Start with [what AI engineering is](what-is-ai-engineering.md) (5 minutes), then take Path A. Legend: 🟢 beginner · 🟡 intermediate · 🔴 advanced.
 
@@ -98,7 +114,7 @@ Not sure? Start with [what AI engineering is](what-is-ai-engineering.md) (5 minu
 
 ## Path C: the full roadmap in 8 weeks
 
-All 101 topics, one phase a week, with the last week for interview prep and a project. Reading is about {total/60:.0f} hours in total; spread it so that you also run the code. Each week below lists every topic in the phase. Weekly reading time is in the right column.
+All {N} topics, one phase a week, with the last week for interview prep and a project. Reading is about {total/60:.0f} hours in total; spread it so that you also run the code. Each week below lists every topic in the phase. Weekly reading time is in the right column.
 
 {sc}
 
@@ -117,6 +133,12 @@ Use [08-interview-prep](../08-interview-prep/README.md): one file a day, five da
 | 7 | Rest, or read the "Interview questions" of the topics you found hardest. |
 
 If you have never studied these topics, one week is not enough for the topics themselves. Use Path A or B first.
+
+## Path E: LLM builder, from first call to serving
+
+**You will end with:** a working picture of the whole life of an LLM call: sending it, getting reliable output, making a model small and cheap to adapt, serving it fast, and grading answers fairly. **You need:** basic Python. Start with 🟢 days, and treat 🔴 days as optional. Reading in this path: {te} minutes.
+
+{se}
 
 ## If you fall behind
 Skipping is fine. Do the topics marked 🟢 first, skip 🔴 ones until you need them, and use the [glossary](glossary.md) when a word is new. The checklist in the [README](../README.md#the-full-checklist) shows the level of every topic.

@@ -106,4 +106,4 @@ LoRA freezes the original model and trains only a small add-on, so fine-tuning n
 - OpenAI fine-tuning guide: https://platform.openai.com/docs/guides/fine-tuning
 - Hugging Face PEFT: https://huggingface.co/docs/peft/index
 
-**Prev:** [Prompt Engineering](14-prompt-engineering.md) · **Next:** [Phase 4 · Agentic AI](../../04-agentic-ai/README.md) · **Back to phase:** [Phase 3](../README.md)
+**Prev:** [Prompt Engineering](14-prompt-engineering.md) · **Next:** [Calling an LLM API](16-calling-an-llm-api.md) · **Back to phase:** [Phase 3](../README.md)
