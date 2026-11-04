@@ -260,7 +260,7 @@ Legend: 🟢 beginner · 🟡 intermediate · 🔴 advanced.
 | [09-projects](09-projects/README.md) | Portfolio project ideas from beginner to advanced |
 | [docs/what-is-ai-engineering.md](docs/what-is-ai-engineering.md) | A 5-minute, no-code explanation of the whole field for complete beginners |
 | [docs/learning-paths.md](docs/learning-paths.md) | Five day-by-day plans with reading times: RAG app, agents and MCP, all 107 topics in 8 weeks, interview week |
-| [docs/practice.md](docs/practice.md) | 48 practice questions with answers: warm-up, calculations, run-the-demo and design scenarios, plus build challenges |
+| [docs/practice.md](docs/practice.md) | 61 practice questions with answers: warm-up, calculations, run-the-demo and design scenarios, plus build challenges |
 | [docs/how-to-study.md](docs/how-to-study.md) | A study routine: pace, and what to do for each topic |
 | [docs/glossary.md](docs/glossary.md) | Plain-English definitions of the key terms |
 | `*/code/` | Runnable, tested demos for every phase (see "What you'll need") |

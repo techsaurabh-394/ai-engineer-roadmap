@@ -31,7 +31,7 @@ Every topic page has the same shape, so use the same routine each time:
 Some topics show code that needs extra packages (for example LangChain or FastAPI). Those snippets are marked with `pip install`. The scripts in `code/` folders never need them. The [what-you'll-need table](../README.md#what-youll-need) lists what each phase uses.
 
 ## 4. At the end of each phase
-- Do the matching part of the [practice questions](practice.md) (Part 2 for Phases 1 and 2, Part 3 for Phase 3, Part 4 for Phases 4 to 6, Part 5 for Phase 7).
+- Do the matching part of the [practice questions](practice.md) (Part 2 for Phases 1 and 2, Part 3 for Phase 3, Part 4 for Phases 4 to 6, Part 5 for Phase 7, Part 9 for the newer topics in Phases 2 and 3).
 - Take the checkpoint quiz in the phase README.
 - Look up any term you hesitated on in the [glossary](glossary.md).
 - Update the progress table in the README on your fork.
