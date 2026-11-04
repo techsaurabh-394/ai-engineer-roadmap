@@ -9,7 +9,7 @@
 - High-school math: multiplication, averages, the idea of a probability.
 - Helpful but optional: [Phase 1 · RAG Foundations](../01-rag-foundations/README.md) for embeddings and vectors.
 
-**Time:** about 6-8 hours, including the code.
+**Time:** about 9-11 hours, including the code.
 
 ## Big idea
 A language model reads **tokens** (pieces of words) and predicts the next token, over and over. Inside, a **transformer** lets every token look at the others (**attention**) to work out what it means. At the end, the model outputs a score for every token in its vocabulary; a **decoding strategy** (greedy, temperature, top-k, top-p, beam search) turns those scores into one chosen token. Everything else in this phase is detail around that loop.
@@ -33,14 +33,21 @@ A language model reads **tokens** (pieces of words) and predicts the next token,
 | 13 | Hallucination | Intermediate | [13-hallucination.md](topics/13-hallucination.md) |
 | 14 | Prompt Engineering | Beginner | [14-prompt-engineering.md](topics/14-prompt-engineering.md) |
 | 15 | Fine-Tuning | Intermediate | [15-fine-tuning.md](topics/15-fine-tuning.md) |
+| 16 | Calling an LLM API | Beginner | [16-calling-an-llm-api.md](topics/16-calling-an-llm-api.md) |
+| 17 | Structured Outputs | Intermediate | [17-structured-outputs.md](topics/17-structured-outputs.md) |
+| 18 | Quantization | Intermediate | [18-quantization.md](topics/18-quantization.md) |
+| 19 | LoRA and PEFT | Advanced | [19-lora-and-peft.md](topics/19-lora-and-peft.md) |
+| 20 | Inference Serving and Batching | Advanced | [20-inference-serving-and-batching.md](topics/20-inference-serving-and-batching.md) |
 
 ## Learning order
 1. **How the model is built (01-06).** Start with the [Transformer Architecture](topics/01-transformer-architecture.md) overview, then zoom into attention (02-03), word order (04), and the two main model shapes (05-06).
 2. **How it runs (07-08).** The [KV Cache](topics/07-kv-cache.md) explains why generation is fast; the [Context Window](topics/08-context-window.md) explains limits and cost.
 3. **How it picks words (09-12).** Temperature, top-k, top-p, and beam search. Run the code while reading.
 4. **How to use it well (13-15).** Why models make things up, how to write prompts that work, and when fine-tuning is (and is not) the right tool.
+5. **How to build with it (16-17).** Make a real API call that survives failures, and get answers in a shape your code can trust.
+6. **Making it small, cheap and fast (18-20).** Quantization, LoRA, and how servers batch many users onto one GPU. These three are advanced: skim them first and come back.
 
-If you are short on time, read 01, 08, 09, 11, 13, 14 first. Come back to the rest later.
+If you are short on time, read 01, 08, 09, 11, 13, 14, 16 first. Come back to the rest later.
 
 ## Run the code
 The demos in `code/` are offline, standard-library Python: no API key, no downloads. Snippets in topic pages that use `torch`, `transformers`, `openai` or `anthropic` need those packages and are marked with `pip install`.
@@ -51,6 +58,11 @@ python 03-llm-concepts/code/sampling_demo.py    # temperature + top-p on real-lo
 python 03-llm-concepts/code/llm_attention.py    # attention, causal mask, multi-head split, positional encoding
 python 03-llm-concepts/code/llm_decoding.py     # greedy vs beam vs top-k vs top-p, KV-cache cost
 python 03-llm-concepts/code/llm_finetune_data.py  # clean and split a tiny fine-tuning dataset
+python 03-llm-concepts/code/llm_api_basics.py   # fake LLM client, retries with backoff, cost, streaming
+python 03-llm-concepts/code/llm_structured.py   # validate JSON against a schema, repair loop
+python 03-llm-concepts/code/llm_quantize.py     # int8 / int4 rounding error, memory table, outliers
+python 03-llm-concepts/code/llm_lora_math.py    # low-rank update, parameter counts, merge
+python 03-llm-concepts/code/llm_serving_sim.py  # static vs continuous batching
 
 python -m pytest -q 03-llm-concepts/code        # run the tests (needs: pip install pytest)
 ```
@@ -61,6 +73,11 @@ python -m pytest -q 03-llm-concepts/code        # run the tests (needs: pip inst
 | [`llm_attention.py`](code/llm_attention.py) | scaled dot-product attention, causal mask, multi-head split/merge, sinusoidal positions | 01-06 |
 | [`llm_decoding.py`](code/llm_decoding.py) | greedy, top-k, top-p, temperature, beam search on a toy table, KV-cache counting | 05, 07, 09-12 |
 | [`llm_finetune_data.py`](code/llm_finetune_data.py) | drop empty and duplicate rows, hold out a validation set, write JSONL | 15 |
+| [`llm_api_basics.py`](code/llm_api_basics.py) | fake client, retry with backoff, cost estimate, streaming | 16 |
+| [`llm_structured.py`](code/llm_structured.py) | JSON extraction, schema validator, repair loop | 17 |
+| [`llm_quantize.py`](code/llm_quantize.py) | symmetric and asymmetric quantization, error, memory table, outliers | 18 |
+| [`llm_lora_math.py`](code/llm_lora_math.py) | low-rank update, trainable parameter counts, merging an adapter | 19 |
+| [`llm_serving_sim.py`](code/llm_serving_sim.py) | static vs continuous batching: latency, throughput, utilization | 20 |
 
 ## Try it
 1. In `sampling_demo.py`, change `LOGITS` so "banana" has the highest score. What does the model now "believe"?
@@ -68,6 +85,9 @@ python -m pytest -q 03-llm-concepts/code        # run the tests (needs: pip inst
 3. Change `top_p_filter(..., 0.9)` to `0.5`. Which tokens survive?
 4. In `llm_attention.py`, remove the causal mask and compare the first row of the weights.
 5. Compute the KV-cache memory for a model with 40 layers, 8 KV heads, head size 128, 2-byte numbers, and 32,000 tokens.
+6. In `llm_api_basics.py`, make the flaky client fail 5 times with 3 attempts allowed. What does the caller see?
+7. In `llm_quantize.py`, add a second outlier. How much worse does the shared-scale error get, and does per-group scaling still fix it?
+8. In `llm_serving_sim.py`, give every request the same length. Does continuous batching still win?
 
 ## Prompting, RAG or fine-tuning?
 | Need | Use |

@@ -33,6 +33,7 @@
 | 18 | Incremental Indexing | Intermediate | [18-incremental-indexing.md](topics/18-incremental-indexing.md) |
 | 19 | Streaming Retrieval | Advanced | [19-streaming-retrieval.md](topics/19-streaming-retrieval.md) |
 | 20 | RAG Evaluation (RAGAS / DeepEval) | Advanced | [20-rag-evaluation.md](topics/20-rag-evaluation.md) |
+| 21 | LLM-as-a-Judge | Advanced | [21-llm-as-a-judge.md](topics/21-llm-as-a-judge.md) |
 
 ## Learning order
 
@@ -42,7 +43,7 @@ Read in number order. The topics are grouped so each block builds on the last:
 2. **Query transformation (5–8):** fixing the *question* before searching — expansion, multi-query with RRF, HyDE, step-back.
 3. **Smarter retrievers (9–12):** metadata filters, multiple vectors per document, small-to-big retrieval, hybrid search.
 4. **Beyond plain text (13–17):** knowledge graphs, GraphRAG, images and tables, databases, live APIs.
-5. **Operating it (18–20):** keeping the index fresh, streaming to users, and measuring quality.
+5. **Operating it (18–21):** keeping the index fresh, streaming to users, measuring quality, and using a model to grade answers fairly.
 
 Tip: if you only have one afternoon, read 1, 6, 12, 18 and 20. That covers the changes that most often move real-world quality.
 
@@ -62,6 +63,7 @@ python adv_query_transform.py   # query expansion, multi-query + RRF, step-back,
 python adv_graph_rag.py         # triple store + multi-hop retrieval
 python adv_incremental_index.py # hash-based incremental indexing
 python adv_rag_metrics.py       # toy context precision/recall, faithfulness, relevancy
+python adv_llm_judge.py         # biased judge, debiased pairwise verdict, agreement and kappa
 ```
 
 | File | Topics it supports |
@@ -72,12 +74,14 @@ python adv_rag_metrics.py       # toy context precision/recall, faithfulness, re
 | [`adv_graph_rag.py`](code/adv_graph_rag.py) | 13, 14 |
 | [`adv_incremental_index.py`](code/adv_incremental_index.py) | 18, 19 |
 | [`adv_rag_metrics.py`](code/adv_rag_metrics.py) | 20 |
+| [`adv_llm_judge.py`](code/adv_llm_judge.py) | 21 |
 
 Try it:
 1. In `adv_rerank.py`, add a new document that repeats "cancel" ten times. Does the bi-encoder fall for it? Does the reranker?
 2. In `adv_query_transform.py`, remove `"restart"` from `SYNONYMS`. Which document drops out?
 3. In `adv_graph_rag.py`, add `("Marco", "reports_to", "CEO")` and call `follow_path` with three relations.
 4. In `adv_rag_metrics.py`, write an answer with one extra invented sentence and watch faithfulness fall.
+5. In `adv_llm_judge.py`, swap the order of the two answers. Which judge changes its verdict, and what does the debiased judge return?
 
 ## Phase checkpoint quiz
 

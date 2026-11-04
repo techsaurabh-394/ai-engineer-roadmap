@@ -10,7 +10,7 @@
 
 ![Animated overview of the learning path](../assets/roadmap.svg)
 
-There are **7 learning phases** with **101 topics**, plus interview prep and projects. Each topic is one short page. Do the phases in order. Inside a phase, do the topics in order.
+There are **7 learning phases** with **107 topics**, plus interview prep and projects. Each topic is one short page. Do the phases in order. Inside a phase, do the topics in order.
 
 | Phase | Folder | You will learn | Level |
 |---|---|---|---|
