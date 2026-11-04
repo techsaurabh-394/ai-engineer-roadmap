@@ -4,7 +4,7 @@
 
 How to use this page:
 1. Do **Part 1** after Phase 1, **Part 2** after Phase 3, and so on. The headings say which phase each part checks.
-2. **Part 6** (numbers) needs a pencil. Every answer was computed with code, so they are correct.
+2. **Part 9** covers the newer topics (API calls, structured output, quantization, LoRA, serving, judging). **Part 6** (numbers) needs a pencil. Every answer was computed with code, so they are correct.
 3. **Part 7** (run and observe) uses the demo scripts. Set up first: [00-start-here](../00-start-here/README.md#setup-one-time).
 4. Score yourself honestly: under 60% on a part means re-read that phase, not that you are bad at this.
 
@@ -286,7 +286,78 @@ First run your evaluation set to see whether the numbers really dropped. Then ch
 
 ---
 
-## Part 9: Build challenges (pick one, finish it)
+## Part 9: Building with LLMs, from first call to serving (Phase 3 topics 16 to 20, Phase 2 topic 21)
+
+These questions go with the newer topics. They run from easy to hard.
+
+**Q49. (Easy) Your code calls an LLM API and sometimes gets a "rate limited" or "server busy" error. Should it retry right away in a tight loop? What should it do instead?**
+<details><summary>Answer</summary>
+No. A tight loop adds load to a service that is already struggling, and you can get blocked. Wait, then try again, and wait longer after each failure (1 s, then 2 s, then 4 s). That is called backoff. Also set a limit on tries so the caller gets a clear error in the end. See <a href="../03-llm-concepts/topics/16-calling-an-llm-api.md">Calling an LLM API</a>.
+</details>
+
+**Q50. (Easy) A call uses 2,000 input tokens and 500 output tokens. The price is $3 per million input tokens and $15 per million output tokens. What does one call cost, and what do 10,000 calls cost?**
+<details><summary>Answer</summary>
+Input: 2,000 / 1,000,000 x $3 = $0.006. Output: 500 / 1,000,000 x $15 = $0.0075. One call is **$0.0135**. Ten thousand calls are **$135**. Output tokens cost more per token, so long answers add up quickly. See <a href="../03-llm-concepts/topics/16-calling-an-llm-api.md">Calling an LLM API</a>.
+</details>
+
+**Q51. (Easy) Why is it risky to ask a model "reply with JSON" and then call `json.loads` on the reply?**
+<details><summary>Answer</summary>
+Models often wrap JSON in extra words or code fences, leave out a field, or use the wrong type, and `json.loads` fails or gives you bad data. Safer: pull the JSON out, check it against a schema, and if it fails, send the error messages back to the model for another try. Valid JSON also does not mean true content. See <a href="../03-llm-concepts/topics/17-structured-outputs.md">Structured Outputs</a>.
+</details>
+
+**Q52. (Medium) A schema says `name` is required and `age` is an integer from 0 to 120. What errors does the validator in `llm_structured.py` report for `{"name": "Asha", "age": 150}`, and for `{"name": "Asha"}`?**
+<details><summary>Answer</summary>
+For the first: `$.age: 150 is above maximum 120`. For the second: `$: missing required field 'age'`. Short, exact messages like these are what you feed back to the model in a repair loop, so it knows what to fix. See <a href="../03-llm-concepts/topics/17-structured-outputs.md">Structured Outputs</a>.
+</details>
+
+**Q53. (Medium) A 7B-parameter model needs 14 GB for its weights in 16-bit. How much for a 13B model in 16-bit, and in 4-bit? And a 70B model in 4-bit?**
+<details><summary>Answer</summary>
+Memory = parameters x bytes per weight. 16-bit is 2 bytes and 4-bit is 0.5 bytes. 13B in 16-bit: 13 x 2 = **26 GB**. 13B in 4-bit: 13 x 0.5 = **6.5 GB**. 70B in 4-bit: 70 x 0.5 = **35 GB**. This counts weights only. The KV cache and activations need more. See <a href="../03-llm-concepts/topics/18-quantization.md">Quantization</a>.
+</details>
+
+**Q54. (Medium) In symmetric 8-bit quantization the biggest absolute weight is 0.5, and integers run from -127 to 127. What is the scale, and what is the largest rounding error for a normal weight?**
+<details><summary>Answer</summary>
+Scale = 0.5 / 127 = **0.003937**. A weight is rounded to the nearest step, so the largest error is half a step: scale / 2 = **0.001969**. For example, 0.2 becomes the integer 51, which is restored as 0.2008. One huge outlier weight forces a large scale for everyone, which is why per-group scales help. See <a href="../03-llm-concepts/topics/18-quantization.md">Quantization</a>.
+</details>
+
+**Q55. (Medium) A weight matrix is 4096 x 4096. How many numbers does it hold? How many does a LoRA adapter with rank 8 train for it? What about rank 16?**
+<details><summary>Answer</summary>
+Full matrix: 4096 x 4096 = **16,777,216**. LoRA trains two thin matrices, 4096 x r and r x 4096, so 2 x 4096 x r. Rank 8: **65,536**, which is 0.39% of the full matrix. Rank 16: **131,072**, which is 0.78%. Doubling the rank doubles the trainable parameters. See <a href="../03-llm-concepts/topics/19-lora-and-peft.md">LoRA and PEFT</a>.
+</details>
+
+**Q56. (Hard) Full fine-tuning needs about 12 bytes per parameter (2 for the weight, 2 for the gradient, 8 for Adam's two 32-bit states). Roughly how much memory is that for a 7B model, and why does LoRA need far less?**
+<details><summary>Answer</summary>
+7 billion x 12 bytes = **84 GB**, before activations. LoRA freezes the base model, so it keeps only the 2-byte weights (14 GB) and needs gradients and optimizer states only for the small adapter. In the demo that is about 14.04 GB in total. These are rules of thumb, not measurements. See <a href="../03-llm-concepts/topics/19-lora-and-peft.md">LoRA and PEFT</a>.
+</details>
+
+**Q57. (Hard) Four requests arrive together and need 2, 2, 2 and 10 tokens. The server has 4 slots. When does each request finish under static batching, and under continuous batching? What are the mean latencies?**
+<details><summary>Answer</summary>
+Static: the batch is released only when the longest request is done, so all four finish at step **10** (mean **10.0**). Continuous: finished requests leave at once, so they finish at steps **2, 2, 2 and 10** (mean **4.0**). The short requests no longer wait for the long one. Run `python 03-llm-concepts/code/llm_serving_sim.py` to see a bigger example. See <a href="../03-llm-concepts/topics/20-inference-serving-and-batching.md">Inference Serving and Batching</a>.
+</details>
+
+**Q58. (Hard) A team reports only the mean latency of their LLM service and it looks fine, but users complain. What would you look at instead, and why?**
+<details><summary>Answer</summary>
+Look at the tail, such as p95 or p99 latency. The mean hides the few slow requests, and a queue makes the slowest ones much worse when the server is busy. One slow call also slows a whole chain of agent steps. In nearest-rank terms, the p95 of 20 sorted values is the 19th one. See <a href="../03-llm-concepts/topics/20-inference-serving-and-batching.md">Inference Serving and Batching</a>.
+</details>
+
+**Q59. (Hard) You use an LLM to pick the better of two answers. You notice it picks answer A far more often than chance. What is likely wrong, and what is a cheap fix?**
+<details><summary>Answer</summary>
+This is position bias: the judge favours the answer shown first. A cheap fix is to run each comparison twice with the order swapped, and call it a **tie** if the two verdicts disagree. Other known biases are favouring longer answers and favouring answers written by the same model. Check the judge against a small set of human-labelled examples. See <a href="../02-advanced-rag/topics/21-llm-as-a-judge.md">LLM-as-a-Judge</a>.
+</details>
+
+**Q60. (Hard) A judge and a human each label 10 answers good (1) or bad (0). Judge: 1,1,1,0,0,1,0,1,1,0. Human: 1,1,0,0,1,1,0,1,1,0. What is the agreement, and what is Cohen's kappa?**
+<details><summary>Answer</summary>
+They agree on 8 of 10, so agreement is **0.8**. By chance alone they would agree 0.52 of the time (the judge says 1 six times and the human says 1 six times, so 0.6 x 0.6 + 0.4 x 0.4). Kappa = (0.8 - 0.52) / (1 - 0.52) = **0.5833**. See <a href="../02-advanced-rag/topics/21-llm-as-a-judge.md">LLM-as-a-Judge</a>.
+</details>
+
+**Q61. (Hard) A judge labels 9 of 10 answers good and 1 bad. The human labels all 10 good. Agreement is 0.9. Is the judge reliable?**
+<details><summary>Answer</summary>
+Not necessarily. Kappa here is **0.0**: the human never says "bad", so chance agreement is already 0.9 and the judge adds nothing beyond it. High agreement on skewed labels can be misleading, so report kappa as well and test the judge on a set that includes bad answers. See <a href="../02-advanced-rag/topics/21-llm-as-a-judge.md">LLM-as-a-Judge</a>.
+</details>
+
+---
+
+## Part 10: Build challenges (pick one, finish it)
 
 | Level | Challenge | Done means |
 |---|---|---|
@@ -299,13 +370,13 @@ First run your evaluation set to see whether the numbers really dropped. Then ch
 More ideas: [09-projects](../09-projects/README.md).
 
 ## Score yourself
-Count the questions you answered correctly without help. Score out of **47**: questions 1 to 44 and 46 to 48. Question 45 and the build challenges are not scored.
+Count the questions you answered correctly without help. Score out of **60**: questions 1 to 44, 46 to 48 and 49 to 61. Question 45 and the build challenges are not scored.
 
 | Score | What to do next |
 |---|---|
-| Under 24 | Re-read Phases 1 and 3 and try again in a week |
-| 24 to 35 | Read the topics behind the questions you missed, then build a challenge |
-| Over 35 | Move to [interview prep](../08-interview-prep/README.md) and build a project |
+| Under 30 | Re-read Phases 1 and 3 and try again in a week |
+| 30 to 44 | Read the topics behind the questions you missed, then build a challenge |
+| Over 44 | Move to [interview prep](../08-interview-prep/README.md) and build a project |
 
 These cut-offs are only a rough guide I chose, not a validated test.
 

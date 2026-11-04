@@ -6,6 +6,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Thi
 ## [Unreleased]
 
 ### Added
+- 13 new practice questions (Part 9 in `docs/practice.md`, Q49 to Q61, easy to hard) for the six new topics. Every number was computed with the demo code. The page now has 61 questions; the score is out of 60.
 - Six new topics, from basic to advanced, each with an offline standard-library demo and tests (the roadmap now has 107 topics and 321 topic interview questions):
   - Phase 3: [Calling an LLM API](03-llm-concepts/topics/16-calling-an-llm-api.md) (beginner), [Structured Outputs](03-llm-concepts/topics/17-structured-outputs.md) and [Quantization](03-llm-concepts/topics/18-quantization.md) (intermediate), [LoRA and PEFT](03-llm-concepts/topics/19-lora-and-peft.md) and [Inference Serving and Batching](03-llm-concepts/topics/20-inference-serving-and-batching.md) (advanced).
   - Phase 2: [LLM-as-a-Judge](02-advanced-rag/topics/21-llm-as-a-judge.md) (advanced).
