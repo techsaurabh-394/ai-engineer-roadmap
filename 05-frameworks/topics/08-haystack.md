@@ -1,8 +1,10 @@
 # Haystack
 
-> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 5 — Frameworks
+> **Level:** Intermediate · **Reading time:** 10 min · **Phase:** 5 — Frameworks
 
 **In one line:** Haystack, from deepset, builds search and RAG systems as pipelines of components whose inputs and outputs are connected explicitly.
+
+**Before you start:** You should know the RAG pipeline steps ([What is RAG](../../01-rag-foundations/topics/01-what-is-rag.md)) and what a vector database stores ([Vector databases](../../01-rag-foundations/topics/10-vector-databases.md)).
 
 ## Explain it like I'm new
 
@@ -10,7 +12,7 @@ Think of plumbing. Each component is a pipe section with a labelled inlet and ou
 
 Haystack emphasises production search: document stores, retrievers, rankers and evaluation. Pipelines can also branch and loop.
 
-Vocabulary (see the docs for exact class names):
+**Words to know (see the docs for exact class names):**
 
 - **Component** — one step with declared inputs and outputs.
 - **Pipeline** — components plus the connections between them.
@@ -19,6 +21,8 @@ Vocabulary (see the docs for exact class names):
 - **Ranker** — reorders retrieved documents (re-ranking, Phase 2).
 - **Generator** — a component that calls an LLM.
 - **Prompt builder** — fills a template with documents and the question.
+- **Re-ranking** — a second pass that sorts the retrieved documents again, with a better but slower scorer.
+- **Type check** — confirming that what one component outputs is what the next one expects to receive.
 
 ## How it works
 
@@ -33,6 +37,18 @@ flowchart LR
 ```
 
 **Mapping:** this is the RAG pipeline of [Phase 1](../../01-rag-foundations/README.md) with the re-ranking stage from [Phase 2](../../02-advanced-rag/README.md) as a first-class part.
+
+### Worked example
+
+The code example below wires two components, `retrieve` and `prompt`, with a named link. I ran it with `p.run("retrieve", "cats")`.
+
+1. Input `"cats"` enters the `retrieve` component.
+2. `retrieve` keeps the documents that contain `cats`. Of `"cats purr"` and `"dogs bark"`, only the first matches. It outputs `['cats purr']`.
+3. The pipeline looks at its links and finds `retrieve -> prompt`. So it passes `['cats purr']` into `prompt`.
+4. `prompt` joins the documents and returns `Context: cats purr`.
+5. `prompt` has no outgoing link, so that value is the final result.
+
+If the link had been missing, the run would have stopped after step 2 with the raw list. Explicit links are what make a pipeline easy to inspect. Check the current docs for the exact Haystack classes.
 
 ## Code example
 
@@ -75,6 +91,14 @@ print(p.run("retrieve", "cats"))   # Context: cats purr
 - Following Haystack 1.x tutorials for a 2.x install.
 - Not evaluating retrieval separately from generation.
 - Skipping a ranker and sending noisy documents to the LLM.
+
+## Recap
+
+If you remember only three things:
+
+- Haystack builds search and RAG systems as pipelines of components whose inputs and outputs are connected explicitly.
+- Its typed, inspectable pipelines and swappable document stores suit search-heavy production RAG, where evaluation matters.
+- For a quick prototype on one small file, it is more setup than you need.
 
 ## Interview questions
 

@@ -1,7 +1,16 @@
 # Context Window
-> **Level:** Beginner · **Reading time:** 6 min · **Phase:** 3 · LLM Concepts
+> **Level:** Beginner · **Reading time:** 7 min · **Phase:** 3 · LLM Concepts
 
 **In one line:** The context window is the maximum number of tokens a model can handle in one request, counting your input and its output together.
+
+**Before you start:** [KV Cache](07-kv-cache.md) (optional, only for step 4 of "How it works").
+
+**Words to know:**
+- **Token:** a small chunk of text (a word, part of a word, or punctuation) that the model reads and writes.
+- **Prompt:** everything you send to the model in one request.
+- **Context window:** the most tokens (prompt plus answer) the model can handle in one request.
+- **`max_tokens`:** a setting that caps how long the model's answer may be. That space is reserved up front.
+- **Truncate:** cut text off, for example by dropping the oldest messages.
 
 ## Explain it like I'm new
 Think of a whiteboard. Everything the model can "see" right now must fit on it: the system instructions, the chat history, any documents you pasted, and the answer it is writing. When the board is full, something has to be erased.
@@ -14,7 +23,7 @@ Sizes are measured in **tokens**, not words. In English a token is often about t
 1. Your request is turned into tokens: `system prompt + messages + tool definitions + documents`.
 2. The model also reserves room for output, often set by a `max_tokens` parameter.
 3. If `input_tokens + max_output_tokens` exceeds the window, the API returns an error or the app must cut something.
-4. Attention cost grows with the square of the length (`n²`), and the [KV cache](07-kv-cache.md) grows linearly, so longer contexts are slower and more expensive.
+4. Attention is the step where every token looks at every other token. Its cost grows with the square of the length (`n²`). The [KV cache](07-kv-cache.md) (stored per-token data the model reuses) grows in step with the length. So longer contexts are slower and more expensive.
 
 ```text
 |<------------------- context window (e.g. 200k tokens) ------------------->|
@@ -22,7 +31,13 @@ Sizes are measured in **tokens**, not words. In English a token is often about t
                                                                             ^ max_tokens reserved
 ```
 
-**Worked budget example.** Window = 8,000 tokens. System prompt 500, tools 700, history 3,000, question 300, reserve 1,000 for the answer. Total = 5,500. You have 2,500 tokens left for retrieved documents.
+### Worked example
+Window = 8,000 tokens. System prompt 500, tools 700, history 3,000, question 300, reserve 1,000 for the answer.
+
+1. Add up what is already used: 500 + 700 + 3,000 + 300 + 1,000 = 5,500.
+2. Subtract from the window: 8,000 - 5,500 = 2,500 tokens left for retrieved documents.
+3. Now the user pastes a 3,000-token document. 3,000 is more than 2,500, so it is 500 tokens over.
+4. Something must give. Options: summarize the history (say it shrinks from 3,000 to 1,000, freeing 2,000, so the document now fits with 1,500 to spare), or cut the document.
 
 **Bigger is not always better.** Studies such as *Lost in the Middle* found that models often use information at the start and end of a long context better than information buried in the middle. Long windows also add cost and latency.
 
@@ -73,6 +88,12 @@ print(len(fit_history("You are helpful.", history, "What did we decide?")))  # h
 - Assuming the model "remembers" earlier sessions. It only sees what you send.
 - Dumping huge documents in "because it fits" and getting worse, slower answers.
 - Silently truncating the system prompt when trimming history.
+
+## Recap
+If you remember only three things:
+- The context window is the token limit for input and output together, measured in tokens, not words.
+- The model has no memory between requests; you must re-send anything it needs to see.
+- When the window is full, truncate, summarize, or retrieve, and remember that bigger is not always better.
 
 ## Interview questions
 **1. Does the context window include the output?**

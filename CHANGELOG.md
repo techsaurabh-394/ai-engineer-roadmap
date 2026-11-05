@@ -5,6 +5,11 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Thi
 
 ## [Unreleased]
 
+### Changed
+- All 113 topic pages now follow one beginner-friendly shape: a **Before you start** line that links the pages to read first, a **Words to know** list that defines every term, a **Worked example** that follows one small case number by number (taken from the repo's own demos), and a three-point **Recap**. Reading times were raised to match and `docs/learning-paths.md` was regenerated (992 minutes in total).
+- `00-start-here/README.md` explains the shape of a topic page and how to master a topic.
+- Fixed one wrong number: the mean in the monitoring page's code comment is 517.5, not 507.5.
+
 ### Added
 - Six deeper LLM topics in Phase 3 (the roadmap now has 113 topics and 339 topic interview questions), each with an offline standard-library demo and tests: [How an LLM Works End to End](03-llm-concepts/topics/21-how-an-llm-works-end-to-end.md), [Q, K and V Explained From Scratch](03-llm-concepts/topics/22-qkv-explained-from-scratch.md), [Inside a Transformer Block](03-llm-concepts/topics/23-inside-a-transformer-block.md), [How LLMs Are Trained](03-llm-concepts/topics/24-how-llms-are-trained.md), [Modern Attention Variants](03-llm-concepts/topics/25-modern-attention-variants.md) and [Mixture of Experts and Scaling Laws](03-llm-concepts/topics/26-mixture-of-experts-and-scaling-laws.md).
 - Path F in `docs/learning-paths.md`: a 7-day "inside the LLM" route. Phase 3 README gains a beginner-first reading order, 4 new exercises and 5 new checkpoint quiz questions. Fifteen glossary terms added (Q/K/V, logit, residual, LayerNorm, cross-entropy, GQA, RoPE, MoE and more).

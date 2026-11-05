@@ -1,7 +1,14 @@
 # Inference Serving and Batching
-> **Level:** Advanced · **Reading time:** 9 min · **Phase:** 3 · LLM Concepts
+> **Level:** Advanced · **Reading time:** 10 min · **Phase:** 3 · LLM Concepts
 
 **In one line:** Serving an LLM is a scheduling problem: a GPU is only efficient when it works on many requests at once, and good servers keep it busy by swapping finished requests out and new ones in at every step.
+
+**Before you start:** [KV Cache](07-kv-cache.md) and [Calling an LLM API](16-calling-an-llm-api.md).
+
+**Words to know:**
+- **Inference:** running a trained model to get answers (not training it).
+- **Batch:** several requests processed together in one GPU step.
+- **Slot:** one place in the batch that holds one request.
 
 ## Explain it like I'm new
 Picture a bus. A bus that drives with one passenger wastes fuel. A bus that waits until it is full makes everyone wait at the stop. The best plan is a bus that keeps moving, drops people off when they arrive, and picks up new people at the next stop.
@@ -33,6 +40,12 @@ flowchart LR
 ```
 
 **Queues and the tail.** When requests arrive faster than the server can finish them, a queue builds up, and waiting time grows quickly as the server gets busy. Averages hide this. Look at **p95** or **p99** latency: the time that 95% or 99% of requests beat. A few slow users matter, and one slow step in a chain of agent calls slows the whole task. Set targets on the tail, not the mean.
+
+### Worked example
+Take 6 requests that all arrive at step 0 and need 2, 2, 2, 10, 2 and 2 steps. The demo runs them on 4 slots:
+1. Static batching: the first batch of 4 is held until its longest request is done, so all four finish at step 10. The last two finish at 12. Mean finish time is 10.67.
+2. Continuous batching: a short request frees its slot at once, and a waiting request takes it. Finish times are 2, 2, 2, 10, 4, 4, with a mean of 4.00.
+3. Result: the same work, but slots are busy 50.0% of the time instead of 41.7%, and users wait far less.
 
 ## Code example
 [`llm_serving_sim.py`](../code/llm_serving_sim.py) is a toy simulator with the standard library only. Time is counted in decode steps. In one step, each request in a slot makes one token. Each request is `(arrival_step, output_tokens)`.
@@ -84,6 +97,12 @@ This toy ignores prefill, memory and real GPU costs. Its numbers are for learnin
 - Reserving the full maximum context for every request, and running out of GPU memory early. Paged caches avoid this.
 - Testing with identical, evenly sized requests. Real traffic has short and long mixed, which is exactly when static batching hurts.
 - Trusting a toy result as a benchmark. Measure on your own model, hardware and traffic.
+
+## Recap
+If you remember only three things:
+- Batching makes the GPU efficient but can make individual users wait.
+- Continuous batching swaps finished requests out after every step, so slots do not sit idle.
+- Watch p95 and p99 latency, not just the average.
 
 ## Interview questions
 <details>

@@ -1,14 +1,24 @@
 # Bi Encoder
 
-> **Level:** Intermediate · **Reading time:** 6 min · **Phase:** 2 — Advanced RAG
+> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 2 — Advanced RAG
 
 **In one line:** A bi-encoder turns the question and each document into vectors *separately*, then finds matches by comparing those vectors.
+
+**Before you start:** [Embeddings](../../01-rag-foundations/topics/02-embeddings.md) and [Cosine Similarity](../../01-rag-foundations/topics/11-cosine-similarity.md). You should know that text can become a list of numbers, and that two lists can be compared for closeness.
 
 ## Explain it like I'm new
 
 Think of a library where every book has a coloured sticker that summarises its topic. When you walk in, the librarian gives your question a sticker too, and you just look for books with the closest colour. Stickers for books are made once, when the book arrives. Only your question needs a new sticker.
 
 That is a bi-encoder. "Bi" means two: the same encoder (or two sibling encoders) runs on the query and on the document **independently**. Each output is an **embedding**, a list of numbers (for example 384 or 768 of them) that places the text in a "meaning space" where similar texts land close together.
+
+Words to know:
+- **Encoder:** a neural network that turns text into numbers.
+- **Embedding / vector:** the list of numbers an encoder produces for one text.
+- **Cosine similarity:** a score from 0 to 1 (for these texts) for how closely two vectors point the same way.
+- **Vector index:** storage that finds the nearest vectors quickly.
+- **Ingest:** the one-time step where you process and store your documents.
+- **HNSW:** a popular index design for fast approximate nearest-neighbour search.
 
 Because document embeddings do not depend on the question, you compute them once at ingest time and store them in a **vector index** (a data structure such as HNSW that finds nearest vectors fast). At query time you embed only the question and ask the index for its nearest neighbours. This is what people usually mean by "dense retrieval" or "vector search".
 
@@ -31,6 +41,15 @@ flowchart LR
 Cosine similarity, worked: `a = [1, 1, 0]`, `b = [1, 0, 0]`.
 dot = 1·1 + 1·0 + 0·0 = 1. |a| = √2 ≈ 1.414, |b| = 1. cosine = 1 / 1.414 ≈ **0.71**.
 Same direction gives 1.0, unrelated (perpendicular) gives 0.
+
+### Worked example
+The demo ([`adv_rerank.py`](../code/adv_rerank.py)) has four small documents. Ingest builds one vector for each, once. Then the question "How do I cancel my subscription and get a refund?" arrives:
+
+1. Embed only the question into a vector `q`.
+2. Compare `q` with each stored vector. Real results: `refund-faq` 0.4811, `cancel-guide` 0.3849, `pricing` 0.1768, `shipping` 0 (no shared words, so it is dropped).
+3. Return the top 3 in that order.
+
+Notice that `refund-faq` wins even though it just repeats the word "refund". One vector per text cannot check whether the whole question is answered. That weakness is why a [cross-encoder](02-cross-encoder.md) is added next.
 
 ## Code example
 
@@ -83,6 +102,12 @@ At scale you store `doc_emb` in a vector database or a library such as FAISS ins
 - Forgetting model-specific prefixes. Some embedding models expect "query: " / "passage: " style prefixes; check the model card.
 - Mixing normalised and unnormalised vectors, then using dot product as if it were cosine.
 - Chunks far longer than the model's input limit, so the tail is silently ignored.
+
+## Recap
+If you remember only three things:
+- A bi-encoder embeds the question and each document separately, so document vectors can be built once and stored.
+- That makes it fast enough to search millions of chunks, but it can miss fine detail.
+- Use the same model for queries and documents, and re-embed everything if you change the model.
 
 ## Interview questions
 

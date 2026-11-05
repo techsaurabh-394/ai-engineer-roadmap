@@ -1,7 +1,9 @@
 # Cosine Similarity
-> **Level:** Beginner · **Reading time:** 6 min · **Phase:** 1 — RAG Foundations
+> **Level:** Beginner · **Reading time:** 7 min · **Phase:** 1 — RAG Foundations
 
 **In one line:** Cosine similarity measures how closely two vectors point in the same direction, from −1 (opposite) through 0 (unrelated) to 1 (same direction), ignoring their length.
+
+**Before you start:** [Embeddings](02-embeddings.md). You should know that an embedding is a list of numbers (a vector) that represents the meaning of a piece of text.
 
 ## Explain it like I'm new
 Picture two people pointing at the sky. If they point at the same star, their arms are aligned, even if one person has longer arms. Cosine similarity only cares about the **direction** of the arms, not their length.
@@ -9,6 +11,12 @@ Picture two people pointing at the sky. If they point at the same star, their ar
 For text [embeddings](02-embeddings.md), direction carries the meaning. A short sentence and a long paragraph about the same topic often point in a similar direction even though their vectors may have different lengths. Cosine similarity says "these are about the same thing" without being fooled by length.
 
 The **cosine** is a function from school geometry. The cosine of the angle between two arrows is 1 when the angle is 0°, 0 when the angle is 90° (a right angle), and −1 at 180°.
+
+Words to know:
+- **Vector:** a list of numbers, such as `[1, 2, 3]`. Think of it as an arrow from the origin.
+- **Dimension:** one position in the list. `[1, 2, 3]` has 3 dimensions.
+- **Similarity score:** a number saying how alike two things are; higher is more alike.
+- **Normalized:** scaled so the vector has length 1.
 
 - **Vector length** (also called the **norm** or magnitude): `‖a‖ = √(a₁² + a₂² + …)`, Pythagoras extended to many dimensions.
 - **Dot product**: `a · b = a₁b₁ + a₂b₂ + …` (see [Dot Product](13-dot-product.md)).
@@ -36,6 +44,15 @@ With `c = [3, 0, −1]`: `a · c = 3 + 0 − 3 = 0`, so `cos(a, c) = 0` → perp
 **Shortcut:** if both vectors are **normalized** (length 1), the denominator is 1, so cosine similarity equals the dot product. Many embedding pipelines normalize for this reason.
 
 **Cosine distance** is often defined as `1 − cosine similarity`, so 0 means identical. Check which one your database reports.
+
+### Worked example
+A search has one query vector `q = [1, 0]` and three stored chunk vectors. Score each with cosine similarity.
+1. `[2, 0]`: dot = 2, lengths 1 and 2, so cos = 2 / (1 × 2) = 1.0. Same direction, just longer.
+2. `[0, 3]`: dot = 0, so cos = 0.0. At a right angle, unrelated.
+3. `[-1, 0]`: dot = −1, lengths 1 and 1, so cos = −1.0. Opposite direction.
+4. Ranking by highest score: `[2, 0]`, then `[0, 3]`, then `[-1, 0]`.
+
+Notice that `[2, 0]` ties a vector of length 1 pointing the same way. Length played no part, only direction.
 
 ## Code example
 From [`code/rag_vector_math.py`](../code/rag_vector_math.py):
@@ -89,6 +106,12 @@ top5 = np.argsort(-scores)[:5]
 - Dividing by zero on an empty or all-zero vector.
 - Mixing up cosine *similarity* (higher is better) and cosine *distance* (lower is better).
 - Normalizing documents but not the query (or the reverse) and then using dot product.
+
+## Recap
+If you remember only three things:
+- Cosine similarity compares only the direction of two vectors, from −1 to 1, and ignores length.
+- It equals the dot product divided by both lengths, so for normalized vectors it equals the dot product.
+- Higher similarity is better, but lower cosine distance is better, so check which one your tool reports.
 
 ## Interview questions
 **1. Why is cosine similarity popular for text embeddings?**

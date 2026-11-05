@@ -1,7 +1,16 @@
 # Beam Search
-> **Level:** Intermediate · **Reading time:** 7 min · **Phase:** 3 · LLM Concepts
+> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 3 · LLM Concepts
 
 **In one line:** Beam search keeps the few best partial sentences at each step instead of only the single best token, so it can find a more likely full sentence than greedy decoding.
+
+**Before you start:** [Temperature](09-temperature.md) and [Top-p](11-top-p.md) (they cover probabilities and sampling, the alternative to beam search).
+
+**Words to know:**
+- **Greedy decoding:** always taking the single most likely next token.
+- **Beam:** one partial sentence the search is still extending, with its score.
+- **Beam width:** how many beams are kept at each step.
+- **Log-probability:** the logarithm of a probability. Adding log-probabilities equals multiplying probabilities.
+- **Length penalty:** an adjustment so that short sentences are not unfairly favoured.
 
 ## Explain it like I'm new
 Imagine planning a road trip by always taking the road that looks fastest at each junction. That's **greedy**. Sometimes the fastest-looking first road leads to a traffic jam later. A smarter planner keeps the **3 best routes so far** at every junction, extends each one, and again keeps the best 3. That is **beam search**, and 3 is the **beam width**.
@@ -40,6 +49,14 @@ result: "a dog ran"  probability 0.4 × 0.9 × 0.5 = 0.18  > greedy's 0.12
 ```
 
 Greedy lost because "a" looked worse than "the" at step 1, but led to a much better continuation.
+
+### Worked example (why logs help)
+Using the same table, score the two full sentences with logs (natural log, rounded):
+
+1. Greedy `the cat sat`: log 0.5 = -0.69, log 0.4 = -0.92, log 0.6 = -0.51. Add them: -2.12.
+2. Beam `a dog ran`: log 0.4 = -0.92, log 0.9 = -0.11, log 0.5 = -0.69. Add them: -1.72.
+3. -1.72 is higher (closer to 0) than -2.12, so `a dog ran` wins. That matches the probabilities: 0.18 beats 0.12.
+4. The code prints exactly this: beam `a dog ran <end>` against greedy `the cat sat <end>`.
 
 ```mermaid
 flowchart LR
@@ -100,6 +117,12 @@ out = model.generate(**inputs, num_beams=4, do_sample=False, max_new_tokens=50, 
 - No length normalization, so the search prefers very short outputs.
 - Very large beam widths. They can make output worse (more generic), not better.
 - Expecting beam search to fix factual errors. It finds likely text, not true text.
+
+## Recap
+If you remember only three things:
+- Beam search keeps the best B partial sentences at each step, so it can recover from a first choice that looked worse.
+- It adds log-probabilities to score whole sentences, and it is deterministic: same input, same output.
+- It suits translation and speech recognition, but is too bland and repetitive for open-ended chat.
 
 ## Interview questions
 **1. How is beam search different from greedy decoding?**

@@ -1,7 +1,9 @@
 # Semantic Chunking
-> **Level:** Intermediate · **Reading time:** 6 min · **Phase:** 1 — RAG Foundations
+> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 1 — RAG Foundations
 
 **In one line:** Semantic chunking starts a new chunk wherever the meaning of the text shifts, by comparing the embeddings of neighbouring sentences.
+
+**Before you start:** [Embeddings](02-embeddings.md) and [Recursive Chunking](05-recursive-chunking.md). You should know that an embedding is a vector for meaning, and what a chunk is.
 
 ## Explain it like I'm new
 Imagine listening to a podcast and writing chapter markers. You do not add a marker every five minutes. You add one when the hosts change topic, from "travel tips" to "camera gear". Semantic chunking places chunk borders the same way: where the topic changes, not where a character counter says so.
@@ -9,6 +11,14 @@ Imagine listening to a podcast and writing chapter markers. You do not add a mar
 **Semantic** means "about meaning". To measure meaning the method uses [embeddings](02-embeddings.md): each sentence becomes a vector, and the similarity between neighbouring sentences tells you whether they talk about the same thing. When the similarity suddenly drops, that is a **breakpoint**, and a new chunk begins.
 
 The result is chunks that each cover one idea. They match questions more cleanly and contain less unrelated text. The cost is that you must embed every sentence during ingestion, and chunk sizes become uneven.
+
+Words to know:
+- **Semantic:** about meaning.
+- **Similarity:** a score for how alike two pieces of text are (higher means more alike).
+- **Breakpoint:** the spot where similarity drops and a new chunk starts.
+- **Threshold:** the cut-off score. Below it, we start a new chunk.
+- **Percentile:** a way to set the threshold relative to all scores, for example "the lowest 5%".
+- **Jaccard overlap:** shared words divided by all distinct words in the two texts.
 
 ## How it works
 1. Split the document into sentences.
@@ -24,6 +34,27 @@ similarity:     0.81  0.77  0.12  0.85  0.79
                               ^ drop below threshold 0.5 -> breakpoint
 chunks:       [ S1  S2  S3 ] [ S4  S5  S6 ]
 ```
+
+### Worked example
+The repo demo cuts its sample text into sentences, then compares each sentence with the next using word overlap (threshold 0.1). The sample has six sentences, S1 to S6. Real scores between neighbours:
+
+| Pair | Overlap | Below 0.1? |
+|---|---|---|
+| S1 to S2 | 0.083 | yes, cut |
+| S2 to S3 | 0.0 | yes, cut |
+| S3 to S4 | 0.056 | yes, cut |
+| S4 to S5 | 0.053 | yes, cut |
+| S5 to S6 | 0.167 | no, keep together |
+
+So five chunks. The last one joins the two "refresh token" sentences, which share words like "refresh" and "tokens". Real output:
+```text
+Docker images are built in layers.
+Each instruction in a Dockerfile adds a layer.
+Multi-stage builds use several FROM lines.
+Only the final stage ends up in the shipped image, so the image stays small.
+Refresh tokens should live in an httpOnly cookie. Rotate refresh tokens on every use.
+```
+Word overlap is a crude stand-in for meaning. It cut S1 from S2 even though both are about Docker layers, because they share few exact words. Real embeddings would likely keep them together. That is the reason production systems use embeddings.
 
 ## Code example
 The demo in [`code/rag_chunkers.py`](../code/rag_chunkers.py) uses **Jaccard word overlap** (shared words ÷ all distinct words) instead of real embeddings, so it runs offline. Swap in a real embedding similarity in production.
@@ -85,6 +116,12 @@ LlamaIndex has a similar `SemanticSplitterNodeParser`.
 - A threshold tuned on one document and reused on very different ones.
 - Bad sentence splitting (abbreviations like "e.g.", code, lists) producing junk "sentences".
 - Expecting it to fix poor text extraction from PDFs.
+
+## Recap
+If you remember only three things:
+- Semantic chunking cuts where similarity between neighbouring sentences drops below a threshold, meaning the topic changed.
+- It costs one embedding per sentence and gives uneven chunk sizes, so cap the maximum size.
+- The demo uses word overlap as a cheap stand-in, and it can cut where a real embedding would not.
 
 ## Interview questions
 **1. How does semantic chunking decide where to cut?**

@@ -1,7 +1,9 @@
 # Dense Retrieval
-> **Level:** Intermediate · **Reading time:** 7 min · **Phase:** 1 — RAG Foundations
+> **Level:** Intermediate · **Reading time:** 9 min · **Phase:** 1 — RAG Foundations
 
 **In one line:** Dense retrieval finds documents by comparing short, meaning-based embedding vectors of the query and the documents, so it matches ideas even when the words differ.
+
+**Before you start:** [Embeddings](02-embeddings.md) and [Dot Product](13-dot-product.md). You should know that an embedding turns text into a list of numbers, and that a dot product multiplies two such lists to measure how alike they are.
 
 ## Explain it like I'm new
 Ask a friend "how do I get back into my account?" A keyword search might miss a help page titled "Password recovery steps" because no words overlap. A friend who understands meaning would point you right to it. Dense retrieval is that friend.
@@ -11,6 +13,14 @@ It works by turning every chunk and every query into an [embedding](02-embedding
 The model that makes the vectors is often called a **bi-encoder** (or two-tower model): it encodes the query and each document *separately*. That matters, because you can embed all documents once, ahead of time, and only embed the query at search time. Searching is then a [nearest neighbour search](10-vector-databases.md) in a vector database.
 
 Dense Passage Retrieval (DPR) was an influential early paper showing a trained bi-encoder could beat BM25 on open-domain question answering benchmarks.
+
+Words to know:
+- **Embedding / vector:** a list of numbers that captures the meaning of a text.
+- **Query:** the question or search text the user types.
+- **Chunk:** a small piece of a document, stored and searched on its own.
+- **Bi-encoder:** a model that turns the query and each document into vectors separately.
+- **Nearest neighbour search:** finding the stored vectors closest to the query vector.
+- **ANN index:** an index for approximate nearest neighbour search, which trades a little accuracy for speed.
 
 ## How it works
 **Offline (ingest)**
@@ -35,12 +45,16 @@ flowchart LR
   I --> S --> K[Top-k chunks]
 ```
 
-Worked example (toy 3-D normalized vectors):
+### Worked example
+Toy 3-D normalized vectors (each has length about 1, so a plain dot product works as the similarity score):
+
 - query "get back into my account" → `[0.80, 0.60, 0.00]`
 - d0 "Password recovery steps" → `[0.75, 0.66, 0.00]` → dot = 0.600 + 0.396 = **0.996**
 - d1 "Docker image layers" → `[0.00, 0.10, 0.99]` → dot = 0 + 0.06 + 0 = **0.06**
 
 d0 wins with zero shared words. (Numbers made up to illustrate; a real model produces its own.)
+
+Step by step: embed the query, multiply it against each stored vector slot by slot, add up the products, and sort from highest to lowest. d0 scores about 0.996 and d1 about 0.06, so d0 comes back first.
 
 ## Code example
 The core of dense search, assuming you already have normalized embeddings (here a stand-in dictionary):
@@ -87,6 +101,12 @@ print([(docs[h["corpus_id"]], round(h["score"], 3)) for h in hits])
 - Text longer than the model's limit gets truncated silently.
 - No evaluation set, so you cannot compare models or detect regressions.
 - Trusting similarity scores as "confidence". Top-1 can be on-topic and still not contain the answer.
+
+## Recap
+If you remember only three things:
+- Dense retrieval turns the query and every chunk into embedding vectors, then returns the chunks whose vectors are closest.
+- Because it compares meaning, it finds matches that share no words, but it can miss exact codes and rare names.
+- Use the same embedding model for documents and queries, and embed the documents once ahead of time.
 
 ## Interview questions
 **1. What is a bi-encoder and why does it suit retrieval?**

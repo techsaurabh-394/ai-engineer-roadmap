@@ -1,7 +1,9 @@
 # Celery
-> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 7 — Production AI
+> **Level:** Intermediate · **Reading time:** 9 min · **Phase:** 7 — Production AI
 
 **In one line:** Celery runs slow jobs (like document ingestion) in background workers so your API can answer fast.
+
+**Before you start:** [Redis](04-redis.md) and [FastAPI for AI](01-fastapi-for-ai.md). Redis is a common broker, and FastAPI is where tasks are started.
 
 ## Explain it like I'm new
 Think of dropping off dry cleaning. You hand over the clothes, get a ticket, and leave. You do not stand there for two days. Someone in the back does the work, and you check with the ticket later.
@@ -14,6 +16,8 @@ Words to know:
 - **Result backend:** where task status and results are stored (optional).
 - **Retry:** run a failed task again, usually with a delay.
 - **Idempotent:** safe to run twice with the same result. Tasks should be, because retries happen.
+- **Dead-letter list:** where tasks go after they fail every retry, so you can inspect them.
+- **Serialize:** turn a function call into text or bytes that can travel through the broker.
 
 ## How it works
 1. The API calls `ingest_document.delay(path)`.
@@ -31,6 +35,14 @@ flowchart LR
   W2 --> V
   W1 -.status.-> RB[(Result backend)]
 ```
+
+### Worked example
+This follows the repo demo `prod_task_queue.py`, with 2 workers and 1 retry allowed. Three tasks are submitted: `embed("hello")`, `embed("bad")`, `embed("world!")`.
+1. Task 1 returns the length of `hello`, which is `5`.
+2. Task 2 raises `ValueError('cannot parse')`. It is retried once and fails again, so it goes to the dead-letter list.
+3. Task 3 returns the length of `world!`, which is `6`.
+
+The demo prints `{1: 5, 3: 6} [(2, 'embed', "ValueError('cannot parse')")]`. The two good tasks have results. The bad one did not block them and is kept for inspection.
 
 ## Code example
 A stdlib in-process version with workers, retries and a dead-letter list: [`prod_task_queue.py`](../code/prod_task_queue.py).
@@ -86,6 +98,13 @@ Start a worker with `celery -A tasks worker --loglevel=info`. Call it from FastA
 - No retry limit or dead-letter handling, so bad jobs loop forever.
 - Running workers with a different code version than the API.
 - Not setting timeouts on external calls inside tasks.
+
+## Recap
+
+**If you remember only three things:**
+- Celery moves slow work out of the web request and into worker processes.
+- The API gets a task ID at once; the broker holds the tasks between API and workers.
+- Make tasks idempotent and limit retries, so bad jobs land in a dead-letter list instead of looping.
 
 ## Interview questions
 **1. Why not ingest inside the API request?**

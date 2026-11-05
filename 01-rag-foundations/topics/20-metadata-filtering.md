@@ -1,7 +1,9 @@
 # Metadata Filtering
-> **Level:** Intermediate · **Reading time:** 7 min · **Phase:** 1 — RAG Foundations
+> **Level:** Intermediate · **Reading time:** 9 min · **Phase:** 1 — RAG Foundations
 
 **In one line:** Metadata filtering restricts a search to chunks whose metadata matches rules — like "team = security" or "year ≥ 2025" — so results are relevant, current and allowed for this user.
+
+**Before you start:** [Metadata](09-metadata.md) and [Vector Databases](10-vector-databases.md). You should know that each stored chunk carries labels (metadata) next to its vector, and that a vector database finds the chunks closest to a query.
 
 ## Explain it like I'm new
 When you shop online you type "running shoes", then tick "size 42", "under $100", "in stock". The search engine only ranks shoes that pass those boxes. The ticks are filters on metadata; the ranking is the search.
@@ -15,6 +17,14 @@ There are three ways to combine filtering with vector search:
 - **Pre-filtering**: filter first, then search only the allowed items. Correct, but can be slow with some ANN indexes, and very strict filters can disturb graph indexes like [HNSW](14-hnsw.md).
 - **Post-filtering**: search top-k first, then drop items that fail. Fast, but you may end up with fewer than k results (or zero).
 - **Filtered (in-index) search**: the database checks the filter while walking the index. Most modern vector databases do this.
+
+Words to know:
+- **Metadata:** labels stored with a chunk, such as source, year or team.
+- **Filter:** a rule on metadata, like `year >= 2025`.
+- **Top-k:** the k best-scoring results (for example the top 10).
+- **Tenant:** one customer or organization whose data must stay separate from others.
+- **ANN index:** an index that finds approximately nearest vectors quickly.
+- **Query:** the search text the user types.
 
 ## How it works
 1. At ingest, store clean, typed metadata on every chunk (numbers as numbers, dates comparable).
@@ -33,6 +43,14 @@ flowchart LR
 ```
 
 Post-filtering problem in numbers: you fetch top-10, but only 5% of the collection matches the filter. On average about 0.5 of the 10 results survive, so you often get zero. Pre-filtering or in-index filtering avoids this.
+
+### Worked example
+The demo has five documents with a `year` label: doc 0 is 2025, doc 1 is 2023, doc 2 is 2024, doc 3 is 2025, doc 4 is 2024. The query is "rotate refresh token".
+
+1. Without a filter, hybrid search returns `[0, 3, 1]`.
+2. Apply the filter `year >= 2025`. Only docs 0 and 3 pass.
+3. Both BM25 and dense search rank only those allowed docs, so doc 1 (2023) can never appear.
+4. Result with the filter: `[0, 3]`.
 
 ## Code example
 From [`code/rag_bm25.py`](../code/rag_bm25.py): a small filter language (equality, "in list", and comparisons), applied **before** ranking on both retrievers.
@@ -92,6 +110,12 @@ Chroma uses `where={"$and": [{"tenant": "acme"}, {"year": {"$gte": 2025}}]}`; pg
 - Applying the filter to dense search but not to BM25 in a hybrid setup.
 - Inconsistent types (`"2025"` vs `2025`) so range filters skip rows.
 - Using post-filtering with a small k and getting empty results.
+
+## Recap
+If you remember only three things:
+- A metadata filter limits a search to chunks whose labels match rules, such as year, team or tenant.
+- Filter before or during retrieval, on every retriever, using values from your auth system, never from the user's prompt.
+- Post-filtering can return fewer than k results, even none, so prefer pre-filtering or in-index filtering.
 
 ## Interview questions
 **1. Why must access control be applied at retrieval time?**

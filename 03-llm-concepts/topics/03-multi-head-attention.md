@@ -1,7 +1,16 @@
 # Multi Head Attention
-> **Level:** Intermediate · **Reading time:** 7 min · **Phase:** 3 · LLM Concepts
+> **Level:** Intermediate · **Reading time:** 9 min · **Phase:** 3 · LLM Concepts
 
 **In one line:** Multi-head attention runs several smaller attention operations side by side, so different heads can track different kinds of relationships at once.
+
+**Before you start:** [Self Attention](02-self-attention.md) and [Transformer Architecture](01-transformer-architecture.md).
+
+**Words to know:**
+- **Head:** one independent attention operation with its own Q, K, V matrices.
+- **`d_model`:** the length of each token's vector (its width).
+- **Split / concatenate:** cut a vector into equal pieces, or glue the pieces back end to end.
+- **`W_o`:** the learned output matrix that mixes the heads' results together.
+- **KV cache:** stored key and value vectors from earlier tokens, so they are not recomputed (see [KV Cache](07-kv-cache.md)).
 
 ## Explain it like I'm new
 Imagine reviewing a contract with a team. One person checks names and dates, another checks money amounts, a third checks who promised what to whom. Each reads the same document but looks for different links. At the end, you combine their notes.
@@ -35,6 +44,14 @@ X (3 tokens x 4 features)
 **Variants you will see in modern LLMs:**
 - **Multi-Query Attention (MQA):** all heads share one K and one V. Smaller [KV cache](07-kv-cache.md), faster decoding.
 - **Grouped-Query Attention (GQA):** groups of query heads share K and V. A middle ground used by many open models.
+
+### Worked example
+Take 3 tokens with 4 numbers each and 2 heads (the same `X` as the code example below).
+1. **Split.** Each token's 4 numbers become two pairs. Head 1 gets the first pair of every token: `[1,0]`, `[0,1]`, `[1,1]`. Head 2 gets the last pair: `[1,0]`, `[0,1]`, `[0,0]`.
+2. **Attend separately.** Each head builds its own 3 × 3 table of weights. Head 1's first row is `[0.4, 0.2, 0.4]`. Head 2's first row is `[0.5, 0.25, 0.25]`. They differ because the heads see different features.
+3. **Odd case.** In head 2, token 3 is `[0, 0]`, so all its scores are 0 and it spreads attention evenly: `[0.33, 0.33, 0.33]`.
+4. **Merge.** Each head returns 3 × 2 numbers. Glued together they are 3 × 4 again, the same shape as the input.
+5. **Mix.** In a real model, `W_o` then lets the two heads' results combine.
 
 ## Code example
 From [`llm_attention.py`](../code/llm_attention.py). Q = K = V = X here (no learned projections) so the split is easy to see.
@@ -83,6 +100,12 @@ print(out.shape)                     # torch.Size([2, 10, 512])
 - Forgetting the output projection `W_o`. Without it, heads cannot share information.
 - Assuming each head has a clear, human-readable job. Some do, many don't.
 - Thinking more heads always means better quality. It is a trade-off.
+
+## Recap
+If you remember only three things:
+- Multi-head attention splits the vector width into several heads, and each head runs its own attention.
+- The heads' outputs are glued back together and mixed with `W_o`, so the output has the same shape as the input.
+- MQA and GQA share K and V across heads to shrink the KV cache.
 
 ## Interview questions
 **1. Why use multiple heads instead of one big one?**

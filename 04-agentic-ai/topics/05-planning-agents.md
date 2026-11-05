@@ -1,15 +1,22 @@
 # Planning Agents
-> **Level:** Intermediate · **Reading time:** 7 min · **Phase:** 4 · Agentic AI
+> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 4 · Agentic AI
 
 **In one line:** A planning agent first writes a list of steps for the whole task, then executes them one by one, re-planning if something goes wrong.
+
+**Before you start:** [ReAct Pattern](04-react-pattern.md). You should know the think, act, observe loop and what a tool call is.
 
 ## Explain it like I'm new
 Compare two ways to cook a new dish. One cook reads one line of the recipe, does it, reads the next line, does it (that is like [ReAct](04-react-pattern.md)). Another cook reads the whole recipe first, lays out a plan ("chop everything, boil water, then fry"), and then works through it, adjusting if the shop was out of an ingredient. That second cook is a **planning agent**.
 
-A plan helps with long tasks because the model doesn't have to keep the whole goal "in its head" at every step. It also gives you, the developer, something to show a user ("here is what I'm going to do, OK?") and something to log and test.
+A plan helps with long tasks because the model doesn't have to keep the whole goal "in its head" at every step. It also gives you something to show a user ("here is what I'm going to do, OK?"). You can log and test it too.
 
 Common names you'll see:
+Words to know:
+- **Plan:** an ordered list of steps, usually as JSON, so code can read it.
 - **Plan-and-execute:** a planner LLM writes steps; an executor (often a ReAct agent) runs each step.
+- **Executor:** the part that actually carries out each step.
+- **Guardrail:** a rule in code that blocks unsafe or unwanted actions.
+- **Approval gate:** a pause where a human says yes or no before a risky step runs.
 - **Re-planning:** after each step, check results and update the remaining plan.
 - **Task decomposition:** breaking a big goal into smaller sub-goals.
 
@@ -42,6 +49,25 @@ flowchart TD
   {"step": 3, "tool": "send_email", "goal": "send to sales lead", "needs_approval": true}
 ]
 ```
+
+### Worked example
+Goal: *"agents and email it"*. The demo planner in `agent_multi.py` is rule-based (it looks for the word "email"), but the flow is the same as with an LLM planner. Real output:
+
+```text
+>>> planner("agents and email it")
+[{'tool': 'write_text', 'arg': 'agents and email it'}, {'tool': 'send_email', 'arg': None}]
+>>> planner("agents")
+[{'tool': 'write_text', 'arg': 'agents'}]
+```
+
+Trace the first one:
+1. **Plan:** two steps, `write_text` then `send_email`.
+2. **Validate:** both tools are on the allowed list and there are only two steps, so the plan is accepted.
+3. **Execute step 1:** `write_text` makes the draft `Draft about agents and email it.`
+4. **Execute step 2:** `send_email` is risky, so it waits for an approver before it runs (the next page shows this in full: see Reflection).
+5. **Finish:** the pipeline status is `done`.
+
+The plan with no email wish has just one step. The plan is decided before any tool runs, which is the difference from ReAct.
 
 ## Code example
 [`agent_multi.py`](../code/agent_multi.py) has a simple rule-based planner (a real one would be an LLM call that returns JSON) and an executor with guardrails:
@@ -91,6 +117,13 @@ def validate_plan(plan, allowed_tools, max_steps=8):
 - Free-text plans that code can't parse. Ask for JSON and validate it.
 - Plans with dozens of tiny steps. Each step is a call, a cost, and a chance to fail.
 - Executing risky steps in the plan without a human approval gate.
+- Mixing up the plan with the result. A plan is only a promise of what to do, and each step can still fail.
+
+## Recap
+If you remember only three things:
+- A planning agent writes the whole list of steps first, then executes them one by one.
+- Plans are made before seeing real data, so allow re-planning when a step fails or something new appears.
+- Ask for the plan as JSON, validate it in code, and put risky steps behind human approval.
 
 ## Interview questions
 **1. When is plan-and-execute better than ReAct?**

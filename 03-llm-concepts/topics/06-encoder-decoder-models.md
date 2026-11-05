@@ -1,7 +1,16 @@
 # Encoder Decoder Models
-> **Level:** Intermediate · **Reading time:** 6 min · **Phase:** 3 · LLM Concepts
+> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 3 · LLM Concepts
 
 **In one line:** An encoder-decoder model first reads the whole input with an encoder, then writes the output with a decoder that looks back at the encoded input through cross-attention.
+
+**Before you start:** [Self Attention](02-self-attention.md) and [Decoder Only Models](05-decoder-only-models.md).
+
+**Words to know:**
+- **Encoder:** the half of the transformer that reads the whole input and turns it into rich vectors.
+- **Decoder:** the half that writes the output one token at a time.
+- **Cross-attention:** attention where queries come from the decoder and keys and values come from the encoder.
+- **Bidirectional:** each token can look both left and right.
+- **Sequence-to-sequence (seq2seq):** a task that maps an input sequence to a different output sequence, such as translation.
 
 ## Explain it like I'm new
 Think of a human interpreter at a meeting. First they listen to the full sentence in French (the **encoder** step: understand everything, in both directions). Then they speak the sentence in English word by word (the **decoder** step), glancing back at their notes of the French sentence as they go. Those glances are **cross-attention**.
@@ -32,6 +41,14 @@ flowchart LR
     end
     N -- append --> O
 ```
+
+### Worked example
+The code example below uses 3 encoded input tokens and 1 output token so far:
+1. The encoder has already turned the input into `[1,0]`, `[0,1]`, `[0.5,0.5]`.
+2. The decoder's current state is `[0.9, 0.1]`, which acts as the query.
+3. The query is compared to each encoded input token. Token 1 is most similar, so the weights are about `[0.43, 0.24, 0.32]` (they add up to 1, give or take rounding).
+4. The result is the weighted blend of the inputs: `[0.59, 0.41]`. This blend flows into the decoder's feed-forward layer.
+5. At the next output token the decoder asks again, with a new query, against the same encoder output. The encoder does not run again.
 
 **Training** is like the decoder-only case but the loss is only on the output tokens: given input X, predict output Y token by token. This is also called **sequence-to-sequence (seq2seq)** learning.
 
@@ -79,6 +96,12 @@ print(tok.decode(model.generate(**ids, max_new_tokens=20)[0], skip_special_token
 - Thinking the encoder re-runs every output step. It runs once; its output is reused.
 - Calling BERT an encoder-decoder. BERT is encoder-only.
 - Assuming encoder-decoder is "outdated". It is still a strong choice for seq2seq tasks such as speech recognition.
+
+## Recap
+If you remember only three things:
+- The encoder reads the whole input once, in both directions. The decoder then writes the output one token at a time.
+- Cross-attention is ordinary attention where the queries come from the decoder and the keys and values come from the encoder.
+- Only the decoder's own self-attention is causal. Most general chat LLMs are decoder-only, but encoder-decoder models still suit translation, summarization and speech-to-text.
 
 ## Interview questions
 **1. What does cross-attention do?**

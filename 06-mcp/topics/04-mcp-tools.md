@@ -1,12 +1,20 @@
 # MCP Tools
-> **Level:** Intermediate · **Reading time:** 10 min · **Phase:** 6 — MCP
+> **Level:** Intermediate · **Reading time:** 12 min · **Phase:** 6 — MCP
 
 **In one line:** Tools are actions a server exposes, each with a name, a description and a JSON Schema for its input, and the model decides when to call them.
+
+**Before you start:** [MCP client](03-mcp-client.md) and [Tool calling](../../04-agentic-ai/topics/02-tool-calling.md). You should know that the model asks the app to run a function.
 
 ## Explain it like I'm new
 A tool is a button on a remote control. The label (description) tells the model what the button does. The model presses it by sending a name and arguments. A tool is **model-controlled**: the LLM chooses to use it, usually with the user's approval.
 
 **JSON Schema** is a standard way to describe the shape of JSON: "an object with a number `a` and a number `b`, both required". The server publishes one per tool so the model knows what to send.
+
+**Words to know:**
+- **Tool:** an action the server can run, such as adding numbers or saving a note.
+- **JSON Schema:** a standard way to describe the shape of data, such as which fields are required and their types.
+- **Protocol error:** the request itself was wrong, such as an unknown tool name. It comes back as a JSON-RPC `error`.
+- **Tool error:** the tool ran but failed. It comes back as a normal result with `isError` set to true.
 
 ## How it works
 1. Client sends `tools/list`.
@@ -39,6 +47,15 @@ sequenceDiagram
   S-->>H: content "42", isError false
   H->>M: result text
 ```
+
+### Worked example
+Three calls to the same toy server, and what each one returns.
+
+1. `tools/call` with `add_numbers`, `a` = 2, `b` = 40. Result: `content` holds the text `42` and `isError` is `false`.
+2. `tools/call` with a tool called `delete_everything`. The server has no such tool, so it replies with a JSON-RPC `error` (code -32602). That is a protocol error.
+3. A tool that exists but cannot do its job, for example reading a missing file, should reply with a normal result whose `isError` is `true` and a message the model can read. The model can then try something else.
+
+The difference matters: a protocol error says "your request was wrong", while a tool error says "the request was fine, the work failed".
 
 ## Code example
 From [`code/hello-mcp-server/src/index.ts`](../code/hello-mcp-server/src/index.ts) (real, builds in CI):
@@ -78,6 +95,15 @@ print(client.call_tool("add_numbers", {"a": 1, "b": "x"})["isError"])  # True
 - Returning huge outputs that flood the context.
 - Treating tool output as trusted. It can contain instructions planted by an attacker (**prompt injection**).
 - Marking a destructive tool read-only.
+- Returning a protocol error for a failed tool run. The model needs to read the failure message, so use `isError` with text instead.
+- Making one huge tool that does everything. Several narrow tools with clear descriptions are safer and easier for the model to pick.
+
+## Recap
+
+**If you remember only three things:**
+- A tool has a name, a description and an input schema. The model chooses when to call it.
+- Success returns `content` with `isError` false. A failed run returns `isError` true with a readable message.
+- Unknown tools or bad arguments are protocol errors. Failed work is a tool error.
 
 ## Interview questions
 1. **Protocol error vs `isError`?**

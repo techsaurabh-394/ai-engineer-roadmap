@@ -1,7 +1,15 @@
 # Fine-Tuning (the overview)
-> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 3 · LLM Concepts
+> **Level:** Intermediate · **Reading time:** 9 min · **Phase:** 3 · LLM Concepts
 
 **In one line:** Fine-tuning means training an existing model a little more on your own examples, so it picks up a style or a narrow skill, and it is usually the last thing to try after prompting and RAG.
+
+**Before you start:** [Prompt Engineering](14-prompt-engineering.md) and the idea of [RAG](../../01-rag-foundations/README.md) (looking facts up at question time).
+
+**Words to know:**
+- **Weights:** the numbers inside a model that hold what it learned. Training changes them.
+- **Training example:** one input paired with the answer you wanted.
+- **Validation set:** examples kept aside and never trained on, used only to measure.
+- **Base model:** the original model you start from before tuning.
 
 ## Explain it like I'm new
 A new chef already knows how to cook. You can do three things to get the food you want:
@@ -32,6 +40,14 @@ flowchart LR
 **Full fine-tuning vs LoRA.** Full fine-tuning changes all of the model's weights, which needs a lot of memory. **LoRA** (low-rank adaptation) freezes the original model and trains a small add-on, so it is far cheaper. **QLoRA** does the same on a compressed (quantized) base model so that it fits on a smaller GPU. Hosted providers hide these details behind an upload-and-train service.
 
 **What about RLHF?** Reinforcement learning from human feedback is a different, later step used to make models follow instructions and be helpful: people rank answers and the model is trained to prefer the better ones. Providers do it for you. You will rarely do it yourself.
+
+### Worked example
+Take the 4 rows in the code example below, tracing what happens:
+1. Row 1: "Can I cancel?" with "Yes, before it ships." It is kept.
+2. Row 2 is the same as row 1, so the cleaner drops it as a duplicate.
+3. Row 3 has an empty answer, so it is dropped as an empty field.
+4. Row 4 is kept. Two rows are left: one goes to training, one to validation.
+5. After training, you ask the tuned model and the base model "Opening hours?", which only the validation row covers. If the tuned model is not clearly better, you do not use it.
 
 ## Code example
 Most fine-tuning failures are data problems, so this demo checks the data. It needs only the standard library. Run it: `python 03-llm-concepts/code/llm_finetune_data.py`
@@ -79,6 +95,12 @@ A good order: **prompt, then add examples in the prompt, then RAG, then fine-tun
 - No validation set, so you cannot tell whether the new model is better.
 - Training on private or customer data without checking the rules for it first.
 - Forgetting that the base model changes. A tuned model may need to be redone when you move to a newer one.
+
+## Recap
+If you remember only three things:
+- Fine-tuning teaches behaviour (style, format, a narrow task). RAG supplies facts.
+- Clean data and a held-out validation set matter more than the amount of data.
+- Try prompts, then examples in the prompt, then RAG, and fine-tune last.
 
 ## Interview questions
 <details>

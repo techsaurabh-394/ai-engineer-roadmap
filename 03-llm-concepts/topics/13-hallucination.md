@@ -1,7 +1,16 @@
 # Hallucination
-> **Level:** Intermediate · **Reading time:** 7 min · **Phase:** 3 · LLM Concepts
+> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 3 · LLM Concepts
 
 **In one line:** A hallucination is when a model produces fluent, confident text that is false or not supported by its sources.
+
+**Before you start:** [Temperature](09-temperature.md) and [Context Window](08-context-window.md).
+
+**Words to know:**
+- **Hallucination:** confident text from a model that is false or not backed by its sources.
+- **Grounding:** giving the model real source text or tools so it answers from facts, not guesses.
+- **RAG (retrieval-augmented generation):** looking up relevant documents first and putting them in the prompt.
+- **Factuality:** whether a claim is true about the world.
+- **Faithfulness:** whether a claim is supported by the text the model was given.
 
 ## Explain it like I'm new
 Think of a student in an exam who doesn't know the answer but writes something that **sounds** right, in perfect grammar, because a blank answer gets zero marks. LLMs behave in a similar way. They are trained to produce the most plausible next token, not to check facts. When the true answer is missing from what they learned or from the prompt, a plausible-sounding guess comes out with the same confident tone as a correct answer.
@@ -38,6 +47,16 @@ flowchart LR
 4. **Constrain output** with schemas (JSON with required fields) so it can't ramble.
 5. **Verify:** a second pass or a separate check compares claims to sources.
 6. **Evaluate** on a test set of questions with known answers, and track the rate over time.
+
+### Worked example
+Use the code example below. The source says: "The Eiffel Tower is in Paris. It was completed in 1889." The answer says: "The Eiffel Tower is in Paris. It was designed by Leonardo da Vinci in 1450."
+
+1. Split the answer into two sentences.
+2. Sentence 1 has 6 words: the, eiffel, tower, is, in, paris. All 6 appear in the source, so overlap is 6/6 = 1.0. It passes the 0.5 limit.
+3. Sentence 2 has 9 words: it, was, designed, by, leonardo, da, vinci, in, 1450. Only "it", "was" and "in" appear in the source, so overlap is 3/9 ≈ 0.33. That is below 0.5, so it is flagged.
+4. The flagged sentence is the made-up one. This matches the printed output in the code example.
+
+This is a crude word-overlap check, so it can miss a false sentence that reuses the source's words. That is why real systems use stronger checks.
 
 ## Code example
 A tiny groundedness check: flag answer sentences that share few words with the source. Real systems use stronger methods (NLI models or an LLM judge), but the idea is the same.
@@ -84,6 +103,12 @@ Every LLM product needs a plan for hallucination. How strict depends on risk.
 - Trusting citations without checking that they exist and say what is claimed.
 - Adding RAG but retrieving the wrong documents. Bad retrieval leads to confident wrong answers.
 - Measuring hallucination by "it looked fine in a demo" instead of a labelled test set.
+
+## Recap
+If you remember only three things:
+- A hallucination is fluent, confident text that is false or unsupported, because the model predicts likely text and does not check facts.
+- Grounding (RAG, tools), "answer only from the context", citations and evals reduce it, but none removes it.
+- Low temperature does not fix it: a consistently wrong answer is still wrong.
 
 ## Interview questions
 **1. Why do LLMs hallucinate?**

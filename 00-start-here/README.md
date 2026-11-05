@@ -28,14 +28,22 @@ There are **7 learning phases** with **113 topics**, plus interview prep and pro
 
 ## Every topic page has the same shape
 
-1. **In one line**: a definition you can quote in an interview
-2. **Explain it like I'm new**: an everyday analogy
-3. **How it works**: steps plus a diagram
-4. **Code example**: small, runnable Python
-5. **When to use it / when not to**
-6. **Common mistakes**
-7. **Interview questions** with hidden answers
-8. **Go deeper**: links to the original paper or official docs
+Every page has the same parts, in the same order, so you always know where you are:
+
+| Part | What it is for |
+|---|---|
+| **In one line** | The whole idea in one sentence you could quote in an interview. If this is clear, you already have the main point. |
+| **Before you start** | Which pages to read first. Skip it only if you already know them. |
+| **Explain it like I'm new** + **Words to know** | An everyday analogy and plain definitions of every term. Read this slowly. |
+| **How it works** + **Worked example** | The steps with a diagram, then one small case followed number by number. Try the numbers by hand with a pencil. |
+| **Code example** | A short runnable program. The output shown is copied from a real run. |
+| **When to use it / when not to** | The honest limits of the idea. |
+| **Common mistakes** | The traps beginners fall into. |
+| **Recap** | The three things to remember. Cover the page and say them out loud. |
+| **Interview questions** | Answer in your head first, then open the answer. |
+| **Go deeper** | Links to the original paper or official docs. |
+
+**To master a topic:** read it, do the worked example by hand, run the code, then answer the three interview questions without looking. If you cannot, read the page again.
 
 ## Setup (one time)
 

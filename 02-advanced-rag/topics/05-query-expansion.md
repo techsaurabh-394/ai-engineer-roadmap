@@ -1,14 +1,24 @@
 # Query Expansion
 
-> **Level:** Intermediate · **Reading time:** 5 min · **Phase:** 2 — Advanced RAG
+> **Level:** Intermediate · **Reading time:** 7 min · **Phase:** 2 — Advanced RAG
 
 **In one line:** Query expansion adds related words or phrasings to the user's question so the search finds documents that use different words for the same thing.
+
+**Before you start:** [BM25](../../01-rag-foundations/topics/17-bm25.md) and [Sparse Retrieval](../../01-rag-foundations/topics/18-sparse-retrieval.md). You should know that keyword search matches exact words.
 
 ## Explain it like I'm new
 
 You search a cookbook index for "aubergine" and find nothing, because the book is American and says "eggplant". A helpful librarian would quietly search both words. That is query expansion.
 
 Users and documents rarely use the same words. This is called the **vocabulary mismatch** problem. Keyword search (like BM25) only matches exact terms, so it suffers most. Vector search handles paraphrases better, but still struggles with acronyms, product names and internal jargon ("k8s" vs "Kubernetes", "PTO" vs "annual leave").
+
+Words to know:
+- **Query:** the text you send to the search system.
+- **Retrieval:** finding the stored chunks that best match a query.
+- **Synonym:** a different word with the same meaning ("aubergine" and "eggplant").
+- **Acronym:** a short form made from initials or letters, like PTO or k8s.
+- **Recall:** whether the good chunks appear in the results at all.
+- **LLM:** a large language model, the kind of AI that writes text.
 
 Query expansion rewrites the query *before* retrieval by adding:
 
@@ -34,6 +44,16 @@ flowchart LR
 ```
 
 Example from the repo demo: the plain query "Why does my pod crash over and over?" finds 2 documents with keyword search. The expanded query also finds the document about liveness probes restarting containers, because it now contains "restart" and "container".
+
+### Worked example
+Corpus: five one-sentence documents. The relevant ones are `d2` (CrashLoopBackOff), `d1` (a container restarts when its liveness probe fails) and `d3` (readiness probes for a pod).
+
+1. **Plain query** "Why does my pod crash over and over?" has the search words `pod crash over over`. Only documents containing those exact words match, so results are `['d2', 'd3']`. `d1` is missed because it says "container" and "restarts", not "pod" or "crash".
+2. **Expand** with the synonym list: "crash" adds `crashing crashloopbackoff restart`, "pod" adds `container`. The query becomes `pod crash over over container crashing crashloopbackoff restart`.
+3. **Search again.** The results are now `['d2', 'd1', 'd3']`. `d1` has been recovered.
+4. **Answer** using the original question, not the expanded text.
+
+The price: the longer query could also pull in noise, which is why expansion usually raises recall while precision may drop.
 
 ## Code example
 
@@ -80,6 +100,12 @@ An LLM-based version replaces the dictionary with a prompt such as: "List 5 sear
 - Sending the expanded query to the LLM as the question. Expansion is for search only.
 - Not measuring: expansion often raises recall while lowering precision. Check both, and consider adding a [reranker](01-reranking.md) after it.
 - Letting the synonym list go stale as product names change.
+
+## Recap
+If you remember only three things:
+- Query expansion adds synonyms or related terms to the query before searching, so documents with different wording are found.
+- It mostly improves recall and helps keyword search the most; too many added words add noise.
+- Use the expanded query for search only, and answer with the original question.
 
 ## Interview questions
 

@@ -1,7 +1,16 @@
 # Temperature
-> **Level:** Beginner · **Reading time:** 6 min · **Phase:** 3 · LLM Concepts
+> **Level:** Beginner · **Reading time:** 7 min · **Phase:** 3 · LLM Concepts
 
 **In one line:** Temperature is a number that controls how random the model's word choice is: low values make it pick the most likely token, high values spread the choice out.
+
+**Before you start:** [Decoder-only models](05-decoder-only-models.md) (they produce one token at a time, which is the step temperature controls).
+
+**Words to know:**
+- **Token:** a small chunk of text the model reads and writes.
+- **Logit:** the raw score the model gives each possible next token. Higher means more likely. It can be any number, even negative.
+- **Softmax:** a formula that turns a list of scores into probabilities that are all positive and add up to 1.
+- **Sampling:** picking the next token at random, weighted by those probabilities.
+- **Greedy decoding:** always picking the single highest-probability token, with no randomness.
 
 ## Explain it like I'm new
 Imagine choosing dinner. On a cautious day (low temperature) you always order your favourite. On an adventurous day (high temperature) you might try the third or fourth item on the menu. The menu has not changed; only your willingness to take a chance has.
@@ -33,6 +42,15 @@ p_i = exp(logit_i / T) / sum_j exp(logit_j / T)
 | 2.0 | 0.50 | 0.20 | 0.18 | 0.05 | 0.07 |
 
 As `T → 0`, sampling becomes **greedy** (always the top token). Many APIs treat `temperature=0` as "as deterministic as possible", but tiny run-to-run differences can still happen because of how servers batch and compute.
+
+### Worked example (by hand, two tokens)
+Take just two tokens with logits `A = 2` and `B = 0`. Use `e^2 ≈ 7.39` and `e^0 = 1`.
+
+1. **T = 1:** divide by 1, so the scores stay 2 and 0. Exponentials: 7.39 and 1. Total 8.39. Probabilities: A = 7.39 / 8.39 ≈ 0.88, B = 1 / 8.39 ≈ 0.12.
+2. **T = 2:** divide by 2, so the scores become 1 and 0. Exponentials: `e^1 ≈ 2.72` and 1. Total 3.72. Probabilities: A = 2.72 / 3.72 ≈ 0.73, B = 1 / 3.72 ≈ 0.27.
+3. The same two logits gave A 0.88 at T=1 but only 0.73 at T=2. Higher temperature moved probability from the favourite to the underdog.
+
+The five-token table above shows the same effect on real numbers.
 
 ```mermaid
 flowchart LR
@@ -88,6 +106,12 @@ Check your provider's docs for the allowed range (for example Anthropic accepts 
 - Using high temperature for JSON or tool calls and getting broken output.
 - Expecting `temperature=0` to give byte-identical outputs forever.
 - Comparing temperatures across providers as if the scales were identical.
+
+## Recap
+If you remember only three things:
+- Temperature divides the logits before softmax: low sharpens the choice toward the top token, high flattens it.
+- It changes how the model picks among options it already scored; it does not add knowledge or accuracy.
+- Use low values for exact tasks such as extraction, code and tool calls, and higher values for creative ones.
 
 ## Interview questions
 **1. What does temperature do mathematically?**

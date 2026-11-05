@@ -1,7 +1,9 @@
 # Sparse Retrieval
-> **Level:** Intermediate · **Reading time:** 6 min · **Phase:** 1 — RAG Foundations
+> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 1 — RAG Foundations
 
 **In one line:** Sparse retrieval represents text as very long vectors that are mostly zeros — one slot per vocabulary word — and finds documents by matching the words they share with the query.
+
+**Before you start:** [Tokenization](03-tokenization.md) and [BM25](17-bm25.md). You should know that text is split into word-like tokens, and that BM25 is a formula that scores documents by their keyword matches.
 
 ## Explain it like I'm new
 Imagine a giant checklist with every word in the dictionary, 50,000 lines long. To describe a document, you tick the words it contains and write how often. A short paragraph ticks maybe 40 lines; the other 49,960 stay empty. That checklist is a **sparse vector**: huge, but almost all zeros.
@@ -13,6 +15,14 @@ To search quickly, sparse systems use an **inverted index**: for each word, a li
 The opposite is **[dense retrieval](19-dense-retrieval.md)**: short vectors (hundreds of numbers) where almost every entry is non-zero and no single slot means a specific word.
 
 There is also **learned sparse retrieval** (for example SPLADE): a neural model outputs a sparse vector over the vocabulary, giving weight to related words that were not in the text (it might add "automobile" for a text about "car"). It keeps the inverted-index speed while adding some meaning.
+
+Words to know:
+- **Vector:** a list of numbers that describes a piece of text.
+- **Vocabulary:** the set of all distinct words seen in your documents.
+- **Query:** the search text the user types.
+- **Inverted index:** a map from each word to the documents that contain it.
+- **Term frequency (TF):** how many times a word appears in a document.
+- **Stop words / stemming:** dropping very common words, and cutting words to a base form ("tokens" to "token").
 
 ## How it works
 1. **Tokenize** every document (lowercase, split into words, maybe remove stop words and apply stemming).
@@ -32,6 +42,14 @@ score: d0 matches 2 terms, d1 matches 1  ->  d0 first
 ```
 
 **TF-IDF**, the older cousin of BM25: `weight = tf × log(N / df)`. The existing [`code/mini_rag.py`](../code/mini_rag.py) uses a TF-IDF variant with hashing (it maps words into 2,048 buckets) — a sparse retriever in a few dozen lines.
+
+### Worked example
+Use the three documents from the diagram: d0 "refresh token cookie", d1 "access token short", d2 "docker image layer". The query is "token cookie".
+
+1. Look up "token" in the inverted index. It gives d0 and d1.
+2. Look up "cookie". It gives d0 only.
+3. Count matches: d0 matched both query words, d1 matched one, and d2 matched none, so d2 is never even looked at.
+4. Ranking: d0 first, then d1. (TF-IDF would also give "cookie" more weight than "token", since "cookie" is in fewer documents. That only strengthens d0's lead.)
 
 ## Code example
 An inverted index with TF-IDF scoring, stdlib only:
@@ -92,10 +110,17 @@ For production keyword search: Elasticsearch, OpenSearch, or Postgres full-text 
 | Explainable | Yes, which words matched | Hard |
 
 ## Common mistakes
+- Mixing up "sparse" with "small". A sparse vector is huge in length (one slot per word); it is just mostly zeros.
 - Tokenizing queries differently from documents.
 - Aggressive stop-word lists that delete meaningful words ("not", "no", or "IT" as in IT department).
 - Missing stemming or lemmatization, so "tokens" never matches "token".
 - Assuming sparse is "outdated". It is still a strong baseline and is often combined with dense retrieval.
+
+## Recap
+If you remember only three things:
+- A sparse vector has one slot per vocabulary word and is almost all zeros, so only the non-zero words are stored.
+- An inverted index maps each word to its documents, so a query only touches documents that share a word with it.
+- Sparse retrieval is great at exact terms but misses synonyms, so it is often paired with dense retrieval.
 
 ## Interview questions
 **1. Why are sparse vectors called sparse?**

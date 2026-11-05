@@ -1,7 +1,18 @@
 # Transformer Architecture
-> **Level:** Beginner · **Reading time:** 7 min · **Phase:** 3 · LLM Concepts
+> **Level:** Beginner · **Reading time:** 9 min · **Phase:** 3 · LLM Concepts
 
 **In one line:** A transformer is a neural network that reads a whole sequence of tokens at once and lets every token look at every other token (attention) to decide what it means.
+
+**Before you start:** Nothing, this is a starting point. If you want to see a whole sentence travel through a model with real numbers first, read [How an LLM Works End to End](21-how-an-llm-works-end-to-end.md) right after this page.
+
+**Words to know:**
+- **Token:** a small piece of text (a word or part of a word) that the model reads.
+- **Embedding:** a list of numbers (a vector) that stands for one token.
+- **Attention:** the step where each token looks at the other tokens and takes in the useful information.
+- **Block (layer):** one repeated unit of the transformer. The model stacks many of them.
+- **Logit:** a raw score for one candidate next token. Higher means more likely.
+- **Softmax:** a function that turns a list of scores into probabilities that add up to 1.
+- **GPU:** a chip that does many calculations at the same time, which is why parallel designs train quickly on it.
 
 ## Explain it like I'm new
 Imagine a group of people reading the sentence "The bank by the river flooded." Each person holds one word. Before deciding what their word means, each person looks around at everyone else's word. The person holding "bank" sees "river" and "flooded" and decides "this is a riverbank, not a money bank." That looking-around step is **attention**, and it is the heart of a transformer.
@@ -33,6 +44,19 @@ flowchart TB
 The original paper had two stacks: an **encoder** (reads the input) and a **decoder** (writes the output). Modern chat LLMs mostly keep only the decoder ([Decoder-Only Models](05-decoder-only-models.md)); translation-style models keep both ([Encoder-Decoder Models](06-encoder-decoder-models.md)).
 
 **Size intuition.** In the base model of the original paper: 6 encoder layers, 6 decoder layers, model width `d_model = 512`, 8 attention heads, and FFN width 2048.
+
+(`d_model` is the length of each token's vector. FFN is the feed-forward network from step 4.)
+
+### Worked example
+Trace the three tokens `The cat sat` through one block, using the same toy numbers as the code example below (4 numbers per token, no learned weights). Every number comes from running that code.
+
+1. **Embed.** The tokens become `[1,0,1,0]`, `[0,1,0,1]`, `[1,1,0,0]`.
+2. **Add position.** Adding the position pattern gives `[1.0, 1.0, 1.0, 1.0]`, `[0.84, 1.54, 0.01, 2.0]`, `[1.91, 0.58, 0.02, 1.0]`. Now "cat" in seat 1 differs from "cat" in any other seat.
+3. **Attention.** Each token blends in the tokens it is allowed to see. With the causal mask (no looking ahead), `The` sees only itself, so its row stays `[1,1,1,1]`. After the residual add, `The` is `[2,2,2,2]`.
+4. **Feed-forward.** The stand-in ReLU keeps `[2,2,2,2]` unchanged (ReLU only zeroes negative numbers). The second residual add gives `[4,4,4,4]`.
+5. **Result.** The final rows are `[4.0, 4.0, 4.0, 4.0]`, `[3.49, 5.75, 0.43, 7.61]`, `[6.82, 2.9, 0.56, 5.0]`. In a real model, the output head would turn each row into logits for the whole vocabulary.
+
+Same shape in, same shape out: that is why blocks can be stacked many times.
 
 ## Code example
 A toy transformer block using the stdlib attention code from this phase. There are no learned weights, so it shows the data flow, not real language skill.
@@ -80,6 +104,12 @@ print(model.config.n_layer, model.config.n_head, model.config.n_embd)  # 12 12 7
 - Forgetting positional information. Attention alone ignores word order.
 - Confusing parameters (learned weights) with the context window (how many tokens it reads).
 - Assuming all LLMs use the full encoder-decoder design. Most chat models are decoder-only.
+
+## Recap
+If you remember only three things:
+- A transformer turns each token's vector into a better, context-aware vector by letting every token attend to the others.
+- One block is attention plus a feed-forward network, each wrapped in a residual connection and layer normalization. The model stacks many blocks.
+- Attention alone ignores order, so position information is added at the start.
 
 ## Interview questions
 **1. What problem did the transformer solve compared with RNNs?**

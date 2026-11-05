@@ -1,7 +1,9 @@
 # Vector Databases
-> **Level:** Intermediate · **Reading time:** 7 min · **Phase:** 1 — RAG Foundations
+> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 1 — RAG Foundations
 
 **In one line:** A vector database stores embeddings with their text and metadata, and finds the vectors closest to a query vector quickly, even among millions.
+
+**Before you start:** [Embeddings](02-embeddings.md) and [Metadata](09-metadata.md). You should know that an embedding is a list of numbers (a vector) that represents meaning, and that chunks carry extra fields.
 
 ## Explain it like I'm new
 A normal database is like a phone book: you look up an exact name. A vector database is like asking a music app "play songs that *sound like* this one". There is no exact match. You want the nearest neighbours by similarity.
@@ -9,6 +11,14 @@ A normal database is like a phone book: you look up an exact name. A vector data
 The core operation is **nearest neighbour search**: given a query vector, return the k stored vectors that are most similar (the **top-k**). You could compare the query with every stored vector. That is called **brute-force** or **flat** search. It is exact, and fine for thousands of vectors. For millions, it gets slow.
 
 So vector databases build an **index**: a data structure that finds *almost* the best matches while checking only a small part of the data. This is **Approximate Nearest Neighbour (ANN)** search. You trade a little accuracy (**recall**: the share of the true top-k you actually get) for a big speed-up. Two common index types are [HNSW](14-hnsw.md) and [IVF](15-ivf-index.md).
+
+Words to know:
+- **Vector:** a list of numbers; here, the embedding of one chunk or one question.
+- **Query:** the user's question, turned into a vector for searching.
+- **Nearest neighbour search:** finding the stored vectors most similar to the query vector.
+- **Index:** a data structure that makes search faster by avoiding a full scan.
+- **ANN:** Approximate Nearest Neighbour, fast search that may miss a few true matches.
+- **Recall:** the share of the true best matches that the search actually returns.
 
 A vector database also handles the boring but vital parts: storing metadata, [filtering](20-metadata-filtering.md), updates and deletes, persistence to disk, and scaling.
 
@@ -28,6 +38,14 @@ filter    --> |  metadata index          --> allowed    | --> top-k (id, score, 
 ```
 
 Rough storage maths: 1 million chunks × 768 dimensions × 4 bytes (float32) ≈ 3 GB for vectors alone, before index overhead. This is why dimension size and **quantization** (storing numbers in fewer bits) matter at scale.
+
+### Worked example
+Trace the `TinyVectorDB` from the code below. It uses 3-number vectors and brute-force search.
+1. Upsert `a` with vector `[1, 0, 0]`, text "about tokens", team `security`.
+2. Upsert `b` with vector `[0, 1, 0]`, text "about docker", team `platform`.
+3. Query with `[0.9, 0.1, 0]` and `k=1`. The database scores the query against both vectors with cosine similarity. `a` points almost the same way (score about 0.99) and `b` points a different way (score about 0.11).
+4. The best is `a`, so the result is `a` / "about tokens".
+5. Repeat with `where={"team": "platform"}`. The filter removes `a` first, so only `b` is scored and `b` is returned, even though it matches less well.
 
 ## Code example
 The smallest possible "vector database", stdlib only, with brute-force search and filters:
@@ -93,6 +111,12 @@ hits = client.query_points("docs", query=[0.9, 0.1, 0], limit=1).points
 - Changing the embedding model without rebuilding the collection.
 - Not storing a document ID, so updates create duplicates.
 - Default ANN settings with no recall check against brute-force results.
+
+## Recap
+If you remember only three things:
+- A vector database stores embeddings with text and metadata, and returns the top-k nearest vectors to a query.
+- Brute-force search is exact but slow at scale; ANN indexes like HNSW and IVF trade a little recall for big speed.
+- Check recall against brute force, store a document ID, and match the distance metric to the embedding model.
 
 ## Interview questions
 **1. What does a vector database do that a plain array of vectors does not?**

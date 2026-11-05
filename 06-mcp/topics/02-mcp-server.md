@@ -1,12 +1,20 @@
 # MCP Server
-> **Level:** Beginner · **Reading time:** 9 min · **Phase:** 6 — MCP
+> **Level:** Beginner · **Reading time:** 11 min · **Phase:** 6 — MCP
 
 **In one line:** An MCP server is a program that exposes tools, resources and prompts to MCP clients over a transport such as stdio.
+
+**Before you start:** [Model Context Protocol](01-model-context-protocol.md). You should know that MCP joins an AI app (client) to tools and data (server).
 
 ## Explain it like I'm new
 A server is like a restaurant kitchen with a menu. The menu lists what you can order (tools, resources, prompts). The client is the waiter who carries orders in and dishes out. The kitchen does the real work and does not care which diner asked.
 
 In MCP, "server" does not mean a big machine in the cloud. Most servers are small programs that run on your laptop. The host starts them as child processes and talks to them through stdin and stdout. That is the **stdio transport**.
+
+**Words to know:**
+- **Server:** the program that offers tools, resources and prompts. It waits for messages and answers them.
+- **Capability:** a feature the server says it supports. A client should only use what was declared.
+- **Notification:** a message with no `id`. Nobody replies to it.
+- **stdio:** the server reads messages from standard input and writes replies to standard output. The host starts it as a child process.
 
 ## How it works
 1. The server starts and waits for messages.
@@ -38,6 +46,15 @@ sequenceDiagram
 ```
 
 **Stdio rule:** stdout is the protocol channel. Never `print()` or `console.log()` there. Log to stderr.
+
+### Worked example
+Here is what a server does for the first two messages. The lines are real output of the toy in [`code/mcp_mini_jsonrpc.py`](../code/mcp_mini_jsonrpc.py).
+
+1. Client sends `initialize` with `id` 1. The server replies with the same `id` and lists what it supports: `tools`, `resources` and `prompts`.
+2. Client sends `notifications/initialized`. It has no `id`, so the server stays silent.
+3. Client sends `tools/list` with `id` 2. The server answers with `add_numbers` and `word_count`.
+
+The order matters. If a client sends `tools/list` before the handshake is finished, the toy server replies with an error: code -32600, "Server not initialized".
 
 ## Code example
 The real server in this repo is [`code/hello-mcp-server/src/index.ts`](../code/hello-mcp-server/src/index.ts). Its skeleton:
@@ -82,6 +99,15 @@ if __name__ == "__main__":
 - Skipping input validation. The model can send bad arguments.
 - Declaring capabilities you do not implement.
 - Running a remote server with no authentication.
+- Forgetting that a notification gets no reply. If you wait for one, your client will hang.
+- Logging to stdout in a stdio server. Stdout carries the protocol messages, so a stray `print` corrupts them. Log to stderr or a file.
+
+## Recap
+
+**If you remember only three things:**
+- A server is a program that answers JSON-RPC messages about its tools, resources and prompts.
+- Start with `initialize`, then `notifications/initialized`. After that the list and call methods work.
+- stdio is for local tools run by the host. Streamable HTTP is for shared or remote servers.
 
 ## Interview questions
 1. **What happens during initialization?**

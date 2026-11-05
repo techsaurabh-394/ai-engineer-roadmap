@@ -3,6 +3,8 @@
 
 **In one line:** Modern LLMs keep the attention idea from [self-attention](02-self-attention.md) but change how it is stored and computed (shared K/V heads, tiled exact math, local windows, rotary positions) so long contexts and many users fit on a GPU.
 
+**Before you start:** [KV Cache](07-kv-cache.md) and [Multi Head Attention](03-multi-head-attention.md). This page is about making that attention cheaper.
+
 ## Explain it like I'm new
 Picture a library with 32 readers (the attention heads). In vanilla [multi-head attention](03-multi-head-attention.md), every reader keeps a private, full set of index cards about every page read so far. That is a lot of cards, and the [KV cache](07-kv-cache.md) is exactly that pile of cards. During generation the GPU spends much of its time just fetching the pile from memory, not doing math.
 
@@ -113,6 +115,15 @@ m=103 n=100 m-n=3  score=0.860824
 
 Real models use many pairs with different rotation speeds (fast hands for fine local order, slow hands for long range).
 
+### Worked example
+The cache sizes below come from [`llm_attn_variants.py`](../code/llm_attn_variants.py): a 32-layer model with 32 heads, head size 128 and 8,192 tokens in 16-bit numbers needs 4 GiB of cache for one conversation.
+
+1. **Multi-head attention** stores K and V for all 32 heads: 4 GiB.
+2. **GQA with 8 groups** shares each K/V head among 4 query heads. Only 8 K/V heads are stored: 1 GiB.
+3. **MQA** shares one K/V head among all 32: 0.125 GiB.
+
+Same model shape and same text. Only the number of K/V heads changed, and the cache shrank 4x and 32x.
+
 ## Code example
 From [`llm_attn_variants.py`](../code/llm_attn_variants.py):
 
@@ -157,6 +168,13 @@ As an app builder, you mostly *choose a model* that already uses these. The effe
 - Assuming a sliding window means the model "forgets" everything older. Deeper layers can still carry older information indirectly, just less reliably.
 - Saying RoPE "adds" a position vector. It rotates Q and K instead, and V is untouched.
 - Forgetting that memory, not arithmetic, is often the real bottleneck when decoding.
+
+## Recap
+
+**If you remember only three things:**
+- GQA and MQA shrink the KV cache by sharing key/value heads between query heads.
+- FlashAttention gives the exact same answer as normal attention but works in tiles, so it never stores the whole n by n score table.
+- RoPE rotates queries and keys by their position, so the attention score depends on how far apart two tokens are.
 
 ## Interview questions
 **1. Why does GQA reduce KV-cache size, and by how much?**

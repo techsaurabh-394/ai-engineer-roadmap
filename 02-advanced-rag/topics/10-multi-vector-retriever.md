@@ -1,8 +1,10 @@
 # Multi Vector Retriever
 
-> **Level:** Advanced · **Reading time:** 6 min · **Phase:** 2 — Advanced RAG
+> **Level:** Advanced · **Reading time:** 7 min · **Phase:** 2 — Advanced RAG
 
 **In one line:** A multi-vector retriever stores several different vectors for each document (summary, questions it answers, small pieces) but returns the full original document when any of them matches.
+
+**Before you start:** [Embeddings](../../01-rag-foundations/topics/02-embeddings.md) and [Chunking](../../01-rag-foundations/topics/04-chunking.md). You should know that text is turned into vectors for search, and that documents are cut into pieces.
 
 ## Explain it like I'm new
 
@@ -15,6 +17,13 @@ A multi-vector retriever separates the two:
 - **Index side:** for each document, create several representations and embed each one. Examples: an LLM-written summary, 3–5 hypothetical questions the document answers, or small sub-chunks.
 - **Storage side:** keep the original document in a **docstore** (a simple key–value store) under an ID.
 - Each vector carries the document ID. At query time, match on any vector, then look up and return the original.
+
+Words to know:
+- **Vector:** a list of numbers that represents the meaning of a piece of text, used to find similar text.
+- **Representation (handle):** one piece of text you embed for search, such as a summary or a question.
+- **Docstore:** a simple key-value store that keeps the original documents under an ID.
+- **doc_id:** the ID that links each vector back to its original document.
+- **LLM (large language model):** the AI that reads and writes text.
 
 ## How it works
 
@@ -33,6 +42,17 @@ flowchart LR
     D --> DS[(Docstore<br/>7 → full text)]
     Q[User question] --> V -->|hit doc_id=7| DS --> L[LLM gets full doc]
 ```
+
+### Worked example
+Document `plans` is a pricing table. A table shares few words with a typical question, so it embeds poorly. Question: "how many users can the business plan have".
+
+1. At ingest, store the full table in the docstore under `plans`. Also embed three handles, each tagged `plans`: a summary, "How much does the Team plan cost?", and "How many users can the Business plan have?".
+2. At query time, the third handle shares the words "how many users can the business plan have" with the question, so it ranks first.
+3. That handle carries `doc_id = plans`. Look up `docstore["plans"]`.
+4. The LLM receives the complete table (the code prints it), not the short question that matched.
+
+The handle is used to find the document and is then discarded.
+
 
 ## Code example
 
@@ -90,6 +110,12 @@ The raw table shares almost no words with "how many users", but a generated ques
 - Duplicates: several handles of the same doc fill the top *k*. De-duplicate by `doc_id`.
 - Forgetting to delete all representations when a document changes ([Incremental Indexing](18-incremental-indexing.md)).
 - Generated questions that leak facts not in the document. Ask the LLM to only use the given text.
+
+## Recap
+If you remember only three things:
+- Multi-vector retrieval searches with several short handles (summary, questions, small chunks) per document.
+- A match on any handle returns the full original document from the docstore.
+- De-duplicate by `doc_id`, and delete all of a document's handles when it changes.
 
 ## Interview questions
 

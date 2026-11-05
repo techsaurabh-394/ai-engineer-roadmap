@@ -1,14 +1,24 @@
 # Cross Encoder
 
-> **Level:** Intermediate · **Reading time:** 6 min · **Phase:** 2 — Advanced RAG
+> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 2 — Advanced RAG
 
 **In one line:** A cross-encoder is a model that reads the question and a document *together* and outputs one relevance score for that pair.
+
+**Before you start:** [Reranking](01-reranking.md). You should know that a second pass re-orders the candidates a fast search returned.
 
 ## Explain it like I'm new
 
 Imagine two ways to judge whether a key fits a lock. Way one: photograph every key once, photograph the lock, and compare photos. Fast, and you can photograph all keys in advance. Way two: actually put each key into the lock and turn it. Slow, but much more accurate, because you test how the two *interact*.
 
 A cross-encoder is way two. An **encoder** is a neural network (usually a transformer like BERT) that turns text into numbers. "Cross" means the question and the document are fed in as *one* combined input, so every word of the question can pay **attention** (look at and weigh) every word of the document. The model can notice things like "the question asks about cancelling *and* refunds, and this passage covers both".
+
+Words to know:
+- **Encoder:** a neural network that turns text into numbers.
+- **Transformer:** the kind of neural network (BERT is one) that lets words look at each other.
+- **Attention:** how the model weighs which other words matter for each word.
+- **Forward pass:** one run of the model on one input.
+- **Token:** a small piece of text, roughly a word or part of a word, that the model reads.
+- **Sigmoid:** a function that squashes any number into the range 0 to 1.
 
 The output is a single number, often between 0 and 1 after a sigmoid, meaning "how relevant is this document to this question". There is no reusable vector for the document. That is the price: you must run the model again for every new question.
 
@@ -27,6 +37,16 @@ document ─▶│                                          │
            └──────────────────────────────────────────┘
         one forward pass PER (question, document) pair
 ```
+
+### Worked example
+Question: "How do I cancel my subscription and get a refund?" Two candidates from the demo corpus:
+
+| Candidate text | What the pair check sees | Toy score |
+|---|---|---|
+| "Refund refund refund. Refund policy. Refund rules." | Covers only the "refund" part of the question; no "cancel" | 0.2 |
+| "To cancel your subscription open Settings... A refund for the unused month is issued..." | Covers cancel, subscription and refund | 0.6667 |
+
+These are the real numbers from `cross_score` in the code below. Each score needed the question and the document together, so nothing could be computed for the documents in advance. With 2 candidates that is 2 model runs; with 50 candidates it is 50.
 
 Cost example: 1 question × 50 candidates = 50 forward passes. 1 question × 10 million documents = 10 million passes. That is why cross-encoders are used for **reranking** a shortlist, not for searching a whole corpus.
 
@@ -79,6 +99,12 @@ scores = reranker.predict(pairs)  # one float per pair
 - Comparing raw scores across different cross-encoder models. Score scales differ; only the ranking within one model is meaningful.
 - Using a model trained on web search for a very different domain without checking it on your own eval set.
 - Scoring one pair at a time instead of in batches, which wastes the GPU.
+
+## Recap
+If you remember only three things:
+- A cross-encoder reads the question and one document together and returns one relevance score.
+- It is more accurate than a bi-encoder but must run once per pair, so it only suits a shortlist.
+- Scores from different models are not comparable; only the ranking inside one model means something.
 
 ## Interview questions
 

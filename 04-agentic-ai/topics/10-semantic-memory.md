@@ -1,7 +1,9 @@
 # Semantic Memory
-> **Level:** Intermediate · **Reading time:** 5 min · **Phase:** 4 · Agentic AI
+> **Level:** Intermediate · **Reading time:** 6 min · **Phase:** 4 · Agentic AI
 
 **In one line:** Semantic memory stores stable facts (about the user, the world, or the domain) that stay true across conversations, such as "Asha's timezone is IST".
+
+**Before you start:** [Long-term Memory](09-long-term-memory.md). You should know that agents save information outside the model and load it into the prompt later.
 
 ## Explain it like I'm new
 You know that Paris is the capital of France, but you probably don't remember the day you learned it. That kind of knowledge, facts without the story of how you got them, is what psychologists call **semantic memory**. Remembering a specific event ("my trip to Paris last May") is **episodic memory** ([next topic](11-episodic-memory.md)).
@@ -12,6 +14,13 @@ For an agent, semantic memory is a profile or fact sheet:
 - About the environment: "The prod database is read-only for this agent".
 
 These facts are small, structured, and useful on almost every turn, so many systems load them into every prompt rather than searching for them.
+
+Words to know:
+- **Fact:** a small piece of information that stays true, like a name or a rule.
+- **Structured:** stored in labelled fields (a key and a value) rather than as a free paragraph.
+- **Key:** the label you look a fact up by, here `(subject, relation)`.
+- **Overwrite:** replace the old value with a new one under the same key.
+- **Prompt:** the text sent to the model on each call.
 
 ## How it works
 1. **Represent** facts in a structured form, for example `(subject, relation) -> value`: `("user", "timezone") -> "IST"`.
@@ -28,6 +37,16 @@ user      timezone    IST            user said       2026-10-01
 user      city        Delhi          user said       2026-10-20   <- replaced "Pune"
 domain    refund_days 30             policy doc      2026-09-15
 ```
+
+### Worked example
+This traces the `SemanticMemory` class from the code below.
+
+1. The user says they live in Pune. The agent runs `set("User", "city", "Pune")`. The key is stored in lower case: `("user", "city")`.
+2. The user later says they moved to Delhi. `set("user", "city", "Delhi")` uses the same key, so Delhi replaces Pune. No contradictory copy is left.
+3. `set("user", "timezone", "IST")` adds a second fact.
+4. `get("USER", "City")` finds `Delhi` because lookups are case-insensitive. `about("user")` returns `{'city': 'Delhi', 'timezone': 'IST'}`.
+
+The demo in `agent_memory.py` does the same with a name and timezone, and prints `{'name': 'Asha', 'timezone': 'IST'}`. That dict is pasted into the prompt as `Known facts about user: ...`.
 
 ## Code example
 From [`agent_memory.py`](../code/agent_memory.py):
@@ -73,6 +92,12 @@ To let the model write facts itself, give it a tool like `remember_fact(subject,
 - Letting the model infer and save guesses ("user is probably a manager") as facts.
 - No way for users to see or delete their stored facts.
 - Loading a huge fact sheet into every prompt.
+
+## Recap
+If you remember only three things:
+- Semantic memory holds stable facts, such as preferences and rules, without the story of how you learned them.
+- Store facts as key to value so a new value overwrites the old one.
+- Let users see and delete their facts, and never save guesses as facts.
 
 ## Interview questions
 **1. What is the difference between semantic and episodic memory in agents?**

@@ -1,10 +1,20 @@
 # HNSW
-> **Level:** Advanced · **Reading time:** 8 min · **Phase:** 1 — RAG Foundations
+> **Level:** Advanced · **Reading time:** 9 min · **Phase:** 1 — RAG Foundations
 
 **In one line:** HNSW (Hierarchical Navigable Small World) is a graph-based index that finds approximate nearest neighbours by hopping from point to closer point, starting on sparse "express" layers and finishing on a dense bottom layer.
 
+**Before you start:** [Vector Databases](10-vector-databases.md) and [Cosine Similarity](11-cosine-similarity.md). You should know what nearest neighbour search is, and that brute force checks every vector.
+
 ## Explain it like I'm new
 Think about travelling from a small village to a friend's house in another country. You do not walk street by street. You drive to a highway, take a flight to the right country, a train to the right city, then walk the last few streets. Each level is coarser and faster than the one below it.
+
+Words to know:
+- **Index:** a data structure that speeds up search by avoiding a full scan.
+- **ANN:** Approximate Nearest Neighbour search, fast but may miss a true best match.
+- **Graph, node, edge:** points joined by links; a node is a point (here, a vector) and an edge is a link.
+- **Greedy walk:** always step to the neighbour that is closest to the query.
+- **Recall:** the share of the true best matches the search actually finds.
+- **Query:** the question, turned into a vector.
 
 HNSW organizes vectors the same way.
 - Every vector is a **node** in a **graph**. A graph is a set of points connected by links (**edges**).
@@ -46,6 +56,14 @@ search: start A (L2) -> B is closer? yes -> drop to L1 -> D closer -> drop to L0
 | `M` | Links per node | Better recall, more memory, slower build |
 | `ef_construction` | Candidate list size when building | Better graph, slower build |
 | `ef` / `ef_search` | Candidate list size when searching | Better recall, slower queries |
+
+### Worked example
+The repo demo uses 200 vectors and 50 queries. Brute force compares each query with all 200 vectors (recall@1 = 1.00, 200 computations). The graph index (one layer, same beam search) does this:
+- `ef=2`: about 43 distance computations per query, but recall@1 is only 0.88.
+- `ef=8`: about 63 computations, recall@1 0.98.
+- `ef=32`: about 127 computations, recall@1 1.00.
+
+(recall@1 = how often the single best result is the true nearest vector.) So a small `ef` is cheap but misses more often. Raising `ef` buys accuracy with more work, still less than the 200 of brute force.
 
 ## Code example
 Real HNSW is too long for a lesson. [`code/rag_hnsw_ivf.py`](../code/rag_hnsw_ivf.py) builds a **single-layer** navigable graph (each node linked to its nearest neighbours plus a few random long links) and searches it with the same beam search HNSW uses on layer 0. It counts distance computations so you can compare with brute force.
@@ -97,6 +115,12 @@ FAISS equivalent: `faiss.IndexHNSWFlat(dim, 32)`.
 - Setting `ef` lower than `k`.
 - Very selective metadata filters on top of HNSW can break graph connectivity and hurt recall; check how your database handles [filtered search](20-metadata-filtering.md).
 - Expecting exact results. HNSW is approximate.
+
+## Recap
+If you remember only three things:
+- HNSW is a layered graph: sparse upper layers give long jumps, and the bottom layer holds every vector.
+- Search walks greedily down the layers, then runs a beam search on the bottom layer.
+- `ef_search` trades recall for speed, so measure recall against brute force.
 
 ## Interview questions
 **1. Explain HNSW in two sentences.**

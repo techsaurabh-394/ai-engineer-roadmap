@@ -1,14 +1,20 @@
 # Sliding Window Chunking
-> **Level:** Beginner · **Reading time:** 5 min · **Phase:** 1 — RAG Foundations
+> **Level:** Beginner · **Reading time:** 6 min · **Phase:** 1 — RAG Foundations
 
 **In one line:** Sliding window chunking makes fixed-size windows of text that move forward by a smaller step, so every border region appears inside at least one full window.
+
+**Before you start:** [Chunking](04-chunking.md) and [Recursive Chunking](05-recursive-chunking.md). You should know that a long document is cut into smaller pieces (chunks) before search.
 
 ## Explain it like I'm new
 Imagine reading a long scroll through a cardboard frame that shows 10 lines. You read, then slide the frame down by 5 lines, and read again. Every line is seen at least once, and lines near the edge of one view are in the middle of the next. That frame is the **window**. How far you slide it is the **stride** (or step).
 
-- **Window size**: how many words or tokens each chunk holds.
-- **Stride**: how far the next window starts after the previous one.
-- **Overlap** = window − stride. With window 10 and stride 5, neighbours share 5 units.
+Words to know:
+- **Chunk:** one small piece of a document that is stored and searched on its own.
+- **Token:** a small piece of text (often a word or part of a word) that a language model reads as one unit.
+- **Window size:** how many words or tokens each chunk holds.
+- **Stride:** how far the next window starts after the previous one.
+- **Overlap:** window − stride. With window 10 and stride 5, neighbours share 5 units.
+- **Top-k:** the k best-matching chunks a search returns.
 
 This fixes a real problem with simple cutting. If an important sentence lands on the border between two chunks, each chunk gets only half. With a sliding window, some window contains the whole sentence.
 
@@ -30,6 +36,15 @@ chunk 4:                   [w6 w7 w8 w9]
 ```
 
 Worked example: 1,000 tokens, window 200, stride 150 (overlap 50). Windows start at 0, 150, 300, 450, 600, 750 and 900. Window 750 ends at token 950, so one more window (900) is needed to reach the end. That is 7 chunks. With stride 200 (no overlap) windows start at 0, 200, 400, 600, 800: 5 chunks. Here, overlap costs 2 extra chunks (40% more).
+
+### Worked example
+Take the 10 words `w0 … w9` from the diagram above with window 4 and stride 2. The overlap is 4 − 2 = 2 words.
+1. Chunk 1 starts at word 0 and holds `w0 w1 w2 w3`.
+2. Move forward by the stride (2). Chunk 2 starts at word 2 and holds `w2 w3 w4 w5`.
+3. Chunk 3 starts at word 4: `w4 w5 w6 w7`. Chunk 4 starts at word 6: `w6 w7 w8 w9`.
+4. Chunk 4 reaches the last word, so we stop. That is 4 chunks.
+
+Now say the key fact is the pair `w3 w4`. A plain cut into `w0-w3` and `w4-w7` splits that pair across two chunks. Chunk 2 above holds both words together, so a search can find the whole fact.
 
 ## Code example
 From [`code/rag_chunkers.py`](../code/rag_chunkers.py):
@@ -75,6 +90,12 @@ chunks = splitter.split_text(long_text)
 - Returning several near-identical windows in the top-k and wasting the prompt. Deduplicate or merge neighbours.
 - Counting in characters and cutting words in half.
 - Forgetting to store each window's start position, which you need for citations and merging.
+
+## Recap
+If you remember only three things:
+- A sliding window cuts text into fixed-size chunks and moves forward by a stride smaller than the window.
+- Overlap = window − stride, and it keeps facts near a border whole in at least one chunk.
+- More overlap means more chunks to store and more near-duplicate search results.
 
 ## Interview questions
 **1. How do window size and stride relate to overlap?**

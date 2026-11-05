@@ -1,14 +1,24 @@
 # Short-term Memory
-> **Level:** Beginner · **Reading time:** 5 min · **Phase:** 4 · Agentic AI
+> **Level:** Beginner · **Reading time:** 6 min · **Phase:** 4 · Agentic AI
 
 **In one line:** Short-term memory is the recent conversation (and tool results) that you re-send to the model on every turn, usually trimmed to a window so it fits the context.
+
+**Before you start:** [Memory](07-memory.md) and the [context window](../../03-llm-concepts/topics/08-context-window.md). You should know that the model forgets between calls, so you re-send the conversation.
 
 ## Explain it like I'm new
 Think of a sticky note on your desk during a phone call. You jot down the last few things the caller said so you can follow along. When the note fills up, you erase the oldest lines. You don't keep a full transcript on the note, just what you need right now.
 
-In an agent, short-term memory (also called **working memory** or the **conversation buffer**) is the list of messages for the current session: user messages, assistant replies, tool calls, and tool results. On each turn, you send this list to the model again. That's how it "remembers" what you said two messages ago.
+In an agent, short-term memory is the list of messages for the current session: user messages, assistant replies, tool calls, and tool results. It is also called **working memory** or the **conversation buffer**. On each turn, you send this list to the model again. That's how it "remembers" what you said two messages ago.
 
-The problem: the list keeps growing. Each turn costs more tokens, and eventually it doesn't fit in the [context window](../../03-llm-concepts/topics/08-context-window.md). So you need a policy for trimming.
+The problem: the list keeps growing. Each turn costs more tokens (small chunks of text that models count and charge by). Eventually it doesn't fit in the [context window](../../03-llm-concepts/topics/08-context-window.md), which is the most text the model can read at once. So you need a policy for trimming.
+
+Words to know:
+- **Turn:** one round of the conversation.
+- **Buffer:** the list of recent messages you keep.
+- **Sliding window:** keep only the newest N messages, and let older ones slide out.
+- **Summary:** a short text that stands in for older messages.
+- **System prompt:** the standing instructions you give the model at the start.
+- **Deque:** a Python list-like container. With `maxlen`, it drops the oldest item when full.
 
 ## How it works
 Common policies:
@@ -51,6 +61,23 @@ for i in range(5):
 print([m["content"] for m in stm.messages()])   # ['message 2', 'message 3', 'message 4']
 ```
 
+### Worked example
+Five messages go into a window of size 3. Real output of the code above:
+
+```text
+['message 2', 'message 3', 'message 4']
+```
+
+Trace it: messages 0 and 1 went in first. When message 3 arrived, message 0 slid out. When message 4 arrived, message 1 slid out. Only the newest three remain, and that is exactly what you would re-send to the model.
+
+Now the summary + window version. Take 8 messages `m0` to `m7` and call `compact(messages, keep_last=3)`. Real output:
+
+```text
+['Summary of earlier conversation: 5 earlier messages about deployment', 'm5', 'm6', 'm7']
+```
+
+The last 3 messages stay word for word. The 5 older ones (`m0` to `m4`) become one summary line. Details in those 5 may be lost, but the gist stays and the prompt is shorter.
+
 A summary + window version (the summarizer would be an LLM call in practice):
 
 ```python
@@ -77,6 +104,13 @@ def compact(messages, keep_last=6, summarize=lambda msgs: f"{len(msgs)} earlier 
 - Splitting a tool call from its result.
 - Counting messages instead of tokens when one message is huge (a pasted document).
 - Never summarizing, so the agent forgets a decision made 30 turns ago.
+- Thinking trimmed messages are saved somewhere. A message that falls out of the window is gone unless you stored it elsewhere.
+
+## Recap
+If you remember only three things:
+- Short-term memory is the recent conversation that you re-send on every turn.
+- Trim it with a sliding window, a summary plus recent messages, or a token budget.
+- Always keep the system prompt and the goal, and trim a tool call together with its result.
 
 ## Interview questions
 **1. What is a buffer window memory?**

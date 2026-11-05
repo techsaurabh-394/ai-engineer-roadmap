@@ -1,8 +1,10 @@
 # SQL RAG
 
-> **Level:** Advanced · **Reading time:** 7 min · **Phase:** 2 — Advanced RAG
+> **Level:** Advanced · **Reading time:** 9 min · **Phase:** 2 — Advanced RAG
 
 **In one line:** SQL RAG (also called text-to-SQL) lets an LLM turn a question into a SQL query, runs it on your database, and uses the result rows as context for the answer.
+
+**Before you start:** [What is RAG](../../01-rag-foundations/topics/01-what-is-rag.md). Some basic SQL (`SELECT`, `WHERE`, `COUNT`) helps but is not required; each query below is explained.
 
 ## Explain it like I'm new
 
@@ -12,6 +14,13 @@ Structured data (tables with columns and types) needs a different kind of retrie
 
 This is powerful and risky. You are letting a model write code that runs against real data. Safety is not optional: read-only access, validation and limits.
 
+Words to know:
+- **SQL:** the language used to ask a database questions, for example `SELECT COUNT(*) FROM orders`.
+- **Schema:** the list of tables and columns in a database, with their types.
+- **Query:** one SQL request that returns rows.
+- **Read-only user:** a database login that can look at data but cannot change or delete it.
+- **`LIMIT`:** a SQL clause that caps how many rows come back.
+
 ## How it works
 
 1. **Schema context:** give the LLM the relevant tables and columns (for big databases, retrieve only relevant tables first).
@@ -20,6 +29,17 @@ This is powerful and risky. You are letting a model write code that runs against
 4. **Execute** with a read-only database user and a timeout.
 5. **On error,** send the error message back to the LLM to fix the query (cap retries, e.g. 2).
 6. **Answer** from the rows, and show the SQL to the user for transparency.
+
+### Worked example
+The database has three orders: two shipped to Germany (`DE`, amounts 120 and 80) and one to France (`FR`, 50). The question is *"How many orders did we ship to Germany in September 2026?"*
+
+1. **Schema context:** the LLM is shown `orders(id, country, amount, shipped_on)`.
+2. **Generate SQL:** it writes `SELECT COUNT(*), SUM(amount) FROM orders WHERE country = 'DE' AND shipped_on LIKE '2026-09-%'`. In plain words: count the rows and add up the amounts where the country is DE and the date starts with 2026-09.
+3. **Validate:** it is one `SELECT`, no forbidden words, and only the `orders` table. There is no `LIMIT`, so the code adds `LIMIT 100`.
+4. **Execute:** rows 1 and 2 match. The result is `[(2, 200.0)]`: 2 orders, 200 total.
+5. **Answer:** the LLM says "2 orders, worth 200 in total" and shows the SQL so a person can check it.
+
+If step 3 had seen `DROP TABLE orders`, it would have raised an error and nothing would have run.
 
 ```mermaid
 flowchart LR
@@ -92,6 +112,12 @@ Regex validation is a teaching aid, not a security boundary. **The real protecti
 - No `LIMIT` or timeout, so one query scans billions of rows.
 - Not showing the SQL. Users and reviewers need to verify how a number was produced.
 - Ambiguous columns (`status = 3`). Add descriptions and allowed values to the schema prompt.
+
+## Recap
+If you remember only three things:
+- Counting and summing need a database query, not a similarity search, so the LLM writes SQL.
+- Safety comes first: a read-only user is the real protection, and validation, `LIMIT` and timeouts are extra layers.
+- Show the generated SQL to users, and evaluate by comparing result rows, not SQL text.
 
 ## Interview questions
 

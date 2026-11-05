@@ -1,12 +1,20 @@
 # Euclidean Distance
-> **Level:** Beginner · **Reading time:** 5 min · **Phase:** 1 — RAG Foundations
+> **Level:** Beginner · **Reading time:** 6 min · **Phase:** 1 — RAG Foundations
 
 **In one line:** Euclidean distance is the straight-line distance between two points, so smaller means more similar and 0 means identical.
+
+**Before you start:** [Embeddings](02-embeddings.md) and [Cosine Similarity](11-cosine-similarity.md). You should know that an embedding is a vector (a list of numbers) and that cosine compares direction.
 
 ## Explain it like I'm new
 Put two pins on a paper map and stretch a ruler between them. The ruler reading is the Euclidean distance. It is the "as the crow flies" distance you learned with Pythagoras: for a right triangle with sides 3 and 4, the long side is 5.
 
 An [embedding](02-embeddings.md) is a point in a space with many dimensions. The same ruler idea works in 384 or 1,536 dimensions; you just add more squared terms.
+
+Words to know:
+- **Distance:** a number saying how far apart two things are; lower means more alike.
+- **Dimension:** one position in a vector. A 384-number embedding has 384 dimensions.
+- **L2 distance:** another name for Euclidean distance.
+- **Normalized:** scaled so the vector has length 1.
 
 Unlike [cosine similarity](11-cosine-similarity.md), Euclidean distance cares about **length** too. Two vectors that point the same way but have different lengths are "far apart" by Euclidean distance, yet "identical" by cosine. It is also called the **L2 distance** (after the L2 norm). Vector databases and FAISS often call it `L2`.
 
@@ -29,6 +37,15 @@ y
 Worked examples:
 - `a = [0, 0]`, `b = [3, 4]`: `√(9 + 16) = √25 = 5`.
 - `a = [1, 2, 3]`, `b = [2, 4, 6]`: differences `[−1, −2, −3]`, squares `[1, 4, 9]`, sum 14, distance `√14 ≈ 3.742`. Cosine said these are identical in direction (1.0). Euclidean says they are 3.7 apart, because `b` is twice as long.
+
+### Worked example
+A query `q = [0, 0]` is compared with three stored vectors `[3, 4]`, `[1, 1]` and `[0, 2]`.
+1. `[3, 4]`: squares 9 + 16 = 25, distance √25 = 5.
+2. `[1, 1]`: squares 1 + 1 = 2, distance √2 ≈ 1.414.
+3. `[0, 2]`: squares 0 + 4 = 4, distance √4 = 2.
+4. Smaller is closer, so the order is `[1, 1]`, `[0, 2]`, `[3, 4]`.
+
+If you used squared distance (2, 4, 25) the order would be the same, which is why libraries skip the square root.
 
 **Squared distance:** many libraries skip the square root. Ranking is the same (the square root keeps order), and it is cheaper.
 
@@ -87,6 +104,12 @@ distances, ids = index.search(xq, 4)                   # 4 nearest per query
 - Comparing raw L2 scores across different models or collections.
 - Forgetting that FAISS `IndexFlatL2` returns *squared* distances.
 - Using L2 on unnormalized text embeddings and getting results biased by vector length.
+
+## Recap
+If you remember only three things:
+- Euclidean (L2) distance is the straight-line distance between two vectors; smaller means more similar.
+- Unlike cosine it is affected by vector length, but on normalized vectors it ranks results the same as cosine.
+- Sort distances ascending, and remember many libraries return squared distance.
 
 ## Interview questions
 **1. How do Euclidean distance and cosine similarity differ?**

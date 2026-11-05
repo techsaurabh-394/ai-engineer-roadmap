@@ -1,7 +1,9 @@
 # Human in the Loop
-> **Level:** Intermediate · **Reading time:** 6 min · **Phase:** 4 · Agentic AI
+> **Level:** Intermediate · **Reading time:** 7 min · **Phase:** 4 · Agentic AI
 
 **In one line:** Human in the loop (HITL) means the agent pauses at chosen points so a person can approve, edit, or reject what it is about to do.
+
+**Before you start:** [Agent Loops](12-agent-loops.md) and [Function Calling](03-function-calling.md). You should know how the loop runs tools that the model requests.
 
 ## Explain it like I'm new
 At many companies, a junior employee can draft a payment, but a manager must click "approve" before money moves. The junior does the work; the manager signs off on the risky part. That's human in the loop.
@@ -13,6 +15,13 @@ Forms of HITL:
 - **Edit** the action's arguments (fix the email text) and then run it.
 - **Answer a question** the agent asks when it is unsure ("Which account did you mean?").
 - **Review the plan** before execution starts ([Planning Agents](05-planning-agents.md)).
+
+Words to know:
+- **Irreversible:** cannot be undone once done, like a sent email.
+- **Gate:** a check in your code that must pass before a tool runs.
+- **Preview:** a clear display of what is about to happen, with the exact arguments.
+- **Approval fatigue:** people click yes without reading because they are asked too often.
+- **Checkpoint:** saved state that lets a paused agent resume later.
 
 ## How it works
 1. **Classify tools by risk** in code: read-only, reversible write, irreversible / external.
@@ -36,6 +45,16 @@ sequenceDiagram
     Tool-->>Code: sent
     Code-->>Agent: tool result: "sent"
 ```
+
+### Worked example
+The pipeline from [`agent_multi.py`](../code/agent_multi.py) writes a draft and then wants to run `send_email`, which is marked risky. Two runs with the same goal (`agents and email it`), different human answers:
+
+| Human says | What the code does | Real result |
+|---|---|---|
+| Yes | logs `human approved send_email`, runs the tool | status `done`, log ends `send_email -> EMAIL SENT: ...` |
+| No | logs `human rejected send_email`, skips the tool | status `rejected`, no email sent |
+
+The draft is written in both runs, because writing text is not risky. Only the irreversible step waits for a person.
 
 For long waits (hours or days), the agent's state must be **saved** so it can resume later; frameworks call this checkpointing or interrupts.
 
@@ -86,6 +105,12 @@ Note the default is **No**: if the human just presses Enter, nothing risky happe
 - Default-yes behaviour on timeout or empty input.
 - Not returning the rejection reason to the agent, so it retries the same thing.
 - No saved state, so the agent loses its work while waiting for a human.
+
+## Recap
+If you remember only three things:
+- Human in the loop means the agent pauses before risky actions so a person can approve, edit, or reject.
+- Enforce the gate in code, show the exact arguments, and make the default answer No.
+- Gate only what matters, or people stop reading and approve everything.
 
 ## Interview questions
 **1. Which agent actions should require human approval?**

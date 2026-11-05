@@ -1,7 +1,17 @@
 # Decoder Only Models
-> **Level:** Intermediate · **Reading time:** 6 min · **Phase:** 3 · LLM Concepts
+> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 3 · LLM Concepts
 
 **In one line:** A decoder-only model is a transformer that reads text left to right and is trained to predict the next token; this is the design behind GPT, Claude, Llama, and most chat LLMs.
+
+**Before you start:** [Transformer Architecture](01-transformer-architecture.md) and [Self Attention](02-self-attention.md).
+
+**Words to know:**
+- **Decoder:** the half of the transformer that writes output one token at a time.
+- **Autoregressive:** each new token is predicted from all the tokens before it, then added to the sequence.
+- **Causal mask:** a rule that stops each position from looking at later positions.
+- **Pretraining:** the first, very large training run, where the model learns to predict the next token on lots of text.
+- **Loss (cross-entropy):** a number measuring how surprised the model was by the right answer. Training tries to make it smaller.
+- **Base model vs chat model:** a base model only continues text. A chat model has extra training to follow instructions.
 
 ## Explain it like I'm new
 Think of the autocomplete on your phone, scaled up massively. You type "See you", it suggests "tomorrow". A decoder-only model does the same thing, one token at a time, and then feeds its own guess back in to guess the next one. Doing this over and over produces whole paragraphs, code, or answers.
@@ -37,6 +47,19 @@ flowchart LR
     P["prompt tokens"] --> M[decoder-only transformer] --> N[next token]
     N -- append --> P
 ```
+
+### Worked example
+Training on the text `The cat sat`:
+1. One pass over the three tokens, with the causal mask on.
+2. At position 0 (`The`) the target is `cat`. At position 1 (`cat`, which sees `The cat`) the target is `sat`. Both are checked in the same pass.
+3. Each position sees only itself and earlier tokens, so none can peek at its own answer. The code example below prints these weight rows: `[1.0, 0.0, 0.0]`, `[0.33, 0.67, 0.0]`, `[0.25, 0.25, 0.5]`. The zeros mark blocked (future) tokens.
+
+Generating with the toy decoder in `llm_decoding.py`:
+1. The toy model starts from a `<start>` marker (not part of the output) and picks `the`.
+2. `the` is appended, and the model picks `cat`.
+3. Then `sat`, then `<end>` (a stop token). The real printed output is `['the', 'cat', 'sat', '<end>']`.
+
+Training reads everything at once. Generation must go one token at a time.
 
 **From base model to chat model.** A pretrained "base" model only continues text. To follow instructions, it is further trained with **instruction tuning** (supervised examples) and preference methods such as **RLHF** (reinforcement learning from human feedback).
 
@@ -83,6 +106,12 @@ print(tok.decode(out[0]))
 - Forgetting that the prompt and the answer share the same [context window](08-context-window.md).
 - Calling a base model and expecting chat behaviour. Use the instruction-tuned version and its chat template.
 - Assuming output is deterministic. With sampling, it varies unless you use greedy decoding (and even then, hardware can add tiny differences).
+
+## Recap
+If you remember only three things:
+- A decoder-only model predicts the next token, appends it, and repeats. This is autoregressive generation.
+- The causal mask means each token sees only earlier tokens, which lets training learn from every position in one pass.
+- Prompt and answer share one sequence and one context window. A base model only continues text, while a chat model is further tuned to follow instructions.
 
 ## Interview questions
 **1. What is the causal mask and why is it needed?**

@@ -1,12 +1,20 @@
 # MCP Client
-> **Level:** Intermediate · **Reading time:** 9 min · **Phase:** 6 — MCP
+> **Level:** Intermediate · **Reading time:** 11 min · **Phase:** 6 — MCP
 
 **In one line:** An MCP client is the part of an AI app that connects to one MCP server, negotiates capabilities and sends its requests.
+
+**Before you start:** [MCP server](02-mcp-server.md). You should know what a server offers and the order of the handshake.
 
 ## Explain it like I'm new
 Picture a phone. The phone app is the host. Inside it, each contact connection is a client. You do not talk to the cell tower yourself; the client handles the call setup.
 
 The host (Claude Desktop, an IDE, your agent) contains the LLM and the user interface. For each server, it creates one client. The client's job is plumbing: open the transport, do the handshake, send requests, match replies to requests by `id`, and hand results back. The host's job is judgment: which tools to show the model and whether the user approves a call.
+
+**Words to know:**
+- **Host:** the app the user sees (a chat app or editor). It contains one client per server.
+- **Client:** the part of the host that talks to one server.
+- **inputSchema:** a description of the arguments a tool accepts, written as JSON Schema.
+- **Untrusted text:** a tool result is text from someone else. Never treat it as instructions.
 
 ## How it works
 1. **Read config.** The host reads a list of servers (see the config below).
@@ -40,6 +48,18 @@ Claude Desktop reads `claude_desktop_config.json`. Each entry under `mcpServers`
 }
 ```
 Build first: `cd 06-mcp/code/hello-mcp-server && npm ci && npm run build`. The config file location depends on your OS; see the [docs](https://modelcontextprotocol.io/).
+
+### Worked example
+One full round trip, from the model asking for a tool to the answer coming back.
+
+1. The client starts the server, sends `initialize` and then `notifications/initialized`.
+2. The client sends `tools/list`. It gets `add_numbers` with its `inputSchema` and converts it into the format your model API expects.
+3. The user asks: "What is 2 plus 40?" The model replies with a request to call `add_numbers` with `a` = 2 and `b` = 40.
+4. If approval is on, the client shows the call to the user. The user says yes.
+5. The client sends `tools/call`. The server runs the tool and returns the text `42`.
+6. The client hands `42` back to the model as untrusted text, and the model writes: "2 plus 40 is 42."
+
+The model never talks to the server directly. The client sits in the middle, so it is the place to ask for approval and to check results.
 
 ## Code example
 The in-process toy client from [`code/mcp_mini_jsonrpc.py`](../code/mcp_mini_jsonrpc.py):
@@ -79,6 +99,15 @@ const result = await client.callTool({ name: "add_numbers", arguments: { a: 2, b
 - Connecting to many servers and sending the model hundreds of tools. Tool choice gets worse; filter them.
 - Ignoring `isError` in the result.
 - Passing secrets to servers you do not trust.
+- Letting the model call a tool without any approval step for actions that change things. Reading is lower risk than writing or deleting.
+- Treating a tool result as instructions. A result can contain text that tries to steer the model.
+
+## Recap
+
+**If you remember only three things:**
+- The client connects, handshakes, lists what the server offers, and passes tools to the model.
+- The model asks, the client sends `tools/call`, and the client feeds the result back.
+- The client is the control point: ask for approval and treat results as untrusted text.
 
 ## Interview questions
 1. **Host vs client?**

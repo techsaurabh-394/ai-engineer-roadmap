@@ -1,8 +1,10 @@
 # GraphRAG
 
-> **Level:** Advanced · **Reading time:** 8 min · **Phase:** 2 — Advanced RAG
+> **Level:** Advanced · **Reading time:** 9 min · **Phase:** 2 — Advanced RAG
 
 **In one line:** GraphRAG builds an entity graph from your documents, groups it into communities, pre-writes a summary for each community, and uses those summaries to answer broad "what are the main themes?" questions.
+
+**Before you start:** [Knowledge Graph RAG](13-knowledge-graph-rag.md). GraphRAG builds on the idea of a graph of entities and relations.
 
 ## Explain it like I'm new
 
@@ -11,6 +13,14 @@ Imagine you get 10,000 customer emails and your boss asks, "What are people main
 That is the problem GraphRAG, from a 2024 Microsoft Research paper, targets. Normal RAG is good at **local** questions ("What is the refund window?") where the answer lives in a few chunks. It is bad at **global** or **sensemaking** questions ("What are the main themes in this dataset?") because no single chunk holds the answer.
 
 GraphRAG builds a knowledge graph from text with an LLM, then runs **community detection** — an algorithm (the paper uses **Leiden**) that finds groups of nodes more connected to each other than to the rest. Each community gets an LLM-written **community summary**. Communities are hierarchical: big groups contain smaller ones, so you get summaries at different levels of detail.
+
+Words to know:
+- **Entity graph:** entities (things) as nodes and their relationships as edges, extracted from text by an LLM.
+- **LLM (large language model):** the AI that reads and writes text.
+- **Community:** a group of nodes more connected to each other than to the rest.
+- **Community detection:** an algorithm that finds those groups. Leiden is the one the paper uses.
+- **Local vs global question:** local needs a few chunks ("What is the refund window?"). Global needs the whole corpus ("What are the main themes?").
+- **Map-reduce:** do a small job on each piece (map), then combine the results (reduce).
 
 ## How it works
 
@@ -39,6 +49,17 @@ flowchart TD
 ```
 
 The open-source implementation also offers a **local search** mode that starts from entities in the question and gathers their neighbours, relations and source chunks — closer to [Knowledge Graph RAG](13-knowledge-graph-rag.md).
+
+### Worked example
+The code example uses seven links between small topics. A global question: "What are customers complaining about?"
+
+1. **Graph:** refund, billing and invoice link to each other. Courier, late delivery and tracking link to each other. App, crash and login link to each other.
+2. **Communities:** three separate groups, one per cluster.
+3. **Summaries:** each group gets a summary. In the toy it is a fixed template; in real GraphRAG an LLM writes it.
+4. **Map-reduce:** each summary gives a partial answer (map), and they are joined (reduce). Real output: `Main themes: Theme about billing, invoice, refund; Theme about courier, late delivery, tracking; Theme about app, crash, login`.
+
+Searching for chunks would have given a few emails. The pre-built summaries cover everything.
+
 
 ## Code example
 
@@ -104,6 +125,12 @@ Real community detection weighs edges and finds denser sub-groups inside connect
 - Underestimating indexing cost and time on large corpora.
 - Never re-indexing, so summaries go stale as documents change.
 - Skipping evaluation. Global answers are hard to grade; use rubric-based comparison against a baseline.
+
+## Recap
+If you remember only three things:
+- GraphRAG answers global, "what are the main themes?" questions that no single chunk contains.
+- It builds an entity graph, finds communities, and pre-writes an LLM summary for each one.
+- Indexing is expensive (many LLM calls), so use normal RAG for specific fact lookups.
 
 ## Interview questions
 

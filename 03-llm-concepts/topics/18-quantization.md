@@ -3,6 +3,13 @@
 
 **In one line:** Quantization stores a model's weights as small integers (8-bit or 4-bit) instead of 16-bit decimals, so the model needs far less memory and often runs faster, at the cost of a small rounding error.
 
+**Before you start:** [Transformer Architecture](01-transformer-architecture.md), to know that a model is mostly a large set of weights.
+
+**Words to know:**
+- **Weight:** one learned number inside the model.
+- **Bit:** a binary digit. An 8-bit integer has 256 possible values, and a 4-bit one has 16.
+- **Scale:** the size of one integer step, used to turn integers back into decimals.
+
 ## Explain it like I'm new
 Think of a photo. A raw photo keeps millions of subtle colours. Save it as a smaller file with fewer colours, and most people cannot tell the difference. But if the photo has a very bright sun in one corner, a poor palette can wash out everything else.
 
@@ -36,6 +43,13 @@ flowchart LR
 **PTQ vs QAT.** *Post-training quantization* (PTQ) shrinks a model that is already trained. It is cheap and the usual choice. *Quantization-aware training* (QAT) simulates rounding during training so the model learns to cope. It is better at very low bits, but costs a training run.
 
 **Ecosystem names.** You will see **GGUF** (the file format used by [llama.cpp](https://github.com/ggml-org/llama.cpp) for running locally), **GPTQ** ([paper](https://arxiv.org/abs/2210.17323)) and **AWQ** ([paper](https://arxiv.org/abs/2306.00978)), which are PTQ methods that choose roundings carefully using sample data. Formats and tools change fast, so check each project's current docs.
+
+### Worked example
+Take a block whose biggest weight is 0.13 and quantize to signed 8-bit (largest integer 127):
+1. Scale = 0.13 / 127 ≈ 0.001024.
+2. A weight of 0.05 becomes round(0.05 / 0.001024) = 49.
+3. Dequantize: 49 × 0.001024 ≈ 0.0502. The error is about 0.0002, at most scale / 2.
+4. With 4-bit (largest integer 7) the scale is 0.13 / 7 ≈ 0.0186, so the same weight lands on 3 and comes back as about 0.056. The steps are bigger, so the error is bigger.
 
 ## Code example
 The demo uses only the standard library and a seeded random generator. Run it: `python 03-llm-concepts/code/llm_quantize.py`
@@ -93,6 +107,12 @@ The tests in [`test_llm_quantize.py`](../code/test_llm_quantize.py) check that t
 - Judging quality by "it still talks fine". Run your own test set on both versions.
 - Assuming 4-bit is always the best choice. 8-bit is safer when you have the memory.
 - Mixing up the file format (GGUF) with the method (GPTQ, AWQ).
+
+## Recap
+If you remember only three things:
+- Quantization stores weights as small integers plus a scale, cutting memory by 2x to 4x.
+- The cost is rounding error, which grows as the bit count falls and when outliers stretch the scale.
+- Use a separate scale per small group, and test your real task after quantizing.
 
 ## Interview questions
 <details>

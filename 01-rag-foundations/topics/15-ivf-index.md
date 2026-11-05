@@ -1,7 +1,9 @@
 # IVF Index
-> **Level:** Advanced · **Reading time:** 7 min · **Phase:** 1 — RAG Foundations
+> **Level:** Advanced · **Reading time:** 9 min · **Phase:** 1 — RAG Foundations
 
 **In one line:** An IVF (Inverted File) index groups vectors into clusters, then at query time searches only the few clusters closest to the query instead of every vector.
+
+**Before you start:** [Vector Databases](10-vector-databases.md) and [HNSW](14-hnsw.md). You should know that a vector is a list of numbers that stands for the meaning of a chunk of text, and that an index is a structure that makes searching faster.
 
 ## Explain it like I'm new
 Imagine a huge library with no catalogue. To find a book about volcanoes you would check every shelf. Now imagine the books are sorted into sections: Geology, Cooking, History. You walk to Geology (and maybe Geography, just in case) and search only there. You skip 95% of the library.
@@ -12,6 +14,14 @@ IVF does this with vectors:
 - At query time, compare the query with the centroids only, pick the `nprobe` closest clusters, and do exact search inside them.
 
 The risk: the true nearest neighbour might sit just across a cluster border, in a cluster you did not probe. Probing more clusters (bigger `nprobe`) lowers that risk and costs more time.
+
+Words to know:
+- **Vector:** a list of numbers that represents the meaning of a piece of text.
+- **Index:** an extra structure built ahead of time so searches do not have to look at everything.
+- **Nearest neighbour:** the stored vector closest to the query vector.
+- **Cluster / centroid:** a group of similar vectors, and the centre point that represents the group.
+- **`nlist` / `nprobe`:** how many clusters you build, and how many clusters you search per query.
+- **Recall:** the share of searches that still find the true best answer.
 
 ## How it works
 **Training and adding**
@@ -39,6 +49,15 @@ nprobe=4 -> search everything      (= brute force)
 Worked example from the demo: 200 vectors in 4 clusters, `nlist = 4`. With `nprobe = 1`, a query costs 4 centroid comparisons + about 50 vectors ≈ 54 distance computations, versus 200 for brute force. On the demo's random queries, recall@1 is 0.98 at `nprobe = 1` and 1.00 at `nprobe = 2`. (Toy data; real recall depends on your data and settings.)
 
 A common heuristic is to make `nlist` grow with the square root of the collection size (a few times `√N` for N vectors), then tune `nprobe` while measuring recall.
+
+### Worked example
+Picture the diagram above with 200 vectors split into 4 clusters (A to D) of about 50 each, and a query `q` that lies between A and B.
+
+1. Compare `q` with the 4 centroids. A is closest, then B. That costs 4 comparisons.
+2. With `nprobe = 1`, search only the roughly 50 vectors in A. Total is about 54 comparisons instead of 200. If the true best match is in B, you miss it. That is the risk.
+3. With `nprobe = 2`, search A and B (about 100 vectors). Total is about 104. Now the match in B is found.
+
+The demo agrees: recall@1 goes from 0.98 (`nprobe = 1`, 54 computations) to 1.00 (`nprobe = 2`, 104 computations).
 
 ## Code example
 From [`code/rag_hnsw_ivf.py`](../code/rag_hnsw_ivf.py):
@@ -93,10 +112,17 @@ D, I = index.search(xb[:5], 4)
 | = `nlist` | Same as brute force | Exact |
 
 ## Common mistakes
+- Mixing up the two settings: `nlist` is fixed when you build the index, while `nprobe` can be changed on every search.
 - Training on too few vectors (k-means needs many points per centroid) or on unrepresentative data.
 - Forgetting to call `train()` before `add()` in FAISS.
 - Leaving `nprobe = 1` (FAISS default) and wondering why recall is poor.
 - Choosing `nlist` far too large for the data, giving many tiny or empty clusters.
+
+## Recap
+If you remember only three things:
+- IVF sorts vectors into clusters with k-means, then searches only the closest few clusters.
+- `nprobe` is the speed and recall dial: more clusters searched means better recall and slower queries.
+- Searching every cluster equals brute force, so IVF trades a little accuracy for a lot of speed.
 
 ## Interview questions
 **1. How does an IVF index speed up search?**

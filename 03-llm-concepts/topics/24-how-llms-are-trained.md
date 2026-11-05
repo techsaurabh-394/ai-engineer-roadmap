@@ -3,6 +3,8 @@
 
 **In one line:** An LLM first learns language by guessing the next token over a huge pile of text (pretraining), then learns to follow instructions from example answers (SFT), then learns what people prefer from ranked answers (RLHF or DPO).
 
+**Before you start:** [How an LLM Works End to End](21-how-an-llm-works-end-to-end.md). You should know that a model turns text into scores for the next token.
+
 ## Explain it like I'm new
 Think of raising a very well-read assistant in three stages:
 
@@ -145,6 +147,13 @@ Do not pretrain unless you have the data and compute budget. Do not use preferen
 - Using a learning rate copied from pretraining for fine-tuning; it is usually much smaller.
 - Judging progress by training loss alone. Always track held-out loss to catch overfitting.
 - Treating RLHF as teaching new knowledge. It mostly shapes style and behaviour.
+
+## Recap
+
+**If you remember only three things:**
+- Pretraining teaches next-token prediction. The loss is minus the log of the probability given to the right token, so p = 0.25 gives 1.386.
+- Gradient descent nudges every parameter a little to lower the loss, and backpropagation works out which way each should move.
+- After pretraining, SFT teaches the model to follow instructions (loss only on the answer), and RLHF or DPO tune it toward preferred answers.
 
 ## Interview questions
 **1. What is the pretraining objective and what does cross-entropy measure?**

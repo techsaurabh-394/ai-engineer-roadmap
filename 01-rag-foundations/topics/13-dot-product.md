@@ -1,7 +1,9 @@
 # Dot Product
-> **Level:** Beginner · **Reading time:** 5 min · **Phase:** 1 — RAG Foundations
+> **Level:** Beginner · **Reading time:** 6 min · **Phase:** 1 — RAG Foundations
 
 **In one line:** The dot product multiplies two vectors element by element and adds the results; a bigger number means the vectors are more aligned and/or longer.
+
+**Before you start:** [Embeddings](02-embeddings.md) and [Cosine Similarity](11-cosine-similarity.md). You should know that an embedding is a vector (a list of numbers) and what vector length means.
 
 ## Explain it like I'm new
 Imagine scoring a restaurant for a friend. Your friend cares about taste (weight 3), price (weight 1) and distance (weight 2). The restaurant rates 5, 2 and 4. The score is `3·5 + 1·2 + 2·4 = 25`. That is a dot product: preferences × features, summed.
@@ -9,6 +11,12 @@ Imagine scoring a restaurant for a friend. Your friend cares about taste (weight
 In search, the query [embedding](02-embeddings.md) plays the "preferences" role and each document embedding the "features" role. Dimensions where both are large and positive push the score up. Dimensions with opposite signs pull it down.
 
 The dot product mixes two things: **direction** (do they point the same way?) and **length** (how big are the vectors?). Formally, `a · b = ‖a‖ × ‖b‖ × cos(angle)`. So it is [cosine similarity](11-cosine-similarity.md) multiplied by both lengths.
+
+Words to know:
+- **Dot product:** multiply matching positions of two vectors and add the results.
+- **Vector length:** how long the vector's arrow is, `√(a₁² + a₂² + …)`.
+- **Normalized:** scaled so the vector has length 1.
+- **Inner product:** another name for the dot product, used by FAISS (`IP`).
 
 It is also the cheapest similarity to compute: one multiply and one add per dimension, no square roots. Hardware (CPUs, GPUs) is very fast at it, which is why vector databases love it.
 
@@ -34,6 +42,16 @@ Worked examples (all in [`code/rag_vector_math.py`](../code/rag_vector_math.py))
 - Cosine: `cos(q, d0) ≈ 0.996`, `cos(q, d1) ≈ 0.832` → d0 wins because it points the same way.
 
 **After normalizing** every vector to length 1, the dot product *is* cosine similarity. That is why many systems normalize embeddings once at ingest, then use the fast dot product at query time. In FAISS this is called **inner product** (`IP`).
+
+### Worked example
+The repo demo ranks three document vectors for a query. Here is the same idea by hand with `q = [1, 0]` and documents `d0 = [1, 0]`, `d1 = [3, 3]`, `d2 = [0, 1]`.
+1. `q · d0 = 1·1 + 0·0 = 1`.
+2. `q · d1 = 1·3 + 0·3 = 3`.
+3. `q · d2 = 1·0 + 0·1 = 0`.
+4. Ranking by dot product: `d1`, `d0`, `d2`. `d1` wins even though it points 45° away from the query, because it is long.
+5. Cosine would give `d0` = 1.0, `d1` ≈ 0.707, `d2` = 0.0, so `d0` wins. Normalize first and dot product agrees with cosine.
+
+This matches the repo's own result: `rag_vector_math.py` ranks by cosine as `[0, 1, 2]` but by dot as `[1, 0, 2]`, and prints "dot prefers the long vector [5,5]; cosine ignores length."
 
 ## Code example
 ```python
@@ -80,6 +98,12 @@ scores, ids = index.search(q, 5)           # scores are cosine similarities
 - Normalizing stored vectors but forgetting the query vector.
 - Assuming dot product scores have a fixed range. Without normalization they are unbounded.
 - Confusing "inner product" and "dot product" — for real-valued vectors they are the same thing.
+
+## Recap
+If you remember only three things:
+- The dot product multiplies matching numbers and adds them, so it grows with both alignment and length.
+- Dot product = cosine × both lengths, so on normalized vectors the two give the same ranking.
+- It is the cheapest metric, but on unnormalized vectors long ones can win for every query.
 
 ## Interview questions
 **1. What is the relationship between dot product and cosine similarity?**

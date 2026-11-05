@@ -1,8 +1,10 @@
 # Knowledge Graph RAG
 
-> **Level:** Advanced · **Reading time:** 7 min · **Phase:** 2 — Advanced RAG
+> **Level:** Advanced · **Reading time:** 8 min · **Phase:** 2 — Advanced RAG
 
 **In one line:** Knowledge-graph RAG stores facts as connected entities and relations, and retrieves by following those connections instead of (or as well as) matching similar text.
+
+**Before you start:** [What is RAG](../../01-rag-foundations/topics/01-what-is-rag.md) and [Ensemble Retrieval](12-ensemble-retrieval.md). Graph retrieval is often used alongside normal vector search.
 
 ## Explain it like I'm new
 
@@ -11,6 +13,14 @@ Think of a family tree. "Who is my mother's brother's daughter?" is hard to answ
 A **knowledge graph (KG)** stores facts as **triples**: `(subject, relation, object)`, for example `(billing-service, owned_by, Payments Team)`. Subjects and objects are **entities** (nodes). Relations are **edges**. Together they form a graph you can walk.
 
 Vector RAG finds passages that *look like* the question. It struggles with **multi-hop** questions, where the answer requires chaining facts that live in different documents. "Who manages the team that owns the billing service?" needs two hops: billing-service → owned_by → Payments Team → managed_by → Priya. No single chunk may contain both facts. A graph makes those hops explicit.
+
+Words to know:
+- **Knowledge graph (KG):** facts stored as a network of connected things.
+- **Triple:** one fact written as (subject, relation, object), such as (billing-service, owned_by, Payments Team).
+- **Entity:** a "thing" in the graph (a node), such as a service, team or person.
+- **Edge:** a labelled link between two entities.
+- **Multi-hop:** a question that needs several links followed in a row.
+- **Entity resolution:** treating different spellings of one thing as a single node.
 
 ## How it works
 
@@ -35,6 +45,17 @@ graph LR
 ```
 
 Starting at `billing-service` with `max_hops=2` reaches Payments Team, Priya, postgres-main and eu-west-1, but not Marco (3 hops).
+
+### Worked example
+Question: "Who manages the team that owns billing-service?" The graph holds these triples: billing-service owned_by Payments Team; Payments Team managed_by Priya; billing-service depends_on postgres-main; postgres-main hosted_in eu-west-1. Real outputs from `adv_graph_rag.py`:
+
+1. **Entity linking:** the question names `billing-service`, so `find_entities` returns `['billing-service']`.
+2. **Hop 1:** follow `owned_by` from billing-service to Payments Team.
+3. **Hop 2:** follow `managed_by` from Payments Team to Priya. `follow_path` returns `['Priya']`.
+4. **Context for the LLM:** with `max_hops=2` it also gathers `postgres-main` and its `eu-west-1` link, and turns the four edges into plain sentences (see output in the code example).
+
+Neither fact alone answers the question. The graph chains them.
+
 
 ## Code example
 
@@ -87,6 +108,12 @@ LangChain and LlamaIndex both have graph integrations that can ask an LLM to wri
 - Traversing too many hops, which explodes into hundreds of loosely related facts.
 - Trusting LLM-extracted triples without spot-checking. Wrong edges produce confident wrong answers.
 - Letting an LLM run write queries (CREATE, DELETE) against the graph.
+
+## Recap
+If you remember only three things:
+- A knowledge graph stores facts as (subject, relation, object) triples that you can walk.
+- It shines on multi-hop questions where the answer chains facts from different places.
+- Entity resolution and a hop limit keep the graph clean and the results small.
 
 ## Interview questions
 

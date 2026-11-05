@@ -1,7 +1,9 @@
 # LangSmith
-> **Level:** Intermediate · **Reading time:** 7 min · **Phase:** 7 — Production AI
+> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 7 — Production AI
 
 **In one line:** LangSmith is a hosted tool from the LangChain team that records every step of an LLM app run so you can debug, evaluate and monitor it.
+
+**Before you start:** [Monitoring](07-monitoring.md). You should know what an LLM call and a RAG pipeline are.
 
 ## Explain it like I'm new
 Think of a flight recorder. When something odd happens, you replay what the plane did. For an LLM app, odd things are common: a wrong answer, a slow reply, an agent stuck in a loop. Without a record, you guess.
@@ -9,6 +11,9 @@ Think of a flight recorder. When something odd happens, you replay what the plan
 A **trace** is the full record of one request. It is made of **runs** (also called spans): the retrieval step, the prompt, the model call, each tool call. Each run stores inputs, outputs, timing, token counts and errors. You open the trace in a web UI and see exactly what the model was given.
 
 LangSmith also supports **datasets** (saved examples), **evaluations** (score your app on a dataset), prompt management and monitoring dashboards. It works with LangChain and LangGraph, and it can also trace code that does not use them.
+
+**Words to know:**
+-
 
 ## How it works
 1. You turn on tracing, usually with environment variables and an API key.
@@ -28,6 +33,13 @@ flowchart LR
   S3 --> T
   T --> UI[Debug, evaluate, monitor]
 ```
+
+### Worked example
+A user asks "refunds" and your app answers wrongly. With tracing on:
+1. LangSmith stores one trace for the request, with runs for `retrieve` and `answer` (as in the stdlib sketch below).
+2. You open the trace and see `retrieve` returned `['doc about refunds']`, and `answer` built `Based on doc about refunds`.
+3. If the retrieved text was wrong, retrieval is at fault. If it was right but the answer was wrong, generation is at fault.
+4. You save this failing example into a dataset. After your fix you run an evaluation to check it stays fixed.
 
 ## Code example
 The concept in stdlib: a decorator that records a run's name, inputs, output and time. Real tracers do this and send the data to a server.
@@ -72,6 +84,13 @@ Setup details change between versions, so follow the current [LangSmith document
 - Tracing but not saving failures into a dataset.
 - Committing the API key to Git.
 - Leaving full tracing on at high volume without checking cost or sampling options.
+
+## Recap
+
+**If you remember only three things:**
+- A trace is the record of one request, made of runs (steps) with inputs, outputs, timing and errors.
+- Look at the trace to see whether retrieval or generation failed, instead of guessing.
+- Save failures into a dataset and re-run evaluations after every change.
 
 ## Interview questions
 **1. What is a trace?**

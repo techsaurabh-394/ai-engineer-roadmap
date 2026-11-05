@@ -1,7 +1,9 @@
 # ReAct Pattern
-> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 4 · Agentic AI
+> **Level:** Intermediate · **Reading time:** 9 min · **Phase:** 4 · Agentic AI
 
 **In one line:** ReAct (Reason + Act) is an agent pattern where the model alternates between writing a short thought, taking an action with a tool, and reading the observation, until it can answer.
+
+**Before you start:** [What is an AI Agent?](01-what-is-an-ai-agent.md) and [Tool Calling](02-tool-calling.md). You should know the agent loop and that tools are functions your code runs.
 
 ## Explain it like I'm new
 Think of how a detective solves a case. "I think the butler was in the kitchen" (thought). "Let me check the kitchen camera" (action). "The camera shows nobody at 9 pm" (observation). "So the butler lied; let me check his phone records" (next thought). Each clue changes the next step.
@@ -11,6 +13,14 @@ The ReAct paper (Yao et al., 2022) showed that mixing **reasoning traces** (thou
 - Acting only can wander, because the model doesn't plan what to look for next.
 
 Interleaving the two lets the model plan, gather facts, and adjust.
+
+Words to know:
+- **Thought:** a short line of text where the model says what it is thinking.
+- **Action:** the tool the model chooses to use, plus its input.
+- **Observation:** the result of the tool, written into the transcript by your code.
+- **Transcript:** the running text of the question, thoughts, actions, and observations so far.
+- **Chain-of-thought:** prompting the model to write out its reasoning step by step before answering.
+- **Parse:** read the model's text and pull out the tool name and input.
 
 ## How it works
 The model writes text in a fixed format, and your code parses it:
@@ -43,7 +53,25 @@ flowchart TD
     A -- Final Answer --> F[return answer]
 ```
 
-**ReAct today.** The original paper used plain text and parsing. Modern APIs have native tool calling, so the "Action" is a structured tool call instead of text. The idea is the same: think, act, observe, repeat. Most agent frameworks (for example LangGraph's prebuilt ReAct agent) implement this loop.
+### Worked example
+Question: *"What is double the population of France?"* The demo `python 04-agentic-ai/code/agent_react.py` ran two tools. Its real printed steps were:
+
+```text
+{'type': 'action', 'tool': 'lookup', 'args': {'topic': 'france'}, 'observation': 'France has a population of about 68 million. Capital: Paris.'}
+{'type': 'action', 'tool': 'multiply', 'args': {'a': 68, 'b': 2}, 'observation': '136'}
+{'type': 'final', 'answer': "Double France's population is about 136 million."}
+```
+
+Trace it:
+1. **Thought:** I don't know the population. **Action:** `lookup` with `{"topic": "france"}`.
+2. Your code runs `lookup`. **Observation:** about 68 million.
+3. **Thought:** now I just need to double it. **Action:** `multiply` with `{"a": 68, "b": 2}`.
+4. Your code runs `multiply`. **Observation:** `136`.
+5. **Thought:** I have what I need. **Final Answer:** about 136 million.
+
+The second action depends on the first observation. A fixed script could not have known the number 68 in advance. (The model here is scripted, so the thoughts are the ones in the transcript at the top of this section.)
+
+**ReAct today.** The original paper used plain text and parsing. Modern APIs have native tool calling, so the "Action" is a structured tool call instead of text. The idea is the same: think, act, observe, repeat. Most agent frameworks implement this loop (for example LangGraph's prebuilt ReAct agent).
 
 ## Code example
 From [`agent_react.py`](../code/agent_react.py), runnable offline with a scripted model:
@@ -110,6 +138,13 @@ result = agent.invoke({"messages": [{"role": "user", "content": "What is 6 times
 - Brittle parsing that crashes on small format changes. Return parse errors as observations instead.
 - Letting the model invent the Observation line itself. Stop generation before "Observation:" (or use native tool calling), and only your code writes observations.
 - Huge observations that bury earlier thoughts. Truncate or summarize tool outputs.
+- Thinking the Thought line is a tool. It is only text for planning, and nothing runs until there is an Action.
+
+## Recap
+If you remember only three things:
+- ReAct repeats Thought, Action, Observation until the model writes a Final Answer.
+- Real observations from tools keep the reasoning honest, and the reasoning picks the next action.
+- Cap the steps, return parse errors as observations, and let only your code write observations.
 
 ## Interview questions
 **1. What problem does ReAct solve compared with chain-of-thought alone?**

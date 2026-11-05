@@ -1,8 +1,10 @@
 # AutoGen
 
-> **Level:** Advanced · **Reading time:** 8 min · **Phase:** 5 — Frameworks
+> **Level:** Advanced · **Reading time:** 10 min · **Phase:** 5 — Frameworks
 
 **In one line:** AutoGen is Microsoft's framework for multi-agent systems where agents talk to each other by sending messages.
+
+**Before you start:** You should know what an agent is ([What is an AI agent](../../04-agentic-ai/topics/01-what-is-an-ai-agent.md)), the multi-agent idea ([Multi-agent systems](../../04-agentic-ai/topics/13-multi-agent-systems.md)) and the critic pattern ([Reflection](../../04-agentic-ai/topics/06-reflection.md)).
 
 ## Explain it like I'm new
 
@@ -10,13 +12,16 @@ Think of a group chat. A coder posts a script, a reviewer replies with problems,
 
 The key idea is that agents are message-passing actors. Control flow comes from who talks to whom, and when the conversation stops.
 
-Vocabulary (check the docs, since the project has had major version changes and several APIs):
+**Words to know (check the docs, since the project has had major version changes and several APIs):**
 
 - **Agent** — an entity that receives messages and replies, backed by an LLM, a human or code.
 - **Team / group chat** — several agents taking turns under a rule, such as round-robin.
 - **Termination condition** — a rule that ends the chat (a keyword, a max number of messages).
 - **Tool** — a function an agent can call, including running generated code.
 - **Human proxy** — an agent that asks a person for input.
+- **Actor** — a small unit that keeps its own state and only talks by sending and receiving messages.
+- **Round-robin** — taking turns in a fixed order: A, B, A, B, and so on.
+- **History** — the shared list of all messages so far.
 
 ## How it works
 
@@ -34,6 +39,21 @@ flowchart LR
 ```
 
 **Mapping:** this is the multi-agent pattern from [Phase 4](../../04-agentic-ai/README.md), with the shared message history as memory. The reviewer loop is the "critic" or reflection pattern.
+
+### Worked example
+
+The code example below has a fake coder and a fake reviewer taking turns. I ran it. The history grows like this:
+
+1. Start: `['write a function']`.
+2. Message 0, coder. No message contains the word "fix", so it adds `code v1`.
+3. Message 1, reviewer. The last message is not `code v2`, so it adds `please fix the bug`.
+4. Message 2, coder. A message now contains "fix", so it adds `code v2`.
+5. Message 3, reviewer. The last message is `code v2`, so it adds `APPROVED`.
+6. The word `APPROVED` is the termination condition, so the chat stops.
+
+Final history: `['write a function', 'code v1', 'please fix the bug', 'code v2', 'APPROVED']`.
+
+Without step 6, the loop would only stop at `max_msgs=10`. That is why you always set a termination rule. Check the current docs for exact AutoGen classes, since they changed between versions.
 
 ## Code example
 
@@ -73,6 +93,15 @@ print(chat("write a function", [coder, reviewer]))
 - Running model-written code directly on your machine.
 - Letting history grow without limit, which exceeds the context window.
 - Using old tutorials from a different major version.
+- Confusing a group chat with one agent that talks to itself. Each agent has its own role and instructions, and they only share the history.
+
+## Recap
+
+If you remember only three things:
+
+- In AutoGen, agents work by sending messages to each other, so the conversation is the program.
+- It fits research and prototypes where agents debate, review, or write and run code.
+- Run any generated code in a sandbox. For fixed, predictable workflows, plain code or a graph is easier to test.
 
 ## Interview questions
 

@@ -1,7 +1,9 @@
 # What is RAG?
-> **Level:** Beginner · **Reading time:** 6 min · **Phase:** 1 — RAG Foundations
+> **Level:** Beginner · **Reading time:** 8 min · **Phase:** 1 — RAG Foundations
 
 **In one line:** RAG (Retrieval-Augmented Generation) means you first *find* the relevant pieces of your own documents, then give only those pieces to a language model so it answers from them.
+
+**Before you start:** Nothing, this is a starting point.
 
 ## Explain it like I'm new
 Think of an open-book exam. A student who studied a year ago (the model) knows a lot, but not your company handbook or last week's release notes. RAG hands the student the right two pages from the book before they answer, and asks them to point at the line they used.
@@ -11,6 +13,14 @@ A **large language model (LLM)** is a program trained on a huge amount of text t
 **Retrieval** means searching a collection and getting back the most relevant items. **Generation** means the LLM writing text. RAG joins the two: retrieve first, generate second. The model now has evidence in front of it, and you can show the user which source each sentence came from (a **citation**).
 
 Why not paste every document into the prompt? Prompts have a size limit (the **context window**), long prompts cost more and are slower, and models are worse at using facts buried in the middle of very long inputs (see "Lost in the Middle" below). Retrieval keeps the prompt small and focused.
+
+Words to know:
+- **LLM (large language model):** a program that writes text by predicting the next word.
+- **Retrieval:** searching a collection and returning the most relevant items.
+- **Chunk:** a small piece of a document, such as a paragraph.
+- **Vector / embedding:** a list of numbers that stands for the meaning of a text.
+- **Vector database:** storage that can quickly find the vectors closest to a given vector.
+- **Top-k:** the *k* best matches, for example the top 2.
 
 ## How it works
 RAG has two phases.
@@ -37,6 +47,19 @@ flowchart LR
     V --> S --> P[Prompt with sources] --> L[LLM] --> A[Answer + citations]
   end
 ```
+
+### Worked example
+The repo demo has a few tiny documents. We ask: "Why use multi-stage builds?" Here is what each step does.
+1. **Ingest (already done):** the Docker notes were split into chunks, each chunk was turned into a vector, and all vectors were stored in an **index** (the searchable store the program builds).
+2. **Embed the question:** the question becomes a vector with the same method.
+3. **Search:** the program compares the question vector with every chunk vector and keeps the closest one.
+4. **Generate:** the best chunk goes into the prompt as evidence. Offline, with no LLM, the demo just prints it.
+
+Real output:
+```text
+[1] (docker.txt) Multi-stage builds compile an application in one stage and copy only the final artifact into a small runtime image. This keeps production images small and reduces the attack surface. Docker Compose describes several services in one YAML file and starts them together.
+```
+The `[1]` is the top match, and `docker.txt` is its source, which is what a **citation** points to. The chunk also contains an unrelated sentence about Docker Compose, a sign that chunk size matters (see [Chunking](04-chunking.md)).
 
 ## Code example
 This repo already has the full loop in one file: [`code/mini_rag.py`](../code/mini_rag.py). The core is four steps:
@@ -83,6 +106,12 @@ docs = store.similarity_search("Where should refresh tokens be stored?", k=3)
 - Bad chunking: pieces too big (vague matches) or too small (no context).
 - Using a different embedding model for questions than for documents.
 - Applying user permissions after generation instead of before retrieval.
+
+## Recap
+If you remember only three things:
+- RAG means retrieve the relevant chunks first, then let the LLM answer from them.
+- Ingest happens once per document; every question then embeds the question, searches, builds a prompt and generates.
+- RAG reduces hallucinations and gives citations, but it does not remove wrong answers.
 
 ## Interview questions
 **1. Why use RAG instead of putting all documents in the prompt?**

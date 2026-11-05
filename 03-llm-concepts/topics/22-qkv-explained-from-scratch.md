@@ -3,6 +3,8 @@
 
 **In one line:** Each token's vector is multiplied by three different learned matrices to make a Query (what I am looking for), a Key (how I advertise myself) and a Value (what I hand over), and attention is a Query-versus-Key match that decides how much of each Value to blend.
 
+**Before you start:** [Self Attention](02-self-attention.md), because this page slows that one down. You should know that attention blends information from other tokens.
+
 ## Explain it like I'm new
 [Self Attention](02-self-attention.md) introduced Q, K and V in a few lines. This page slows down and builds them from zero.
 
@@ -52,7 +54,7 @@ flowchart LR
   V --> O
 ```
 
-### A full worked example
+### Worked example: a full walk-through
 Three tokens, `the animal it`, with `d_model = 4` and `d_k = 2`. Every number below is computed by [`llm_qkv.py`](../code/llm_qkv.py) (run `python 03-llm-concepts/code/llm_qkv.py`). The matrices are hand-picked, where a real model would have learned them.
 
 ```text
@@ -153,6 +155,13 @@ Q, K, V attention is how a transformer mixes information across tokens. For a sh
 - Swapping the roles: `Q Kᵀ` compares queries with keys. Values never enter the score.
 - Believing a heat table proves the model "reasoned" this way. It shows information flow in one head of one layer.
 - Assuming a bigger `d_k` is free. It raises parameters and compute, and the `sqrt(d_k)` scale is needed to keep softmax well behaved.
+
+## Recap
+
+**If you remember only three things:**
+- Q is what a token looks for, K is how it advertises itself, and V is what it hands over.
+- Scores come from Q matching K. The output is a weighted blend of V.
+- The three matrices W_q, W_k, W_v are learned. The attention weights are computed fresh for every input.
 
 ## Interview questions
 **1. Why use separate W_q, W_k and W_v instead of one shared projection?**

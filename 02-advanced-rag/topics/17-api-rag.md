@@ -1,8 +1,10 @@
 # API RAG
 
-> **Level:** Advanced · **Reading time:** 6 min · **Phase:** 2 — Advanced RAG
+> **Level:** Advanced · **Reading time:** 8 min · **Phase:** 2 — Advanced RAG
 
 **In one line:** API RAG fetches live data from an API at question time (weather, order status, stock levels) and gives the response to the LLM as context.
+
+**Before you start:** [What is RAG](../../01-rag-foundations/topics/01-what-is-rag.md) and [SQL RAG](16-sql-rag.md). Tool calling is explained on this page, but [Tool Calling](../../04-agentic-ai/topics/02-tool-calling.md) goes deeper.
 
 ## Explain it like I'm new
 
@@ -15,6 +17,13 @@ Retrieval does not have to mean a vector database. Any source that returns relev
 - The JSON response is trimmed and put in the prompt.
 - The LLM answers from it.
 
+Words to know:
+- **API:** a defined way for one program to ask another for data.
+- **JSON:** a plain-text format for structured data, like `{"status": "shipped"}`.
+- **Tool calling:** the model outputs a tool name plus arguments, and your code runs it.
+- **Trim:** keep only the fields you need from a big response.
+- **Prompt injection:** hidden instructions inside data that try to steer the model.
+
 This is where RAG and agents meet. A single fixed API call is RAG. Letting the model choose among many tools in a loop is an agent (Phase 4).
 
 ## How it works
@@ -25,6 +34,15 @@ This is where RAG and agents meet. A single fixed API call is RAG. Letting the m
 4. Call the API with a timeout; handle errors and retries.
 5. **Trim** the response to the fields that matter (APIs return far more than needed).
 6. Build the prompt: question + trimmed data + "answer only from this data".
+
+### Worked example
+A user `u1` asks *"Where is my order A123?"*. The code below does exactly this.
+
+1. **Route:** a pattern finds `A123` in the question and picks the tool `get_order` with `order_id="A123"`.
+2. **Check permission:** the order's owner is `u1`, and the asker is `u1`, so it goes ahead. If another user had asked, the answer would be `not found`.
+3. **Call the API:** it returns six fields: `owner`, `status`, `carrier`, `eta`, `warehouse_bin`, `internal_margin`.
+4. **Trim:** only `status`, `carrier` and `eta` are kept. The internal margin and bin number never reach the model.
+5. **Prompt:** the LLM sees `Data: {"status": "shipped", "carrier": "DHL", "eta": "2026-10-27"}` and the question, and answers from that.
 
 ```mermaid
 sequenceDiagram
@@ -101,6 +119,12 @@ Here a regex router picks the tool. In production you would usually let the LLM 
 - Dumping the whole JSON response into the prompt (cost, noise, and data leaks such as internal fields).
 - Trusting text fields from APIs. User-written content (ticket bodies, reviews) can contain prompt-injection instructions; treat it as data.
 - No timeout or fallback, so one slow API freezes the whole answer.
+
+## Recap
+If you remember only three things:
+- API RAG fetches live data at question time instead of searching pre-indexed text.
+- Use the user's own permissions, validate the arguments, and trim the response before prompting.
+- Add timeouts and fallbacks, and treat text fields from APIs as data, never as instructions.
 
 ## Interview questions
 

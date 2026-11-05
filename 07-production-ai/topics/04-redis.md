@@ -1,7 +1,9 @@
 # Redis
-> **Level:** Intermediate · **Reading time:** 9 min · **Phase:** 7 — Production AI
+> **Level:** Intermediate · **Reading time:** 10 min · **Phase:** 7 — Production AI
 
-**In one line:** Redis is a very fast in-memory data store, used in AI apps for caching answers, rate limiting and sharing state.
+**In one line:** Redis is a very fast in-memory data store, used in AI apps for caching answers, rate limiting (capping how many requests a user can make) and sharing state.
+
+**Before you start:** [FastAPI for AI](01-fastapi-for-ai.md). You should know what an LLM call costs in time and money.
 
 ## Explain it like I'm new
 Think of a sticky note on your monitor. Looking up a phone number in a big directory takes a minute. If you wrote it on a note, you read it in a second. But sticky notes get old, so you throw them out after a while.
@@ -13,6 +15,9 @@ Key ideas:
 - **TTL (time to live):** the key deletes itself after N seconds. This stops stale answers from living forever.
 - **Exact cache:** the key is a hash of the exact prompt. Same text, same hit.
 - **Semantic cache:** you embed the question and look for a *similar* earlier question. It catches rephrasing but can return a wrong answer if the similarity threshold is too loose.
+
+**Words to know:**
+-
 
 ## How it works
 1. A request arrives. Normalize the question (trim, lowercase).
@@ -30,6 +35,19 @@ flowchart LR
   L --> W[SET with TTL]
   W --> A
 ```
+
+### Worked example
+This follows the repo demo `prod_cache_ratelimit.py`, with a cache and a limiter.
+
+The cache sees the questions `hi`, `hi`, `bye`, `hi`:
+1. `hi`: miss, so compute and store it.
+2. `hi`: hit, served from the cache.
+3. `bye`: miss, so compute and store it.
+4. `hi`: hit again.
+
+That is 2 hits out of 4 lookups, and the demo prints `hit rate: 0.5`.
+
+The rate limiter is a token bucket holding 3 tokens. Each request spends one. Five requests arrive almost at once, so the first three find a token and the last two do not. The demo prints `[True, True, True, False, False]`: 3 of 5 allowed.
 
 ## Code example
 A stdlib exact cache with TTL and hit-rate stats. See [`prod_cache_ratelimit.py`](../code/prod_cache_ratelimit.py) (tests in `test_prod_cache_ratelimit.py`).
@@ -91,6 +109,13 @@ For a semantic cache, store an embedding next to each answer and search by vecto
 - Caching error responses.
 - A semantic threshold picked by guess, with no test on real queries.
 - Treating Redis as the only copy of important data. It is a cache first.
+
+## Recap
+
+**If you remember only three things:**
+- A cache answers repeat questions from memory instead of paying for another LLM call.
+- Always set a TTL, and put the model, prompt version and tenant in the key.
+- A rate limiter caps requests; the demo allowed 3 of 5.
 
 ## Interview questions
 **1. Exact vs semantic cache?**

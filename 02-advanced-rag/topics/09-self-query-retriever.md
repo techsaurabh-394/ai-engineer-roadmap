@@ -1,8 +1,10 @@
 # Self Query Retriever
 
-> **Level:** Intermediate · **Reading time:** 6 min · **Phase:** 2 — Advanced RAG
+> **Level:** Intermediate · **Reading time:** 7 min · **Phase:** 2 — Advanced RAG
 
 **In one line:** A self-query retriever uses an LLM to split a natural-language question into a search phrase plus structured metadata filters, then runs both.
+
+**Before you start:** [Metadata](../../01-rag-foundations/topics/09-metadata.md) and [Metadata Filtering](../../01-rag-foundations/topics/20-metadata-filtering.md). Self-query is metadata filtering where an LLM writes the filter for you.
 
 ## Explain it like I'm new
 
@@ -11,6 +13,14 @@ You tell a shop assistant, "I want running shoes under $100 in size 42." A good 
 Most documents in a RAG system have **metadata**: structured fields such as `author`, `year`, `product`, `department`, `language`. Pure vector search ignores these. Ask "security policies updated after 2023" and the embedding of "after 2023" barely matters; you get old policies that are semantically similar.
 
 A self-query retriever asks an LLM to read the question and output two things: a **semantic query** (what the text should be about) and a **filter** (structured conditions on metadata). The vector store then searches only among documents that pass the filter. "Self-query" means the system writes its own structured query.
+
+Words to know:
+- **Metadata:** facts about a document, such as its year, author or region, stored next to its text.
+- **Filter:** a condition that keeps only documents whose metadata matches (for example, year greater than 2023).
+- **Semantic query:** the part of the question about meaning, used for similarity search.
+- **Vector store:** a database that finds text by meaning using embeddings (lists of numbers that capture meaning).
+- **Schema:** the list of metadata fields you allow, with their types.
+- **LLM (large language model):** the AI that reads and writes text.
 
 ## How it works
 
@@ -28,6 +38,21 @@ flowchart LR
     V --> S[(Vector store:<br/>filter then search)]
     S --> R[Chunks]
 ```
+
+### Worked example
+Question: "security policies updated after 2023 for the EU team". The code example below has three documents:
+
+| Document | year | region |
+|---|---|---|
+| Password rotation every 90 days. | 2022 | EU |
+| Security policy: MFA required for all staff. | 2024 | EU |
+| Security policy: VPN for remote work. | 2024 | US |
+
+1. The LLM turns the question into a query `security policy` and filters `year > 2023`, `region = EU`. Suppose it also invents `colour = red`.
+2. **Validate:** `colour` is not in the schema, so it is dropped.
+3. **Filter:** the 2022 document fails `year > 2023`. The US document fails `region = EU`. One document is left.
+4. **Search** that pool for "security policy". The real output of the code is `['Security policy: MFA required for all staff.']`.
+
 
 ## Code example
 
@@ -82,6 +107,12 @@ print([d["text"] for d in self_query(parsed)])
 - Letting the LLM control permission filters. Add tenant and access filters in code, after parsing.
 - No fallback when the filter returns zero results.
 - Vague schema descriptions. Tell the LLM the allowed values ("region: one of EU, US, APAC").
+
+## Recap
+If you remember only three things:
+- A self-query retriever has an LLM split a question into a search phrase plus metadata filters.
+- Always validate the filter against your schema, and never let the LLM control access permissions.
+- Have a fallback for when the filter matches nothing.
 
 ## Interview questions
 

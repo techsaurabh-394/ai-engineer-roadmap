@@ -1,8 +1,10 @@
 # OpenAI Agents SDK
 
-> **Level:** Intermediate · **Reading time:** 9 min · **Phase:** 5 — Frameworks
+> **Level:** Intermediate · **Reading time:** 11 min · **Phase:** 5 — Frameworks
 
 **In one line:** The OpenAI Agents SDK is a small Python library with three main ideas: an Agent (model plus instructions plus tools), a Runner that runs the agent loop, and handoffs between agents.
+
+**Before you start:** You should understand what a tool call is ([Tool calling](../../04-agentic-ai/topics/02-tool-calling.md)) and the agent loop ([Agent loops](../../04-agentic-ai/topics/12-agent-loops.md)).
 
 ## Explain it like I'm new
 
@@ -10,7 +12,7 @@ Think of a help desk. A front-desk person answers simple questions and, for bill
 
 It keeps the number of concepts low. You do not write the loop. The Runner calls the model, runs any tools it asks for, feeds results back, and stops when the model gives a final answer.
 
-Vocabulary:
+**Words to know:**
 
 - **Agent** — a model, instructions (system prompt) and a list of tools.
 - **Tool** — usually a Python function; its signature and docstring describe it to the model.
@@ -19,6 +21,8 @@ Vocabulary:
 - **Guardrail** — a check on inputs or outputs that can stop a run.
 - **Tracing** — a record of each model call and tool call in a run.
 - **Session** — stored conversation history (memory) across runs.
+- **System prompt** — standing instructions given to the model before the user's message.
+- **Docstring** — the text in triple quotes under a Python function that explains what it does.
 
 ## How it works
 
@@ -38,6 +42,18 @@ flowchart TD
 ```
 
 **Mapping:** this is the ReAct-style agent loop from [Phase 4](../../04-agentic-ai/README.md), packaged. Handoffs are the multi-agent routing pattern. Sessions are conversation memory.
+
+### Worked example
+
+The scripted fake model in the code example below plays the role of the real LLM. I ran it with the input `"What time is it in Paris?"`. Here is the message list at each turn.
+
+1. Start: `messages = [user: "What time is it in Paris?"]`.
+2. Turn 1. The last message is from the user, so the fake model replies `{"tool": "get_time", "args": {"city": "Paris"}}`. That is a request to run a tool.
+3. The runner calls `get_time(city="Paris")`, which returns `"12:00 in Paris"`. It appends `tool: "12:00 in Paris"` to the messages.
+4. Turn 2. The last message is now from the tool, so the model replies `{"final": "It is 12:00 in Paris"}`.
+5. The runner sees `final` and returns it. The printed output is `It is 12:00 in Paris`.
+
+The loop took 2 turns. `max_turns=5` would have stopped it with an error if the model kept asking for tools. A real SDK does the same, with a real model. Check the current docs for exact imports.
 
 ## Code example
 
@@ -90,6 +106,15 @@ Tools, handoffs and guardrails are added through `Agent` options; see the docs f
 - No turn limit.
 - Giving one agent too many tools instead of splitting roles.
 - Skipping guardrails on tools that change data.
+- Mixing up a *tool* with a *handoff*. A tool runs a function and returns a result to the same agent. A handoff passes the conversation to a different agent.
+
+## Recap
+
+If you remember only three things:
+
+- Three ideas: an Agent (model plus instructions plus tools), a Runner that runs the loop, and handoffs that pass work to another agent.
+- It is a good fit for tool-using agents and simple handoffs with little code, and it has built-in tracing.
+- For complex branching or durable saved state, a graph framework fits better. Check the docs if you use non-OpenAI models.
 
 ## Interview questions
 

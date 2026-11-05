@@ -1,7 +1,9 @@
 # Model Context Protocol
-> **Level:** Beginner · **Reading time:** 9 min · **Phase:** 6 — MCP
+> **Level:** Beginner · **Reading time:** 11 min · **Phase:** 6 — MCP
 
 **In one line:** The Model Context Protocol (MCP) is an open standard that lets any AI app talk to any tool or data source through one shared message format.
+
+**Before you start:** [Tool calling](../../04-agentic-ai/topics/02-tool-calling.md). You should already know that an LLM can ask an app to run a function for it.
 
 ## Explain it like I'm new
 Think of a USB-C port. Before it, every device had its own charger. After it, one cable fits many devices.
@@ -14,6 +16,12 @@ Three words you need:
 - **Server:** a small program that exposes capabilities.
 
 A server can offer three kinds of things (called **primitives**): **tools** (actions), **resources** (data to read) and **prompts** (reusable templates).
+
+**Words to know:**
+- **JSON-RPC:** a tiny message format. A request names a `method` and `params`. The reply carries the same `id`.
+- **Transport:** the pipe the messages travel through, such as stdio (a local program's input and output) or HTTP.
+- **Capability:** a feature a side says it supports, such as `tools`.
+- **Handshake:** the first exchange where both sides say hello and agree on what they support.
 
 ## How it works
 1. The host starts a client for each configured server.
@@ -40,6 +48,29 @@ flowchart LR
 | Tools | The **model** | The LLM decides when to call them |
 | Resources | The **application** | The app decides what data to attach |
 | Prompts | The **user** | The user picks them (like slash commands) |
+
+### Worked example
+Let us trace one tiny session with the toy in [`code/mcp_mini_jsonrpc.py`](../code/mcp_mini_jsonrpc.py). The client wants to add 2 and 40 using a tool. Every line below is a real message printed by the toy (`>>` is client to server, `<<` is the reply).
+
+**Step 1. Say hello.**
+```
+>> {"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-06-18", "capabilities": {}, "clientInfo": {"name": "mini-client", "version": "0.1.0"}}}
+<< {"jsonrpc": "2.0", "id": 1, "result": {"protocolVersion": "2025-06-18", "capabilities": {"tools": {"listChanged": false}, "resources": {}, "prompts": {}}, "serverInfo": {"name": "mini-mcp", "version": "0.1.0"}}}
+```
+The reply has `id` 1, so we know it answers request 1. The server says it supports tools, resources and prompts.
+
+**Step 2. Confirm.** The client sends a notification. It has no `id`, so there is no reply.
+```
+>> {"jsonrpc": "2.0", "method": "notifications/initialized"}
+<< (nothing)
+```
+
+**Step 3. Use a tool.** The client sends `tools/call` (request `id` 3 in the full demo, after a `tools/list` as `id` 2).
+```
+>> {"jsonrpc": "2.0", "id": 3, "method": "tools/call", "params": {"name": "add_numbers", "arguments": {"a": 2, "b": 40}}}
+<< {"jsonrpc": "2.0", "id": 3, "result": {"content": [{"type": "text", "text": "42"}], "isError": false}}
+```
+The text `42` goes back to the model. That is all MCP is: a few small JSON messages in a fixed order.
 
 ## Code example
 The runnable toy in [`code/mcp_mini_jsonrpc.py`](../code/mcp_mini_jsonrpc.py) shows the real message shapes without a network. Here is the first request and reply:
@@ -72,6 +103,13 @@ The version string changes over time. Check the [current spec](https://modelcont
 - Mixing up host, client and server.
 - Trusting any server you find online. A server runs code with your permissions.
 - Assuming A2A and MCP compete. MCP connects agents to tools; A2A connects agents to agents.
+- Mixing up the three primitives. A **tool** is an action the model runs. A **resource** is data the app attaches. A **prompt** is a template the user picks.
+
+## Recap
+**If you remember only three things:**
+- MCP is one shared plug between AI apps (clients) and tools or data (servers).
+- Everything is JSON-RPC messages: requests with an `id`, replies with the same `id`.
+- A server offers three primitives: tools (model picks), resources (app picks), prompts (user picks).
 
 ## Interview questions
 1. **What problem does MCP solve?**

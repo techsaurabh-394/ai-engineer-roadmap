@@ -1,16 +1,25 @@
 # Reflection
-> **Level:** Intermediate · **Reading time:** 7 min · **Phase:** 4 · Agentic AI
+> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 4 · Agentic AI
 
 **In one line:** Reflection is when an agent reviews its own output (or gets feedback from a critic), writes down what went wrong, and tries again using that feedback.
 
+**Before you start:** [ReAct Pattern](04-react-pattern.md) and [Planning Agents](05-planning-agents.md). You should know what a tool call is and how a plan with a risky step is approved.
+
 ## Explain it like I'm new
 When you write an important email, you often re-read it before sending: "Too long. I forgot the deadline. Fix that." Then you send the better version. That re-read-and-fix step is **reflection**.
+
+Words to know:
+- **Draft:** a first attempt at an answer, code, or plan.
+- **Critic:** a check (a prompt, a model, or plain code) that finds problems in the draft.
+- **Rubric:** a short checklist the critic judges the draft against.
+- **Revision:** a new version of the draft that fixes the problems.
+- **Weights:** the numbers inside a model that training changes. Reflection does not change them.
 
 For agents, reflection usually takes one of two forms:
 - **Self-critique:** the same model checks its draft against the task and revises.
 - **Critic agent:** a separate prompt or model plays reviewer and sends feedback to the worker.
 
-The **Reflexion** paper (Shinn et al., 2023) went further: after a failed attempt, the agent writes a short verbal lesson ("I searched the wrong name; next time search the full title") and stores it in memory. The next attempt reads those lessons. The paper calls this "verbal reinforcement learning", because the model improves across tries without changing its weights.
+The **Reflexion** paper (Shinn et al., 2023) went further: after a failed attempt, the agent writes a short verbal lesson ("I searched the wrong name; next time search the full title") and stores it in memory. The next attempt reads those lessons. The paper calls this "verbal reinforcement learning". The model improves across tries without changing its weights.
 
 Reflection works best when there is a **real signal** to check against: a failing test, a validation error, a rubric, or a tool result. Pure "are you sure?" checks without new information help less and can even make correct answers worse.
 
@@ -30,6 +39,27 @@ flowchart LR
     C -- no --> R[reflection notes] --> W
     R -. store lesson .-> M[(episodic memory)]
 ```
+
+### Worked example
+Goal: *"agents and email it"*. This is the real log from `run_pipeline("agents and email it", ...)` in `agent_multi.py`, with a human who approves:
+
+```text
+plan: ['write_text', 'send_email']
+write_text -> Draft about agents and email it.
+critic: ['needs a concrete example']
+add_example -> Draft about agents and email it. Example: a support bot that looks up orders.
+human approved send_email
+send_email -> EMAIL SENT: Draft about agents and email it. Example: a support bot that looks up orders.
+```
+
+Trace it:
+1. **Generate:** the worker writes the draft `Draft about agents and email it.`
+2. **Evaluate:** the critic checks it and finds one problem: `needs a concrete example`.
+3. **Reflect and revise:** the worker adds an example sentence. The draft is now better.
+4. **Approve:** the revised draft (not the first one) is shown to the human, who says yes.
+5. **Act:** only now does `send_email` run.
+
+If the human says no instead, the same run ends with the status `rejected` and the email is never sent. The critic ran *before* the risky action, which is the safe order.
 
 ## Code example
 From [`agent_multi.py`](../code/agent_multi.py): a rule-based critic and a revision loop. In a real system the critic could be an LLM with a rubric, or real tests.
@@ -84,6 +114,13 @@ Return JSON: {"pass": true|false, "problems": ["..."], "fix": "one-sentence inst
 - No limit on revision rounds.
 - Letting the critic and worker share the same blind spot (same prompt, same context). Give the critic the rubric and sources.
 - Not saving lessons, so the agent repeats the same mistake on the next task.
+- Treating reflection as magic. If nothing new is checked (no test, no rubric), asking "are you sure?" mostly adds cost.
+
+## Recap
+If you remember only three things:
+- Reflection means: draft, check, write down what is wrong, revise, and repeat a limited number of times.
+- It works best with a real signal, such as failing tests, a validator, or a rubric.
+- Cap the revision rounds, and run the critic before any action you cannot undo.
 
 ## Interview questions
 **1. What is Reflexion?**

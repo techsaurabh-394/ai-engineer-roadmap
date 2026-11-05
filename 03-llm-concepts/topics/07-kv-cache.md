@@ -1,7 +1,17 @@
 # KV Cache
-> **Level:** Advanced · **Reading time:** 7 min · **Phase:** 3 · LLM Concepts
+> **Level:** Advanced · **Reading time:** 9 min · **Phase:** 3 · LLM Concepts
 
 **In one line:** The KV cache stores the key and value vectors of tokens already processed, so each new token only computes its own instead of recomputing the whole prefix.
+
+**Before you start:** [Self Attention](02-self-attention.md) and [Decoder Only Models](05-decoder-only-models.md).
+
+**Words to know:**
+- **Key (K) and value (V):** two vectors each token produces. Later tokens use them to find and read this token's information.
+- **Prefix:** the tokens that came before the current one.
+- **Prefill:** the first step, which processes the whole prompt in one go.
+- **Decode step:** producing one new token after the prompt.
+- **Cache:** saved results that are reused instead of recomputed.
+- **GPU memory:** the fast memory on the chip that runs the model. It is limited, and the cache uses it.
 
 ## Explain it like I'm new
 Imagine writing a long email and, before typing each new word, re-reading the entire email from the start. That is what a naive model does: to pick token 101, it reprocesses tokens 1-100 again. Then for token 102, it re-reads 1-101.
@@ -15,6 +25,19 @@ Why keys and values? In [self-attention](02-self-attention.md), the new token's 
 2. **Decode step.** For the new token only: compute its Q, K, V. Append K and V to the cache.
 3. Attend: the new Q against **all cached K**, mix **all cached V**.
 4. Produce the next token, repeat from step 2.
+
+### Worked example
+Generate 4 tokens and count how many K,V pairs get computed.
+
+| step | without cache | with cache |
+|---|---|---|
+| 1 | 1 (token 1) | 1 (token 1) |
+| 2 | 2 (tokens 1-2) | 1 (token 2 only) |
+| 3 | 3 (tokens 1-3) | 1 (token 3 only) |
+| 4 | 4 (tokens 1-4) | 1 (token 4 only) |
+| total | 1+2+3+4 = 10 | 4 |
+
+The real demo prints the same pattern at bigger sizes: 10 tokens cost 55 without the cache and 10 with it.
 
 **Counting work.** Generating `n` tokens:
 - Without cache: step `t` computes K,V for `t` tokens, total `1 + 2 + … + n = n(n+1)/2`.
@@ -75,6 +98,12 @@ for n in (10, 100, 1000):
 - Forgetting that the cache grows linearly with context length and batch size.
 - Changing an early part of the prompt and expecting cache reuse. Any change invalidates everything after it.
 - Confusing the KV cache (inside one generation) with a semantic/response cache (reusing whole answers).
+
+## Recap
+If you remember only three things:
+- Earlier tokens' keys and values never change, so we compute them once and store them in the KV cache.
+- The cache turns the work from about `n(n+1)/2` to `n`: for 1,000 tokens, 500,500 down to 1,000.
+- The price is GPU memory, which grows with context length, layers, KV heads and the number of users.
 
 ## Interview questions
 **1. Why can we cache K and V but not Q?**
