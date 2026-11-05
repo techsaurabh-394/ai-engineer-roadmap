@@ -1,12 +1,19 @@
 # MCP Prompts
-> **Level:** Intermediate · **Reading time:** 7 min · **Phase:** 6 — MCP
+> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 6 — MCP
 
 **In one line:** Prompts are reusable message templates a server offers, which the user picks explicitly, much like slash commands.
+
+**Before you start:** [MCP resources](05-mcp-resources.md). You should know who chooses a resource, so you can compare with who chooses a prompt.
 
 ## Explain it like I'm new
 A prompt is a form letter with blanks. You choose "complaint letter", fill in the name and date, and get a finished message. In MCP, the server ships the template. The user selects it (for example by typing `/summarize`). That makes prompts **user-controlled**: neither the model nor the app picks them silently.
 
 Why not just paste text? Because a good server author knows the best wording for their tools. A "code review" prompt can set up the right instructions and even embed a resource.
+
+**Words to know:**
+- **Prompt:** a reusable message template a server offers, like a slash command.
+- **Argument:** a blank in the template that the user fills in, such as `text`.
+- **Message:** one item with a `role` (such as user) and some `content`.
 
 ## How it works
 1. Server declares the `prompts` capability.
@@ -38,6 +45,17 @@ flowchart LR
 | Tool | Model | `tools/call` | `add_numbers` |
 | Resource | Application | `resources/read` | `notes://welcome` |
 | Prompt | User | `prompts/get` | `/summarize` |
+
+### Worked example
+Using the toy server's `summarize` prompt.
+
+1. `prompts/list` shows one prompt named `summarize`. It needs one argument called `text`.
+2. The user picks it, like typing a slash command, and pastes `MCP is a protocol.`
+3. The client sends `prompts/get` with the name and that argument.
+4. The server fills the template and returns one `user` message: `Summarize this:` then `MCP is a protocol.`
+5. The host places that message into the conversation and sends it to the model.
+
+The user picked the prompt. The model did not.
 
 ## Code example
 Offline toy ([`code/mcp_mini_jsonrpc.py`](../code/mcp_mini_jsonrpc.py)):
@@ -78,6 +96,15 @@ def summarize(text: str) -> str:
 - Hard-coding secrets into templates.
 - Assuming the host shows prompts. Some clients do not support them yet.
 - Forgetting to validate arguments.
+- Thinking prompts are system prompts. They are messages the user chooses to insert, not hidden instructions.
+- Putting secrets in prompt templates. Anyone who can list prompts can read them.
+
+## Recap
+
+**If you remember only three things:**
+- A prompt is a template of messages the server offers.
+- The user picks a prompt and fills its arguments. The model does not.
+- Tools are model-chosen, resources are app-chosen, prompts are user-chosen.
 
 ## Interview questions
 1. **Who controls prompts?**

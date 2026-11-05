@@ -1,8 +1,10 @@
 # CrewAI
 
-> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 5 — Frameworks
+> **Level:** Intermediate · **Reading time:** 10 min · **Phase:** 5 — Frameworks
 
 **In one line:** CrewAI organizes several LLM agents as a "crew" where each agent has a role and goal and works through assigned tasks.
+
+**Before you start:** You should know what an agent is ([What is an AI agent](../../04-agentic-ai/topics/01-what-is-an-ai-agent.md)) and the idea of several agents working together ([Multi-agent systems](../../04-agentic-ai/topics/13-multi-agent-systems.md)).
 
 ## Explain it like I'm new
 
@@ -10,13 +12,15 @@ Think of a small newsroom. A researcher gathers facts, a writer drafts, an edito
 
 It suits workflows that already look like a pipeline of roles. The cost is that every agent is an extra LLM call or many, so runs are slower and pricier than one well-written prompt.
 
-Vocabulary (check the docs for exact current options):
+**Words to know (check the docs for exact current options):**
 
 - **Agent** — a role, a goal and a backstory, plus optional tools.
 - **Task** — a description of work and its expected output, assigned to an agent.
 - **Crew** — the group of agents and tasks, and how they run.
 - **Process** — the execution style, such as sequential (one after another) or hierarchical (a manager delegates).
 - **Tool** — a function an agent may call.
+- **Role / goal / backstory** — plain-language text that is placed in the agent's prompt to shape how it behaves.
+- **Context** — the earlier output handed to the next agent as input.
 
 ## How it works
 
@@ -31,6 +35,21 @@ flowchart LR
 ```
 
 **Mapping:** this is the multi-agent pattern from [Phase 4](../../04-agentic-ai/README.md): specialist agents passing work along. Each agent is an agent loop with its own prompt. Memory is the context handed from task to task.
+
+### Worked example
+
+The code example below is a sequential crew with three fake agents. A real agent would call an LLM. Here each one just reports what it did. I ran it. Here is the context at each step.
+
+1. Start: `context = ""` (empty).
+2. Researcher gets task `collect facts`. Context is empty, so it returns `[researcher] did 'collect facts' using: nothing`.
+3. Writer gets task `draft article` plus the researcher's output as context. It returns `[writer] did 'draft article' using: [researcher] did 'collect facts' using: nothing`.
+4. Editor does the same with the writer's output. The final printed line is:
+
+```text
+[editor] did 'polish draft' using: [writer] did 'draft article' using: [researcher] did 'collect facts' using: nothing
+```
+
+You can read the whole chain of work inside the last line. That is the point of "each task's output becomes context for the next". It is also why one bad early answer is carried to the end. Check the current docs for the exact CrewAI calls.
 
 ## Code example
 
@@ -70,6 +89,15 @@ print(context)
 - Vague task descriptions and no expected output.
 - No review step, so errors pass down the chain.
 - Not logging each agent's output, making failures hard to find.
+- Mixing up an *agent* with a *task*. The agent is who does the work. The task is what needs doing and what a good result looks like.
+
+## Recap
+
+If you remember only three things:
+
+- CrewAI sets up several agents as a crew. Each agent has a role and a goal, and works through the tasks you assign.
+- It suits work that splits cleanly into roles, such as research then write then review, and it is quick to read and set up.
+- More agents mean more cost and more places to fail. If one agent with tools can do the job, use one.
 
 ## Interview questions
 

@@ -1,8 +1,10 @@
 # DSPy
 
-> **Level:** Advanced · **Reading time:** 9 min · **Phase:** 5 — Frameworks
+> **Level:** Advanced · **Reading time:** 11 min · **Phase:** 5 — Frameworks
 
 **In one line:** DSPy lets you declare what an LLM step should do (inputs and outputs) as code, then uses an optimizer to find good prompts instead of you hand-writing them.
+
+**Before you start:** You should know what a prompt is and why wording matters ([Prompt engineering](../../03-llm-concepts/topics/14-prompt-engineering.md)). It also helps to know that we measure quality with a score ([Agent evaluation](../../04-agentic-ai/topics/15-agent-evaluation.md)).
 
 ## Explain it like I'm new
 
@@ -10,13 +12,16 @@ Hand-tuned prompts are like hand-tuned engine settings: they work for one car on
 
 You write a **signature**, a typed contract such as "question -> answer". You wrap it in a **module**. An **optimizer** then tunes the prompt against a **metric** you define.
 
-Vocabulary:
+**Words to know:**
 
 - **Signature** — declares input and output fields of an LLM call.
 - **Module** — a reusable piece that uses a signature (for example `Predict`, or a reasoning variant).
 - **Metric** — a function that scores an output (exact match, a judge, a check).
 - **Optimizer** — a procedure that tries prompt variants or examples and keeps what scores best.
 - **Trainset** — labelled examples for optimizing.
+- **Few-shot examples** — a few sample question-and-answer pairs placed in the prompt to show the model what you want.
+- **Overfitting** — doing well on the examples you tuned on, but badly on new ones.
+- **Validation set** — examples kept aside, never used for tuning, to check the result honestly.
 
 ## How it works
 
@@ -34,6 +39,19 @@ flowchart LR
 ```
 
 **Mapping:** the optimizer loop is the evaluation habit from [Phase 3](../../03-llm-concepts/README.md) and [Phase 7](../../07-production-ai/README.md) made automatic: measure, change, measure again. It can tune the generation step of a RAG pipeline from [Phase 1](../../01-rag-foundations/README.md).
+
+### Worked example
+
+The code example below is a tiny optimizer. It tries two instructions and keeps the one that scores best. The fake model obeys a keyword: if the instruction says "brief" it returns just the last word, otherwise it adds "The answer is". Here is the work by hand (it is small enough to check, and I also ran it).
+
+Trainset: `("capital of France Paris", "Paris")` and `("largest planet Jupiter", "Jupiter")`. Metric: the output must equal the expected answer exactly.
+
+| Instruction | Output for question 1 | Output for question 2 | Score |
+|-------------|----------------------|-----------------------|-------|
+| `Be verbose.` | `The answer is Paris` (no match) | `The answer is Jupiter` (no match) | 0 of 2 |
+| `Be brief.` | `Paris` (match) | `Jupiter` (match) | 2 of 2 |
+
+The optimizer keeps `Be brief.` The metric defined "good", so the optimizer pushed toward it. If the metric had accepted any answer containing the right word, `Be verbose.` would also have scored 2 and the choice would have been a tie. Check the current docs for exact DSPy classes.
 
 ## Code example
 
@@ -81,6 +99,15 @@ Optimizers and typed class-based signatures are covered in the docs.
 - Too few examples, so it overfits the trainset.
 - Not holding out a validation set.
 - Expecting it to fix bad retrieval or bad data.
+- Mixing up *prompt engineering* with *optimizing*. Engineering is you editing wording by hand. DSPy searches for wording by score, so you must supply the score.
+
+## Recap
+
+If you remember only three things:
+
+- With DSPy you declare what a step should do (its inputs and outputs) and an optimizer searches for good prompts for you.
+- It needs two things: examples and a metric that scores the output. Without them the optimizer has nothing to improve.
+- For a one-off prompt, writing it by hand is faster. DSPy pays off in multi-step pipelines and when you change models.
 
 ## Interview questions
 

@@ -1,8 +1,10 @@
 # LangGraph
 
-> **Level:** Intermediate · **Reading time:** 10 min · **Phase:** 5 — Frameworks
+> **Level:** Intermediate · **Reading time:** 12 min · **Phase:** 5 — Frameworks
 
 **In one line:** LangGraph lets you describe an agent or workflow as a graph of steps (nodes) joined by edges, with shared state passed along.
+
+**Before you start:** You should understand a simple agent loop (think, act, repeat) from [Agent loops](../../04-agentic-ai/topics/12-agent-loops.md) and a little of what a tool call is ([Tool calling](../../04-agentic-ai/topics/02-tool-calling.md)).
 
 ## Explain it like I'm new
 
@@ -10,7 +12,7 @@ Think of a subway map. Stations are steps. Tracks say where you can go next. Som
 
 A plain agent loop (Phase 4) is `while not done: think, act`. That works until you need branches, retries, human approval or several agents. A graph makes the control flow explicit and visible, so you can reason about it, test it and pause it.
 
-Vocabulary:
+**Words to know:**
 
 - **State** — the data shared by all nodes (often a typed dict with a message list).
 - **Node** — a function that reads state and returns updates.
@@ -18,6 +20,9 @@ Vocabulary:
 - **Conditional edge** — a router function that picks the next node from the state.
 - **START / END** — special entry and exit points.
 - **Checkpointer** — saves state after each step, enabling memory across turns, resume after a crash and human-in-the-loop pauses.
+- **Graph** — a set of steps (nodes) plus the links (edges) between them. Not a chart with axes.
+- **Router** — a small function that looks at the state and returns the name of the next node.
+- **Compile** — freeze the graph definition into something you can run. It also checks the wiring.
 
 ## How it works
 
@@ -35,6 +40,21 @@ flowchart LR
 ```
 
 **Mapping to earlier phases:** the agent loop from [Phase 4](../../04-agentic-ai/README.md) is this exact graph: model node, tool node, and a conditional edge that checks "did the model ask for a tool?". Memory (Phase 4) maps to state plus a checkpointer.
+
+### Worked example
+
+This trace comes from the repo's offline demo ([`fw_mini_graph.py`](../code/fw_mini_graph.py)). It is a "write, then review" loop. The `write` node adds the word `word ` to a draft. The `review` node marks `ok` as true once the draft has at least 3 words. The router goes to END if `ok` is true, else back to `write`. I added print lines and ran it to get these real values:
+
+| # | Node runs | Update returned | Router decision |
+|---|-----------|-----------------|-----------------|
+| 1 | write | `draft = 'word '` | (fixed edge to review) |
+| 2 | review | `ok = False` (1 word) | back to write |
+| 3 | write | `draft = 'word word '` | (fixed edge to review) |
+| 4 | review | `ok = False` (2 words) | back to write |
+| 5 | write | `draft = 'word word word '` | (fixed edge to review) |
+| 6 | review | `ok = True` (3 words) | END |
+
+The final state is `{'draft': 'word word word ', 'ok': True}`. The demo also records the visited nodes as `['write', 'review', 'write', 'review', 'write', 'review']`. Notice that nodes never call each other. They only return updates, and the runner merges them into the shared state. A real LangGraph app has the same shape, but check the current docs for exact imports.
 
 ## Code example
 
@@ -87,6 +107,15 @@ Conditional routing uses `add_conditional_edges`; see the docs for its exact for
 - Putting too much into state, making it hard to inspect.
 - Mutating state in place instead of returning updates.
 - Using a graph where a simple `if` would do.
+- Mixing up a *conditional edge* with a node. The router only chooses where to go next. It does not do the work.
+
+## Recap
+
+If you remember only three things:
+
+- LangGraph describes a workflow as nodes (steps) joined by edges (what runs next), with one shared state passed along.
+- Use it when you need branches, loops, retries, approval steps, or saving and resuming state.
+- If you cannot draw your workflow on paper yet, draw it first. A straight line of three functions needs no graph.
 
 ## Interview questions
 

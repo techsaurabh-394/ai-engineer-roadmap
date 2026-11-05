@@ -1,14 +1,24 @@
 # Memory
-> **Level:** Beginner · **Reading time:** 7 min · **Phase:** 4 · Agentic AI
+> **Level:** Beginner · **Reading time:** 8 min · **Phase:** 4 · Agentic AI
 
 **In one line:** Agent memory is everything your code stores and feeds back to the model so it can use past information, because the model itself forgets everything between calls.
 
+**Before you start:** [What is an AI Agent?](01-what-is-an-ai-agent.md) and the [context window](../../03-llm-concepts/topics/08-context-window.md). You should know that a model can only read a limited amount of text per call.
+
 ## Explain it like I'm new
-Imagine a very capable assistant with a strange condition: every time they leave the room, they forget everything. To work with them, you keep a notebook. Before each conversation, you hand them the relevant pages: today's chat so far, facts about the client, and notes from similar past jobs.
+Imagine a very capable assistant with a strange condition: every time they leave the room, they forget everything. To work with them, you keep a notebook. Before each conversation, you hand them the relevant pages. These are today's chat so far, facts about the client, and notes from similar past jobs.
 
-That is exactly how LLM memory works. The model is **stateless**: each API call starts fresh. Any "memory" is text (or data) your application saves and then puts back into the prompt. Memory design is about deciding **what to save, where, and what to load back** each time, because the [context window](../../03-llm-concepts/topics/08-context-window.md) is limited and costs money.
+That is exactly how LLM memory works. The model is **stateless**: each API call starts fresh. Any "memory" is text (or data) your application saves and then puts back into the prompt. Memory design means deciding **what to save, where, and what to load back** each time. This matters because the [context window](../../03-llm-concepts/topics/08-context-window.md) (the most text the model can read at once) is limited and costs money.
 
-A common breakdown, borrowed loosely from psychology (and used in the CoALA paper on agent architectures):
+Words to know:
+- **Stateless:** keeps nothing from one call to the next.
+- **Prompt:** the text you send to the model on one call.
+- **Token:** a small chunk of text, roughly a word or part of a word. Models and prices count in tokens.
+- **Token budget:** the most tokens you allow yourself to put in one prompt.
+- **Vector search:** finding notes by meaning instead of exact words.
+- **Memory poisoning:** untrusted text sneaking into memory and being trusted later.
+
+A common breakdown is borrowed loosely from psychology. The CoALA paper on agent architectures uses it too:
 
 | Type | Holds | Example | Topic |
 |---|---|---|---|
@@ -62,6 +72,26 @@ Run `python 04-agentic-ai/code/agent_memory.py` for a demo of all four types.
 
 **In real projects**, frameworks provide memory building blocks, for example LangGraph's checkpointers (short-term, per conversation thread) and stores (long-term, across threads). See the [LangGraph docs](https://langchain-ai.github.io/langgraph/).
 
+### Worked example
+Run the code example above (plus one more fact) and the assembled prompt is real output from `build_context`:
+
+```text
+Known facts about user: {'name': 'Asha'}
+Relevant note: The deploy script lives in scripts/deploy.sh
+user: Hi, I need help deploying.
+assistant: Sure, which environment?
+user: How do I deploy to staging?
+```
+
+Trace it, line by line:
+1. The new question is *"How do I deploy to staging?"*
+2. **Semantic memory** supplies the fact line: the user's name is Asha.
+3. **Long-term memory** is searched with the question. The note shares the word "deploy", so it is added as `Relevant note`.
+4. **Short-term memory** adds the last two messages of the chat.
+5. The new question goes on the end. This whole block is the prompt. The model sees nothing else.
+
+The model did not remember anything. Your code looked things up and pasted them in. (In the code example, the file name is the thing the model can now answer with.)
+
 ## When to use it / when not to
 - **Short-term only** is enough for many single-session chat apps.
 - **Add long-term memory** when users return and expect the system to remember preferences or past work.
@@ -70,9 +100,16 @@ Run `python 04-agentic-ai/code/agent_memory.py` for a demo of all four types.
 
 ## Common mistakes
 - Thinking the model "remembers" on its own. Only what you send exists for it.
+- Thinking memory is one thing. It is several stores, each with a different job, and you pick what to load from each.
 - Stuffing all history into every prompt until the context overflows.
 - Saving everything, including wrong or outdated facts, with no way to update or delete.
 - Letting untrusted content (a web page) write directly into long-term memory. It can plant instructions that come back later (memory poisoning).
+
+## Recap
+If you remember only three things:
+- The model is stateless. Memory is text your code saves and puts back into the prompt each turn.
+- There are several kinds of memory (short-term, long-term, semantic, episodic, procedural), and each has a different job.
+- Load only what is relevant and fits the token budget, and treat saved memory as user data you must protect.
 
 ## Interview questions
 **1. Do LLMs have memory between API calls?**

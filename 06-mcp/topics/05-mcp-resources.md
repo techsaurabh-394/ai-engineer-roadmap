@@ -1,12 +1,20 @@
 # MCP Resources
-> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 6 — MCP
+> **Level:** Intermediate · **Reading time:** 9 min · **Phase:** 6 — MCP
 
 **In one line:** Resources are read-only data a server exposes, each identified by a URI, which the host application chooses to load into context.
+
+**Before you start:** [MCP tools](04-mcp-tools.md). You should know what a tool is, so you can tell it apart from a resource.
 
 ## Explain it like I'm new
 A resource is a book on a library shelf. The librarian (the application) decides which books to put on your desk. The reader (the model) does not walk the shelves on its own. This is **application-controlled**.
 
 A **URI** is just an address, like `file:///notes/todo.md` or `notes://welcome`. The server picks the scheme. Resources can be files, database rows, logs, API responses or anything readable.
+
+**Words to know:**
+- **Resource:** read-only data the server exposes, such as a file, a note or a database row.
+- **URI:** a name for one resource, like `notes://welcome`.
+- **MIME type:** a label for the kind of content, such as `text/plain`.
+- **Context:** the text the model can see right now. A loaded resource is added to it.
 
 ## How it works
 1. Server declares the `resources` capability.
@@ -38,6 +46,17 @@ flowchart LR
 | Has side effects | Often | No (read-only) |
 | Takes arguments | Yes (schema) | Only via URI / template |
 | Example | `create_note` | `notes://welcome` |
+
+### Worked example
+Reading one resource from the toy server.
+
+1. `resources/list` returns one item: URI `notes://welcome`, name `Welcome`, type `text/plain`.
+2. The host shows it in a picker, or decides on its own to attach it.
+3. The client sends `resources/read` with that `uri`.
+4. The server returns `contents` with the text `Hello from a resource.`
+5. The host adds that text to the conversation, so the model can use it.
+
+No model decision happened anywhere. The app or the user chose the data. That is the key difference from a tool, where the model chooses.
 
 ## Code example
 Using the offline toy ([`code/mcp_mini_jsonrpc.py`](../code/mcp_mini_jsonrpc.py)):
@@ -75,6 +94,15 @@ def welcome() -> str:
 - Path traversal: `file:///../../etc/passwd`.
 - Returning very large files with no limit.
 - Assuming every client supports resources. Support varies, so check your host.
+- Using a resource for something that changes the world. Resources are read-only data. Actions belong in tools.
+- Asking for a URI the server never listed. The server answers with an error.
+
+## Recap
+
+**If you remember only three things:**
+- Resources are read-only data, each named by a URI.
+- The app or user picks them. The model does not call them.
+- Use a resource for data to read, and a tool for an action to perform.
 
 ## Interview questions
 1. **Who controls resources?**

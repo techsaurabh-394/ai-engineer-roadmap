@@ -1,12 +1,20 @@
 # Build a Custom MCP Server
-> **Level:** Advanced · **Reading time:** 12 min · **Phase:** 6 — MCP
+> **Level:** Advanced · **Reading time:** 14 min · **Phase:** 6 — MCP
 
 **In one line:** Build a small notes server step by step: design narrow tools, validate input, expose notes as resources, add a prompt, test it and connect it to a host safely.
+
+**Before you start:** [MCP server](02-mcp-server.md), [MCP tools](04-mcp-tools.md) and [MCP resources](05-mcp-resources.md). You should be able to read the message shapes for each.
 
 ## Explain it like I'm new
 Building a server is like writing a tiny API for an AI instead of a human. A human reads docs. The model reads your tool descriptions and schemas. So the craft is: few clear actions, strict inputs, small outputs.
 
 You will build a **notes server**. A fuller, finished version lives in [mcp-notes-server](https://github.com/techsaurabh-394/mcp-notes-server) (persistence, search, tests and a Claude Desktop config). Read it after this walkthrough.
+
+**Words to know:**
+- **Narrow tool:** a tool that does one small, clear job, with no way to run arbitrary commands.
+- **Validation:** checking every argument for type, length and allowed values before using it.
+- **Least privilege:** give the server only the access it needs, such as one folder.
+- **Host config:** the file where you tell the host which servers to start.
 
 ## How it works
 1. **Pick the job.** "Let the model save and find my notes."
@@ -28,6 +36,17 @@ flowchart TD
   T --> D[(Notes file or SQLite)]
   R --> D
 ```
+
+### Worked example
+The plan, as a story of one note.
+
+1. The user says: "Save a note called ideas with the text buy milk."
+2. The model calls `create_note` with `title` = `ideas` and `body` = `buy milk`.
+3. The server checks the title length and type. It rejects anything unexpected, then writes the note inside one folder only.
+4. The server replies `isError` false with a short confirmation.
+5. Later, the app attaches the note as the resource `notes://ideas`, or the user triggers the `summarize_notes` prompt.
+
+Notice what is missing: no raw SQL, no shell command, no path from the user. Every step the model can reach is small and checked.
 
 ## Code example
 **Step A: the real starting point.** Copy [`code/hello-mcp-server`](../code/hello-mcp-server/src/index.ts). It already has registration, `zod` validation, annotations and stdio.
@@ -117,6 +136,15 @@ if __name__ == "__main__":
 - Writing to stdout.
 - Skipping tests of failure paths.
 - Letting note text act as instructions to the model. Treat stored text as data.
+- Letting a tool take a file path from the model. Use an id or title, then build the path yourself inside one safe folder.
+- Skipping tests because "it is only a small server". Test the logic and the message shapes before you connect it to a host.
+
+## Recap
+
+**If you remember only three things:**
+- Design a few narrow tools. Never expose a shell or raw database access.
+- Validate every argument and keep writes inside one folder.
+- Test the logic and the JSON-RPC shapes, then connect with approvals on.
 
 ## Interview questions
 1. **How would you design a notes server safely?**

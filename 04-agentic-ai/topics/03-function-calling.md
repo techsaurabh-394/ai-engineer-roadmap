@@ -1,7 +1,9 @@
 # Function Calling
-> **Level:** Beginner · **Reading time:** 7 min · **Phase:** 4 · Agentic AI
+> **Level:** Beginner · **Reading time:** 8 min · **Phase:** 4 · Agentic AI
 
 **In one line:** Function calling is the OpenAI-style name for tool calling: the model returns a function name plus JSON arguments, and your code maps that to a real function and runs it.
+
+**Before you start:** [Tool Calling](02-tool-calling.md). You should know that the model outputs a tool name plus JSON arguments, and your code runs the tool.
 
 ## Explain it like I'm new
 "Tool calling" and "function calling" describe the same idea. OpenAI popularized the term **function calling**; Anthropic and others say **tool use**. Many people use the words interchangeably.
@@ -9,6 +11,13 @@
 Picture a restaurant order slip. The waiter (the model) doesn't cook. They write a slip: `dish: "pasta", size: "large", extras: ["cheese"]`. The kitchen (your code) reads the slip, checks that the dish exists and the fields make sense, and cooks it. The slip must follow a fixed form, or the kitchen can't read it.
 
 This page focuses on the **kitchen side**: turning the model's slip into a safe, correct function call. That is called **dispatch**.
+
+Words to know:
+- **Dispatch:** looking up the function the model named and calling it safely.
+- **Registry:** a Python dict that maps tool names to functions. It is your allowed list.
+- **Validate:** check that the arguments have the right fields and types before running anything.
+- **Schema:** a written description of what shape the arguments must have.
+- **Parse:** turn a JSON string into a Python dict you can use.
 
 ## How it works
 1. **Describe** each function with a name, description, and a JSON Schema for its **parameters**.
@@ -29,7 +38,19 @@ arguments: '{"a": 6, "b": 7}'   ->    json.loads(...)            valid JSON?
                                       multiply(**args)  -> "42"  caught errors?
 ```
 
-**Strict mode / structured outputs.** Some APIs can constrain the model so its arguments always match your schema (for example OpenAI's `strict: true` for function definitions). This reduces bad calls but you should still validate, because the values can be valid JSON and still be wrong for your business logic (a negative quantity, an ID that doesn't exist).
+### Worked example
+Here is the dispatcher from the code example below, given four different slips. These are real outputs (run `dispatch` from `agent_react.py`):
+
+| Model's slip (name, arguments) | What dispatch does | Result |
+|---|---|---|
+| `multiply`, `{"a": 6, "b": 7}` | name found, both fields present, both numbers, runs `6 * 7` | `42` |
+| `multiply`, `{"a": 6, "c": 7}` | `b` is required but missing | `Error: missing required argument 'b'` |
+| `multiply`, `{"a": "6", "b": 7}` | `a` is a string, not a number | `Error: argument 'a' must be number` |
+| `divide`, `{"a": 6, "b": 7}` | `divide` is not in the registry | `Error: unknown tool 'divide'. Available: lookup, multiply` |
+
+Only the first slip runs the function. The other three become short error messages that go back to the model, which can then fix its call and try again. Nothing crashes. (The last message lists the tools in the full file, so it shows two names. The short code below prints a slightly shorter message.)
+
+**Strict mode / structured outputs.** Some APIs can constrain the model so its arguments always match your schema (for example OpenAI's `strict: true` for function definitions). This reduces bad calls. You should still validate, because values can be valid JSON and still wrong for your business rules (a negative quantity, or an ID that doesn't exist).
 
 **Parallel calls.** Models can return several function calls in one turn. Run independent ones (concurrently if you like), and return one result per call ID.
 
@@ -114,8 +135,15 @@ if msg.tool_calls:
 ## Common mistakes
 - Calling `eval()` on the arguments or on model text. Never execute model output as code without a sandbox.
 - Forgetting that OpenAI's `arguments` is a string, not a dict.
+- Thinking "function calling" means the model calls your Python function directly. It only writes the request.
 - Skipping validation because "the schema is strict".
 - Letting exceptions crash the loop instead of returning them to the model.
+
+## Recap
+If you remember only three things:
+- Function calling and tool calling are the same idea with different provider names.
+- Dispatch means: find the name in a registry, parse the JSON, validate it, run it, and catch errors.
+- Strict schemas help, but you still check business rules and permissions in your own code.
 
 ## Interview questions
 **1. Is function calling different from tool calling?**

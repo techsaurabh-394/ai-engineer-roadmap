@@ -1,8 +1,10 @@
 # LlamaIndex
 
-> **Level:** Beginner · **Reading time:** 8 min · **Phase:** 5 — Frameworks
+> **Level:** Beginner · **Reading time:** 10 min · **Phase:** 5 — Frameworks
 
 **In one line:** LlamaIndex is a library focused on connecting your own documents to an LLM: load, split, index, retrieve and answer.
+
+**Before you start:** You should know the basic RAG idea of retrieve-then-answer ([What is RAG](../../01-rag-foundations/topics/01-what-is-rag.md)) and what chunking is ([Chunking](../../01-rag-foundations/topics/04-chunking.md)).
 
 ## Explain it like I'm new
 
@@ -10,7 +12,7 @@ Imagine a librarian. You hand over a pile of documents. The librarian files them
 
 It is data-centric. Where LangChain is a general toolbox, LlamaIndex puts the document pipeline first: many loaders, many chunking strategies, many index types, and query engines on top.
 
-Vocabulary:
+**Words to know:**
 
 - **Document** — a raw source (a PDF, a web page) with metadata.
 - **Node** — a chunk of a document. (Not the same as a graph node.)
@@ -19,6 +21,8 @@ Vocabulary:
 - **Response synthesizer** — builds the prompt from retrieved nodes and calls the LLM.
 - **Query engine** — retriever plus synthesizer: question in, answer out.
 - **Chat engine** — a query engine with conversation memory.
+- **Embed** — turn text into a list of numbers so that similar meanings end up close together ([Embeddings](../../01-rag-foundations/topics/02-embeddings.md)).
+- **Top-k** — the k best matches. With `k=1` you keep only the single best one.
 
 ## How it works
 
@@ -36,6 +40,24 @@ flowchart LR
 ```
 
 **Mapping:** this is the RAG pipeline from [Phase 1](../../01-rag-foundations/README.md) with each stage named. Advanced options (re-ranking, hybrid search) are in [Phase 2](../../02-advanced-rag/README.md).
+
+### Worked example
+
+The code example below is a tiny stand-in for a query engine. It scores documents by how many words they share with the question, instead of using embeddings. I ran it. Here are the steps.
+
+1. Documents: `"Paris is the capital of France."` and `"The Nile is a river in Africa."`
+2. Question: `"capital of France?"`. Its words are `capital`, `of`, `france?`.
+3. Retriever step. Document 1 shares `capital` and `of`, so its score is 2. Document 2 shares only `of`, so its score is 1. (The `?` stays attached to `france?`, so it does not match `france.`. Real engines tokenize better.)
+4. With `k=1`, we keep the top document: the Paris one.
+5. Synthesizer step: it builds this prompt. A real engine would send it to an LLM.
+
+```text
+Context:
+Paris is the capital of France.
+Question: capital of France?
+```
+
+So the "retriever" picked the right page, and the "synthesizer" wrapped it into a prompt. For the real library calls, check the current docs for exact imports.
 
 ## Code example
 
@@ -81,6 +103,15 @@ Defaults hide the embedding model, chunk size and top-k. Read the docs and set t
 - Not checking which nodes were retrieved before blaming the LLM.
 - Re-indexing on every run instead of persisting the index.
 - Mixing up "node" here with "node" in graph frameworks.
+- Expecting the index to answer questions. The index only finds nodes. The LLM writes the answer from them.
+
+## Recap
+
+If you remember only three things:
+
+- LlamaIndex is built for one job: connect your own documents to an LLM by loading, splitting, indexing, retrieving and answering.
+- It gives you ready loaders and index types, so you write less glue code for question answering over many files.
+- For a tiny corpus that fits in one prompt, or when you want full control of chunking and ranking, your own short code is simpler.
 
 ## Interview questions
 

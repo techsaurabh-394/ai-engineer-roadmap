@@ -1,21 +1,25 @@
 # What is an AI Agent?
-> **Level:** Beginner · **Reading time:** 6 min · **Phase:** 4 · Agentic AI
+> **Level:** Beginner · **Reading time:** 7 min · **Phase:** 4 · Agentic AI
 
 **In one line:** An AI agent is an LLM running in a loop that decides which actions (tool calls) to take, sees the results, and keeps going until the goal is done.
+
+**Before you start:** Nothing, this is a starting point. You only need to know that an LLM is a program that takes text in and writes text back.
 
 ## Explain it like I'm new
 A plain chatbot is like asking a friend a question by text message: you ask, they reply, done. An agent is like giving an assistant a task: "Find three flights to Delhi under ₹8,000 and add the cheapest to my calendar." The assistant searches, reads results, compares, then uses the calendar, deciding each next step based on what they just learned.
 
-Key words:
-- **LLM:** the language model that does the thinking (deciding).
+Words to know:
+- **LLM (large language model):** a program trained on lots of text that writes text in reply to text. It does the thinking (deciding).
+- **Agent:** an LLM plus tools plus a loop, so it can take several steps toward a goal.
 - **Tool:** a function your code exposes, such as `search_flights` or `add_event`.
 - **Loop:** ask the model → run the tool it picked → give it the result → ask again.
 - **Environment:** everything outside the model that tools touch (files, APIs, databases).
+- **API (application programming interface):** a way for one program to ask another program for something.
 
 The model never runs code itself. It **asks** for a tool; **your code** runs it. That boundary is where you put safety checks.
 
 ## How it works
-1. Send the model the goal, the conversation so far, and a list of available tools (names, descriptions, input schemas).
+1. Send the model the goal, the conversation so far, and a list of available tools. Each tool has a name, a description, and an input schema (a description of the arguments it accepts).
 2. The model replies with either a final answer or one or more **tool calls** (tool name + arguments).
 3. Your code validates and runs each tool call.
 4. You send the tool results back as new messages.
@@ -35,7 +39,26 @@ flowchart LR
 - A **workflow** follows code paths you wrote in advance (step 1, then step 2), with LLM calls inside.
 - An **agent** lets the model choose the steps and how many to take.
 
-Workflows are more predictable and cheaper. Agents are more flexible for open-ended tasks where you cannot predict the steps.
+Workflows are more predictable and cheaper. Agents are more flexible when you cannot predict the steps in advance.
+
+### Worked example
+Goal: *"What is 12*7+5? Save the answer as a note."* This is the real output of `python 04-agentic-ai/code/agent.py` (the model is a scripted stand-in, so no API key is needed):
+
+```text
+step 1: calculator({"expression": "12*7+5"}) -> 89
+step 2: save_note({"text": "12*7+5 = 89"}) -> Saved note #1.
+12*7+5 is 89, and I saved it as a note.
+```
+
+Trace it:
+1. Your code sends the goal and the tool list to the model.
+2. The model replies with a tool call: `calculator` with `expression = "12*7+5"`. It does no maths itself.
+3. Your code runs `calculator` and gets `89`. It sends `89` back to the model as a tool result.
+4. The model sees the answer, but the goal also says to save it. So it asks for `save_note` with the text `12*7+5 = 89`.
+5. Your code runs `save_note`, which returns `Saved note #1.`, and sends that back.
+6. The model now has nothing left to do. It replies with plain text and no tool call. That reply is the final answer, and the loop ends.
+
+Notice that the model picked the second step *because of* the first result. That choosing is what makes it an agent.
 
 ## Code example
 The core loop from [`agent.py`](../code/agent.py) (runs offline with a scripted model):
@@ -76,6 +99,13 @@ Run it: `python 04-agentic-ai/code/agent.py`. With `ANTHROPIC_API_KEY` set and `
 - Building an agent when a fixed workflow would be simpler and more reliable.
 - Not logging each step, so failures can't be replayed.
 - Trusting text from tools or web pages as if it were the user's instruction.
+- Thinking the agent "runs" the tools itself. The model only asks, and your code does the running.
+
+## Recap
+If you remember only three things:
+- An agent is an LLM in a loop: decide, act with a tool, read the result, decide again.
+- The model only asks for tools. Your code runs them, so your code is where safety checks live.
+- Always cap the number of steps, and use a plain workflow when the steps are known in advance.
 
 ## Interview questions
 **1. What is the difference between an LLM call and an agent?**

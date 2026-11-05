@@ -1,17 +1,26 @@
 # Tool Calling
-> **Level:** Beginner · **Reading time:** 7 min · **Phase:** 4 · Agentic AI
+> **Level:** Beginner · **Reading time:** 8 min · **Phase:** 4 · Agentic AI
 
 **In one line:** Tool calling is how an LLM asks your program to run a function for it, by outputting the tool's name and arguments in a structured format.
+
+**Before you start:** [What is an AI Agent?](01-what-is-an-ai-agent.md). You should know that an agent is an LLM in a loop, and that your code (not the model) runs the tools.
 
 ## Explain it like I'm new
 Think of a manager on the phone who can't touch a computer. They say, "Look up order 1234 and tell me the status." An assistant at a desk does the lookup and reads back the result. The manager is the LLM; the assistant is your code; the computer system is the tool.
 
-LLMs on their own can only produce text. They can't check today's weather, read your database, or do exact math reliably. **Tools** fix that. You describe each tool to the model:
+LLMs on their own can only produce text. They can't check today's weather or read your database. They also can't do exact math reliably. **Tools** fix that. You describe each tool to the model:
 - a **name** (`get_weather`),
 - a **description** (when to use it),
 - an **input schema** in **JSON Schema** (a standard way to describe what fields a JSON object has and their types).
 
-The model reads these descriptions and, when useful, replies with a **tool call** instead of plain text. Your code runs the function and sends back a **tool result**.
+Words to know:
+- **JSON:** a plain-text format for data, like `{"city": "Pune"}`.
+- **Argument:** one input value you give a function, such as `city`.
+- **Tool call:** the model's request to run a tool with certain arguments. It is only a request.
+- **Tool result:** the output your code sends back after running the tool.
+- **SDK (software development kit):** a code library that wraps an API so you can call it from Python.
+
+The model reads these descriptions and, when useful, replies with a tool call instead of plain text. Your code runs the function and sends back a tool result.
 
 ## How it works
 Using the Anthropic Messages API as the example (other providers are similar):
@@ -34,6 +43,16 @@ sequenceDiagram
     App->>LLM: tool_result {tool_use_id, content: "31°C, clear"}
     LLM-->>App: "It's 31°C and clear in Pune."
 ```
+
+### Worked example
+Question: *"What's the weather in Pune?"* Follow one round trip (the same steps as the diagram below):
+1. You send the question plus the `get_weather` definition shown further down.
+2. The model replies with a tool call: name `get_weather`, input `{"city": "Pune"}`, and some `id`. It stops there, because it cannot check the weather itself.
+3. Your code finds the function called `get_weather`, checks that `city` is present, and runs it. Say it returns `"31°C, clear"`.
+4. You send that text back as a tool result carrying the same `id`, so the model knows which request it answers.
+5. The model reads `31°C, clear` and writes the final answer: *"It's 31°C and clear in Pune."*
+
+The 31°C is a made-up value for illustration. What matters is the shape: request out, result back, same `id`.
 
 **Tool definition example:**
 
@@ -96,6 +115,12 @@ if resp.stop_reason == "tool_use":
 - Raising exceptions instead of returning a readable error string the model can recover from.
 - Forgetting to echo the `tool_use_id` in the result, so the API rejects the message.
 - Returning huge outputs (whole web pages) that flood the [context window](../../03-llm-concepts/topics/08-context-window.md).
+
+## Recap
+If you remember only three things:
+- The model never runs a tool. It outputs a name and JSON arguments, and your code runs it.
+- A good tool has a clear name, a description of when to use it, and a strict input schema.
+- Return errors as readable text, and always echo the `tool_use_id`, so the model can recover.
 
 ## Interview questions
 **1. What does the model actually return when it "calls a tool"?**
