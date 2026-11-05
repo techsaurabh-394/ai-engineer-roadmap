@@ -10,13 +10,13 @@
   <a href="https://github.com/techsaurabh-394/ai-engineer-roadmap/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/techsaurabh-394/ai-engineer-roadmap/ci.yml?style=flat&label=CI" alt="CI status"/></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green?style=flat" alt="MIT license"/></a>
   <img src="https://img.shields.io/badge/python-3.10%2B-3776AB?style=flat&logo=python&logoColor=white" alt="Python 3.10 or newer"/>
-  <img src="https://img.shields.io/badge/topics-107-2DD4BF?style=flat" alt="107 topics"/>
+  <img src="https://img.shields.io/badge/topics-113-2DD4BF?style=flat" alt="113 topics"/>
   <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat" alt="PRs welcome"/></a>
   <a href="https://github.com/techsaurabh-394/ai-engineer-roadmap"><img src="https://img.shields.io/github/stars/techsaurabh-394/ai-engineer-roadmap?style=flat&logo=github&color=6ea8fe" alt="GitHub stars"/></a>
   <a href="https://github.com/techsaurabh-394/ai-engineer-roadmap/commits/main"><img src="https://img.shields.io/github/last-commit/techsaurabh-394/ai-engineer-roadmap?style=flat" alt="Last commit"/></a>
 </p>
 
-**107 topics in 7 phases**, each explained in plain English with an everyday analogy, a diagram, Python code, 3 interview questions and links to the original papers or official docs. If you know basic Python, you can start today. The demo scripts run offline with no API key.
+**113 topics in 7 phases**, each explained in plain English with an everyday analogy, a diagram, Python code, 3 interview questions and links to the original papers or official docs. If you know basic Python, you can start today. The demo scripts run offline with no API key.
 
 ![The 7 phases from zero to production, with topic counts](assets/learning-path.svg)
 
@@ -104,12 +104,12 @@ Legend: 🟢 beginner · 🟡 intermediate · 🔴 advanced.
 |---|---|---|---|---|---|
 | 1 RAG Foundations | 20 | 10 | 8 | 2 | 0 / 20 |
 | 2 Advanced RAG | 21 | 0 | 10 | 11 | 0 / 21 |
-| 3 LLM Concepts | 20 | 6 | 11 | 3 | 0 / 20 |
+| 3 LLM Concepts | 26 | 7 | 14 | 5 | 0 / 26 |
 | 4 Agentic AI | 16 | 5 | 8 | 3 | 0 / 16 |
 | 5 Frameworks | 8 | 2 | 4 | 2 | 0 / 8 |
 | 6 MCP | 7 | 2 | 4 | 1 | 0 / 7 |
 | 7 Production AI | 15 | 2 | 12 | 1 | 0 / 15 |
-| **Total** | **107** | **27** | **57** | **23** | **0 / 107** |
+| **Total** | **113** | **28** | **60** | **25** | **0 / 113** |
 
 ### Phase 1 — RAG Foundations
 
@@ -186,6 +186,12 @@ Legend: 🟢 beginner · 🟡 intermediate · 🔴 advanced.
 - [ ] 🟡 [Quantization](03-llm-concepts/topics/18-quantization.md)
 - [ ] 🔴 [LoRA and PEFT](03-llm-concepts/topics/19-lora-and-peft.md)
 - [ ] 🔴 [Inference Serving and Batching](03-llm-concepts/topics/20-inference-serving-and-batching.md)
+- [ ] 🟢 [How an LLM Works End to End](03-llm-concepts/topics/21-how-an-llm-works-end-to-end.md)
+- [ ] 🟡 [Q, K and V Explained From Scratch](03-llm-concepts/topics/22-qkv-explained-from-scratch.md)
+- [ ] 🟡 [Inside a Transformer Block](03-llm-concepts/topics/23-inside-a-transformer-block.md)
+- [ ] 🟡 [How LLMs Are Trained](03-llm-concepts/topics/24-how-llms-are-trained.md)
+- [ ] 🔴 [Modern Attention Variants](03-llm-concepts/topics/25-modern-attention-variants.md)
+- [ ] 🔴 [Mixture of Experts and Scaling Laws](03-llm-concepts/topics/26-mixture-of-experts-and-scaling-laws.md)
 
 ### Phase 4 — Agentic AI
 
@@ -259,13 +265,13 @@ Legend: 🟢 beginner · 🟡 intermediate · 🔴 advanced.
 | [08-interview-prep](08-interview-prep/README.md) | 43 curated questions plus 4 system-design prompts, in 5 files |
 | [09-projects](09-projects/README.md) | Portfolio project ideas from beginner to advanced |
 | [docs/what-is-ai-engineering.md](docs/what-is-ai-engineering.md) | A 5-minute, no-code explanation of the whole field for complete beginners |
-| [docs/learning-paths.md](docs/learning-paths.md) | Five day-by-day plans with reading times: RAG app, agents and MCP, all 107 topics in 8 weeks, interview week |
+| [docs/learning-paths.md](docs/learning-paths.md) | Five day-by-day plans with reading times: RAG app, agents and MCP, all 113 topics in 8 weeks, interview week |
 | [docs/practice.md](docs/practice.md) | 61 practice questions with answers: warm-up, calculations, run-the-demo and design scenarios, plus build challenges |
 | [docs/how-to-study.md](docs/how-to-study.md) | A study routine: pace, and what to do for each topic |
 | [docs/glossary.md](docs/glossary.md) | Plain-English definitions of the key terms |
 | `*/code/` | Runnable, tested demos for every phase (see "What you'll need") |
 
-Interview questions in total: **321** at the end of the 107 topic pages (3 each), plus the 43 + 4 in `08-interview-prep`.
+Interview questions in total: **339** at the end of the 113 topic pages (3 each), plus the 43 + 4 in `08-interview-prep`.
 
 ## What makes this different
 - **Plain English first.** Every term is defined where it first appears.
@@ -280,7 +286,7 @@ ai-engineer-roadmap/
 ├── 00-start-here/        setup and how to learn
 ├── 01-rag-foundations/   20 topics + code/
 ├── 02-advanced-rag/      21 topics + code/
-├── 03-llm-concepts/      20 topics + code/
+├── 03-llm-concepts/      26 topics + code/
 ├── 04-agentic-ai/        16 topics + code/
 ├── 05-frameworks/        8 topics + code/
 ├── 06-mcp/               7 topics + code/ (incl. a TypeScript MCP server)
