@@ -1,7 +1,9 @@
 # Agent Loops
-> **Level:** Intermediate · **Reading time:** 7 min · **Phase:** 4 · Agentic AI
+> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 4 · Agentic AI
 
 **In one line:** The agent loop is the code that repeatedly calls the model, runs the tools it asks for, feeds back the results, and decides when to stop.
+
+**Before you start:** [ReAct Pattern](04-react-pattern.md) and [Tool Calling](02-tool-calling.md). You should know that the model asks for a tool by name and your code runs it.
 
 ## Explain it like I'm new
 Think of a thermostat. It checks the temperature, decides whether to heat, acts, waits, and checks again, forever. An agent loop is similar but with a goal and a finish line: check the situation, decide, act, observe, and stop when the job is done or when something says "enough".
@@ -9,6 +11,13 @@ Think of a thermostat. It checks the temperature, decides whether to heat, acts,
 Every agent, whatever the framework, has this loop at its core. In [`agent.py`](../code/agent.py) it's about 15 lines. Frameworks add features around it (state saving, streaming, retries), but if you understand the loop, you understand agents.
 
 The most important part of the loop is not the "keep going" part. It's the **stop conditions**. An agent without good stop conditions can run for hundreds of steps, repeat the same failing action, and run up a large bill.
+
+Words to know:
+- **Step:** one trip around the loop (one model call plus any tool runs).
+- **Observation:** the result of a tool, sent back to the model.
+- **Stop condition:** a rule that ends the loop, such as a step cap.
+- **Budget:** a limit on tokens (units of text the model reads and writes), money, or time.
+- **Idempotent:** safe to run twice with the same effect as once. Reading is idempotent; charging a card is not.
 
 ## How it works
 1. **Initialize** state: messages (goal + system prompt), step counter, budget.
@@ -33,6 +42,21 @@ flowchart TD
     L -- yes --> STOP[stop with partial result]
     L -- no --> M
 ```
+
+### Worked example
+The demo in [`agent.py`](../code/agent.py) runs the loop with a scripted model. Real output for the goal "What is 12*7+5? Save the answer as a note." (the model's replies are scripted, so no API key is needed):
+
+```text
+step 1: calculator({"expression": "12*7+5"}) -> 89
+step 2: save_note({"text": "12*7+5 = 89"}) -> Saved note #1.
+12*7+5 is 89, and I saved it as a note.
+```
+
+1. Step 1: the model asks for `calculator`. The loop runs it and appends the result `89` to the messages.
+2. Step 2: the model sees `89` and asks for `save_note`. The loop runs it and appends `Saved note #1.`.
+3. Step 3: the model replies with plain text and no tool call. That is the normal finish, so the loop returns the text.
+
+If the model never stopped asking for tools, `max_steps` would end the run with `Stopped: ...` instead. The test `test_agent_stops_at_max_steps` checks this, and it passes.
 
 **Stop conditions to always have:**
 
@@ -87,6 +111,12 @@ def run_agent(llm, user_goal, tools, specs, max_steps=6):
 - Dropping the assistant's tool-call message before appending results (the API needs both).
 - Not logging each step (inputs, outputs, tokens, time), so failures can't be reproduced.
 - Retrying non-idempotent actions (like "charge card") on error and doing them twice.
+
+## Recap
+If you remember only three things:
+- The agent loop is: call the model, run the requested tools, append the results, and repeat.
+- Stop conditions (step cap, budget, timeout, repeat detection) matter more than the loop itself.
+- Return tool errors to the model instead of crashing, and be careful with actions that cannot be undone.
 
 ## Interview questions
 **1. What are the essential stop conditions for an agent loop?**

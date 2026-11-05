@@ -1,12 +1,21 @@
 # Cost Optimization
-> **Level:** Intermediate · **Reading time:** 10 min · **Phase:** 7 — Production AI
+> **Level:** Intermediate · **Reading time:** 11 min · **Phase:** 7 — Production AI
 
 **In one line:** Cost optimization means sending fewer tokens, to cheaper models, fewer times, without dropping below your quality bar.
+
+**Before you start:** [Redis](04-redis.md) and [Observability](13-observability.md). You should know what a cache is and what a token is.
 
 ## Explain it like I'm new
 Think of a taxi. You pay by distance. You save money by not taking a taxi when you can walk (cache), taking a cheap ride for a short trip (small model), and not driving around the block first (shorter prompts).
 
 LLM APIs usually charge per **token** for input (your prompt plus retrieved context) and for output (the answer). Output tokens often cost more than input tokens. So cost grows with prompt size, answer size and request count.
+
+**Words to know:**
+- **Token:** a small piece of text a model reads or writes. You pay per token.
+- **Cache hit:** the answer was already stored, so no model call is needed.
+- **TTL (time to live):** how long a cached answer is kept before it expires.
+- **Routing:** choosing which model handles a request.
+- **Golden set:** a fixed list of test questions used to check quality before and after a change.
 
 The main levers:
 - **Caching:** store answers for repeated questions (topic 4). A cache hit costs almost nothing.
@@ -91,6 +100,18 @@ print(ask("what is rag? ")) # cache hit, cost 0.0
 print(cache.hit_rate)
 ```
 
+### Worked example: the cache demo
+The demo asks the same question twice, with different capital letters and a trailing space. Real output:
+
+```text
+('answer', 0.000153)
+('answer', 0.0)
+0.5
+```
+1. `What is RAG?` is not in the cache. The fake model uses 3 input tokens and 50 output tokens. Cost = 3/1000 * 0.001 + 50/1000 * 0.003 = 0.000003 + 0.00015 = 0.000153.
+2. `what is rag? ` becomes the same cache key after `strip().lower()`. It is a hit, so the cost is 0.0.
+3. One hit and one miss gives a hit rate of 1 / 2 = 0.5.
+
 ### In real projects
 Most provider SDKs let you set `max_tokens` (or an equivalent name) on each call, and some providers offer prompt caching and batch APIs with their own rules and discounts. Read your provider's current pricing and docs, and cache in Redis for multiple servers.
 
@@ -105,6 +126,13 @@ Most provider SDKs let you set `max_tokens` (or an equivalent name) on each call
 - Setting `max_tokens` so low that answers are cut mid-sentence.
 - Routing to a small model with no quality check.
 - Forgetting that retries and agent loops multiply cost.
+
+## Recap
+
+**If you remember only three things:**
+- Cost = tokens in and out times price, multiplied by request count. Measure it before you change anything.
+- Main levers: cache repeats, route easy tasks to small models, trim prompts and top-k, and cap `max_tokens`.
+- Re-run your golden set after each change, because quality drops show up there and not in the invoice.
 
 ## Interview questions
 **1. Name four ways to cut LLM cost.**

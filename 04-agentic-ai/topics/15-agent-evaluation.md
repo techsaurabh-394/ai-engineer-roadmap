@@ -1,7 +1,9 @@
 # Agent Evaluation
-> **Level:** Advanced · **Reading time:** 8 min · **Phase:** 4 · Agentic AI
+> **Level:** Advanced · **Reading time:** 9 min · **Phase:** 4 · Agentic AI
 
 **In one line:** Agent evaluation is measuring, with a fixed set of test tasks, whether an agent reaches the right outcome, takes sensible steps, and stays within cost, time, and safety limits.
+
+**Before you start:** [ReAct Pattern](04-react-pattern.md) and [Agent Loops](12-agent-loops.md). You should know that an agent takes several steps, each with a tool call and a result.
 
 ## Explain it like I'm new
 A driving test doesn't just check that you arrived. The examiner also checks that you stopped at red lights, didn't take a crazy route, and didn't hit anything. Agent evaluation works the same way. You check:
@@ -11,6 +13,14 @@ A driving test doesn't just check that you arrived. The examiner also checks tha
 - **Safety:** did it avoid forbidden actions and respect approvals?
 
 Agents are harder to test than a single prompt because they take many steps, call real tools, and can behave differently each run. So you need a **test set** (tasks with known good outcomes), a way to **run** the agent on them repeatably (often with mocked tools), and **graders** that score the results.
+
+Words to know:
+- **Test set:** a fixed list of tasks, each with a known good result.
+- **Trace:** the recorded list of every step the agent took.
+- **Grader:** code, a model, or a person that scores a run.
+- **Mock:** a fake tool that returns fixed data, so runs are repeatable.
+- **LLM-as-judge:** using a language model to score open-ended answers against a rubric (a written scoring guide).
+- **Regression:** a change that makes things worse than the previous version.
 
 ## How it works
 1. **Collect tasks.** 20-100 realistic tasks to start, including edge cases and known past failures. For each, write what success looks like (expected answer, expected final state, or a rubric).
@@ -33,6 +43,20 @@ flowchart LR
     G1 & G2 & G3 --> M[metrics: success, steps, cost, violations]
     M --> D{better than last version?}
 ```
+
+### Worked example
+The evaluator in the code below runs two test cases on the offline agent. Real output of `evaluate(CASES)`:
+
+```text
+(1.0, [{'outcome_ok': True, 'trajectory_ok': True, 'steps': 3, 'errors': 0},
+       {'outcome_ok': True, 'trajectory_ok': True, 'steps': 3, 'errors': 0}])
+```
+
+1. Case 1 asks for double the population of France. The answer must contain `136`, and the trace must include both `lookup` and `multiply`. Both checks pass (outcome and trajectory).
+2. Case 2 uses a model that never stops calling `lookup`. The expected result is the answer `Stopped` (the step cap works), with `lookup` called. This also passes.
+3. Both cases pass, so the success rate is `2 / 2 = 1.0`. Each run took 3 trace entries and had no tool errors.
+
+Notice that case 2 "passes" by stopping safely. Good evals test failure behaviour too.
 
 **Useful metrics:**
 
@@ -88,6 +112,12 @@ With a real model you'd replace `ScriptedLLM` with an API-backed one and keep to
 - Evaluating against live tools, so results change because the world changed, not the agent.
 - A test set that never grows, so new failure types go unmeasured.
 - Ignoring cost and latency until production.
+
+## Recap
+If you remember only three things:
+- Evaluate an agent on a fixed test set: the outcome, the steps it took, the cost, and safety.
+- Make runs repeatable with mocked tools, and save the full trace of each run.
+- Prefer code checks, use LLM judges carefully, and add every new failure to the test set.
 
 ## Interview questions
 **1. What is the difference between outcome and trajectory evaluation?**

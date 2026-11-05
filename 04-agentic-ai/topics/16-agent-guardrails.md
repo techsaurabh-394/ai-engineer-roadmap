@@ -1,7 +1,9 @@
 # Agent Guardrails
-> **Level:** Advanced · **Reading time:** 8 min · **Phase:** 4 · Agentic AI
+> **Level:** Advanced · **Reading time:** 9 min · **Phase:** 4 · Agentic AI
 
 **In one line:** Guardrails are checks in your code that limit what an agent can see and do (allowed tools, valid arguments, step and cost limits, input and output filters), no matter what the model decides.
+
+**Before you start:** [Human in the Loop](14-human-in-the-loop.md) and [Function Calling](03-function-calling.md). You should know how code validates a tool call and how risky actions wait for approval.
 
 ## Explain it like I'm new
 A new driver can steer, but the road has lane markings, speed limits, and barriers on dangerous bends. The driver mostly stays safe on their own; the barriers stop the worst outcomes when they don't.
@@ -14,6 +16,13 @@ An agent is a capable but unreliable driver. It can misunderstand, hallucinate t
 - **Filters:** check inputs (block obvious attacks, strip secrets) and outputs (no leaked personal data, valid format).
 
 The golden rule: **guardrails live in code, not in the prompt.** "Never delete files" in a system prompt is a request. A delete tool that isn't on the allowlist is a fact.
+
+Words to know:
+- **Least privilege:** give the agent only the access it needs, and nothing more.
+- **Sandbox:** an isolated area (a folder, container, or VM) where mistakes cannot reach the rest of the system.
+- **Business rule:** a check specific to your app, such as a maximum refund amount.
+- **PII:** personally identifiable information, such as names, phone numbers, or ID numbers.
+- **Audit log:** a record of every call and decision, kept for review.
 
 ## How it works
 Layers, from outside in:
@@ -42,6 +51,19 @@ flowchart LR
     R -- no --> RUN
     RUN --> O[output filter] --> LOG[(audit log)]
 ```
+
+### Worked example
+Take `Guardrails(["write_text"], max_steps=2)` from the code below. Real output when we call `check` three times:
+
+| Call | What happens | Result |
+|---|---|---|
+| `check("write_text")` | step 1, on the allowlist | passes silently |
+| `check("send_email")` | step 2, not on the allowlist | `tool 'send_email' is not on the allowlist` |
+| `check("write_text")` | step 3, over the cap of 2 | `max_steps=2 exceeded` |
+
+Notice that every call counts as a step, even a refused one. That is on purpose: an agent that keeps asking for forbidden tools still hits the cap.
+
+At pipeline level, `run_pipeline("agents and email it", ..., allowed_tools=("write_text", "add_example"))` returns status `blocked` and its log ends with `guardrail: tool 'send_email' is not on the allowlist`.
 
 ## Code example
 From [`agent_multi.py`](../code/agent_multi.py): a `Guardrails` object that enforces an allowlist and a step cap, and marks risky tools for approval.
@@ -105,6 +127,12 @@ Always. The question is how strict.
 - Validating schema but not business rules (a valid JSON refund of ₹10,00,000 is still a problem).
 - Treating text from tools, web pages, or other agents as trusted instructions.
 - No global budget, so a multi-agent system can run up costs even if each agent has a limit.
+
+## Recap
+If you remember only three things:
+- Guardrails are code checks around tool execution: allowlist, argument validation, limits, approvals, and filters.
+- Safety rules in a prompt are requests. Rules in code are enforced.
+- Use layers and least privilege, because no single check stops every attack.
 
 ## Interview questions
 **1. Why can't a system prompt alone keep an agent safe?**

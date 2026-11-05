@@ -1,7 +1,9 @@
 # Episodic Memory
-> **Level:** Intermediate · **Reading time:** 6 min · **Phase:** 4 · Agentic AI
+> **Level:** Intermediate · **Reading time:** 7 min · **Phase:** 4 · Agentic AI
 
 **In one line:** Episodic memory is a log of the agent's past experiences (what task it tried, what it did, and how it turned out) that it can recall to do better next time.
+
+**Before you start:** [Long-term Memory](09-long-term-memory.md) and [Semantic Memory](10-semantic-memory.md). You should know how agents save and search information outside the model, and how facts differ from events.
 
 ## Explain it like I'm new
 Last time you assembled flat-pack furniture, you put the doors on before the shelves and had to start over. Next time, you remember that **episode** and do the shelves first. You're not recalling a general fact; you're recalling a specific event and its lesson.
@@ -15,6 +17,13 @@ Agents can do the same. After each task, save a record:
 Next time a similar task arrives, the agent looks up similar episodes and adds them to the prompt: "Last time this failed because migrations weren't run." This is the memory side of [Reflection](06-reflection.md); the **Reflexion** paper stores exactly these kinds of verbal lessons between attempts.
 
 Episodic memory is also gold for **you**, the developer: it's a record of what the agent did, useful for debugging and [evaluation](15-agent-evaluation.md).
+
+Words to know:
+- **Episode:** one past attempt at a task, saved as a record.
+- **Outcome:** how the attempt ended, such as success or failure.
+- **Lesson:** a short sentence about what to do differently next time.
+- **Recall:** find the saved episodes most similar to the new task.
+- **Prune:** delete old or useless records so recall stays clean.
 
 ## How it works
 1. **Record** at the end of each task (or each attempt): task description, key actions, outcome, timestamp, and an optional lesson. The lesson can come from a reflection step.
@@ -32,6 +41,16 @@ sequenceDiagram
     Agent->>Agent: plan includes "migrate" step
     Agent->>Episodes: record(task, actions, outcome=success)
 ```
+
+### Worked example
+This traces the `EpisodicMemory` code below (real output).
+
+1. Attempt 1 at `deploy to staging`: actions `run tests`, `deploy`. It fails. The agent records it with the lesson `run migrations before deploy`. The record gets time `t=1`.
+2. Attempt 2 is a different task, `write weekly report`. It succeeds, so `t=2`, with no lesson.
+3. Attempt 3 at `deploy to staging`: this time the agent recalls first. `recall("deploy staging")` matches only the two deploy episodes, and ranks the newest first. It then adds the `migrate` step and succeeds (`t=3`).
+4. Real output of the recall: `3 success ['run tests', 'migrate', 'deploy']` then `1 failure ['run tests', 'deploy'] run migrations before deploy`.
+
+The weekly report episode never shows up, because it shares no words with the new task. `failures()` returns `['run migrations before deploy']`.
 
 ## Code example
 From [`agent_memory.py`](../code/agent_memory.py):
@@ -74,6 +93,12 @@ def episodes_to_prompt(episodes):
 - Only saving successes; failures carry the most useful lessons.
 - No similarity filter, so unrelated episodes clutter the prompt.
 - Treating an old lesson as permanent truth after the environment changed.
+
+## Recap
+If you remember only three things:
+- Episodic memory stores specific past attempts: the task, the actions, the outcome, and a lesson.
+- Before a new task, recall similar episodes and add a short summary to the prompt.
+- Keep failures and lessons, not raw transcripts, and expire lessons that may be out of date.
 
 ## Interview questions
 **1. What does an episodic memory record usually contain?**

@@ -1,7 +1,9 @@
 # Multi-Agent Systems
-> **Level:** Advanced · **Reading time:** 8 min · **Phase:** 4 · Agentic AI
+> **Level:** Advanced · **Reading time:** 9 min · **Phase:** 4 · Agentic AI
 
 **In one line:** A multi-agent system splits a job across several LLM "agents", each with its own role, prompt, and tools, that pass work between them.
+
+**Before you start:** [Agent Loops](12-agent-loops.md) and [Reflection](06-reflection.md). You should know how a single agent loops over tools, and how a critic step improves a draft.
 
 ## Explain it like I'm new
 A newspaper doesn't have one person do everything. An editor plans the stories, reporters write them, and a fact-checker reviews them before print. Each has a narrow job and different tools.
@@ -14,6 +16,14 @@ A multi-agent system copies that structure. Common roles:
 "Agent" here often just means "an LLM call with its own system prompt and tool list". Several agents can even use the same model.
 
 Why split? A single agent with 40 tools and a giant prompt gets confused. Smaller agents with focused prompts are easier to test and improve one at a time. Work can also run in parallel. The price: more model calls, more cost, and more places for things to go wrong.
+
+Words to know:
+- **Orchestrator:** the agent (or code) that splits the job and hands out pieces.
+- **Worker:** an agent that does one kind of task with a small set of tools.
+- **Critic:** an agent that checks a draft and lists problems.
+- **Handoff:** passing work and state from one agent to the next.
+- **Allowlist:** the list of tools an agent may call. Anything else is refused.
+- **Prompt injection:** hidden instructions in text the agent reads, meant to steer it.
 
 ## How it works
 Common shapes:
@@ -35,6 +45,26 @@ flowchart LR
     X --> R[result]
     G[[guardrails: allowlist + max steps]] -. checks every tool call .- W
 ```
+
+### Worked example
+Real output of `python agent_multi.py` for the goal `agents and email it`:
+
+```text
+plan: ['write_text', 'send_email']
+write_text -> Draft about agents and email it.
+critic: ['needs a concrete example']
+add_example -> Draft about agents and email it. Example: a support bot that looks up orders.
+human approved send_email
+send_email -> EMAIL SENT: Draft about agents and email it. Example: a support bot that looks up orders.
+```
+
+1. The **planner** turns the goal into two steps.
+2. The **worker** runs `write_text` and produces a short draft.
+3. The **critic** says the draft needs a concrete example, so the worker revises it with `add_example`.
+4. `send_email` is marked risky, so the code asks a human first. Here the demo approves automatically.
+5. Only then does the email go out.
+
+If the allowlist leaves out `send_email`, the same run stops at step 4 with status `blocked`. The email is never sent, because the check is in code.
 
 **Design rules:**
 - Pass **structured** messages between agents (JSON with fields), not long free text.
@@ -89,6 +119,12 @@ The tests in [`test_agent_multi.py`](../code/test_agent_multi.py) cover reflecti
 - Each agent having all tools, defeating the point of specialization.
 - No overall step or budget limit across the whole system.
 - Trusting one agent's output as instructions to another without validation (a prompt-injection path).
+
+## Recap
+If you remember only three things:
+- A multi-agent system splits a job into roles (planner, workers, critic) that pass structured results to each other.
+- It adds cost and complexity, so start with one agent and split only when you have a clear reason.
+- Put guardrails and approvals in the orchestration code, not in any agent's prompt.
 
 ## Interview questions
 **1. When would you choose a multi-agent design over a single agent?**

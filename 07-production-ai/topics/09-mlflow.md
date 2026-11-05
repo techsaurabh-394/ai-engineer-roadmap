@@ -1,20 +1,24 @@
 # MLflow
-> **Level:** Intermediate · **Reading time:** 7 min · **Phase:** 7 — Production AI
+> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 7 — Production AI
 
 **In one line:** MLflow is an open-source tool that records your experiments (settings, scores, files) so you can compare runs and reproduce the best one.
+
+**Before you start:** [LangSmith](08-langsmith.md) and [Chunking](../../01-rag-foundations/topics/04-chunking.md). You should know that RAG splits documents into chunks, and that a score is a number you measure.
 
 ## Explain it like I'm new
 Imagine a cooking notebook. Every time you try a recipe you write the ingredients, the oven temperature and how it tasted. Later you can say "the version with less salt at 180°C was best."
 
 Without notes, AI work becomes chaos: "Which chunk size gave that good score last Tuesday?" MLflow is the notebook.
 
-Words to know:
+**Words to know:**
 - **Run:** one try (one training, or one evaluation of your RAG pipeline).
 - **Parameter:** an input setting, like `chunk_size=500`.
 - **Metric:** a number result, like `hit_rate=0.82`. It can be logged over time.
 - **Artifact:** a file you keep, such as a plot or a prompt file.
 - **Experiment:** a group of related runs.
 - **Model registry:** a place to version and promote models.
+- **Hit rate:** the share of test questions where retrieval found the right chunk. 0.82 means 82 out of 100.
+- **Reproduce:** run the same settings again and get the same result. You can only do this if you wrote the settings down.
 
 MLflow started with classic machine learning and also has features for LLM apps (tracing, evaluation). Check the [MLflow docs](https://mlflow.org/docs/latest/) for current GenAI features.
 
@@ -34,6 +38,22 @@ flowchart LR
   R2 --> M
   R3 --> M
 ```
+
+### Worked example
+You want to pick a chunk size for a RAG app. You try three sizes on the same 100 test questions. Each try is one run, and you log one parameter and one metric. These are the demo's made-up scores:
+
+| Run | Parameter `chunk_size` | Metric `hit_rate` |
+|---|---|---|
+| 1 | 300 | 0.71 |
+| 2 | 500 | 0.82 |
+| 3 | 800 | 0.76 |
+
+The highest hit rate is 0.82, so run 2 wins. Running the mini-tracker below prints the real result:
+
+```text
+best: {'chunk_size': 500} {'hit_rate': 0.82}
+```
+Because the parameter was logged next to the metric, you know *which setting* produced 0.82 and can use it again.
 
 ## Code example
 A stdlib mini-tracker with the same shape as MLflow's API:
@@ -87,6 +107,13 @@ Run `mlflow ui` and open the address it prints to compare runs. By default resul
 - Not logging the code version (Git commit) or prompt version.
 - Running a tracking server with no access control on a public address.
 - Chasing tiny score differences on a very small eval set.
+
+## Recap
+
+**If you remember only three things:**
+- A run is one try. You log its parameters (inputs you chose) and its metrics (numbers you measured).
+- Logging both lets you compare runs and reproduce the best one.
+- Compare on the same eval set, or the comparison means nothing.
 
 ## Interview questions
 **1. Parameter vs metric?**

@@ -1,7 +1,9 @@
 # Deploy a Production AI Application
-> **Level:** Advanced · **Reading time:** 12 min · **Phase:** 7 — Production AI
+> **Level:** Advanced · **Reading time:** 13 min · **Phase:** 7 — Production AI
 
 **In one line:** Deploying a production AI app means packaging an API, its cache, queue, data stores and monitoring so they run reliably, are safe, and can be updated without breaking users.
+
+**Before you start:** [FastAPI for AI](01-fastapi-for-ai.md), [Docker](02-docker.md) and [Cost optimization](14-cost-optimization.md). You should know what an API endpoint and a container are.
 
 ## Explain it like I'm new
 A demo is a food stall you run yourself. A production app is a restaurant: a front desk (API), a pantry (cache and vector database), a back kitchen for slow jobs (workers), health inspections (guardrails and security), and a log of every order (observability).
@@ -15,6 +17,14 @@ This topic ties the whole phase together. Each part solves one problem:
 - **Monitoring, tracing** (topics 7, 8, 9, 13): show what is happening.
 - **Prompt versions** (10), **security** (11), **guardrails** (12), **cost controls** (14).
 - **CI/CD** (continuous integration and delivery): an automatic pipeline that tests and ships every change.
+
+**Words to know:**
+- **Replica:** one running copy of your app. Several replicas share the load.
+- **Load balancer:** sends each request to one of the replicas.
+- **Rate limit:** a cap on how many requests a user can make in a time window.
+- **Idempotent:** safe to run twice with the same effect as once, which makes retries safe.
+- **Rollback:** switch back to the previous working version.
+- **Runbook:** a written guide for what to do when something breaks.
 
 ## How it works
 ```mermaid
@@ -33,6 +43,20 @@ flowchart LR
   DEV[Git push] --> CI[CI: tests + golden set + scan]
   CI --> IMG[Build image] --> REG[Registry] --> K[Kubernetes rollout]
 ```
+
+### Worked example
+Trace three requests through the endpoint in the code example below. The pieces are the repo's real guardrail, cache and tracer. A stub stands in for the model. Real output:
+
+```text
+{'answer': 'stub answer', 'cached': False}
+{'answer': 'stub answer', 'cached': True}
+(400, ['possible_injection'])
+```
+1. `What is RAG?` passes the rate limit and the input check. It is not in the cache, so the model is called and the call is recorded in a span. The answer is stored.
+2. The same question again is a cache hit. No model call happens, so no tokens are spent.
+3. `Ignore previous instructions now` fails the input check and the API replies with HTTP status 400 (bad request). The model is never called.
+
+After these three requests the tracer counted exactly 1 `llm_call`, since only the first request reached the model.
 
 ### Step-by-step checklist
 1. **Build the API.** FastAPI with Pydantic request and response models, `/health` and `/ready` routes, timeouts on every external call. (01)
@@ -113,6 +137,13 @@ A GitHub Actions workflow is a YAML file in `.github/workflows/`. A minimal CI j
 - Shipping prompt or model changes without running the golden set in CI.
 - Secrets baked into the image or checked into Git.
 - No rollback plan.
+
+## Recap
+
+**If you remember only three things:**
+- A production app is more than a model call: API, guardrails, cache, queue, vector database, monitoring and CI/CD.
+- Move slow work to workers, keep secrets out of the image and Git, and run the golden set in CI.
+- Release changes by canary, watch cost and latency, and keep a one-step rollback and a runbook.
 
 ## Interview questions
 **1. Why run ingestion in Celery instead of the API?**

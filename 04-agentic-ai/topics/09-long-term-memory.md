@@ -1,7 +1,9 @@
 # Long-term Memory
-> **Level:** Intermediate · **Reading time:** 6 min · **Phase:** 4 · Agentic AI
+> **Level:** Intermediate · **Reading time:** 7 min · **Phase:** 4 · Agentic AI
 
 **In one line:** Long-term memory is information an agent saves outside the model (in a database or file) so it can search and reuse it in future sessions.
+
+**Before you start:** [Short-term Memory](08-short-term-memory.md). You should know that the model only "remembers" what is inside the current prompt.
 
 ## Explain it like I'm new
 Short-term memory is the sticky note for today's call. Long-term memory is the filing cabinet. You file away things worth keeping ("client prefers email, not calls"; "the deploy script is in scripts/deploy.sh"), and the next time a related topic comes up, you pull the right folder.
@@ -10,7 +12,15 @@ For an agent, the filing cabinet is a **store**: a database table, a JSON file, 
 - **Write:** decide what is worth saving and save it, with metadata (who, when, source).
 - **Read:** given a new question, **retrieve** the most relevant saved items and add them to the prompt.
 
-If that sounds like RAG, it is. Long-term memory is RAG over things the agent (or user) learned, instead of over a fixed document set. See [Phase 1 · RAG Foundations](../../01-rag-foundations/README.md).
+If that sounds like RAG, it is. Long-term memory is RAG over things the agent (or user) learned, instead of over a fixed document set. RAG (retrieval-augmented generation) means looking up relevant text and pasting it into the prompt. See [Phase 1 · RAG Foundations](../../01-rag-foundations/README.md).
+
+Words to know:
+- **Session:** one continuous conversation or run. Long-term memory survives after it ends.
+- **Store:** the place memories are saved (a file, a database, or a vector database).
+- **Metadata:** extra labels on a memory, such as who it belongs to and when it was saved.
+- **Retrieve:** search the store and return the best-matching items.
+- **Top-k:** the k best matches. With `k=2` you get the two best.
+- **Embedding:** a list of numbers that represents the meaning of a text, so similar meanings land close together.
 
 ## How it works
 1. **Extract.** After a turn or a task, decide what to save. Options: save everything; save only what the user explicitly asks ("remember that…"); or ask the LLM to extract key facts.
@@ -30,6 +40,16 @@ flowchart LR
     end
     S --> R
 ```
+
+### Worked example
+This uses the `LongTermMemory` class from the code below (real output from `agent_memory.py`).
+
+1. Session 1: the agent saves two notes: `The deploy script lives in scripts/deploy.sh` and `Staging database password rotates every 30 days`.
+2. Session 2, days later: the user asks `where is the deploy script`.
+3. `search` drops filler words such as `the` and `is`, then counts shared words. The first note shares `deploy` and `script` (score 2). The second shares none (score 0) and is thrown away.
+4. The best match is added to the prompt as `Relevant note: The deploy script lives in scripts/deploy.sh`.
+
+Real output: `['The deploy script lives in scripts/deploy.sh']`. The model answers correctly even though it never saw that note in this session.
 
 ## Code example
 From [`agent_memory.py`](../code/agent_memory.py): a keyword store with save, ranked search, and JSON persistence. Swap `tokenize` + overlap for embeddings + cosine similarity to get a vector store.
@@ -85,6 +105,12 @@ print(ltm.search("where is the deploy script"))   # ['The deploy script lives in
 - Never deleting or updating, so outdated facts win.
 - Saving untrusted tool output as trusted memory (memory poisoning).
 - Not telling the model where a memory came from or how old it is.
+
+## Recap
+If you remember only three things:
+- Long-term memory is a store outside the model that you write to and search later, so knowledge survives across sessions.
+- It is RAG over what the agent learned: retrieve the top matches and put them in the prompt.
+- Filter by user, save selectively, and delete stale items, or it becomes leaky and noisy.
 
 ## Interview questions
 **1. How is long-term memory related to RAG?**
