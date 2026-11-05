@@ -1,7 +1,9 @@
 # Docker
-> **Level:** Beginner · **Reading time:** 8 min · **Phase:** 7 — Production AI
+> **Level:** Beginner · **Reading time:** 9 min · **Phase:** 7 — Production AI
 
 **In one line:** Docker packs your app and everything it needs into an image that runs the same way on any machine.
+
+**Before you start:** [FastAPI for AI](01-fastapi-for-ai.md). It helps to know what a web API is and what `requirements.txt` lists.
 
 ## Explain it like I'm new
 Think of a lunchbox. You pack the food, the fork and the napkin. Wherever you open it, you get the same meal. "It works on my laptop" stops being a problem because the laptop's Python version no longer matters.
@@ -9,6 +11,9 @@ Think of a lunchbox. You pack the food, the fork and the napkin. Wherever you op
 An **image** is the read-only package (your code, Python, libraries). A **container** is a running copy of an image. A **Dockerfile** is the recipe that builds the image. A **registry** (Docker Hub, GitHub Container Registry) stores images so servers can pull them.
 
 Images are built in **layers**. Each Dockerfile instruction makes a layer. Docker caches layers, so if nothing changed in a step, it reuses the old layer. That is why order matters: copy `requirements.txt` and install packages *before* copying your code. Your code changes often; dependencies rarely.
+
+**Words to know:**
+-
 
 ## How it works
 1. Write a `Dockerfile`.
@@ -23,6 +28,17 @@ COPY requirements.txt      requirements.txt changes
 RUN pip install ...        (reruns only if the line above changed)
 COPY . .                   any code file changes   <- changes most often, goes last
 ```
+
+### Worked example
+You build the Dockerfile above for the first time. Every step runs, and each result is saved as a layer.
+
+You then edit only `main.py` and rebuild:
+1. `FROM python:3.12-slim`: nothing changed, so the layer is reused.
+2. `COPY requirements.txt .`: the file is the same, so it is reused.
+3. `RUN pip install ...`: its input is unchanged, so it is reused. This is the slow step you just skipped.
+4. `COPY . .`: your code changed, so this layer and everything after it rebuild.
+
+If `COPY . .` came first, step 4's change would invalidate the `pip install` layer too, and every edit would reinstall all packages. The stdlib sketch below shows the same idea: its second line prints `pip install: cached` and `copy code: rebuilt`.
 
 ## Code example
 Stdlib sketch of the layer-cache idea: a step reruns only if its input hash changes.
@@ -84,6 +100,13 @@ Add a `.dockerignore` file listing `.git`, `.env`, `__pycache__` and `.venv` so 
 - Baking API keys into the image.
 - Using the `latest` tag in production. You cannot tell what version is running.
 - Forgetting `--host 0.0.0.0`, so the app is unreachable from outside the container.
+
+## Recap
+
+**If you remember only three things:**
+- An image is the package; a container is a running copy of it.
+- Docker reuses cached layers, so put rarely-changing steps (dependencies) before often-changing ones (code).
+- Never put secrets in the image. Pass them at run time.
 
 ## Interview questions
 **1. Image vs container?**

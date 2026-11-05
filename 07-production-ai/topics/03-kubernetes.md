@@ -1,12 +1,14 @@
 # Kubernetes
-> **Level:** Intermediate · **Reading time:** 10 min · **Phase:** 7 — Production AI
+> **Level:** Intermediate · **Reading time:** 11 min · **Phase:** 7 — Production AI
 
 **In one line:** Kubernetes runs many containers across many machines and keeps them healthy, scaled and reachable.
+
+**Before you start:** [Docker](02-docker.md). You should know what an image and a container are.
 
 ## Explain it like I'm new
 Think of a shift manager at a busy store. You say "I want 3 cashiers at all times." If one goes home sick, the manager calls in a replacement. If the line grows, the manager adds more. You describe the goal; the manager does the work.
 
-Kubernetes (often "K8s") works the same way. You write a **desired state** in YAML. Kubernetes keeps comparing reality to it and fixes differences.
+Kubernetes (often written "K8s", because there are 8 letters between K and s) works the same way. You write a **desired state** in YAML (a plain-text config format). Kubernetes keeps comparing reality to it and fixes differences.
 
 Key words:
 - **Pod:** the smallest unit; one or more containers running together.
@@ -15,12 +17,15 @@ Key words:
 - **Probes:** health checks. A **liveness** probe restarts a stuck container. A **readiness** probe keeps traffic away until the app is ready (important when a model takes time to load).
 - **Resource requests/limits:** how much CPU and memory a pod is guaranteed and how much it may use.
 
+**Words to know:**
+-
+
 ## How it works
 1. You build and push an image to a registry.
 2. You apply a Deployment and a Service with `kubectl apply -f`.
 3. The scheduler places pods on nodes that have enough free resources.
 4. The Service sends traffic only to pods that pass readiness.
-5. An autoscaler (HPA) can add pods when CPU is high.
+5. An autoscaler (the Horizontal Pod Autoscaler, HPA) can add pods when CPU is high.
 
 ```mermaid
 flowchart LR
@@ -32,6 +37,14 @@ flowchart LR
   D -.manages.-> P2
   D -.manages.-> P3
 ```
+
+### Worked example
+You apply a Deployment with `replicas: 3`. Kubernetes starts `pod-a`, `pod-b` and `pod-c`, and the Service sends users to all three.
+1. `pod-c` crashes. Actual state is 2 pods, desired is 3.
+2. The Deployment notices the gap and starts a replacement pod.
+3. The Service skips the new pod until its readiness probe passes, then includes it again.
+
+The stdlib sketch below does the same thing with two pods left and `desired = 3`. It adds one and prints `['pod-a', 'pod-b', 'pod-2']`.
 
 ## Code example
 Stdlib sketch of the control loop: compare desired and actual, then fix.
@@ -124,6 +137,13 @@ The numbers are starting points, not recommendations; measure your own app. Crea
 - Secrets written in plain YAML in Git.
 - Using the `latest` image tag.
 - Scaling pods but forgetting the LLM provider's rate limits.
+
+## Recap
+
+**If you remember only three things:**
+- You describe the desired state; Kubernetes keeps comparing it to reality and fixes the gap.
+- A Deployment keeps N pods running, and a Service gives them one stable address.
+- Readiness decides who gets traffic; liveness decides who gets restarted.
 
 ## Interview questions
 **1. Readiness vs liveness probe?**

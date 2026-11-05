@@ -1,7 +1,9 @@
 # RabbitMQ
-> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 7 — Production AI
+> **Level:** Intermediate · **Reading time:** 9 min · **Phase:** 7 — Production AI
 
 **In one line:** RabbitMQ is a message broker: producers send messages to it, and it routes them safely to the queues that consumers read from.
+
+**Before you start:** [Celery](05-celery.md). You should know what a background task and a broker are.
 
 ## Explain it like I'm new
 Think of a post office. You do not hand a letter to the recipient. You drop it at the post office, which sorts it and puts it in the right mailbox. The recipient picks it up when ready. If they are away, the letter waits.
@@ -16,6 +18,7 @@ Words to know:
 - **Binding / routing key:** the rule linking an exchange to a queue.
 - **Ack (acknowledgement):** the consumer tells RabbitMQ "done". Without an ack, the message is redelivered.
 - **Dead-letter queue (DLQ):** where messages go after repeated failure or expiry, so you can inspect them.
+- **Nack (negative acknowledgement):** the consumer says "I failed". The broker can requeue the message or send it to the DLQ.
 
 ## How it works
 1. A producer publishes a message to an **exchange** with a routing key.
@@ -33,6 +36,16 @@ flowchart LR
   Q2 --> C2[Worker B]
   Q1 -. failures .-> DLQ[Dead-letter queue]
 ```
+
+### Worked example
+Your API publishes the message `doc1` to the exchange with routing key `ingest`.
+1. The exchange matches the key `ingest` and puts the message in the `ingest` queue.
+2. Worker A takes `doc1` and processes it.
+3. Worker A sends an ack, so RabbitMQ deletes the message.
+4. If Worker A had crashed before the ack, the message would return to the queue for another worker.
+5. If a worker sends a nack and retries run out, the message goes to the DLQ.
+
+The stdlib toy below publishes `doc1`, `bad` and `nowhere`/`x`. The key `nowhere` matches no queue, so `x` goes to `dead` straight away. Consuming `doc1` works, and consuming `bad` fails. The toy prints `ingest processed doc1 None dead: ['x', 'bad']`.
 
 ## Code example
 A stdlib toy of a direct exchange with queues and a dead-letter list:
@@ -88,6 +101,13 @@ Run a local broker with the official Docker image (see the [RabbitMQ docs](https
 - Unbounded queue growth. Watch queue length and alert on it.
 - Large payloads in messages. Send IDs or paths.
 - Default credentials left on a public host.
+
+## Recap
+
+**If you remember only three things:**
+- A producer sends to an exchange, the exchange routes to queues, and consumers read from queues.
+- The consumer acks only after the work is done, so a crash does not lose the message.
+- A dead-letter queue keeps messages that keep failing so you can inspect them.
 
 ## Interview questions
 **1. Queue vs exchange?**

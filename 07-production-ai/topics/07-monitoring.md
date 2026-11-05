@@ -1,7 +1,9 @@
 # Monitoring
-> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 7 — Production AI
+> **Level:** Intermediate · **Reading time:** 9 min · **Phase:** 7 — Production AI
 
 **In one line:** Monitoring means watching numbers about your running service and alerting a human when they go wrong.
+
+**Before you start:** [FastAPI for AI](01-fastapi-for-ai.md). You should know what a request, a status code and an API are.
 
 ## Explain it like I'm new
 A car dashboard shows speed, fuel and engine temperature. You do not open the engine to know you are low on fuel. A warning light tells you.
@@ -21,6 +23,9 @@ AI services add their own:
 - **Provider errors and rate-limit (429) responses.**
 - **Quality signals:** thumbs-down rate, empty-answer rate, guardrail blocks.
 
+**Words to know:**
+-
+
 ## How it works
 1. Your app emits metrics (counters, histograms, gauges).
 2. A collector scrapes or receives them and stores them as time series.
@@ -36,6 +41,14 @@ flowchart LR
   R --> N[Notify on-call]
 ```
 
+### Worked example
+You have 10 request times in milliseconds: nine near 120 to 140, and one at 4000.
+1. The mean is 517.5 ms. That makes everyone look slow, though only one user was.
+2. p50 is 130 ms, the typical user.
+3. p95 is 4000 ms. It exposes the slow tail.
+
+Now an alert rule: "error rate above 5% for 5 minutes". In one minute 1000 requests arrive and 60 fail, which is 6%. If this holds for 5 minutes, the rule fires and the on-call person is notified, and they open the runbook.
+
 ## Code example
 Percentiles with a stdlib helper, from [`prod_observability.py`](../code/prod_observability.py):
 
@@ -45,7 +58,7 @@ sys.path.insert(0, "07-production-ai/code")
 from prod_observability import percentile
 
 latencies_ms = sorted([120, 130, 125, 140, 135, 128, 132, 138, 127, 4000])
-print("mean:", sum(latencies_ms) / len(latencies_ms))   # 507.5, looks bad for everyone
+print("mean:", sum(latencies_ms) / len(latencies_ms))   # 517.5, looks bad for everyone
 print("p50:", percentile(latencies_ms, 50))             # 130, the typical user
 print("p95:", percentile(latencies_ms, 95))             # 4000, the slow tail
 ```
@@ -65,6 +78,13 @@ Many teams export metrics in the Prometheus format and view them in Grafana. Oth
 - Alerts with no owner or runbook.
 - Logging full prompts with personal data into the metrics system.
 - Dashboards nobody looks at. Review them in a regular meeting.
+
+## Recap
+
+**If you remember only three things:**
+- Monitoring is numbers about a running service, plus alerts that tell a human when they go wrong.
+- Use percentiles (p50, p95), not averages, because one slow call skews the mean.
+- Start with traffic, errors, p95 latency and cost, and add AI metrics such as tokens and cache hit rate.
 
 ## Interview questions
 **1. Why p95 instead of average latency?**

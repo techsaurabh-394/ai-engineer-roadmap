@@ -1,16 +1,21 @@
 # FastAPI for AI
-> **Level:** Beginner · **Reading time:** 9 min · **Phase:** 7 — Production AI
+> **Level:** Beginner · **Reading time:** 10 min · **Phase:** 7 — Production AI
 
 **In one line:** FastAPI is a Python web framework that turns your AI function into an HTTP API with automatic input validation and docs.
+
+**Before you start:** [Calling an LLM API](../../03-llm-concepts/topics/16-calling-an-llm-api.md). You should know basic Python functions and dictionaries.
 
 ## Explain it like I'm new
 Think of a restaurant. The kitchen (your model or RAG pipeline) cooks the food. The waiter (the API) takes orders in a fixed format, passes them to the kitchen, and brings back the plate. Customers never walk into the kitchen.
 
-An **API** (application programming interface) lets other programs call your code over the network. **HTTP** is the protocol they use. A client sends a request to a **route** such as `POST /chat`, and your server sends back a response, usually **JSON**.
+An **API** (application programming interface) is a doorway that lets other programs call your code over the network. **HTTP** is the protocol they use. A client sends a request to a **route** such as `POST /chat`, and your server sends back a response, usually **JSON** (a plain-text format for data, like `{"answer": "hi"}`).
 
 FastAPI helps with three things. It uses **Pydantic** models to check that incoming data has the right shape. It builds interactive docs at `/docs`. And it supports `async` code, which lets one server handle many slow network calls (like LLM calls) at the same time.
 
 LLM answers can take many seconds. **Streaming** sends the answer in small pieces as the model produces them, so the user sees text right away.
+
+**Words to know:**
+-
 
 ## How it works
 1. The client sends `POST /chat` with a JSON body.
@@ -30,6 +35,14 @@ sequenceDiagram
   L-->>A: tokens
   A-->>C: JSON or streamed chunks
 ```
+
+### Worked example
+A client sends `POST /chat` with the body `{"question": "What is RAG?"}`.
+1. FastAPI checks the body. `question` is a non-empty string, so it passes.
+2. Your function runs and returns an answer.
+3. FastAPI replies with status `200` and JSON. In the stdlib sketch below the result is `{'status': 200, 'answer': '(fake model) You asked: What is RAG?'}`.
+
+Now the client sends an empty body `{}`. There is no `question`, so validation fails before any model call. The sketch returns `{'status': 422, 'error': 'question must be a non-empty string'}`. Real FastAPI sends a `422` too, with its own error details. No tokens were spent.
 
 ## Code example
 The core idea, stdlib only: validate input, then call a function. This is what FastAPI automates.
@@ -101,6 +114,13 @@ async def chat_stream(req: ChatRequest):
 - No `/health` route, so Docker and Kubernetes cannot check the service.
 - Returning raw exception text to users. It can leak internals.
 - Loading the model on every request instead of once at startup.
+
+## Recap
+
+**If you remember only three things:**
+- FastAPI turns a Python function into an HTTP route and checks input with Pydantic.
+- Bad input gets a `422` before you spend any tokens.
+- Use `async`, a timeout, a `/health` route and streaming so slow LLM calls do not freeze the server.
 
 ## Interview questions
 **1. Why use Pydantic models for an LLM API?**
