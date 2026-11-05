@@ -22,7 +22,7 @@
 Answers are short on purpose. Where a topic moves fast (for example MCP transports), the answer tells you to check the current documentation.
 
 ## Even more questions
-Every one of the **107 topic pages** ends with 3 interview questions and hidden answers. That's 321 more questions, sorted by topic (checked by script). Use them to review a phase the day before an interview.
+Every one of the **113 topic pages** ends with 3 interview questions and hidden answers. That's 339 more questions, sorted by topic (checked by script). Use them to review a phase the day before an interview.
 
 **Next:** [09 · Projects](../09-projects/README.md)
 

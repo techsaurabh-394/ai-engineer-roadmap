@@ -9,7 +9,7 @@
 - High-school math: multiplication, averages, the idea of a probability.
 - Helpful but optional: [Phase 1 · RAG Foundations](../01-rag-foundations/README.md) for embeddings and vectors.
 
-**Time:** about 9-11 hours, including the code.
+**Time:** about 15-18 hours, including the code.
 
 ## Big idea
 A language model reads **tokens** (pieces of words) and predicts the next token, over and over. Inside, a **transformer** lets every token look at the others (**attention**) to work out what it means. At the end, the model outputs a score for every token in its vocabulary; a **decoding strategy** (greedy, temperature, top-k, top-p, beam search) turns those scores into one chosen token. Everything else in this phase is detail around that loop.
@@ -38,6 +38,12 @@ A language model reads **tokens** (pieces of words) and predicts the next token,
 | 18 | Quantization | Intermediate | [18-quantization.md](topics/18-quantization.md) |
 | 19 | LoRA and PEFT | Advanced | [19-lora-and-peft.md](topics/19-lora-and-peft.md) |
 | 20 | Inference Serving and Batching | Advanced | [20-inference-serving-and-batching.md](topics/20-inference-serving-and-batching.md) |
+| 21 | How an LLM Works End to End | Beginner | [21-how-an-llm-works-end-to-end.md](topics/21-how-an-llm-works-end-to-end.md) |
+| 22 | Q, K and V Explained From Scratch | Intermediate | [22-qkv-explained-from-scratch.md](topics/22-qkv-explained-from-scratch.md) |
+| 23 | Inside a Transformer Block | Intermediate | [23-inside-a-transformer-block.md](topics/23-inside-a-transformer-block.md) |
+| 24 | How LLMs Are Trained | Intermediate | [24-how-llms-are-trained.md](topics/24-how-llms-are-trained.md) |
+| 25 | Modern Attention Variants | Advanced | [25-modern-attention-variants.md](topics/25-modern-attention-variants.md) |
+| 26 | Mixture of Experts and Scaling Laws | Advanced | [26-mixture-of-experts-and-scaling-laws.md](topics/26-mixture-of-experts-and-scaling-laws.md) |
 
 ## Learning order
 1. **How the model is built (01-06).** Start with the [Transformer Architecture](topics/01-transformer-architecture.md) overview, then zoom into attention (02-03), word order (04), and the two main model shapes (05-06).
@@ -46,6 +52,11 @@ A language model reads **tokens** (pieces of words) and predicts the next token,
 4. **How to use it well (13-15).** Why models make things up, how to write prompts that work, and when fine-tuning is (and is not) the right tool.
 5. **How to build with it (16-17).** Make a real API call that survives failures, and get answers in a shape your code can trust.
 6. **Making it small, cheap and fast (18-20).** Quantization, LoRA, and how servers batch many users onto one GPU. These three are advanced: skim them first and come back.
+
+7. **Under the hood, step by step (21-24).** New here? Read [How an LLM Works End to End](topics/21-how-an-llm-works-end-to-end.md) right after topic 01: it follows one sentence through every stage with real numbers. Then [Q, K and V Explained From Scratch](topics/22-qkv-explained-from-scratch.md) (the part most people find hardest), [Inside a Transformer Block](topics/23-inside-a-transformer-block.md) (residuals, LayerNorm, feed-forward) and [How LLMs Are Trained](topics/24-how-llms-are-trained.md) (loss, gradient descent, SFT, RLHF).
+8. **Modern designs (25-26).** [Modern Attention Variants](topics/25-modern-attention-variants.md) (MQA, GQA, FlashAttention, sliding window, RoPE) and [Mixture of Experts and Scaling Laws](topics/26-mixture-of-experts-and-scaling-laws.md). Advanced: read after 07 and 20.
+
+**Best first-time order for a beginner:** 01, 21, 02, 22, 03, 04, 23, 05, 07, 24, then the rest in number order.
 
 If you are short on time, read 01, 08, 09, 11, 13, 14, 16 first. Come back to the rest later.
 
@@ -63,6 +74,12 @@ python 03-llm-concepts/code/llm_structured.py   # validate JSON against a schema
 python 03-llm-concepts/code/llm_quantize.py     # int8 / int4 rounding error, memory table, outliers
 python 03-llm-concepts/code/llm_lora_math.py    # low-rank update, parameter counts, merge
 python 03-llm-concepts/code/llm_serving_sim.py  # static vs continuous batching
+python 03-llm-concepts/code/llm_e2e_walkthrough.py  # one sentence through every stage of a toy LLM
+python 03-llm-concepts/code/llm_qkv.py          # Q, K, V and the full attention trace, step by step
+python 03-llm-concepts/code/llm_block.py        # LayerNorm, RMSNorm, FFN, residuals, parameter counts
+python 03-llm-concepts/code/llm_training.py     # tiny language model trained with gradient descent
+python 03-llm-concepts/code/llm_attn_variants.py  # MQA/GQA cache sizes, online softmax, sliding window, RoPE
+python 03-llm-concepts/code/llm_moe_scaling.py  # MoE router, active vs total parameters, scaling-law fit
 
 python -m pytest -q 03-llm-concepts/code        # run the tests (needs: pip install pytest)
 ```
@@ -78,6 +95,12 @@ python -m pytest -q 03-llm-concepts/code        # run the tests (needs: pip inst
 | [`llm_quantize.py`](code/llm_quantize.py) | symmetric and asymmetric quantization, error, memory table, outliers | 18 |
 | [`llm_lora_math.py`](code/llm_lora_math.py) | low-rank update, trainable parameter counts, merging an adapter | 19 |
 | [`llm_serving_sim.py`](code/llm_serving_sim.py) | static vs continuous batching: latency, throughput, utilization | 20 |
+| [`llm_e2e_walkthrough.py`](code/llm_e2e_walkthrough.py) | toy LLM: tokens, embeddings, blocks, logits, softmax, autoregressive loop | 21 |
+| [`llm_qkv.py`](code/llm_qkv.py) | Q/K/V projections, score table, mask, weights, output, parameter count | 22 |
+| [`llm_block.py`](code/llm_block.py) | LayerNorm, RMSNorm, ReLU/GELU, feed-forward, residual depth experiment | 23 |
+| [`llm_training.py`](code/llm_training.py) | cross-entropy, gradient descent on a bigram model, loss mask, preference loss | 24 |
+| [`llm_attn_variants.py`](code/llm_attn_variants.py) | KV-cache size MHA vs GQA vs MQA, online softmax, sliding window, RoPE | 25 |
+| [`llm_moe_scaling.py`](code/llm_moe_scaling.py) | top-k router, MoE layer, load balance, 6*N*D compute, power-law fit | 26 |
 
 ## Try it
 1. In `sampling_demo.py`, change `LOGITS` so "banana" has the highest score. What does the model now "believe"?
@@ -88,6 +111,10 @@ python -m pytest -q 03-llm-concepts/code        # run the tests (needs: pip inst
 6. In `llm_api_basics.py`, make the flaky client fail 5 times with 3 attempts allowed. What does the caller see?
 7. In `llm_quantize.py`, add a second outlier. How much worse does the shared-scale error get, and does per-group scaling still fix it?
 8. In `llm_serving_sim.py`, give every request the same length. Does continuous batching still win?
+9. In `llm_qkv.py`, change one number in `W_q` and watch which row of the weight table changes. Why does only that token's *looking* change, not what it *offers*?
+10. In `llm_training.py`, halve the learning rate. How many more steps does the loss need to reach the same value?
+11. In `llm_attn_variants.py`, change the GQA group count from 8 to 4. What happens to the KV-cache size?
+12. In `llm_moe_scaling.py`, change top-2 to top-1. How do active parameters per token change?
 
 ## Prompting, RAG or fine-tuning?
 | Need | Use |
@@ -147,6 +174,31 @@ Causes: training optimizes for plausible text, not truth; missing or rare knowle
 **10. What is prompt injection, and why can't one clever prompt fully stop it?**
 <details><summary>Answer</summary>
 Untrusted text (web pages, emails, files) that contains instructions the model then follows. The model reads instructions and data as the same kind of tokens, so wording alone cannot guarantee separation. Defences must also live in code: least-privilege tools, validation, and human approval.
+</details>
+
+**11. What are Q, K and V, and why three separate matrices instead of one?**
+<details><summary>Answer</summary>
+Each token's vector is multiplied by three learned matrices. Q is what the token is looking for, K is how it advertises itself for matching, and V is the content it hands over once matched. Separate matrices let "what I search for", "how I am found" and "what I give" differ, which one shared matrix could not do.
+</details>
+
+**12. In one sentence each, what do the residual connection, LayerNorm and the feed-forward network do?**
+<details><summary>Answer</summary>
+The residual adds the input back to the output so information and gradients can skip layers. LayerNorm rescales each token's numbers to a steady range so deep stacks train stably. The feed-forward network processes each token on its own after attention has mixed tokens, and holds much of the model's stored knowledge.
+</details>
+
+**13. What is the training loss for next-token prediction, and what does a loss of 1.386 mean?**
+<details><summary>Answer</summary>
+Cross-entropy: minus the natural log of the probability the model gave the correct next token. 1.386 is -ln(0.25), so the model gave the right token a 25% chance. Lower loss means more probability on the right token.
+</details>
+
+**14. Why does Grouped-Query Attention shrink the KV cache?**
+<details><summary>Answer</summary>
+Several query heads share one key/value head, so fewer K and V vectors are stored per token. The cache scales with the number of KV heads, not query heads.
+</details>
+
+**15. A Mixture-of-Experts model has far more parameters than a dense one, yet is not slower per token. Why?**
+<details><summary>Answer</summary>
+A router sends each token to only its top-k experts, so only a fraction of the parameters (the active ones) do work per token. The catch is that all experts must still be held in memory.
 </details>
 
 More practice: [interview prep · LLM fundamentals](../08-interview-prep/01-llm-fundamentals.md).

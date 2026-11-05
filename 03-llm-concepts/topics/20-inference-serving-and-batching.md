@@ -129,4 +129,4 @@ Look at p95 and p99. The median can hide a slow tail from queueing under load, v
 - Speculative decoding: https://arxiv.org/abs/2211.17192
 - vLLM repo: https://github.com/vllm-project/vllm
 
-**Prev:** [LoRA and PEFT](19-lora-and-peft.md) · **Next:** [Phase 4 · Agentic AI](../../04-agentic-ai/README.md) · **Back to phase:** [Phase 3](../README.md)
+**Prev:** [LoRA and PEFT](19-lora-and-peft.md) · **Next:** [How an LLM Works End to End](21-how-an-llm-works-end-to-end.md) · **Back to phase:** [Phase 3](../README.md)
