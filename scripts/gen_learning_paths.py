@@ -63,7 +63,7 @@ B = [
 CW = [
  ("Week 1", [(1,n) for n in range(1,PH[1]+1)], "Phase 1. Do the checkpoint quiz in the phase README."),
  ("Week 2", [(2,n) for n in range(1,PH[2]+1)], "Phase 2. Run every script in `02-advanced-rag/code/`, including `adv_llm_judge.py`."),
- ("Week 3", [(3,n) for n in range(1,PH[3]+1)], "Phase 3. Run `llm_attention.py`, `llm_decoding.py`, `sampling_demo.py`, `llm_finetune_data.py`, `llm_api_basics.py`, `llm_structured.py`, `llm_quantize.py`, `llm_lora_math.py` and `llm_serving_sim.py`."),
+ ("Week 3", [(3,n) for n in range(1,PH[3]+1)], "Phase 3. Run `llm_attention.py`, `llm_decoding.py`, `sampling_demo.py`, `llm_finetune_data.py`, `llm_api_basics.py`, `llm_structured.py`, `llm_quantize.py`, `llm_lora_math.py`, `llm_serving_sim.py`, `llm_e2e_walkthrough.py`, `llm_qkv.py`, `llm_block.py`, `llm_training.py`, `llm_attn_variants.py` and `llm_moe_scaling.py`."),
  ("Week 4", [(4,n) for n in range(1,PH[4]+1)], "Phase 4. Run the four agent scripts."),
  ("Week 5", [(5,n) for n in range(1,PH[5]+1)], "Phase 5. Run `fw_mini_chain.py` and `fw_mini_graph.py`, then read the framework comparison."),
  ("Week 6", [(6,n) for n in range(1,PH[6]+1)], "Phase 6. Build the TypeScript server."),
@@ -80,7 +80,16 @@ E = [
  ("7", [(3,20),(3,7)], "Run `python 03-llm-concepts/code/llm_serving_sim.py`. Change the request lengths until static and continuous batching tie."),
  ("8", [(2,20),(2,21)], "Run `python 02-advanced-rag/code/adv_llm_judge.py`. Swap the answer order and see which judge changes its mind."),
 ]
-sa, ta = table(A); sb, tb = table(B); sc, tc = table(CW); se, te = table(E)
+F = [
+ ("1", [(3,1),(3,21)], "Run `python 03-llm-concepts/code/llm_e2e_walkthrough.py`. Follow the word 'the cat sat on the' from text to the next token."),
+ ("2", [(3,22)], "Run `python 03-llm-concepts/code/llm_qkv.py`. Change one number in W_q and see which attention row moves."),
+ ("3", [(3,2),(3,3),(3,4)], "Run `python 03-llm-concepts/code/llm_attention.py`. Remove the causal mask and compare the first row of weights."),
+ ("4", [(3,23),(3,5)], "Run `python 03-llm-concepts/code/llm_block.py`. Watch the residual keep the signal alive through a deep stack."),
+ ("5", [(3,24),(3,15)], "Run `python 03-llm-concepts/code/llm_training.py`. Watch the loss fall, then halve the learning rate."),
+ ("6", [(3,7),(3,25)], "Run `python 03-llm-concepts/code/llm_attn_variants.py`. Compare the KV-cache sizes of MHA, GQA and MQA."),
+ ("7", [(3,26),(3,20)], "Run `python 03-llm-concepts/code/llm_moe_scaling.py`. Change top-2 to top-1 and compare active parameters."),
+]
+sa, ta = table(A); sb, tb = table(B); sc, tc = table(CW); se, te = table(E); sf, tf = table(F)
 total = sum(v[2] for v in T.values())
 assert N == sum(PH_COUNT := [sum(1 for k in T if k[0] == p) for p in PH]), N
 assert all(sum(1 for k in T if k[0] == p) == PH[p] for p in PH), 'topic numbers must be 1..N with no gaps'
@@ -97,6 +106,7 @@ Pick the path that matches what you want to do. Every time below is the **readin
 | Learn everything | [Path C: full roadmap](#path-c-the-full-roadmap-in-8-weeks) | 8 weeks |
 | Prepare for an interview | [Path D: interview week](#path-d-interview-in-one-week) | 1 week |
 | Build with LLM APIs, from first call to serving | [Path E: LLM builder](#path-e-llm-builder-from-first-call-to-serving) | 8 days, about 1 hour a day |
+| Understand how an LLM really works inside (Q, K, V, training, MoE) | [Path F: inside the LLM](#path-f-inside-the-llm-how-it-really-works) | 7 days, about 1 hour a day |
 
 Not sure? Start with [what AI engineering is](what-is-ai-engineering.md) (5 minutes), then take Path A. Legend: 🟢 beginner · 🟡 intermediate · 🔴 advanced.
 
@@ -139,6 +149,12 @@ If you have never studied these topics, one week is not enough for the topics th
 **You will end with:** a working picture of the whole life of an LLM call: sending it, getting reliable output, making a model small and cheap to adapt, serving it fast, and grading answers fairly. **You need:** basic Python. Start with 🟢 days, and treat 🔴 days as optional. Reading in this path: {te} minutes.
 
 {se}
+
+## Path F: inside the LLM, how it really works
+
+**You will end with:** a clear mental model of what happens inside a language model: tokens and embeddings, Q, K and V, the transformer block, how a model is trained, and the modern tricks (GQA, FlashAttention, RoPE, mixture of experts). **You need:** basic Python and high-school math. Do the days in order; day 2 is the one most people find hardest, so read it twice. Reading in this path: {tf} minutes.
+
+{sf}
 
 ## If you fall behind
 Skipping is fine. Do the topics marked 🟢 first, skip 🔴 ones until you need them, and use the [glossary](glossary.md) when a word is new. The checklist in the [README](../README.md#the-full-checklist) shows the level of every topic.
