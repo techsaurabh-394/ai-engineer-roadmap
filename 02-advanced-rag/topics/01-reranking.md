@@ -1,8 +1,10 @@
 # Reranking
 
-> **Level:** Intermediate · **Reading time:** 6 min · **Phase:** 2 — Advanced RAG
+> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 2 — Advanced RAG
 
 **In one line:** Reranking is a second, more careful pass that re-orders the chunks your first search returned, so the best ones end up at the top.
+
+**Before you start:** [Dense Retrieval](../../01-rag-foundations/topics/19-dense-retrieval.md) and [Embeddings](../../01-rag-foundations/topics/02-embeddings.md). You should know that a first search turns text into vectors and returns the closest chunks.
 
 ## Explain it like I'm new
 
@@ -11,6 +13,14 @@ Think of hiring. First, a recruiter skims 500 CVs in an hour and keeps 30 that m
 RAG retrieval works the same way. The first stage, called **retrieval** or **recall stage**, uses a fast method (vector search, keyword search like BM25, or both) to pull, say, the top 50 **candidates** (possibly relevant chunks) out of millions. It is tuned to not *miss* good chunks, even if it lets in some noise.
 
 The second stage, the **reranker**, scores only those 50 candidates with a slower but smarter model and keeps the top 3–5. Those few go into the prompt. The reranker is tuned for **precision**: the chunks at the top should really answer the question.
+
+Words to know:
+- **Chunk:** a small piece of a document that is stored and searched on its own.
+- **Candidates:** the chunks the first search returns, before they are re-ordered.
+- **Recall:** did the good chunks make it into the candidates at all?
+- **Precision:** are the chunks at the top really the good ones?
+- **Reranker:** a model that gives each (question, chunk) pair a fresh relevance score.
+- **Prompt:** the text you send to the language model, including the chunks.
 
 Why bother? The language model only sees what you put in the prompt. If the right chunk sits at position 14, it never gets used. Models also pay less attention to text buried in the middle of long prompts, so order matters too.
 
@@ -38,6 +48,16 @@ Tiny worked example. The question is "How do I cancel my subscription and get a 
 | "To cancel your subscription open Settings… A refund is issued…" | 0.38 | 0.67 |
 
 The first chunk repeats "refund", so the fast vector match likes it. The reranker checks how much of the *whole* question each chunk covers, and flips the order.
+
+### Worked example
+Trace the four steps with the real demo corpus ([`adv_rerank.py`](../code/adv_rerank.py), four tiny documents). The question is the same cancel-and-refund one, with `k=3` candidates and `top_n=2` kept.
+
+1. **Fast retrieval** scores every document by vector similarity and keeps the top 3: `refund-faq` 0.4811, `cancel-guide` 0.3849, `pricing` 0.1768. (`shipping` scores 0 and is dropped.)
+2. **Rerank** scores each of the 3 pairs by how much of the whole question the text covers: `cancel-guide` 0.6667, `refund-faq` 0.2, `pricing` 0.2.
+3. **Sort and slice** to 2. `refund-faq` and `pricing` tie at 0.2, and the code breaks ties by name, so `pricing` wins.
+4. **Final prompt chunks:** `cancel-guide`, `pricing`.
+
+The chunk that really answers the question moved from 2nd place to 1st. Note that `pricing` only made the cut because we asked for 2; it is a weak match, which is why real systems use a score threshold too.
 
 ## Code example
 
@@ -91,6 +111,12 @@ Hosted rerank APIs exist too. They follow the same idea: send the query and cand
 - Reranking full documents that exceed the model's input limit. The text gets cut off silently.
 - Not measuring. Check hit@k and MRR before and after on a golden set (see [RAG Evaluation](20-rag-evaluation.md)).
 - Ignoring latency. Reranking 200 pairs on CPU per request can add noticeable delay.
+
+## Recap
+If you remember only three things:
+- Reranking is a second pass: a fast search finds many candidates, and a slower, smarter model re-orders them.
+- The reranker can only re-order what retrieval found, so fix recall first.
+- Retrieve more than you keep (for example 50 in, 5 out), and measure before and after.
 
 ## Interview questions
 

@@ -1,14 +1,23 @@
 # HyDE
 
-> **Level:** Advanced · **Reading time:** 6 min · **Phase:** 2 — Advanced RAG
+> **Level:** Advanced · **Reading time:** 8 min · **Phase:** 2 — Advanced RAG
 
 **In one line:** HyDE (Hypothetical Document Embeddings) asks an LLM to write a fake answer to the question, then searches with that fake answer instead of the question.
+
+**Before you start:** [Bi Encoder](03-bi-encoder.md) and [Query Expansion](05-query-expansion.md). You should know that text is embedded as a vector, and that the query can be rewritten before searching.
 
 ## Explain it like I'm new
 
 Suppose you want a photo of "a cosy reading corner". Searching for that phrase works so-so. Now imagine you first sketch the picture — armchair, lamp, bookshelf, blanket — and then search for photos that *look like your sketch*. Your sketch is wrong in details, but it looks much more like the real photos than the four-word phrase did.
 
 Questions and answers look different. A question is short and full of "how", "why", "what". Documents are long, declarative statements. In embedding space, a question can sit far from the passage that answers it. HyDE closes that gap: the LLM writes a **hypothetical document**, a plausible answer that may contain made-up details. You embed *that* and search for real documents near it. Real documents that answer the question tend to look like a plausible answer.
+
+Words to know:
+- **Hypothetical document:** a made-up passage that looks like a real answer; it may contain wrong details.
+- **Embedding:** the list of numbers that represents a text's meaning.
+- **Embedding space:** the "map" where texts with similar meaning sit close together.
+- **Zero-shot:** working without any training examples for your specific data.
+- **LLM:** a large language model, the kind of AI that writes text.
 
 The fake answer is **never shown to the user** and never used as evidence. It is only a better search key. The final answer is still generated from the real retrieved chunks.
 
@@ -30,6 +39,14 @@ flowchart LR
 ```
 
 Example. Question: "Why does my pod crash over and over?" The fake passage: "A pod that keeps crashing goes into CrashLoopBackOff; Kubernetes restarts the container with back-off delays." Searching with this text matches the real CrashLoopBackOff document first, because it shares the document's vocabulary and style.
+
+### Worked example
+Corpus: `d1` (liveness probe restarts a container), `d2` (CrashLoopBackOff), `d3` (readiness probes). Question: "Why does my pod crash over and over?"
+
+1. **Generate.** The demo's fake LLM returns: "A pod that keeps crashing goes into CrashLoopBackOff; Kubernetes restarts the container with back-off delays."
+2. **Search with the passage, not the question.** It shares words with the real documents, such as CrashLoopBackOff, restarts and container.
+3. **Result:** `['d2', 'd1', 'd3']`. `d2` is first, and `d1` is also found. A plain keyword search on the question returned only `['d2', 'd3']`.
+4. **Answer.** The LLM gets the original question plus the real chunks `d2` and `d1`. The fake passage is thrown away.
 
 The original paper (Gao et al., 2022) used this for **zero-shot** dense retrieval: no relevance labels were needed to train the retriever.
 
@@ -73,6 +90,12 @@ The demo searches with keywords to stay offline. In a real system you would embe
 - Using HyDE on exact-match queries (IDs, error codes) where the original query is better.
 - Not combining with the original query. Fusing results from both (for example with RRF) is a safer default.
 - Using a long generation. A short paragraph is usually enough and cheaper.
+
+## Recap
+If you remember only three things:
+- HyDE has an LLM write a fake answer, then searches with that fake answer instead of the short question.
+- The fake passage is only a search key. Never show it or use it as evidence.
+- It helps when questions are short and documents are formal, but costs an extra LLM call and can mislead search on unfamiliar topics.
 
 ## Interview questions
 

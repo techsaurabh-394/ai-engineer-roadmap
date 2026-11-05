@@ -1,8 +1,10 @@
 # Streaming Retrieval
 
-> **Level:** Advanced · **Reading time:** 6 min · **Phase:** 2 — Advanced RAG
+> **Level:** Advanced · **Reading time:** 8 min · **Phase:** 2 — Advanced RAG
 
 **In one line:** Streaming retrieval means sending results and answer tokens to the user as soon as each piece is ready, and keeping the index updated continuously as new data arrives, instead of waiting for everything to finish.
+
+**Before you start:** [What is RAG](../../01-rag-foundations/topics/01-what-is-rag.md) and [Incremental Indexing](18-incremental-indexing.md). You should know the basic retrieve-then-generate loop, and that an index can be updated piece by piece.
 
 ## Explain it like I'm new
 
@@ -14,6 +16,13 @@ At a restaurant, you'd rather get bread and drinks right away than wait 40 minut
 2. **Streaming the ingest path:** new data (chat messages, tickets, logs, news) flows into the index continuously, within seconds, instead of in a nightly batch. This keeps answers fresh.
 
 Both use **generators** or async iterators in code: functions that produce results one at a time, rather than building a full list first.
+
+Words to know:
+- **Token:** a small piece of text (often a word or part of one) that the LLM produces one at a time.
+- **TTFT (time to first token):** how long the user waits before anything appears.
+- **Generator:** a Python function that uses `yield` to hand back values one by one.
+- **SSE (Server-Sent Events):** a simple way for a server to push a stream of events to a browser over HTTP.
+- **Change feed:** a stream of "this record was added or changed" messages from a data source.
 
 ## How it works
 
@@ -28,6 +37,15 @@ Both use **generators** or async iterators in code: functions that produce resul
 1. A queue or change feed (Kafka, a database change stream, webhooks) delivers new or changed records.
 2. A worker chunks, hashes and embeds them ([Incremental Indexing](18-incremental-indexing.md)).
 3. Upsert into the vector store; the next query can see them.
+
+### Worked example
+The user asks *"Where do refresh tokens go?"*. The code below sends these events, in this order:
+
+1. `event: sources`, data `["auth.txt#0"]`. This goes out as soon as retrieval finishes, before the LLM has produced a word.
+2. Eight `event: token` messages, one per word: `"Store "`, `"refresh "`, `"tokens "`, and so on, ending with `"[auth.txt#0]. "`. The user watches the sentence build up.
+3. `event: done`, data `null`. The client knows the stream is over.
+
+The full answer takes the same total time as before. But the user sees sources immediately and the first word after about one token delay, so the wait feels short.
 
 ```mermaid
 sequenceDiagram
@@ -100,6 +118,12 @@ for line in to_sse(answer_stream("Where do refresh tokens go?")):
 - Running output guardrails only at the end, after the user already saw the text. Check incrementally or buffer risky sections.
 - Not handling client disconnects, so the server keeps paying for tokens nobody reads.
 - Streaming ingest without idempotency, so retries create duplicate chunks. Use content hashes or stable IDs.
+
+## Recap
+If you remember only three things:
+- Streaming means sending sources and tokens as soon as they are ready, so the first token arrives fast (low TTFT).
+- Streaming ingest keeps the index fresh within seconds by processing a change feed instead of a nightly batch.
+- Never stream content before permission and safety checks are done.
 
 ## Interview questions
 

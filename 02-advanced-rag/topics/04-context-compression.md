@@ -1,14 +1,24 @@
 # Context Compression
 
-> **Level:** Intermediate · **Reading time:** 6 min · **Phase:** 2 — Advanced RAG
+> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 2 — Advanced RAG
 
 **In one line:** Context compression trims retrieved chunks down to only the parts that help answer the question, before they go into the prompt.
+
+**Before you start:** [Reranking](01-reranking.md) and [Chunking](../../01-rag-foundations/topics/04-chunking.md). You should know what a retrieved chunk is and that the top few go into the prompt.
 
 ## Explain it like I'm new
 
 You ask a friend, "What time does the pharmacy close on Sunday?" They hand you the pharmacy's entire 4-page brochure. The answer is in there, but you have to dig. A better friend highlights one line: "Sunday: 10:00–16:00."
 
 Retrieved chunks are like the brochure. A 500-word chunk may contain one useful sentence. Sending all of it costs **tokens** (the units models read and bill by), adds latency, and gives the model more irrelevant text to get confused by. Research has also shown that models use information in the middle of long contexts less reliably than at the start or end.
+
+Words to know:
+- **Chunk:** a small piece of a document that is stored and searched on its own.
+- **Context:** the retrieved text you put in the prompt for the model to read.
+- **Token:** a small piece of text (roughly a word or part of one); cost and speed depend on how many you send.
+- **Extractive:** keeps the original sentences unchanged.
+- **Abstractive:** rewrites the text in new, shorter words.
+- **Faithfulness:** whether the answer sticks to what the sources actually say.
 
 Context compression is the highlighting step. It sits between retrieval and generation. Common methods:
 
@@ -35,6 +45,18 @@ chunk (5 sentences, 120 tokens)            compressed (1 sentence, 18 tokens)
 │ Ask about flu shots.        │
 └─────────────────────────────┘
 ```
+
+### Worked example
+Question: "What time does the pharmacy close on Sunday?" The retrieved chunk has four sentences. The toy compressor from the code below keeps a sentence if it shares at least one meaningful word with the question (stop words like "the" and "on" are ignored):
+
+| Sentence | Shared word | Kept? |
+|---|---|---|
+| Our pharmacy opened in 1998. | pharmacy | yes |
+| We stock 3,000 products. | none | no |
+| Sunday hours are 10:00-16:00. | sunday | yes |
+| Parking is free. | none | no |
+
+Real output: `Our pharmacy opened in 1998. Sunday hours are 10:00-16:00.` Half the chunk is gone, and the answer is still there. The "opened in 1998" sentence is unneeded noise that crept in, which is the weakness of keyword matching.
 
 Worked token math: 5 chunks × 400 tokens = 2,000 context tokens. If compression keeps 20%, you send 400 tokens. That is 1,600 fewer input tokens on every request.
 
@@ -84,6 +106,12 @@ Keyword overlap keeps the "pharmacy opened" sentence too, which shows why real s
 - Compressing so hard that faithfulness drops. Measure answer quality, not just token savings.
 - Re-ordering sentences, which can change meaning.
 - Letting the compressor model "answer" instead of extract. Prompt it to copy text, not rewrite facts.
+
+## Recap
+If you remember only three things:
+- Context compression trims retrieved chunks to the parts that help answer the question, before the prompt is built.
+- It saves tokens and cost, but cutting too hard can drop needed detail or break meaning.
+- Prefer extractive methods (copy sentences) for exact citations, and test answer quality with and without compression.
 
 ## Interview questions
 

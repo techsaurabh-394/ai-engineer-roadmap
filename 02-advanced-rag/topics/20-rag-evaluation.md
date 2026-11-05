@@ -1,8 +1,10 @@
 # RAG Evaluation (RAGAS / DeepEval)
 
-> **Level:** Advanced · **Reading time:** 9 min · **Phase:** 2 — Advanced RAG
+> **Level:** Advanced · **Reading time:** 11 min · **Phase:** 2 — Advanced RAG
 
 **In one line:** RAG evaluation measures, with numbers, whether your system retrieves the right context and writes answers that are correct, grounded in that context, and on-topic.
+
+**Before you start:** [What is RAG](../../01-rag-foundations/topics/01-what-is-rag.md) and [Reranking](01-reranking.md). You should know the retrieve-then-generate loop and what "top results" means.
 
 ## Explain it like I'm new
 
@@ -13,6 +15,14 @@ A RAG system has two parts that can fail independently: the **retriever** (the i
 You start with a **golden set** (also called a test set): realistic questions, ideally with a **reference answer** (what a correct answer says) and the sources that should be found. You run every question through the pipeline and compute **metrics**. Then every change — new chunk size, a [reranker](01-reranking.md), a new prompt — becomes a measured decision instead of a guess.
 
 **RAGAS** and **DeepEval** are two popular open-source Python libraries that implement these metrics, mostly using an **LLM-as-judge**: a language model that reads the question, contexts and answer and makes yes/no judgements, like "is this claim supported by the context?".
+
+Words to know:
+- **Retriever / generator:** the part that finds chunks, and the part (the LLM) that writes the answer.
+- **Context:** the retrieved chunks that are put in the prompt.
+- **Golden set:** your test questions with known good answers or sources.
+- **Claim:** one single fact stated in a sentence of an answer.
+- **Hallucination:** a claim the model states that nothing in the context supports.
+- **hit@k / MRR:** simple retrieval scores. hit@k asks whether a correct chunk is in the top k; MRR (mean reciprocal rank) rewards putting the first correct chunk high.
 
 ## How it works
 
@@ -31,6 +41,16 @@ Simplified formulas, with a tiny worked example:
 2. **Context recall** — split the reference answer into claims; share supported by the contexts. 2 of 2 claims found → **1.0**.
 3. **Faithfulness** — split the generated answer into claims; share supported by the contexts. "Stored in an httpOnly cookie" (supported) + "expire after exactly 30 days" (not in context) → 1/2 = **0.5**. That is a hallucination caught.
 4. **Answer relevancy** — RAGAS generates questions *from* the answer and compares them to the real question by embedding similarity. An evasive or off-topic answer scores low.
+
+### Worked example
+The sample in the code below asks *"Where should refresh tokens be stored?"*. The retriever returned three chunks: (1) refresh tokens go in an httpOnly cookie and should be rotated, (2) a Docker Compose sentence, (3) "access tokens should be short lived". A person marks them relevant, irrelevant, relevant: `[1, 0, 1]`. The answer was *"Refresh tokens should be stored in an httpOnly cookie. They expire after exactly 30 days."*
+
+- **Context precision:** relevant chunks sit at positions 1 and 3. Precision at 1 is 1/1, at 3 is 2/3. Average: (1 + 0.667) / 2 = **0.833**. The Docker chunk at position 2 pushed the score down.
+- **Context recall:** the reference answer has two claims (cookie, rotated on every use). Both appear in the contexts, so **1.0**.
+- **Faithfulness:** the answer has two claims. The cookie claim is in the context. "Expire after exactly 30 days" is in no chunk. 1 of 2 is **0.5**, a hallucination caught.
+- **Answer relevancy:** the answer is about where tokens are stored, so **1.0**.
+
+Reading the four together: retrieval was decent (small ranking flaw), but the generator invented a fact. You would fix the prompt or generator, not the retriever. These match the real output of the demo.
 
 ```mermaid
 flowchart LR
@@ -89,6 +109,12 @@ def faithfulness(answer, contexts, threshold=0.6):
 - Trusting LLM-as-judge blindly. Judges can prefer longer answers, be inconsistent between runs, and miss subtle errors. Spot-check against human labels and fix the judge model and prompt version.
 - Changing the judge model between runs and comparing scores as if nothing changed.
 - Ignoring cost and latency. A better score that doubles latency may not be a better product.
+
+## Recap
+If you remember only three things:
+- Score the retriever (context precision, context recall) and the generator (faithfulness, answer relevancy) separately, so you can tell which part broke.
+- A golden set of realistic questions turns every change into a measured decision.
+- Metric scores are only a guide, since LLM judges are imperfect. Compare versions with the same judge and spot-check by hand.
 
 ## Interview questions
 

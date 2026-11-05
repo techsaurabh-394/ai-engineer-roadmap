@@ -1,8 +1,10 @@
 # Parent Document Retriever
 
-> **Level:** Intermediate · **Reading time:** 5 min · **Phase:** 2 — Advanced RAG
+> **Level:** Intermediate · **Reading time:** 6 min · **Phase:** 2 — Advanced RAG
 
 **In one line:** A parent-document retriever searches over small chunks for accuracy, then returns the larger "parent" section each chunk came from, so the LLM gets full context.
+
+**Before you start:** [Parent-Child Chunking](../../01-rag-foundations/topics/07-parent-child-chunking.md) and [Chunking](../../01-rag-foundations/topics/04-chunking.md). This page is the retrieval side of that chunking idea.
 
 ## Explain it like I'm new
 
@@ -14,6 +16,14 @@ Chunk size is a classic RAG dilemma:
 - **Large chunks** (e.g. a full section) carry context, but their embedding is a blur of many topics, so they match less precisely.
 
 The parent-document retriever gets both. You split documents into **parents** (large sections) and each parent into **children** (small chunks). Only children are embedded. Each child stores its `parent_id`. Search hits children; you return their parents.
+
+Words to know:
+- **Chunk:** a small piece of a document, cut so it can be embedded and searched.
+- **Parent:** a large chunk (such as a whole section) that gives the LLM full context.
+- **Child:** a small chunk cut from a parent. Children are what you search.
+- **Embedding:** a list of numbers capturing the meaning of text, used to compare it with a question.
+- **Docstore:** a simple store that keeps the parent texts under IDs.
+- **LLM (large language model):** the AI that reads and writes text.
 
 ## How it works
 
@@ -35,6 +45,17 @@ Document
 ```
 
 A variant is **sentence-window retrieval**: embed single sentences and return the sentence plus N neighbours on each side.
+
+### Worked example
+The code example has two parent sections, `install` and `config`. Each sentence is a child that remembers its parent. Question: "what timeout value".
+
+1. **Children** of `config`: "Open settings.yaml.", "Set the port to 8080.", "Set the timeout to 30 seconds." The `install` children are about the installer.
+2. **Search children.** "Set the timeout to 30 seconds." shares the most words with the question, so it wins (k=1).
+3. **Map to parent.** That child belongs to `config`.
+4. **Return the parent.** The real output is `['Open settings.yaml. Set the port to 8080. Set the timeout to 30 seconds.']`.
+
+The LLM sees which file to edit, not only the number 30.
+
 
 ## Code example
 
@@ -94,6 +115,12 @@ The child "Set the timeout to 30 seconds." matched; the LLM receives the full co
 - Parents so large that only one or two fit in the prompt.
 - Splitting parents mid-table or mid-code-block. Split on headings when possible.
 - Citing the child instead of the parent (or vice versa) inconsistently. Pick one and keep offsets.
+
+## Recap
+If you remember only three things:
+- Search small child chunks for precision, then return the large parent section for context.
+- De-duplicate parents, because several children can point to the same one.
+- Keep parents small enough that a few of them fit in the prompt.
 
 ## Interview questions
 

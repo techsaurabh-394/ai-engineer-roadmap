@@ -1,8 +1,10 @@
 # Incremental Indexing
 
-> **Level:** Intermediate · **Reading time:** 6 min · **Phase:** 2 — Advanced RAG
+> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 2 — Advanced RAG
 
 **In one line:** Incremental indexing updates your RAG index by re-embedding only the chunks that are new or changed, and deleting chunks that disappeared, instead of rebuilding everything.
+
+**Before you start:** [Embeddings](../../01-rag-foundations/topics/02-embeddings.md), [Chunking](../../01-rag-foundations/topics/04-chunking.md) and [Vector Databases](../../01-rag-foundations/topics/10-vector-databases.md). You should know that documents are split into chunks, and each chunk is turned into a vector and stored.
 
 ## Explain it like I'm new
 
@@ -11,6 +13,13 @@ If one page of a 500-page book changes, you don't reprint the whole book. You sw
 **Embedding** every chunk costs time and money (API calls or GPU time). A full re-index of 1 million chunks every night is wasteful when only 200 changed. Worse, if you only *add* new versions without removing old ones, your index fills with **stale chunks**: outdated text that still gets retrieved and leads to wrong answers.
 
 The usual trick is a **content hash**: a short fingerprint computed from the text (for example SHA-256). Same text → same hash. Change one character → completely different hash. By comparing hashes from the last run with the current ones, you know exactly what to add, skip and delete.
+
+Words to know:
+- **Chunk:** one small piece of a document, the unit that gets embedded.
+- **Embed:** turn a chunk of text into a vector (a list of numbers) so it can be searched by meaning.
+- **Content hash:** a short fingerprint of some text. Same text gives the same hash.
+- **Stale chunk:** an old chunk that is still in the index after its source changed.
+- **Upsert:** "update or insert": add the item if new, replace it if it exists.
 
 ## How it works
 
@@ -30,6 +39,17 @@ Old version              New version              Action
 "Run the server."   ──▶  "Run the server."        skip
                                                   embed calls: 1 instead of 3
 ```
+
+### Worked example
+A small README has three paragraphs. Here is what the three `upsert` calls in the code below do (real output):
+
+| Run | What you give it | Added | Unchanged | Removed | Total embed calls |
+|---|---|---|---|---|---|
+| 1 | first version | 3 | 0 | 0 | 3 |
+| 2 | same text again | 0 | 3 | 0 | 3 |
+| 3 | "pip" changed to "uv" | 1 | 2 | 1 | 4 |
+
+Run 1: every hash is new, so all 3 chunks are embedded. Run 2: all 3 hashes are already stored, so nothing is embedded and the call count stays at 3. Run 3: only the "Install" paragraph has a new hash. It is embedded (call 4), and the old "pip" chunk is removed so it can never be retrieved again. A full rebuild would have cost 3 more calls instead of 1.
 
 ## Code example
 
@@ -84,6 +104,12 @@ removed = self._garbage_collect(old - set(new_hashes))  # drop stale chunks nobo
 - Forgetting deletes. Old chunks keep answering questions with outdated facts.
 - Hashing only the text when metadata matters. If `permissions` change, the chunk must be updated too; include relevant metadata in the hash.
 - Keeping the hash record in memory only. Persist it next to the index.
+
+## Recap
+If you remember only three things:
+- Fingerprint (hash) every chunk and embed only the ones you have not seen before.
+- Delete chunks whose hash disappeared, or stale text will keep answering questions.
+- If the embedding model or chunker changes, do a full rebuild instead.
 
 ## Interview questions
 

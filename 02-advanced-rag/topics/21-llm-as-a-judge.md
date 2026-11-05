@@ -1,7 +1,9 @@
 # LLM-as-a-Judge
-> **Level:** Advanced · **Reading time:** 9 min · **Phase:** 2 — Advanced RAG
+> **Level:** Advanced · **Reading time:** 10 min · **Phase:** 2 — Advanced RAG
 
 **In one line:** LLM-as-a-judge uses a language model to grade answers when there is no exact match to check, and it only works if you design a rubric, fight the judge's known biases, and measure how often it agrees with people.
+
+**Before you start:** [RAG Evaluation](20-rag-evaluation.md). You should know what faithfulness and answer relevancy mean, and why we score answers with numbers.
 
 ## Explain it like I'm new
 A teacher can mark a maths test with an answer key. But an essay has no key. Someone has to read it and decide if it is good. That is slow and costly if you have thousands of essays.
@@ -9,6 +11,13 @@ A teacher can mark a maths test with an answer key. But an essay has no key. Som
 An **LLM judge** is a model you ask to be that reader. You give it the question, the answer, and a list of things to check. It returns a score or a choice. It is fast and cheap, so you can grade every change to your system.
 
 But the judge is a reader with habits. It may like the first answer it sees. It may like long answers. It may like answers that sound like itself. So you do not trust it blindly. You check it against a small set of answers that real people graded.
+
+Words to know:
+- **Rubric:** a written list of what to check and what each score level means.
+- **Pointwise / pairwise:** grade one answer alone, or pick the better of two.
+- **Bias:** a habit that makes the judge favour something other than quality (such as position or length).
+- **Human labels:** grades from real people, used as the reference for checking the judge.
+- **Agreement / kappa:** how often judge and human match, and the same measure corrected for luck.
 
 ## How it works
 1. **Pick a mode.**
@@ -30,6 +39,15 @@ But the judge is a reader with habits. It may like the first answer it sees. It 
    `kappa = (po - pe) / (1 - pe)`
 
    `po` is the observed agreement. `pe` is the agreement you would expect by chance, from how often each side uses each label. Kappa is 1.0 for perfect agreement and 0.0 for chance level.
+
+### Worked example
+Two answers to "Where do refresh tokens go?": a short good one (mentions httpOnly cookie) and a long weak one. The demo judge is biased to slot A.
+
+1. Show good answer first: the judge says **A**. That looks right.
+2. Swap the order, weak answer first: the judge says **A** again. It picked the weak answer only because it was in slot A.
+3. The verdict followed the position, not the answer, so the debiased check calls it a **tie** instead of trusting either vote.
+
+The same idea explains kappa: matching a human 70% of the time sounds fine, but after subtracting luck, kappa is only 0.3478. The full hand calculation is below the code.
 
 ```mermaid
 flowchart LR
@@ -93,6 +111,12 @@ Two lessons. First, 70% agreement sounds fine, but kappa of 0.35 is weak, so thi
 - Changing the judge model or prompt between runs and comparing scores as if nothing changed.
 - Using an LLM for what code can check exactly.
 - Letting long answers win. Say in the rubric that length is not quality, and spot-check it.
+
+## Recap
+If you remember only three things:
+- An LLM judge grades answers that have no exact key, using a clear rubric.
+- Judges have biases (position, length, self-preference), so swap the order, pin the judge, and use a different model.
+- Check the judge against human labels using kappa, not just raw agreement.
 
 ## Interview questions
 <details>

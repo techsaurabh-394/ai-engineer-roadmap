@@ -1,8 +1,10 @@
 # Ensemble Retrieval
 
-> **Level:** Intermediate · **Reading time:** 6 min · **Phase:** 2 — Advanced RAG
+> **Level:** Intermediate · **Reading time:** 7 min · **Phase:** 2 — Advanced RAG
 
 **In one line:** Ensemble retrieval runs several different retrievers (usually keyword and vector) on the same question and fuses their results into one ranked list.
+
+**Before you start:** [Hybrid Search](../../01-rag-foundations/topics/16-hybrid-search.md), [BM25](../../01-rag-foundations/topics/17-bm25.md) and [Bi-Encoder](03-bi-encoder.md). Ensemble retrieval generalises hybrid search to any set of retrievers.
 
 ## Explain it like I'm new
 
@@ -14,6 +16,14 @@ Retrievers have different blind spots:
 - **Dense / vector retrieval** (a [bi-encoder](03-bi-encoder.md)) is great at meaning and paraphrases. It can miss exact identifiers like `ERR_CONN_RESET` or `SKU-48812`.
 
 Ensemble retrieval, often called **hybrid search** when it combines exactly these two, runs both and merges the lists. Many vector databases offer hybrid search built in.
+
+Words to know:
+- **Retriever:** any component that takes a question and returns ranked documents.
+- **BM25:** a classic keyword-scoring formula that rewards matching rare words.
+- **Dense retrieval:** search by meaning using embeddings (lists of numbers capturing meaning).
+- **Fusion:** merging several ranked lists into one.
+- **RRF (Reciprocal Rank Fusion):** fusion that uses only each document's rank, not its raw score.
+- **Normalise:** rescale scores to a common range, such as 0 to 1, so they can be added fairly.
 
 ## How it works
 
@@ -38,6 +48,19 @@ Weighted fusion worked example with α = 0.5:
 | A (contains "ERR_CONN_RESET") | 1.0 | 0.3 | 0.65 |
 | B (paraphrase of the problem) | 0.1 | 1.0 | 0.55 |
 | C | 0.4 | 0.4 | 0.40 |
+
+### Worked example
+Question: "connection reset by proxy". Three documents: `a` mentions `ERR_CONN_RESET` and the proxy dropping connections, `b` says a connection keeps getting reset and to raise the proxy timeout, `c` is about TLS certificates. Real output from the code below:
+
+1. **Keyword ranking:** `['b', 'a', 'c']`. `b` shares three query words (connection, reset, proxy). `a` and `c` share one each (proxy).
+2. **Trigram ranking** (overlapping 3-letter pieces, which are forgiving about spelling): `['a', 'b', 'c']`.
+3. **Fuse with RRF**, weights 0.5 each, `k=60`:
+   - `b`: 0.5/(60+1) + 0.5/(60+2)
+   - `a`: 0.5/(60+2) + 0.5/(60+1), the same total.
+4. `a` and `b` tie because each ranked first once and second once. `c` is last in both lists. The final list is `['b', 'a', 'c']`, with the tie broken by which document was seen first.
+
+A document near the top of both lists beats one that is top of only one list. Ties like this are normal with two short lists.
+
 
 ## Code example
 
@@ -96,6 +119,12 @@ See `rrf_merge` in [`adv_query_transform.py`](../code/adv_query_transform.py) fo
 - Indexing different chunk sets in the two retrievers, so IDs don't line up.
 - Picking weights by gut feel. Tune on a golden set.
 - Forgetting to apply the same permission filters to both retrievers.
+
+## Recap
+If you remember only three things:
+- Ensemble retrieval runs several retrievers (usually keyword plus vector) and fuses their ranked lists.
+- RRF only needs ranks, so it avoids the problem of mixing incompatible scores.
+- Use the same chunks and the same permission filters in every retriever.
 
 ## Interview questions
 

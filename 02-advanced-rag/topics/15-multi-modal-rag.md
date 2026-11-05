@@ -1,8 +1,10 @@
 # Multi Modal RAG
 
-> **Level:** Advanced · **Reading time:** 6 min · **Phase:** 2 — Advanced RAG
+> **Level:** Advanced · **Reading time:** 8 min · **Phase:** 2 — Advanced RAG
 
 **In one line:** Multi-modal RAG retrieves not just text but also images, tables, charts, audio or video, and gives them to a model that can understand them.
+
+**Before you start:** [What is RAG](../../01-rag-foundations/topics/01-what-is-rag.md), [Embeddings](../../01-rag-foundations/topics/02-embeddings.md), and [Multi Vector Retriever](10-multi-vector-retriever.md). You should know that RAG finds relevant text and hands it to an LLM, and that embeddings turn content into searchable numbers.
 
 ## Explain it like I'm new
 
@@ -16,6 +18,14 @@ There are three common designs:
 2. **Shared embedding space:** use a model like **CLIP** that maps images and text into the same vector space, so a text query can find an image directly.
 3. **Summary + original:** embed a text summary or caption for search, but send the *original* image to a **vision-language model (VLM)**, a model that accepts images in its input. This is the [multi-vector](10-multi-vector-retriever.md) pattern applied to images.
 
+Words to know:
+- **Modality:** a type of data, such as text, image, table or audio.
+- **Caption:** a short text description of an image, written by a person or a model.
+- **OCR (optical character recognition):** software that reads the text out of a picture or scan.
+- **CLIP:** a model that puts images and text in the same vector space, so a sentence and a matching picture end up close together.
+- **VLM (vision-language model):** an LLM that accepts images as well as text.
+- **Parser:** a tool that splits a document into its parts (text blocks, tables, figures).
+
 ## How it works
 
 1. **Parse** documents into elements: text blocks, tables, figures, page images (layout-aware parsers or OCR).
@@ -23,6 +33,16 @@ There are three common designs:
 3. **Index** with metadata: `type`, `page`, `doc_id`, and a link to the original file.
 4. **Retrieve** with a text query (or an image query).
 5. **Generate** with a VLM: pass the question, retrieved text, and the original images.
+
+### Worked example
+A car manual has three pieces. The question is: *"which bolt holds the alternator and what torque"*. This is design 3 from above (the code below runs it).
+
+1. **Parse:** the manual becomes three elements: a diagram (`p3-fig1`), a safety sentence (`p3-txt`), and a torque table (`p7-tbl`).
+2. **Represent:** each gets a text caption. The diagram's caption is *"Exploded diagram of the alternator showing the two mounting bolts and belt tensioner."*
+3. **Retrieve:** the code counts words shared between the question and each caption. The diagram and the torque table share the most words (both mention the alternator and a bolt). The safety sentence shares almost none, so it is left out.
+4. **Generate:** the app attaches the *original* image `manual/p3_fig1.png` and the table text to the prompt for the VLM, which reads the picture and answers.
+
+The caption was only the search handle. The model still sees the real picture.
 
 ```mermaid
 flowchart LR
@@ -87,6 +107,12 @@ The generation step would attach `manual/p3_fig1.png` as an image and the torque
 - Losing the link from caption back to the original image or page.
 - Trusting OCR blindly on low-quality scans. Spot-check.
 - Sending dozens of full-resolution images to the VLM; image tokens are expensive.
+
+## Recap
+If you remember only three things:
+- Real documents hold images, tables and scans, and text-only RAG loses them.
+- Three designs: convert everything to text, share one embedding space (CLIP), or search captions but send the original image to a VLM.
+- Always keep a link from each caption back to its original file, and watch image costs.
 
 ## Interview questions
 

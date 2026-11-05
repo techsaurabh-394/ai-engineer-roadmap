@@ -1,14 +1,23 @@
 # Multi Query Retrieval
 
-> **Level:** Intermediate · **Reading time:** 6 min · **Phase:** 2 — Advanced RAG
+> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 2 — Advanced RAG
 
 **In one line:** Multi-query retrieval asks an LLM to rewrite one question into several different search queries, runs them all, and merges the results.
+
+**Before you start:** [Query Expansion](05-query-expansion.md) and [Hybrid Search](../../01-rag-foundations/topics/16-hybrid-search.md). You should know that a query is sent to a retriever, and that result lists from different searches can be combined.
 
 ## Explain it like I'm new
 
 If you lose your keys, you don't search one way. You check "where did I last drive", "which jacket was I wearing", "did I leave them in the door". Each angle finds different places. Together they cover much more ground.
 
 A single user question is one angle. If it is phrased vaguely, or the documents phrase things differently, retrieval misses. Multi-query retrieval uses a **large language model (LLM)** to write, say, three alternative versions of the question. Each version goes to the retriever separately. You then **merge** the result lists into one ranking.
+
+Words to know:
+- **Query variant:** a rewrite of the question in different words or from a different angle.
+- **Retriever:** the component that takes a query and returns the best-matching chunks.
+- **Rank:** a document's position in a result list (1 is the top).
+- **Merge / fusion:** combining several ranked lists into one.
+- **RRF:** Reciprocal Rank Fusion, a merge method that uses only ranks.
 
 The most common way to merge is **Reciprocal Rank Fusion (RRF)**. It ignores raw scores (which are hard to compare across queries) and looks only at positions. Documents that rank well in many lists win.
 
@@ -40,6 +49,24 @@ RRF worked example with k=60:
 | C | 3 | 1/63 = **0.0159** |
 
 B wins: it appears in three lists near the top.
+
+### Worked example
+The repo demo runs the question "Why does my pod crash over and over?" with a fake LLM that returns fixed variants. So there are four queries, each searched separately (real output):
+
+| Query | Result list |
+|---|---|
+| original question | d2, d3 |
+| why does my pod restart | d2, d3 |
+| CrashLoopBackOff meaning | d2 |
+| liveness probe fails container restart | d1, d4 |
+
+Merge with RRF (k=60), adding 1/(60+rank) per list:
+- `d2`: rank 1 in three lists, 3 × 1/61 = 0.0492
+- `d3`: rank 2 in two lists, 2 × 1/62 = 0.0323
+- `d1`: rank 1 in one list, 1/61 = 0.0164
+- `d4`: rank 2 in one list, 1/62 = 0.0161 (just misses the top 3)
+
+Final top 3: `['d2', 'd3', 'd1']`. The single plain query returned only `['d2', 'd3']`, so the extra variant found `d1`.
 
 ## Code example
 
@@ -84,6 +111,12 @@ Run `python adv_query_transform.py` in `02-advanced-rag/code` to see the merged 
 - Dropping the original question from the query set. It is often the best single query.
 - Generating variants that all say the same thing. Ask for different angles or sub-questions.
 - Running the N searches one after another instead of concurrently.
+
+## Recap
+If you remember only three things:
+- Multi-query retrieval has an LLM write several versions of the question, searches with each, and merges the lists.
+- RRF merges by rank position only, so documents that appear high in many lists win.
+- It costs one extra LLM call plus several searches, so keep the original question and run searches in parallel.
 
 ## Interview questions
 

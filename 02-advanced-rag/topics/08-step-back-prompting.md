@@ -1,8 +1,10 @@
 # Step Back Prompting
 
-> **Level:** Advanced · **Reading time:** 5 min · **Phase:** 2 — Advanced RAG
+> **Level:** Advanced · **Reading time:** 6 min · **Phase:** 2 — Advanced RAG
 
 **In one line:** Step-back prompting first asks a more general question about the underlying concept, retrieves for that too, and uses both to answer the specific question.
+
+**Before you start:** [HyDE](07-hyde.md) and [Multi-Query Retrieval](06-multi-query-retrieval.md). Both use an LLM to rewrite the question before searching, and step-back is a third way to do that.
 
 ## Explain it like I'm new
 
@@ -11,6 +13,13 @@ A student asks, "What happens to the pressure of a gas if the temperature double
 Specific questions often match no document directly. Your docs might explain *how Kubernetes handles container health* in general, but never mention your exact symptom. Step-back prompting asks an LLM to produce a **step-back question**: a broader, more abstract version ("How does Kubernetes manage container health and restarts?"). You retrieve for both the original and the step-back question. The general chunks give the model the principles; the specific chunks give it the details.
 
 The technique comes from a 2023 Google DeepMind paper that showed abstraction-first prompting helped on reasoning-heavy tasks. In RAG, the same idea is used as a retrieval trick.
+
+Words to know:
+- **LLM (large language model):** the AI that reads and writes text, such as the model behind a chatbot.
+- **Retrieve:** search your documents and fetch the best matches.
+- **Top *k*:** the *k* best-scoring results (for example, top 3).
+- **Step-back question:** a broader, more general version of the user's question.
+- **RRF (Reciprocal Rank Fusion):** a simple way to merge several ranked lists. A document ranked high in any list ends up high in the merged list.
 
 ## How it works
 
@@ -35,6 +44,17 @@ A prompt that works well includes one or two examples of step-back pairs, such a
 Original: Which team did Messi play for in 2010?
 Step-back: What is Messi's career history?
 ```
+
+### Worked example
+Question: "Why does my pod crash over and over?" (A *pod* is a running container group in Kubernetes. You only need to know it keeps crashing.) The demo has three small documents, `d1`, `d2`, `d3`. Real output from `adv_query_transform.py`:
+
+1. **Plain search** on the original question returns `['d2', 'd3']`. `d1`, the document about liveness probes (Kubernetes health checks that restart a broken container), is missing, because it never mentions "crash".
+2. **Step back.** The LLM writes: "How does Kubernetes manage container health and restarts?"
+3. **Search again** with that general question and merge both lists. Result: `['d1', 'd2', 'd3']`.
+4. The model now sees `d1` (why restarts happen) next to `d2` and `d3` (your specific symptoms) and answers the original question.
+
+The only change was one extra, broader search. It pulled in the document that explains the principle.
+
 
 ## Code example
 
@@ -88,6 +108,12 @@ Question: Why does my pod crash over and over?
 - Stepping back too far ("What is computing?"), which retrieves generic noise.
 - Not labelling general vs specific context, so the model answers the general question instead.
 - Using it everywhere without measuring; for many factual queries it does not help.
+
+## Recap
+If you remember only three things:
+- Step-back prompting asks a broader question to fetch the general principles behind your specific question.
+- Retrieve for both the original and the step-back question, then answer the original one.
+- Skip it for simple fact lookups, where it only adds cost.
 
 ## Interview questions
 
