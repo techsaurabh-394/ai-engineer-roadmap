@@ -1,7 +1,9 @@
 # Hybrid Search
-> **Level:** Intermediate · **Reading time:** 7 min · **Phase:** 1 — RAG Foundations
+> **Level:** Intermediate · **Reading time:** 9 min · **Phase:** 1 — RAG Foundations
 
 **In one line:** Hybrid search runs keyword search and embedding search side by side and merges their results, so you catch both exact-term matches and same-meaning matches.
+
+**Before you start:** [Embeddings](02-embeddings.md) and [Metadata](09-metadata.md). You should know that an embedding is a list of numbers (a vector) that captures the meaning of text, and that metadata is extra labels (like year or source) stored with each chunk.
 
 ## Explain it like I'm new
 Imagine asking two librarians for help. One is a stickler for exact words: ask for "error E1234" and she finds every page that says E1234. The other understands meaning: ask "how do I reset my login?" and he finds the page titled "Password recovery". Each misses things the other finds. Hybrid search asks both and combines their lists.
@@ -13,6 +15,14 @@ The two librarians are:
 The hard part is merging. BM25 scores might range from 0 to 25; cosine similarities from 0 to 1. You cannot just add them. Two common methods:
 - **Reciprocal Rank Fusion (RRF)**: ignore the raw scores, use only each document's *rank* in each list.
 - **Weighted score fusion**: normalize both scores to 0–1, then combine, e.g. `0.5·dense + 0.5·sparse`.
+
+Words to know:
+- **Query:** the question or search text the user types.
+- **Corpus:** the whole collection of documents you search.
+- **Rank:** a document's position in a result list (1 is the top).
+- **Fusion:** merging several ranked lists into one.
+- **RRF:** Reciprocal Rank Fusion, a merge method that uses only ranks.
+- **Normalize:** rescale scores onto a common range, such as 0 to 1.
 
 ## How it works
 1. Run the query through BM25 → ranked list A.
@@ -41,6 +51,14 @@ Worked RRF example, `k = 60`:
 | d3 | — | 2 | 1/62 = 0.01613 |
 
 Order: d2, d1, d3. d2 wins because both systems rank it high.
+
+### Worked example
+The demo corpus has five short documents. Document 0 says "Refresh tokens belong in an httpOnly cookie and are rotated on every use." Document 3 is about Cache-Control, and document 1 is about access tokens. The query is "rotate refresh token". Real output:
+
+- BM25 (exact words): `[(1.4727, 0)]`. Only document 0 shares a whole word ("refresh") with the query, so BM25 returns just that one.
+- Dense (toy similarity of letter groups): `[(0.479, 0), (0.178, 3), (0.13, 1)]`. It also surfaces documents 3 and 1 because they share some letter patterns.
+- Hybrid, after RRF: `[0, 3, 1]`. Document 0 is first in both lists, so it wins.
+- Hybrid with a filter `year >= 2025`: `[0, 3]`. Document 1 is from 2023, so it is removed. Documents 0 and 3 are from 2025, so they stay.
 
 ## Code example
 From [`code/rag_bm25.py`](../code/rag_bm25.py). The "dense" side here is a toy character-trigram similarity so it runs offline; swap in real embeddings in practice.
@@ -93,10 +111,17 @@ Many databases have hybrid search built in (Weaviate, Qdrant, Elasticsearch/Open
 | Hybrid | Both | Two indexes, fusion to tune |
 
 ## Common mistakes
+- Thinking hybrid search needs both lists to agree. A document found by only one side still gets a score and can rank well.
 - Adding raw BM25 scores to cosine scores without normalizing.
 - Filtering only one side, so forbidden documents re-enter through the other list.
 - Using different chunks for the two indexes, so IDs do not line up.
 - Fetching only top-3 from each side before fusion. Fetch more (e.g. 20–50), fuse, then cut.
+
+## Recap
+If you remember only three things:
+- Hybrid search runs keyword (sparse) and meaning (dense) search together and merges the two ranked lists.
+- RRF merges by rank position only, so you never have to compare BM25 scores with cosine scores.
+- Apply the same metadata filter to both sides, and fetch more than top-3 from each before fusing.
 
 ## Interview questions
 **1. Why combine sparse and dense retrieval?**

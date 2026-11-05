@@ -1,7 +1,9 @@
 # Chunking
-> **Level:** Beginner · **Reading time:** 6 min · **Phase:** 1 — RAG Foundations
+> **Level:** Beginner · **Reading time:** 8 min · **Phase:** 1 — RAG Foundations
 
 **In one line:** Chunking is cutting long documents into smaller pieces so each piece can be embedded, searched and shown to the model on its own.
+
+**Before you start:** [What is RAG?](01-what-is-rag.md) and [Tokenization](03-tokenization.md). You should know that RAG searches small pieces of documents, and that sizes are often counted in tokens.
 
 ## Explain it like I'm new
 Imagine a 300-page cookbook and someone asks "how long do I boil an egg?". You would not photocopy the whole book for them. You would hand them the one paragraph about eggs. Chunking prepares the book in advance by cutting it into paragraph-sized cards, so later you can hand over just the right card.
@@ -13,6 +15,14 @@ Why not cut into single sentences? A sentence like "It should be rotated on ever
 So chunking is a balance between **precision** (small, focused pieces) and **context** (enough text to be understood). Two numbers control it:
 - **Chunk size**: how big each piece is, in characters or tokens.
 - **Overlap**: how much text neighbouring chunks share, so an idea cut at a border still appears whole in one chunk.
+
+Words to know:
+- **Chunk:** one piece of a document that is embedded and searched on its own.
+- **Chunk size:** how long each chunk is, in characters or tokens.
+- **Overlap:** the text shared by two neighbouring chunks.
+- **Strategy:** the rule used to decide where to cut.
+- **Metadata:** facts about a chunk, such as its source file and page.
+- **Embed:** turn text into a vector (a list of numbers) that stands for its meaning.
 
 ## How it works
 1. Clean the text (remove headers, footers, repeated menus).
@@ -35,6 +45,20 @@ Fixed, size 20, overlap 5:
 ```
 
 Worked example: a 1,000-token document, chunk size 300, overlap 50. Each new chunk starts 250 tokens after the previous one (300 − 50). Chunks start at 0, 250, 500 and 750, so you get 4 chunks and the last one is shorter (250 tokens).
+
+### Worked example
+Here is real output from the repo's fixed-size chunker on a short sample text, with size 60 characters and overlap 10. It makes 6 chunks. These are the first two:
+```text
+'Docker images are built in layers. Each instruction in a Doc'
+'n in a Dockerfile adds a layer.\n\nMulti-stage builds use seve'
+```
+Trace it:
+1. Chunk 1 is characters 0 to 59.
+2. The step is 60 − 10 = 50, so chunk 2 starts at character 50, not 60.
+3. That is why both chunks contain `n in a Doc`: those 10 shared characters are the overlap.
+4. The cut is blind to meaning. Chunk 1 stops in the middle of "Dockerfile", and chunk 2 starts mid-word at `n in a`.
+
+That mid-word cut is the main weakness of fixed-size chunking. The next topic, [Recursive Chunking](05-recursive-chunking.md), fixes it by cutting at paragraph and sentence borders first.
 
 ## Code example
 Fixed-size chunking with overlap, from [`code/rag_chunkers.py`](../code/rag_chunkers.py):
@@ -82,6 +106,12 @@ chunks = splitter.split_text(long_text)
 - Losing the heading, so a chunk says "Step 3" with no idea which procedure it belongs to. Prepend the section title.
 - No overlap, so answers that span a border are never retrieved whole.
 - Tuning by eye instead of by measuring retrieval quality.
+
+## Recap
+If you remember only three things:
+- Chunking cuts documents into pieces so each piece gets its own focused vector and can be retrieved alone.
+- Chunk size balances precision (small) against context (large), and overlap protects ideas cut at a border.
+- Fixed-size cuts are simple but can split words and sentences, so tune the strategy by measuring retrieval quality.
 
 ## Interview questions
 **1. Why chunk at all?**

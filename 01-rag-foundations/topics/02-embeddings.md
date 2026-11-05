@@ -1,7 +1,9 @@
 # Embeddings
-> **Level:** Beginner · **Reading time:** 7 min · **Phase:** 1 — RAG Foundations
+> **Level:** Beginner · **Reading time:** 9 min · **Phase:** 1 — RAG Foundations
 
 **In one line:** An embedding is a list of numbers that represents the meaning of a piece of text, so that texts with similar meaning get similar numbers.
+
+**Before you start:** [What is RAG?](01-what-is-rag.md). You should know that RAG searches chunks of documents and that the search compares numbers, not words.
 
 ## Explain it like I'm new
 Imagine a big map of a city where every sentence has an address. Sentences about "dogs" live in one neighbourhood, sentences about "taxes" live across town. "My puppy chewed my shoe" and "The dog ate my sneaker" live on the same street, even though they share almost no words. An embedding is that address.
@@ -12,8 +14,16 @@ An **embedding model** is a neural network trained so that related texts land cl
 
 Because "close" means "similar in meaning", embeddings let search find matches that share no exact words. That is the main reason RAG systems use them.
 
+Words to know:
+- **Vector:** an ordered list of numbers, such as `[1, 2]`.
+- **Dimension:** one position in a vector. `[1, 2]` has 2 dimensions.
+- **Embedding:** a vector that stands for the meaning of a text.
+- **Embedding model:** the trained neural network that turns text into an embedding.
+- **Cosine similarity:** a score for how closely two vectors point the same way (1.0 means same direction).
+- **Normalize:** rescale a vector so its length is 1.
+
 ## How it works
-1. Text goes into the embedding model. The model first splits it into **tokens** (word pieces).
+1. Text goes into the embedding model. The model first splits it into **tokens** (word pieces; see [Tokenization](03-tokenization.md)).
 2. The model processes the tokens and outputs one vector for the whole text (often by averaging token vectors, called **pooling**).
 3. Many models then **normalize** the vector so its length is 1. This makes comparison simpler.
 4. To compare two texts, you compare their vectors with a similarity measure such as **cosine similarity**.
@@ -28,6 +38,20 @@ Because "close" means "similar in meaning", embeddings let search find matches t
 
 Tiny worked example in 2 dimensions: `a = [1, 2]`, `b = [2, 4]`, `c = [2, -1]`.
 `a` and `b` point the same way (cosine 1.0). `a` and `c` are at a right angle (cosine 0.0, because 1·2 + 2·(−1) = 0).
+
+### Worked example
+The repo's [`rag_vector_math.py`](../code/rag_vector_math.py) uses 3-number vectors: `a=[1,2,3]`, `b=[2,4,6]`, `c=[3,0,-1]`. Real output:
+```text
+dot(a,b)       = 28
+cos(a,b)       = 1.0
+dot(a,c)       = 0
+cos(a,c)       = 0.0
+```
+Check by hand: multiply position by position and add. For `a` and `b`: 1·2 + 2·4 + 3·6 = 28. For `a` and `c`: 1·3 + 2·0 + 3·(−1) = 0.
+
+What matters is direction. `b` is just `a` stretched to twice the length, so they point the same way and cosine is 1.0. `c` is at a right angle to `a`, so cosine is 0.0.
+
+For text, read it the same way. "refresh token storage" and "where to keep tokens" get vectors pointing almost the same way (high cosine), while "docker image layers" points elsewhere (low cosine).
 
 ## Code example
 Real embedding models need a download, so this stdlib demo fakes one with **bag-of-words** counts. It shows the shape of the idea (text → vector → compare), not real meaning.
@@ -81,6 +105,12 @@ print(vecs.shape, float(vecs[0] @ vecs[1]))           # (2, 384) and a high simi
 - Changing the embedding model without re-embedding every stored chunk.
 - Feeding text longer than the model's input limit, so the end is silently dropped.
 - Assuming a high similarity score means the chunk contains the answer. It means "related topic".
+
+## Recap
+If you remember only three things:
+- An embedding is a vector (a list of numbers) that places a text on a "meaning map".
+- Texts with similar meaning get vectors that point the same way, so cosine similarity is high.
+- Use the same embedding model for documents and questions, and re-embed everything if you change models.
 
 ## Interview questions
 **1. What is an embedding?**

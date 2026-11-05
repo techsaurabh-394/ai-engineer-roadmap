@@ -1,7 +1,9 @@
 # Tokenization
-> **Level:** Beginner · **Reading time:** 6 min · **Phase:** 1 — RAG Foundations
+> **Level:** Beginner · **Reading time:** 8 min · **Phase:** 1 — RAG Foundations
 
 **In one line:** Tokenization is splitting text into small units called tokens (words or word pieces) that a model can turn into numbers.
+
+**Before you start:** [Embeddings](02-embeddings.md). You should know that models work on numbers (vectors), not on raw text.
 
 ## Explain it like I'm new
 Think of LEGO. You cannot ship a built castle through a narrow tube, but you can ship the bricks and rebuild it. Models cannot read raw text. They read a sequence of brick IDs. A **tokenizer** breaks text into bricks (tokens) and maps each to an integer ID from a fixed **vocabulary**.
@@ -15,8 +17,16 @@ Why should a RAG engineer care?
 
 A rough rule for English text with common tokenizers is about 4 characters per token, but code, numbers and other languages differ a lot. Always measure with the real tokenizer.
 
+Words to know:
+- **Token:** one small unit of text (a word or part of a word) that the model sees as a single item.
+- **Tokenizer:** the tool that splits text into tokens and maps each one to an ID.
+- **Vocabulary:** the fixed list of all tokens a model knows, each with an integer ID.
+- **Subword:** a piece of a word, such as "ization".
+- **Corpus:** the big collection of text used to train or build something.
+- **Context window:** the maximum number of tokens a model can take in at once.
+
 ## How it works
-Most modern models use **Byte-Pair Encoding (BPE)** or a close relative (WordPiece, Unigram).
+Most modern models use **Byte-Pair Encoding (BPE)** or a close relative (WordPiece, Unigram). BPE learns its vocabulary by repeatedly merging the pair of symbols that appears together most often.
 
 1. Start with single characters (or bytes) as the vocabulary.
 2. Count which pair of neighbouring symbols appears most often in a big training corpus.
@@ -33,6 +43,16 @@ tokens:          [low][er] [low][e][s][t]  -> IDs like [912, 263, 912, 68, 82, 8
 ```
 
 Different models use different tokenizers. The same sentence can be 10 tokens for one model and 14 for another.
+
+### Worked example
+Trace the diagram above on the text "lower lowest".
+1. Start with single characters, plus `_` to mark where a word ends. That is 12 symbols: `l o w e r _ l o w e s t`.
+2. Merge `l`+`o` into `lo`. It appears twice, so we are down to 10 symbols.
+3. Merge `lo`+`w` into `low`. It also appears twice, so we have 8 symbols.
+4. Merge `e`+`r` into `er`. That gives 7 symbols.
+5. Read off the tokens: `[low][er]` and `[low][e][s][t]`. Six tokens, and the word-end marker `_` is bookkeeping.
+
+The word "low" is now one token because it is common in the training text, while "lowest" still needs several pieces. Each token then gets an integer ID from the vocabulary (the IDs shown are illustrative).
 
 ## Code example
 A tiny BPE trainer, stdlib only, to see merges happen:
@@ -91,6 +111,12 @@ For Hugging Face models, use `AutoTokenizer.from_pretrained(model_name)` from `t
 - Assuming one word equals one token.
 - Forgetting that the system prompt, retrieved chunks *and* the answer all share the same context window.
 - Using an English-based estimate for code, tables or non-English text.
+
+## Recap
+If you remember only three things:
+- A token is a word or word piece, and the model reads text as a sequence of token IDs.
+- Limits, speed and cost are all counted in tokens, not characters or words.
+- Count tokens with the tokenizer of the model you actually use, because different models split text differently.
 
 ## Interview questions
 **1. Why do models use subword tokens instead of whole words?**
