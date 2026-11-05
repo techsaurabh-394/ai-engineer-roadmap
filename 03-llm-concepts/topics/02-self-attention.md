@@ -1,7 +1,17 @@
 # Self Attention
-> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 3 · LLM Concepts
+> **Level:** Intermediate · **Reading time:** 10 min · **Phase:** 3 · LLM Concepts
 
 **In one line:** Self-attention lets each token build its new meaning as a weighted average of all the tokens in the same sentence, with weights based on how relevant each one is.
+
+**Before you start:** [Transformer Architecture](01-transformer-architecture.md). For a slower, step-by-step walk through Q, K and V, see [Q, K and V Explained From Scratch](22-qkv-explained-from-scratch.md).
+
+**Words to know:**
+- **Vector:** a list of numbers, here standing for one token.
+- **Dot product:** multiply two vectors position by position and add the results. A bigger answer means the vectors point in a more similar direction.
+- **Softmax:** turns a list of scores into positive weights that add up to 1.
+- **Weighted average:** a blend where some items count more than others.
+- **Causal mask:** a rule that stops a token from looking at tokens that come after it.
+- **Matrix:** a table of numbers. Multiplying a vector by a learned matrix produces a new vector.
 
 ## Explain it like I'm new
 Think of a library search. You walk in with a **question** ("books about rivers"). Every book has a **label** on its spine. You compare your question to each label, and the better the match, the more of that book you read. What you walk out with is a blend of the books' **contents**, weighted by match.
@@ -34,10 +44,13 @@ query q3  ->  [0.27  0.27  0.45]
 output_i = sum_j  weight[i][j] * v_j
 ```
 
-**Tiny worked example.** One query `q = [1, 0]`, two keys `k1 = [1, 0]`, `k2 = [0, 1]`, values `v1 = [10, 0]`, `v2 = [0, 10]`.
+### Worked example
+One query `q = [1, 0]`, two keys `k1 = [1, 0]`, `k2 = [0, 1]`, values `v1 = [10, 0]`, `v2 = [0, 10]`.
 - Scores: `q·k1 = 1`, `q·k2 = 0`. Scale by `sqrt(2) ≈ 1.414`: `[0.707, 0]`.
 - Softmax: `e^0.707 ≈ 2.03`, `e^0 = 1`, so weights `≈ [0.67, 0.33]`.
 - Output: `0.67·[10,0] + 0.33·[0,10] = [6.7, 3.3]`. The query "leans" toward the value whose key matched.
+
+Read it as a story: the query `[1, 0]` asks "who is like me?" Key 1 is identical to it, key 2 is unrelated, so token 1 gets about two thirds of the attention. The output is a blend that is mostly value 1 with a bit of value 2.
 
 The test `test_attention_hand_computed_example` in [`test_llm_attention.py`](../code/test_llm_attention.py) checks this exact number.
 
@@ -90,6 +103,12 @@ out = F.scaled_dot_product_attention(q, k, v, is_causal=True)
 - Applying softmax over the wrong axis. Each **query row** must sum to 1.
 - Masking by setting scores to 0 instead of `-inf`. A score of 0 still gets weight after softmax.
 - Mixing up attention weights with "explanations". Weights hint at information flow but are not proof of reasoning.
+
+## Recap
+If you remember only three things:
+- Each token makes a query, and compares it to every token's key to get scores.
+- Softmax turns the scores into weights, and the output is the weighted average of the value vectors.
+- Divide by `sqrt(d_k)` to keep scores tame, and use `-inf` (not 0) to mask tokens that must not be seen.
 
 ## Interview questions
 **1. Why divide by sqrt(d_k)?**

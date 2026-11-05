@@ -3,6 +3,13 @@
 
 **In one line:** LoRA freezes the big model and trains two tiny matrices whose product is added to each chosen weight matrix, so you train well under 1% of the parameters and still change the model's behaviour.
 
+**Before you start:** [Fine-Tuning (the overview)](15-fine-tuning.md) and [Quantization](18-quantization.md).
+
+**Words to know:**
+- **Matrix:** a grid of numbers. A model's weights are stored as many matrices.
+- **Rank (r):** how many independent directions of change the add-on can carry.
+- **Adapter:** the small trained add-on, which you can load or remove.
+
 ## Explain it like I'm new
 Imagine a huge printed textbook. Full fine-tuning means reprinting the whole book with your edits. LoRA means leaving the book alone and sticking a thin set of sticky notes on some pages. The notes are small and cheap to make. You can peel them off, or use a different set for each customer.
 
@@ -33,6 +40,13 @@ flowchart LR
 **Swapping adapters.** One base model plus many small adapters can serve many tasks or customers. You load the right adapter for each request. Each file is megabytes, not gigabytes.
 
 **What LoRA cannot fix.** It does not add reliable new facts (use [RAG](../../01-rag-foundations/README.md)). It does not give the model skills it is far from having. Bad data still gives a bad adapter. A low rank can also underfit a hard task, and a high learning rate can make the model forget other abilities. Always test against the base model.
+
+### Worked example
+Use a tiny 4×4 matrix W with rank r = 1:
+1. A is 1×4 and B is 4×1, so they hold 4 + 4 = 8 numbers. W holds 16.
+2. B·A is a full 4×4 grid, built from only those 8 numbers.
+3. B starts at zero, so W' = W at the start and the model is unchanged.
+4. Training moves A and B only. W' = W + (alpha / r) × B·A then changes the output, while W itself never changes.
 
 ## Code example
 The demo uses plain Python lists, so every number is hand-checkable. Run it: `python 03-llm-concepts/code/llm_lora_math.py`
@@ -98,6 +112,12 @@ The tests in [`test_llm_lora_math.py`](../code/test_llm_lora_math.py) check the 
 - Merging an adapter into a quantized base without checking the result.
 - Comparing only against the training set. Test on held-out examples and against the base model.
 - Using an adapter with a different base model version than the one it was trained on.
+
+## Recap
+If you remember only three things:
+- LoRA freezes the weights and trains two small matrices whose product is added to W.
+- For d = 4096 and r = 8 that is 65,536 trained numbers instead of 16,777,216 (0.39%).
+- QLoRA adds a 4-bit base model for more savings. LoRA still does not add reliable facts.
 
 ## Interview questions
 <details>

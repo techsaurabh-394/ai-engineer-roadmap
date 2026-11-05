@@ -1,7 +1,9 @@
 # Calling an LLM API
-> **Level:** Beginner · **Reading time:** 7 min · **Phase:** 3 · LLM Concepts
+> **Level:** Beginner · **Reading time:** 8 min · **Phase:** 3 · LLM Concepts
 
 **In one line:** Calling an LLM API means sending a list of role-tagged messages over HTTPS and getting back text plus a count of the tokens you used, and a production call also needs a timeout, retries and a cost check.
+
+**Before you start:** [Prompt Engineering](14-prompt-engineering.md), so you know what a prompt and a token are.
 
 ## Explain it like I'm new
 Think of ordering food by phone. You say who you are and what you want. The kitchen sends the food and a bill.
@@ -35,6 +37,13 @@ flowchart LR
 **Never hardcode keys.** Put the key in an environment variable (for example `os.environ["MY_API_KEY"]`) or a secrets manager. Never commit it to Git. Keys in a public repo get scraped within minutes.
 
 **Retries, with numbers.** With a base delay of 1 second and doubling, the waits are 1, 2, 4 seconds. Real code also adds a little random **jitter**, so that many clients do not all retry at the same instant. Honour a `Retry-After` header if the server sends one.
+
+### Worked example
+Say you send "What is the capital of France?" and the reply uses 12 input tokens and 8 output tokens. With prices of 3.0 per million input tokens and 15.0 per million output tokens:
+1. Input cost: 12 × 3.0 = 36 (in millionths of a currency unit).
+2. Output cost: 8 × 15.0 = 120.
+3. Total: (36 + 120) / 1,000,000 = 0.000156. This is the cost the demo below prints.
+4. If a call gets a 429, you wait 1 second and retry. A second 429 means waiting 2 seconds. Attempt 3 works, which matches the demo's `attempts 3 waits [1.0, 2.0]`.
 
 ## Code example
 This demo has no network. `FakeLLM` returns a dict shaped like a typical response. Real providers use their own field names, so check their docs. Run it: `python 03-llm-concepts/code/llm_api_basics.py`
@@ -91,6 +100,12 @@ The `sleep` argument is injectable, so the test passes `waits.append` and runs i
 - Ignoring the finish reason, and showing a reply that was cut off at `max_tokens`.
 - Forgetting that the API is stateless and that the whole history is billed again on every call.
 - Never logging token usage, then getting a surprise bill.
+
+## Recap
+If you remember only three things:
+- The API is stateless: you send the whole conversation on every call.
+- Always set a timeout, retry only temporary errors (429, 5xx), and cap the retries.
+- Log token usage, because cost is input tokens plus output tokens, each at its own price.
 
 ## Interview questions
 <details>

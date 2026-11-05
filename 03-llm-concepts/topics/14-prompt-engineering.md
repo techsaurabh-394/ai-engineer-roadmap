@@ -1,7 +1,16 @@
 # Prompt Engineering
-> **Level:** Beginner · **Reading time:** 8 min · **Phase:** 3 · LLM Concepts
+> **Level:** Beginner · **Reading time:** 9 min · **Phase:** 3 · LLM Concepts
 
 **In one line:** Prompt engineering is writing and testing the instructions, examples, and context you give a model so it reliably produces the output you need.
+
+**Before you start:** [Context Window](08-context-window.md) (a prompt must fit inside it).
+
+**Words to know:**
+- **Prompt:** all the text the model sees in one request.
+- **System prompt:** standing instructions such as role, rules and format.
+- **Zero-shot / few-shot:** zero-shot gives instructions only; few-shot adds a few worked examples.
+- **Chain-of-thought:** asking the model to write out its steps before the final answer.
+- **Prompt injection:** untrusted text that contains instructions the model might wrongly follow.
 
 ## Explain it like I'm new
 Think of briefing a smart new teammate who knows a lot but knows nothing about your company or this task. "Write something about our product" gets you something vague. "Write a 3-sentence product update for existing customers, friendly tone, mention the new export button, no pricing" gets you what you want.
@@ -46,6 +55,15 @@ flowchart LR
 | Structured output | JSON schema or tool schema | parsing in code |
 | Prompt chaining | split work into several calls | long or complex tasks |
 
+### Worked example
+Goal: label customer messages as `billing`, `bug`, `feature_request` or `other`.
+
+1. **Define success.** Write 4 test messages with the label you expect, for example "I was charged twice" is `billing`.
+2. **Attempt 1, vague:** "What kind of message is this?" The model answers in a sentence: "This looks like a billing complaint." Code expecting one label cannot use that, so 0 of 4 pass.
+3. **Attempt 2, clear:** add the system prompt "Reply with exactly one label: billing, bug, feature_request, or other." Now the model replies `billing`, and say 3 of 4 pass.
+4. **Read the failure.** The one miss is "Can you add dark mode?", which it labelled `other`. Change one thing: add it as a few-shot example with the answer `feature_request`.
+5. **Run all 4 again.** If all pass, keep this prompt and watch real traffic. The pass counts here are illustrative, not measured.
+
 **Prompt injection.** If your prompt includes untrusted text (a web page, an email, a user upload), that text can contain instructions such as "ignore previous instructions". The model may follow them. No prompt wording fully prevents this. Treat untrusted text as data, limit what tools the model can use, and check actions in code ([Agent Guardrails](../../04-agentic-ai/topics/16-agent-guardrails.md)).
 
 ## Code example
@@ -75,8 +93,10 @@ def evaluate(model_fn, cases):
 
 # offline stand-in for a model so the example runs without an API key
 fake_model = lambda system, msgs: "bug" if "error" in msgs[-1]["content"] else "other"
-print(evaluate(fake_model, [("Error 500 on login", "bug"), ("Love it!", "other")]))  # 1.0
+print(evaluate(fake_model, [("Error 500 on login", "bug"), ("Love it!", "other")]))  # 0.5
 ```
+
+Why 0.5, not 1.0? The stand-in model looks for lowercase `"error"`, but the test message says `Error` with a capital E, so it answers `other` and misses. One of two cases passes. This is a small example of why a test set is useful: it exposes failures you would not notice by eye.
 
 **In real projects** pass `SYSTEM` and `build_messages(...)` to your provider:
 
@@ -102,6 +122,12 @@ print(resp.content[0].text)
 - Mixing instructions and untrusted data without markers.
 - Examples that are all the same, so the model copies them too closely.
 - Believing a prompt can make the system safe against injection on its own.
+
+## Recap
+If you remember only three things:
+- A prompt is clear instructions plus context, constraints, output format and often a few examples, with untrusted data kept in marked sections.
+- Improve prompts by testing: fixed test set, read failures, change one thing, repeat.
+- Prompting is the cheapest lever, but it cannot add missing knowledge (use RAG) or guarantee safety against injection.
 
 ## Interview questions
 **1. What is few-shot prompting and when does it help?**

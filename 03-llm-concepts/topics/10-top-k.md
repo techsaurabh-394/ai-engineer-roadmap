@@ -1,7 +1,16 @@
 # Top-k
-> **Level:** Beginner · **Reading time:** 5 min · **Phase:** 3 · LLM Concepts
+> **Level:** Beginner · **Reading time:** 6 min · **Phase:** 3 · LLM Concepts
 
 **In one line:** Top-k sampling keeps only the k most likely next tokens, throws the rest away, and samples from what is left.
+
+**Before you start:** [Temperature](09-temperature.md) (it explains logits, softmax and sampling).
+
+**Words to know:**
+- **Vocabulary:** the full list of tokens the model can pick from, often tens of thousands.
+- **Probability distribution:** one probability per token, all adding up to 1.
+- **Long tail:** the many unlikely tokens at the bottom of the sorted list.
+- **Renormalize:** rescale the kept probabilities so they add up to 1 again.
+- **Greedy decoding:** always picking the single most likely token.
 
 ## Explain it like I'm new
 Imagine a quiz show where you may pick any answer, but the host first crosses out everything except the top 3 most popular answers from the audience. You still choose at random, but only among sensible options. Silly answers can't sneak in.
@@ -32,6 +41,15 @@ the  ##########  0.50      the  ###########  0.56
 a    ########    0.40  ->  a    #########    0.44
 my   ##          0.10      my   (removed)
 ```
+
+### Worked example (picking a token)
+Same table: `the 0.5, a 0.4, my 0.1`, with `k = 2`.
+
+1. Sort: the 0.5, a 0.4, my 0.1.
+2. Keep the first 2: `the` and `a`. Drop `my`.
+3. Their sum is 0.9, so divide each by 0.9: the 0.556, a 0.444.
+4. Sample. Imagine a random number between 0 and 1 comes out as 0.30. Numbers below 0.556 pick `the`, the rest pick `a`. So 0.30 picks `the`.
+5. If the draw were 0.80 it would pick `a`. `my` is never possible.
 
 **The weakness.** `k` is fixed. When the model is very sure (one token at 0.97), `k = 50` still lets 49 poor tokens in. When the model is unsure (100 tokens all plausible), `k = 50` may cut good ones. [Top-p](11-top-p.md) adapts to this by using a probability threshold instead.
 
@@ -80,6 +98,12 @@ The Anthropic Messages API also accepts a `top_k` parameter; OpenAI's chat API e
 - Using one fixed `k` for every task.
 - Combining very high temperature with large `k` and wondering why text goes off the rails.
 - Assuming every API supports `top_k`.
+
+## Recap
+If you remember only three things:
+- Top-k keeps the k most likely tokens, drops the rest, and renormalizes.
+- `k = 1` is greedy decoding; a huge `k` is plain sampling.
+- The count k is fixed, so it cannot adapt to how confident the model is; top-p can.
 
 ## Interview questions
 **1. What does top-k sampling do?**

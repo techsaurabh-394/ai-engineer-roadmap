@@ -3,6 +3,12 @@
 
 **In one line:** Structured outputs make an LLM return data your code can parse, such as JSON that matches a schema, and you still validate every reply, because even a well-formed answer can be wrong.
 
+**Before you start:** [Calling an LLM API](16-calling-an-llm-api.md) and [Hallucinations](13-hallucination.md).
+
+**Words to know:**
+- **JSON:** a plain-text format for data, like `{"priority": 2}`.
+- **Schema:** a description of which fields a JSON object must have and what values are allowed.
+
 ## Explain it like I'm new
 Imagine a paper form with boxes: Name, Category (tick one), Priority (1 to 3). A clerk checks it at the desk. If a box is empty or the tick is in the wrong place, the clerk hands it back and says what is wrong.
 
@@ -40,6 +46,12 @@ flowchart LR
 - Give fields clear names, and describe them in the prompt.
 
 **What validation cannot do.** It checks the *shape*, not the *truth*. `{"category": "billing", "priority": 1, "tags": ["refund"]}` is valid even if the customer was really reporting a bug. Check facts another way: compare to a source, add an evaluation set, or have a human review the risky cases. See [Hallucinations](13-hallucination.md) for why a confident answer can still be wrong.
+
+### Worked example
+Ask for a support ticket with category in `billing`, `bug`, `other` and priority 1 to 3:
+1. Try 1 returns `category: "refund"`, `priority: 7` and a wrong tag type. Validation lists all 3 errors.
+2. You send those errors back and ask for a corrected object.
+3. Try 3 passes every check, so the result `{'category': 'bug', 'priority': 2, 'tags': ['login']}` is used. This matches the demo's `repaired result after 3 tries`.
 
 ## Code example
 This demo is stdlib only. It has a tiny validator for a *subset* of JSON Schema (`type`, `required`, `enum`, `minimum`, `maximum`, nested objects, array `items`), not the whole spec. Run it: `python 03-llm-concepts/code/llm_structured.py`
@@ -96,6 +108,12 @@ The error messages are the useful part. The model sees *exactly* what to fix, an
 - No retry limit, so a bad prompt loops and burns money.
 - Making every field required, so the model invents values for things it does not know. Allow `null` or an `other` value instead.
 - Assuming a valid shape means a correct answer.
+
+## Recap
+If you remember only three things:
+- A schema plus validation turns free text into data your code can trust in shape.
+- Send the list of errors back to the model, and stop after a few tries.
+- Validation checks shape, not truth, so a valid answer can still be wrong.
 
 ## Interview questions
 <details>

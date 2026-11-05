@@ -1,7 +1,17 @@
 # Positional Encoding
-> **Level:** Intermediate · **Reading time:** 6 min · **Phase:** 3 · LLM Concepts
+> **Level:** Intermediate · **Reading time:** 8 min · **Phase:** 3 · LLM Concepts
 
 **In one line:** Positional encoding adds information about each token's position, so the model can tell "dog bites man" from "man bites dog".
+
+**Before you start:** [Self Attention](02-self-attention.md) and [Transformer Architecture](01-transformer-architecture.md).
+
+**Words to know:**
+- **Position:** the seat number of a token in the text: 0 for the first, 1 for the second, and so on.
+- **Embedding:** the vector of numbers that stands for a token.
+- **Sine and cosine:** two smooth wave functions that go up and down between -1 and 1.
+- **Rotary (RoPE):** a method that turns (rotates) the query and key vectors by an angle that depends on position.
+- **ALiBi:** a method that subtracts a penalty from attention scores that grows with the distance between tokens.
+- **Context length:** the most tokens a model was trained to read at once.
 
 ## Explain it like I'm new
 Imagine cutting a sentence into word cards and throwing them in a bag. You have all the words, but not the order. Self-attention sees its input like that bag: it compares every token with every other token, and nothing in the math says which came first.
@@ -26,7 +36,8 @@ PE[pos, 2i+1] = cos( pos / 10000^(2i / d_model) )
 3. The vector is **added** to the token embedding before the first layer.
 4. Because `sin(a+b)` can be written using `sin(a)` and `cos(a)`, the offset between two positions is a simple linear function. This helps the model learn relative distance.
 
-**Worked example** with `d_model = 4`:
+### Worked example
+With `d_model = 4` (each vector has 4 numbers):
 
 ```text
 pos 0: [sin(0),  cos(0),  sin(0/100),  cos(0/100)] = [0.000, 1.000, 0.000, 1.000]
@@ -41,6 +52,8 @@ flowchart LR
     S[position vector] --> P
     P --> A[first transformer layer]
 ```
+
+Now add it. Say "dog" has the embedding `[1, 0, 1, 0]` (a made-up toy vector). At position 0 it becomes `[1, 0, 1, 0] + [0, 1, 0, 1] = [1, 1, 1, 1]`. At position 2 it becomes `[1, 0, 1, 0] + [0.909, -0.416, 0.02, 1.0] = [1.909, -0.416, 1.02, 1.0]`. The same word now gives two different inputs, so attention can tell the seats apart.
 
 **RoPE** in one sentence: instead of adding a vector, it rotates each 2-D pair of Q and K features by `pos × θ_i`, so the dot product `q·k` depends on the **distance** between positions.
 
@@ -82,6 +95,12 @@ You rarely pick this yourself; it comes with the model. It matters when you read
 - Assuming a model will work well past the context length it was trained on. Position handling is a main reason it often doesn't.
 - Mixing up "position in the sentence" with "position in the vector". The formula uses both.
 - Adding positional encoding twice (once in your code, once inside the library model).
+
+## Recap
+If you remember only three things:
+- Attention on its own ignores word order, so every token needs a position signal.
+- Sinusoidal encoding gives each position a fixed fingerprint of waves, which is added to the embedding.
+- Learned, rotary (RoPE) and ALiBi are other ways to do the same job, and they affect how well a model handles long text.
 
 ## Interview questions
 **1. Why is positional information needed in a transformer?**

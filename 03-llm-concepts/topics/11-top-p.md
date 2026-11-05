@@ -1,12 +1,21 @@
 # Top-p
-> **Level:** Intermediate · **Reading time:** 6 min · **Phase:** 3 · LLM Concepts
+> **Level:** Intermediate · **Reading time:** 7 min · **Phase:** 3 · LLM Concepts
 
 **In one line:** Top-p (nucleus) sampling keeps the smallest group of most-likely tokens whose probabilities add up to at least p, then samples only from that group.
+
+**Before you start:** [Temperature](09-temperature.md) and [Top-k](10-top-k.md).
+
+**Words to know:**
+- **Cumulative probability:** a running total of probabilities as you go down the sorted list.
+- **Nucleus:** the group of tokens kept by top-p.
+- **Renormalize:** rescale the kept probabilities so they add up to 1 again.
+- **Sampling:** picking a token at random, weighted by probability.
+- **Floating-point tolerance:** allowing for tiny rounding errors in decimal arithmetic.
 
 ## Explain it like I'm new
 Imagine you're choosing a restaurant from reviews. Instead of saying "only look at the top 3" (that's [top-k](10-top-k.md)), you say "look at the most popular places until you've covered 90% of all visits". In a town with one famous place that gets 95% of visits, you only consider that one. In a city with many equally popular places, you consider many.
 
-That is top-p. The group of kept tokens is called the **nucleus**. Its size **adapts**: small when the model is confident, large when it is unsure. The idea and name come from the paper *The Curious Case of Neural Text Degeneration*, which showed that both greedy/beam decoding (too repetitive) and pure sampling (too random) produce poor text, and proposed nucleus sampling as a middle path.
+That is top-p. The group of kept tokens is called the **nucleus**. Its size **adapts**: small when the model is confident, large when it is unsure. The idea and name come from the paper *The Curious Case of Neural Text Degeneration*. It showed that greedy and beam decoding give repetitive text. It also showed that pure sampling gives text that is too random. It proposed nucleus sampling as a middle path.
 
 ## How it works
 1. Compute probabilities (after [temperature](09-temperature.md)).
@@ -30,6 +39,15 @@ confident step:  sat 0.95, ran 0.03, ...      -> nucleus = {sat}            (1 t
 unsure step:     8 tokens at ~0.12 each       -> nucleus = 8 tokens
 top-k with k=3 would keep 3 in both cases.
 ```
+
+### Worked example (step by step)
+Probabilities, already sorted: `the 0.5, a 0.3, my 0.15, our 0.05`. Let `p = 0.9`.
+
+1. Add `the`: running total 0.5. That is below 0.9, so continue.
+2. Add `a`: total 0.8. Still below 0.9, so continue.
+3. Add `my`: total 0.95. That reaches 0.9, so stop. The nucleus is {the, a, my}. `our` is dropped.
+4. Renormalize by dividing by 0.95: the 0.526, a 0.316, my 0.158.
+5. Sample from those three.
 
 With the [`sampling_demo.py`](../code/sampling_demo.py) logits at T = 1.0 (`Paris 0.76, London 0.13, Rome 0.09, ...`), `p = 0.9` keeps `Paris, London, Rome` and renormalizes them to about `0.78, 0.13, 0.10`.
 
@@ -86,6 +104,12 @@ OpenAI's docs recommend changing temperature **or** top_p, not both.
 - Tuning `top_p` and temperature together and not knowing which change helped.
 - Forgetting the floating-point tolerance: sums like 0.5 + 0.4 may come out as 0.8999999.
 - Believing top-p prevents factual errors. It only limits unlikely tokens.
+
+## Recap
+If you remember only three things:
+- Top-p keeps the smallest group of top tokens whose probabilities add up to at least p, then renormalizes and samples.
+- The group size adapts: one token when the model is confident, many when it is unsure.
+- It limits unlikely tokens but does not make answers true; change top-p or temperature, not both at once.
 
 ## Interview questions
 **1. How does top-p differ from top-k?**
