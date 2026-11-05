@@ -3,6 +3,8 @@
 
 **In one line:** A Mixture of Experts (MoE) model has many specialist feed-forward blocks but runs only a few per token, and scaling laws tell us how much model size, data and compute we need for a given quality.
 
+**Before you start:** [Inside a Transformer Block](23-inside-a-transformer-block.md). A mixture of experts replaces the feed-forward network described there.
+
 ## Explain it like I'm new
 Imagine a hospital. A dense model is a single doctor who handles every patient and must know everything. An MoE model is a hospital with 8 specialists and a **receptionist** (the router). Each patient (token) is sent to the 2 most suitable specialists, and their opinions are blended. The hospital employs 8 doctors (big knowledge capacity) but each patient only costs 2 doctors' time (cheap per patient).
 
@@ -96,6 +98,14 @@ Note the pattern: 10x more parameters with 10x more tokens means 100x more compu
 
 For MoE, use **active** parameters for per-token compute but **total** parameters for memory.
 
+### Worked example
+From real output of [`llm_moe_scaling.py`](../code/llm_moe_scaling.py), a toy layer with 8 experts and top-2 routing.
+
+1. The word `sat` goes to the router. Its two best experts are expert 4 (weight 0.76) and expert 0 (weight 0.24). The weights add up to 1.
+2. Only those two experts run. The other six do nothing for this token.
+3. For one real-sized layer (d_model 4096, d_ff 14336) the total is 939,556,864 parameters but only 234,913,792 are active per token. That is 0.25, which is 2 of 8 experts.
+4. Look at the load: expert 0 handles half the tokens while four experts get none (imbalance 4.0). That uneven use is the load-balancing problem.
+
 ## Code example
 From [`llm_moe_scaling.py`](../code/llm_moe_scaling.py):
 
@@ -130,6 +140,13 @@ Run `python 03-llm-concepts/code/llm_moe_scaling.py`; tests: `pytest 03-llm-conc
 - Reading `6·N·D` as a measured value. It is a rule-of-thumb estimate.
 - Treating "20 tokens per parameter" as a law of nature. It is a rule of thumb for compute-optimal training under one study's setup.
 - Believing a straight line on a log-log plot means linear growth; it means a power law.
+
+## Recap
+
+**If you remember only three things:**
+- A mixture of experts has many feed-forward experts. A router sends each token to only its top few.
+- Total parameters stay large (all must sit in memory), but active parameters per token are a small fraction.
+- Scaling laws say loss falls smoothly with more parameters, data and compute. Training cost is roughly 6 times parameters times tokens.
 
 ## Interview questions
 **1. What is the difference between total and active parameters in an MoE model?**

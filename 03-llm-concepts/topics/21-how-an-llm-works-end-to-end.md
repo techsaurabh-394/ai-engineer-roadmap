@@ -3,6 +3,8 @@
 
 **In one line:** An LLM turns text into numbers, runs those numbers through a stack of identical blocks, scores every word in its vocabulary as the possible next token, picks one, and repeats, one token at a time.
 
+**Before you start:** [Transformer Architecture](01-transformer-architecture.md) for the big picture. You only need to know that an LLM reads text and predicts what comes next.
+
 ## Explain it like I'm new
 Imagine a very well-read friend playing a guessing game. You say "the cat sat on the…" and they answer "mat". You then say the whole thing again with "mat" added, and they guess the next word again. They never write a whole paragraph in one go. They only ever guess **one next word**, then look at everything so far and guess again.
 
@@ -70,6 +72,16 @@ The model is trained on a single task: given the tokens so far, predict the next
 
 Training shows the model huge amounts of text, checks how often its next-token guess was right, and nudges every parameter to be slightly better. In our toy, the 128 parameters were hand-picked instead, so the demo is deterministic and you can read every number.
 
+### Worked example
+Here is the loop for the toy model, from real output of [`llm_e2e_walkthrough.py`](../code/llm_e2e_walkthrough.py).
+
+1. Text `the cat sat on the` becomes five tokens, then the IDs `[0, 1, 2, 3, 0]`. The first and last are both `the`, so both have ID 0.
+2. Each ID becomes a vector of 4 numbers. After position is added, the two `the` vectors differ slightly, so the model can tell them apart.
+3. Two blocks mix the tokens. Only the **last** position is used to predict what comes next.
+4. The model gives each of the 8 words in its vocabulary a score. `mat` gets about 4.975 and `.` gets about -5.896.
+5. Softmax turns the scores into probabilities: `mat` 0.959, `the` 0.008, and so on. They add up to 1.
+6. Greedy decoding picks `mat`. The new text `the cat sat on the mat` goes round the loop again.
+
 ## Code example
 ```python
 from llm_e2e_walkthrough import generate
@@ -126,6 +138,13 @@ It is a simplification. Real models add layer normalization, multiple attention 
 - Believing the model "looks up" facts in a database. Knowledge is stored implicitly in the parameters.
 - Thinking tokens are words. A word can be several tokens, and a token can be a space or punctuation.
 - Believing the model learns from your chat. At inference time the parameters are frozen. Only the context you send changes the output.
+
+## Recap
+
+**If you remember only three things:**
+- An LLM turns text into token IDs, then vectors, mixes them with attention blocks, and scores every word in its vocabulary.
+- It predicts only ONE next token per turn. Longer text comes from feeding each new token back in.
+- Parameters (the learned numbers) are what training changes. The steps themselves are fixed.
 
 ## Interview questions
 **1. Why does an LLM generate text one token at a time?**

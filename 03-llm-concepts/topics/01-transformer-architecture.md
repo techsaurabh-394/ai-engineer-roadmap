@@ -3,7 +3,7 @@
 
 **In one line:** A transformer is a neural network that reads a whole sequence of tokens at once and lets every token look at every other token (attention) to decide what it means.
 
-**Before you start:** Nothing, this is a starting point.
+**Before you start:** Nothing, this is a starting point. If you want to see a whole sentence travel through a model with real numbers first, read [How an LLM Works End to End](21-how-an-llm-works-end-to-end.md) right after this page.
 
 **Words to know:**
 - **Token:** a small piece of text (a word or part of a word) that the model reads.

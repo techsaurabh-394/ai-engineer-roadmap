@@ -3,6 +3,8 @@
 
 **In one line:** A transformer block is attention plus three supporting parts: residual connections that carry the signal past each step, a normalisation layer that keeps numbers in a healthy range, and a feed-forward network that processes each token on its own.
 
+**Before you start:** [Self Attention](02-self-attention.md) and [Q, K and V Explained From Scratch](22-qkv-explained-from-scratch.md). Attention is only half of a block, and this page covers the other half.
+
 ## Explain it like I'm new
 Earlier topics covered attention ([self-attention](02-self-attention.md), [multi-head](03-multi-head-attention.md)). But a real model is a tall stack of identical **blocks**, often 30 to 100 of them, and attention is only one ingredient in each block. Picture a factory line with many stations:
 
@@ -144,6 +146,13 @@ class Block(nn.Module):
 - Forgetting `eps`, which gives NaNs on constant vectors.
 - Confusing pre-norm and post-norm when loading weights: they are not interchangeable.
 - Assuming the FFN mixes tokens. It does not; only attention does.
+
+## Recap
+
+**If you remember only three things:**
+- Attention mixes information between tokens. The feed-forward network then processes each token on its own.
+- The residual connection adds the input back, so signals and learning can skip a layer. LayerNorm keeps numbers in a steady range.
+- In a block with a 4x feed-forward expansion, roughly two thirds of the parameters sit in the feed-forward network.
 
 ## Interview questions
 **1. Why do transformers use residual connections?**
