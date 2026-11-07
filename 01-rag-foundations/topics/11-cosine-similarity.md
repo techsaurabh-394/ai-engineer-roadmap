@@ -21,6 +21,12 @@ Words to know:
 - **Vector length** (also called the **norm** or magnitude): `‖a‖ = √(a₁² + a₂² + …)`, Pythagoras extended to many dimensions.
 - **Dot product**: `a · b = a₁b₁ + a₂b₂ + …` (see [Dot Product](13-dot-product.md)).
 
+<!-- anim:cosine-similarity -->
+## Watch it
+![Cosine similarity: a vector rotating against a query, with its score](../../assets/anim/cosine-similarity.svg)
+
+*The diagram plays on a loop. Read the caption in the box, one step at a time.*
+
 ## How it works
 1. Compute the dot product of the two vectors.
 2. Compute the length of each vector.

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 330" width="880" height="330" role="img" aria-labelledby="t d" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+<title id="t">Tool calling, step by step</title>
+<desc id="d">The model asks, your code acts.</desc>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9DA7B3"/></marker></defs>
+<rect width="880" height="330" rx="16" fill="#0D1117"/>
+<text x="440.0" y="40" font-size="22" fill="#E6EDF3" font-weight="700" text-anchor="middle">Tool calling, step by step</text>
+<text x="440.0" y="64" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">The model asks, your code acts.</text>
+<line x1="160.0" y1="150" x2="199.0" y2="150" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="333.0" y1="150" x2="372.0" y2="150" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="506.0" y1="150" x2="545.0" y2="150" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="679.0" y1="150" x2="718.0" y2="150" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<rect x="30.0" y="104" width="128" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.2;0.212;1" values="#F5B042;#F5B042;#30363D;#30363D"/></rect>
+<circle cx="48.0" cy="104" r="13" fill="#F5B042"/><text x="48.0" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">1</text>
+<text x="94.0" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Question</text>
+<text x="94.0" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">from the user</text>
+<rect x="203.0" y="104" width="128" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.188;0.2;0.4;0.412;1" values="#30363D;#30363D;#F5B042;#F5B042;#30363D;#30363D"/></rect>
+<circle cx="221.0" cy="104" r="13" fill="#F5B042"/><text x="221.0" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">2</text>
+<text x="267.0" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Model</text>
+<text x="267.0" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">picks a tool</text>
+<rect x="376.0" y="104" width="128" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.388;0.4;0.6;0.612;1" values="#30363D;#30363D;#F5B042;#F5B042;#30363D;#30363D"/></rect>
+<circle cx="394.0" cy="104" r="13" fill="#F5B042"/><text x="394.0" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">3</text>
+<text x="440.0" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Your code</text>
+<text x="440.0" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">runs the tool</text>
+<rect x="549.0" y="104" width="128" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.588;0.6;0.8;0.812;1" values="#30363D;#30363D;#F5B042;#F5B042;#30363D;#30363D"/></rect>
+<circle cx="567.0" cy="104" r="13" fill="#F5B042"/><text x="567.0" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">4</text>
+<text x="613.0" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Result</text>
+<text x="613.0" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">sent back</text>
+<rect x="722.0" y="104" width="128" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.788;0.8;1.0" values="#30363D;#30363D;#F5B042;#F5B042"/></rect>
+<circle cx="740.0" cy="104" r="13" fill="#F5B042"/><text x="740.0" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">5</text>
+<text x="786.0" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Answer</text>
+<text x="786.0" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">in plain words</text>
+<circle r="9" fill="#F5B042" cx="94.0" cy="88"><animate attributeName="cx" dur="12.0s" repeatCount="indefinite" keyTimes="0.0;0.01;0.2;0.27;0.4;0.47;0.6;0.67;0.8;0.87;1.0" values="94.0;94.0;94.0;267.0;267.0;440.0;440.0;613.0;613.0;786.0;786.0"/><animate attributeName="cy" dur="12.0s" repeatCount="indefinite" keyTimes="0.0;0.01;0.2;0.27;0.4;0.47;0.6;0.67;0.8;0.87;1.0" values="88;88;88;88;88;88;88;88;88;88;88"/></circle>
+<rect x="30" y="226" width="820" height="84" rx="12" fill="#161B22" stroke="#30363D"/>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">1. User asks something the model cannot know<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.2;0.212;1" values="1;1;0;0"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">For example: what is the weather in Delhi?<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.2;0.212;1" values="1;1;0;0"/></text>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">2. The model replies with a tool request<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.188;0.2;0.4;0.412;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">It names the tool and its inputs. It does not run anything.<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.188;0.2;0.4;0.412;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">3. YOUR code runs the function<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.388;0.4;0.6;0.612;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">This is where you check permissions and limits.<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.388;0.4;0.6;0.612;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">4. The result goes back to the model<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.588;0.6;0.8;0.812;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">As a new message in the conversation.<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.588;0.6;0.8;0.812;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">5. The model writes the final answer<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.788;0.8;1.0" values="0;0;1;1"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">Using the tool result as facts.<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.788;0.8;1.0" values="0;0;1;1"/></text>
+</svg>

@@ -18,6 +18,12 @@ Words to know:
 
 The model never runs code itself. It **asks** for a tool; **your code** runs it. That boundary is where you put safety checks.
 
+<!-- anim:agent-loop-anim -->
+## Watch it
+![The agent loop: goal, plan, act, observe](../../assets/anim/agent-loop-anim.svg)
+
+*The diagram plays on a loop. Read the caption in the box, one step at a time.*
+
 ## How it works
 1. Send the model the goal, the conversation so far, and a list of available tools. Each tool has a name, a description, and an input schema (a description of the arguments it accepts).
 2. The model replies with either a final answer or one or more **tool calls** (tool name + arguments).

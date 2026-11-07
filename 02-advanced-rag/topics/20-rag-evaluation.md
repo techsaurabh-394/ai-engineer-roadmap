@@ -24,6 +24,12 @@ Words to know:
 - **Hallucination:** a claim the model states that nothing in the context supports.
 - **hit@k / MRR:** simple retrieval scores. hit@k asks whether a correct chunk is in the top k; MRR (mean reciprocal rank) rewards putting the first correct chunk high.
 
+<!-- anim:eval-loop -->
+## Watch it
+![Evaluation loop: test set, run, score, improve](../../assets/anim/eval-loop.svg)
+
+*The diagram plays on a loop. Read the caption in the box, one step at a time.*
+
 ## How it works
 
 The four core RAG metrics (names as popularised by RAGAS; DeepEval has close equivalents such as faithfulness, answer relevancy, contextual precision and contextual recall):

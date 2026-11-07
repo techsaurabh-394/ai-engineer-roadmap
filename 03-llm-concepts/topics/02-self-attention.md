@@ -23,6 +23,12 @@ Self-attention does exactly this for every token:
 
 "Self" means the queries, keys, and values all come from the same sequence. In real models, Q, K, and V are produced by multiplying each token's vector by three learned weight matrices (`W_q`, `W_k`, `W_v`). Training adjusts these matrices so useful words attend to each other, for example "it" attending to the noun it refers to.
 
+<!-- anim:attention -->
+## Watch it
+![Self-attention: one word weighting every other word](../../assets/anim/attention.svg)
+
+*The diagram plays on a loop. Read the caption in the box, one step at a time.*
+
 ## How it works
 The formula from *Attention Is All You Need*:
 

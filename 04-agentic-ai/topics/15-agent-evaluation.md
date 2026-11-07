@@ -22,6 +22,12 @@ Words to know:
 - **LLM-as-judge:** using a language model to score open-ended answers against a rubric (a written scoring guide).
 - **Regression:** a change that makes things worse than the previous version.
 
+<!-- anim:eval-loop -->
+## Watch it
+![Evaluation loop: test set, run, score, improve](../../assets/anim/eval-loop.svg)
+
+*The diagram plays on a loop. Read the caption in the box, one step at a time.*
+
 ## How it works
 1. **Collect tasks.** 20-100 realistic tasks to start, including edge cases and known past failures. For each, write what success looks like (expected answer, expected final state, or a rubric).
 2. **Make runs repeatable.** Use mocked or sandboxed tools with fixed data, low temperature, and a fixed agent version.
