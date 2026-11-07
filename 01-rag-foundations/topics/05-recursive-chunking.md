@@ -21,6 +21,12 @@ Words to know:
 - **Fallback:** the next, smaller separator to try when the current one is not enough.
 - **Chunk size:** the maximum length of a chunk (here in characters).
 
+<!-- anim:05-recursive-chunking -->
+## Watch it
+![Recursive chunking: Split on the biggest natural break first, then smaller ones only if needed.](../../assets/anim/05-recursive-chunking.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#05-recursive-chunking).*
+
 ## How it works
 1. If the text already fits the size limit, return it as one chunk.
 2. Otherwise, take the first separator in the list (e.g. `"\n\n"`) and split.

@@ -28,6 +28,12 @@ A common breakdown is borrowed loosely from psychology. The CoALA paper on agent
 | Episodic | past events and outcomes | "last deploy failed: forgot migrations" | [11](11-episodic-memory.md) |
 | Procedural | how to do things | system prompt, tool code, skills | (your prompts and code) |
 
+<!-- anim:07-memory -->
+## Watch it
+![Agent memory: The model forgets between calls, so your code remembers for it.](../../assets/anim/07-memory.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#07-memory).*
+
 ## How it works
 Every turn, a memory-aware agent does roughly this:
 

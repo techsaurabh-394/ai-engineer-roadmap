@@ -22,6 +22,12 @@ It suits workflows that already look like a pipeline of roles. The cost is that 
 - **Role / goal / backstory** — plain-language text that is placed in the agent's prompt to shape how it behaves.
 - **Context** — the earlier output handed to the next agent as input.
 
+<!-- anim:05-crewai -->
+## Watch it
+![CrewAI: A crew of role-playing agents working through tasks.](../../assets/anim/05-crewai.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#05-crewai).*
+
 ## How it works
 
 1. Define agents with roles and goals.

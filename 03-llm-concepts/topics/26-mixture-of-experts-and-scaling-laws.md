@@ -10,6 +10,12 @@ Imagine a hospital. A dense model is a single doctor who handles every patient a
 
 The second half of this page answers a different question: *if I have a fixed budget, should I build a bigger model or train a smaller one longer?* Researchers found that quality improves along smooth, predictable curves, called **scaling laws**. That predictability is why labs can plan multi-million-dollar training runs.
 
+<!-- anim:26-mixture-of-experts-and-scaling-laws -->
+## Watch it
+![Mixture of experts and scaling laws: Many specialists, but only a few run per token.](../../assets/anim/26-mixture-of-experts-and-scaling-laws.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#26-mixture-of-experts-and-scaling-laws).*
+
 ## How it works
 ### 1. Replace the FFN with experts plus a router
 In a [transformer block](01-transformer-architecture.md), attention is followed by a feed-forward network (FFN). MoE ([Shazeer et al., 2017](https://arxiv.org/abs/1701.06538); in transformers, [Switch Transformer](https://arxiv.org/abs/2101.03961)) swaps that single FFN for `E` expert FFNs plus a small router. Attention layers stay as they are.

@@ -20,6 +20,12 @@ Words to know:
 - **Percentile:** a way to set the threshold relative to all scores, for example "the lowest 5%".
 - **Jaccard overlap:** shared words divided by all distinct words in the two texts.
 
+<!-- anim:06-semantic-chunking -->
+## Watch it
+![Semantic chunking: Start a new chunk where the meaning of the text shifts.](../../assets/anim/06-semantic-chunking.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#06-semantic-chunking).*
+
 ## How it works
 1. Split the document into sentences.
 2. (Optional) Group each sentence with one neighbour on each side, so single short sentences do not swing the score.

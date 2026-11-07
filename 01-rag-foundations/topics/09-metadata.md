@@ -30,6 +30,12 @@ It powers four things:
 3. **Context**: adding the document title or section heading to the chunk text makes vague chunks clearer.
 4. **Maintenance**: find and delete all chunks from a document when it changes.
 
+<!-- anim:09-metadata -->
+## Watch it
+![Metadata: Extra facts stored next to each chunk make search, citing and debugging easier.](../../assets/anim/09-metadata.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#09-metadata).*
+
 ## How it works
 1. **Capture** during loading: file name, URL, page number, heading path, timestamps.
 2. **Derive** extra fields: language, document type, product, or tags from rules or an LLM.

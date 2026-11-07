@@ -22,6 +22,12 @@ A **prompt** is all the text the model sees. In chat APIs it is usually split in
 
 Prompt engineering is less about magic words and more about clear writing plus **testing**: you change the prompt, run it on a set of examples, and check the results.
 
+<!-- anim:prompt-loop -->
+## Watch it
+![Prompt engineering loop: Write, test on real cases, measure, refine.](../../assets/anim/prompt-loop.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#prompt-loop).*
+
 ## How it works
 A reliable process:
 1. **Define success.** What does a good output look like? Write 10-30 test inputs with expected outputs or checks.

@@ -24,9 +24,9 @@ Words to know:
 
 <!-- anim:react-loop -->
 ## Watch it
-![ReAct loop: thought, action, observation, final answer](../../assets/anim/react-loop.svg)
+![ReAct loop: Think, Act, Observe: Like a detective: each clue changes the next step.](../../assets/anim/react-loop.svg)
 
-*The diagram plays on a loop. Read the caption in the box, one step at a time.*
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#react-loop).*
 
 ## How it works
 The model writes text in a fixed format, and your code parses it:

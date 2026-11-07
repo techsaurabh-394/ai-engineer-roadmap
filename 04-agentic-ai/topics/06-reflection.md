@@ -23,6 +23,12 @@ The **Reflexion** paper (Shinn et al., 2023) went further: after a failed attemp
 
 Reflection works best when there is a **real signal** to check against: a failing test, a validation error, a rubric, or a tool result. Pure "are you sure?" checks without new information help less and can even make correct answers worse.
 
+<!-- anim:reflection-loop -->
+## Watch it
+![Reflection loop: Draft, critique, learn from it, try again.](../../assets/anim/reflection-loop.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#reflection-loop).*
+
 ## How it works
 1. **Generate** a draft (an answer, code, or plan).
 2. **Evaluate** it. Best: an objective check (run the tests, validate the JSON, check citations). Otherwise: a critic prompt with a clear rubric.

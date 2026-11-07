@@ -15,6 +15,12 @@ LangSmith also supports **datasets** (saved examples), **evaluations** (score yo
 **Words to know:**
 -
 
+<!-- anim:08-langsmith -->
+## Watch it
+![LangSmith: Record every step of an LLM run so you can debug and evaluate.](../../assets/anim/08-langsmith.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#08-langsmith).*
+
 ## How it works
 1. You turn on tracing, usually with environment variables and an API key.
 2. As your app runs, each step is sent to LangSmith in the background.

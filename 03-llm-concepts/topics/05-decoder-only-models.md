@@ -20,6 +20,12 @@ Think of the autocomplete on your phone, scaled up massively. You type "See you"
 
 The key rule is the **causal mask**: when computing position 5, the model may look at positions 0-5 but never 6 and beyond. This matches how text is generated (the future doesn't exist yet) and lets training learn from every position in a document at once.
 
+<!-- anim:05-decoder-only-models -->
+## Watch it
+![Decoder-only models: Read left to right and predict the next token. GPT, Claude and Llama work this way.](../../assets/anim/05-decoder-only-models.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#05-decoder-only-models).*
+
 ## How it works
 **Training (pretraining):**
 1. Take a huge amount of text, cut it into token sequences.

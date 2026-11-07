@@ -9,26 +9,26 @@
 <line x1="260" y1="300" x2="450" y2="300" stroke="#2DD4BF" stroke-width="4" stroke-linecap="round"/>
 <text x="458" y="292" font-size="14" fill="#2DD4BF" font-weight="700" text-anchor="start">query</text>
 <g><line x1="260" y1="300" x2="450" y2="300" stroke="#F5B042" stroke-width="4" stroke-linecap="round"/><text x="458" y="292" font-size="14" fill="#F5B042" font-weight="700" text-anchor="start">chunk</text>
-<animateTransform attributeName="transform" type="rotate" dur="12s" repeatCount="indefinite" calcMode="linear" keyTimes="0.0;0.25;0.5;0.75;1.0" values="-10 260 300;-45 260 300;-90 260 300;-135 260 300;-180 260 300"/></g>
+<animateTransform attributeName="transform" type="rotate" dur="15s" repeatCount="indefinite" calcMode="linear" keyTimes="0.0;0.036;0.2;0.236;0.4;0.436;0.6;0.636;0.8;0.836;1.0" values="-180 260 300;-10 260 300;-10 260 300;-45 260 300;-45 260 300;-90 260 300;-90 260 300;-135 260 300;-135 260 300;-180 260 300;-180 260 300"/></g>
 <rect x="540" y="110" width="310" height="210" rx="14" fill="#161B22" stroke="#30363D"/>
 <text x="695" y="142" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">score = cos(angle)</text>
-<g opacity="0"><animate attributeName="opacity" dur="12s" repeatCount="indefinite" keyTimes="0;0.2;0.22;1" values="1;1;0;0"/><text x="695" y="205" font-size="46" fill="#F5B042" font-weight="700" text-anchor="middle">+0.98</text>
+<g opacity="0"><animate attributeName="opacity" dur="15s" repeatCount="indefinite" keyTimes="0;0.2;0.22;1" values="1;1;0;0"/><text x="695" y="205" font-size="46" fill="#F5B042" font-weight="700" text-anchor="middle">+0.98</text>
 <text x="695" y="238" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">angle 10 degrees</text>
 <text x="695" y="276" font-size="17" fill="#E6EDF3" font-weight="700" text-anchor="middle">almost the same meaning</text>
 </g>
-<g opacity="0"><animate attributeName="opacity" dur="12s" repeatCount="indefinite" keyTimes="0;0.18;0.2;0.4;0.42;1" values="0;0;1;1;0;0"/><text x="695" y="205" font-size="46" fill="#F5B042" font-weight="700" text-anchor="middle">+0.71</text>
+<g opacity="0"><animate attributeName="opacity" dur="15s" repeatCount="indefinite" keyTimes="0;0.18;0.2;0.4;0.42;1" values="0;0;1;1;0;0"/><text x="695" y="205" font-size="46" fill="#F5B042" font-weight="700" text-anchor="middle">+0.71</text>
 <text x="695" y="238" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">angle 45 degrees</text>
 <text x="695" y="276" font-size="17" fill="#E6EDF3" font-weight="700" text-anchor="middle">related</text>
 </g>
-<g opacity="0"><animate attributeName="opacity" dur="12s" repeatCount="indefinite" keyTimes="0;0.38;0.4;0.6;0.62;1" values="0;0;1;1;0;0"/><text x="695" y="205" font-size="46" fill="#F5B042" font-weight="700" text-anchor="middle">+0.00</text>
+<g opacity="0"><animate attributeName="opacity" dur="15s" repeatCount="indefinite" keyTimes="0;0.38;0.4;0.6;0.62;1" values="0;0;1;1;0;0"/><text x="695" y="205" font-size="46" fill="#F5B042" font-weight="700" text-anchor="middle">+0.00</text>
 <text x="695" y="238" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">angle 90 degrees</text>
 <text x="695" y="276" font-size="17" fill="#E6EDF3" font-weight="700" text-anchor="middle">unrelated</text>
 </g>
-<g opacity="0"><animate attributeName="opacity" dur="12s" repeatCount="indefinite" keyTimes="0;0.58;0.6;0.8;0.82;1" values="0;0;1;1;0;0"/><text x="695" y="205" font-size="46" fill="#F5B042" font-weight="700" text-anchor="middle">-0.71</text>
+<g opacity="0"><animate attributeName="opacity" dur="15s" repeatCount="indefinite" keyTimes="0;0.58;0.6;0.8;0.82;1" values="0;0;1;1;0;0"/><text x="695" y="205" font-size="46" fill="#F5B042" font-weight="700" text-anchor="middle">-0.71</text>
 <text x="695" y="238" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">angle 135 degrees</text>
 <text x="695" y="276" font-size="17" fill="#E6EDF3" font-weight="700" text-anchor="middle">leaning opposite</text>
 </g>
-<g opacity="0"><animate attributeName="opacity" dur="12s" repeatCount="indefinite" keyTimes="0;0.78;0.8;1.0" values="0;0;1;1"/><text x="695" y="205" font-size="46" fill="#F5B042" font-weight="700" text-anchor="middle">-1.00</text>
+<g opacity="0"><animate attributeName="opacity" dur="15s" repeatCount="indefinite" keyTimes="0;0.78;0.8;1.0" values="0;0;1;1"/><text x="695" y="205" font-size="46" fill="#F5B042" font-weight="700" text-anchor="middle">-1.00</text>
 <text x="695" y="238" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">angle 180 degrees</text>
 <text x="695" y="276" font-size="17" fill="#E6EDF3" font-weight="700" text-anchor="middle">opposite meaning</text>
 </g>

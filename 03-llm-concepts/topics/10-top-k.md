@@ -20,6 +20,12 @@ An LLM's vocabulary often has tens of thousands of tokens. Even if each odd toke
 - `k = 1` is the same as greedy decoding (always the top token).
 - Large `k` (for example the whole vocabulary) is the same as plain sampling.
 
+<!-- anim:top-k -->
+## Watch it
+![Top-k sampling: Keep only the k most likely tokens, then pick from those.](../../assets/anim/top-k.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#top-k).*
+
 ## How it works
 1. Compute probabilities (after [temperature](09-temperature.md)).
 2. Sort tokens by probability.

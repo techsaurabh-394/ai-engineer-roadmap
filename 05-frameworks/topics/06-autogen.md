@@ -23,6 +23,12 @@ The key idea is that agents are message-passing actors. Control flow comes from 
 - **Round-robin** — taking turns in a fixed order: A, B, A, B, and so on.
 - **History** — the shared list of all messages so far.
 
+<!-- anim:06-autogen -->
+## Watch it
+![AutoGen: Agents solve problems by messaging each other.](../../assets/anim/06-autogen.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#06-autogen).*
+
 ## How it works
 
 1. Create agents with roles.

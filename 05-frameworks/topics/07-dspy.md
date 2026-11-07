@@ -23,6 +23,12 @@ You write a **signature**, a typed contract such as "question -> answer". You wr
 - **Overfitting** — doing well on the examples you tuned on, but badly on new ones.
 - **Validation set** — examples kept aside, never used for tuning, to check the result honestly.
 
+<!-- anim:07-dspy -->
+## Watch it
+![DSPy: Declare what a step does, and let an optimizer write the prompt.](../../assets/anim/07-dspy.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#07-dspy).*
+
 ## How it works
 
 1. Write a signature and a module.

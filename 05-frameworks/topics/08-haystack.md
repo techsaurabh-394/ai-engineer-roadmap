@@ -24,6 +24,12 @@ Haystack emphasises production search: document stores, retrievers, rankers and 
 - **Re-ranking** — a second pass that sorts the retrieved documents again, with a better but slower scorer.
 - **Type check** — confirming that what one component outputs is what the next one expects to receive.
 
+<!-- anim:08-haystack -->
+## Watch it
+![Haystack: Pipelines of components with connected inputs and outputs.](../../assets/anim/08-haystack.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#08-haystack).*
+
 ## How it works
 
 1. Create components.

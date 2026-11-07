@@ -14,6 +14,12 @@ Think of ordering food by phone. You say who you are and what you want. The kitc
 
 The bill depends on how much you ordered (input tokens) and how much came back (output tokens). Sometimes the phone line is busy. Then you wait a bit and call again, and you wait longer each time. That is a **retry with backoff**.
 
+<!-- anim:16-calling-an-llm-api -->
+## Watch it
+![Calling an LLM API: Messages go out over HTTPS, text and a token count come back.](../../assets/anim/16-calling-an-llm-api.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#16-calling-an-llm-api).*
+
 ## How it works
 1. **Build messages.** A list of `{"role": ..., "content": ...}` items. Roles are `system`, `user` and `assistant`. The API is stateless, so you send the whole conversation each time.
 2. **Set the knobs.** `max_tokens` caps the length of the reply. `temperature` sets how random it is: low (near 0) for steady answers, higher for more variety.

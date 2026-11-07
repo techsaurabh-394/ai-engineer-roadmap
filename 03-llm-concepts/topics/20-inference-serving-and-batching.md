@@ -21,6 +21,12 @@ Two words you must know:
 
 These two pull against each other. Bigger batches raise throughput, but each user may wait longer. Serving is about finding a good balance.
 
+<!-- anim:20-inference-serving-and-batching -->
+## Watch it
+![Inference serving and batching: Keep the GPU busy by working on many requests at once.](../../assets/anim/20-inference-serving-and-batching.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#20-inference-serving-and-batching).*
+
 ## How it works
 1. **Prefill.** The server reads the whole prompt in one parallel pass. This is heavy on compute. It decides most of the time to first token.
 2. **Decode.** The model then makes one token at a time. Each step is small, and it is limited mostly by how fast the GPU can read memory (the model weights and the [KV cache](07-kv-cache.md)). This is why batching helps so much: reading the weights once can serve many requests in the same step.

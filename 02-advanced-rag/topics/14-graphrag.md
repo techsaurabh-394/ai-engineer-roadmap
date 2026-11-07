@@ -22,6 +22,12 @@ Words to know:
 - **Local vs global question:** local needs a few chunks ("What is the refund window?"). Global needs the whole corpus ("What are the main themes?").
 - **Map-reduce:** do a small job on each piece (map), then combine the results (reduce).
 
+<!-- anim:14-graphrag -->
+## Watch it
+![GraphRAG: Summaries of communities answer questions about the whole collection.](../../assets/anim/14-graphrag.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#14-graphrag).*
+
 ## How it works
 
 **Indexing (expensive, offline):**

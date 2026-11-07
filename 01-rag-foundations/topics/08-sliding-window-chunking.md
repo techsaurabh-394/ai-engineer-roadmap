@@ -20,6 +20,12 @@ This fixes a real problem with simple cutting. If an important sentence lands on
 
 Sliding windows are fixed-size chunking with overlap, usually counted in words or tokens instead of characters.
 
+<!-- anim:08-sliding-window-chunking -->
+## Watch it
+![Sliding window chunking: Fixed windows that move by less than their size, so borders overlap.](../../assets/anim/08-sliding-window-chunking.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#08-sliding-window-chunking).*
+
 ## How it works
 1. Split the text into units (words or tokens).
 2. Take units `0 … window−1` as chunk 1.

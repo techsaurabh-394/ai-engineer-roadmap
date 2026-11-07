@@ -21,9 +21,9 @@ Training takes time and money, and what the chef learned stays fixed. If the rec
 
 <!-- anim:fine-tuning-flow -->
 ## Watch it
-![Fine-tuning: data, clean, train, evaluate, deploy](../../assets/anim/fine-tuning-flow.svg)
+![Fine-tuning, step by step: Teach a base model your style or task.](../../assets/anim/fine-tuning-flow.svg)
 
-*The diagram plays on a loop. Read the caption in the box, one step at a time.*
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#fine-tuning-flow).*
 
 ## How it works
 1. **Collect examples:** pairs of "input" and "the answer you wanted". Quality matters more than quantity.

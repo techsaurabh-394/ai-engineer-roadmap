@@ -20,6 +20,12 @@ Words to know:
 
 It is also the cheapest similarity to compute: one multiply and one add per dimension, no square roots. Hardware (CPUs, GPUs) is very fast at it, which is why vector databases love it.
 
+<!-- anim:13-dot-product -->
+## Watch it
+![Dot product: Multiply matching numbers, then add. A worked example.](../../assets/anim/13-dot-product.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#13-dot-product).*
+
 ## How it works
 1. Pair up the numbers at the same position in both vectors.
 2. Multiply each pair.

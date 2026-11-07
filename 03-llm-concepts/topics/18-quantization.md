@@ -15,6 +15,12 @@ Think of a photo. A raw photo keeps millions of subtle colours. Save it as a sma
 
 A model is a huge pile of numbers called **weights**. Normally each weight is a 16-bit float, which takes 2 bytes. Quantization rounds each weight to one of a few allowed levels, such as 256 levels (8-bit) or 16 levels (4-bit). Each weight then takes 1 byte or half a byte. The model is the same shape, just stored with fewer "colours".
 
+<!-- anim:18-quantization -->
+## Watch it
+![Quantization: Store weights as small integers to save memory.](../../assets/anim/18-quantization.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#18-quantization).*
+
 ## How it works
 1. **Memory math:** memory is parameters × bytes per weight. A 7-billion-parameter model is 7e9 × 2 bytes = 14 GB in 16-bit, and 7e9 × 0.5 bytes = 3.5 GB in 4-bit. This counts weights only. The KV cache and activations need extra memory.
 2. **Pick a scale:** find the biggest absolute weight in a block. Divide it by the biggest integer (127 for signed 8-bit). The result is the **scale**: the size of one integer step.

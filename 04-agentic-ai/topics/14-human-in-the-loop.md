@@ -23,6 +23,12 @@ Words to know:
 - **Approval fatigue:** people click yes without reading because they are asked too often.
 - **Checkpoint:** saved state that lets a paused agent resume later.
 
+<!-- anim:14-human-in-the-loop -->
+## Watch it
+![Human in the loop: The agent pauses so a person can approve risky steps.](../../assets/anim/14-human-in-the-loop.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#14-human-in-the-loop).*
+
 ## How it works
 1. **Classify tools by risk** in code: read-only, reversible write, irreversible / external.
 2. When the agent requests a **risky** tool, **pause** before running it.
