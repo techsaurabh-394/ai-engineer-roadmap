@@ -280,7 +280,7 @@ Legend: 🟢 beginner · 🟡 intermediate · 🔴 advanced.
 | [docs/glossary.md](docs/glossary.md) | Plain-English definitions of the key terms |
 | `*/code/` | Runnable, tested demos for every phase (see "What you'll need") |
 
-Interview questions in total: **339** at the end of the 113 topic pages (3 each), plus the 43 + 4 in `08-interview-prep`.
+Interview questions in total: **340** at the end of the 113 topic pages, plus the 43 + 4 in `08-interview-prep`.
 
 ## What makes this different
 - **Plain English first.** Every term is defined where it first appears.

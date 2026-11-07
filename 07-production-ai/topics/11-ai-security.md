@@ -138,6 +138,9 @@ Use your platform's secret store (Kubernetes Secrets, a cloud secret manager) in
 **3. Can a good system prompt prevent injection?**
 <details><summary>Answer</summary>No. It reduces risk but is not a guarantee. Real protection comes from architecture: untrusted data handling, least privilege, output validation and human approval.</details>
 
+**4. Why must document permissions be checked before retrieval rather than after the model generates an answer?**
+<details><summary>Answer</summary>Once restricted documents enter the prompt, the model can leak their contents directly or indirectly (for example through summaries or prompt injection). Filtering by the user's access rights before retrieval ensures unauthorized text never reaches the model.</details>
+
 ## Go deeper
 - [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
 
