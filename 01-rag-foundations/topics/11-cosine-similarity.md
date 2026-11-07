@@ -23,9 +23,9 @@ Words to know:
 
 <!-- anim:cosine-similarity -->
 ## Watch it
-![Cosine similarity: a vector rotating against a query, with its score](../../assets/anim/cosine-similarity.svg)
+![Cosine similarity: The angle between two embedding vectors tells you how similar their meaning is.](../../assets/anim/cosine-similarity.svg)
 
-*The diagram plays on a loop. Read the caption in the box, one step at a time.*
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#cosine-similarity).*
 
 ## How it works
 1. Compute the dot product of the two vectors.

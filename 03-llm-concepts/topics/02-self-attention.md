@@ -25,9 +25,9 @@ Self-attention does exactly this for every token:
 
 <!-- anim:attention -->
 ## Watch it
-![Self-attention: one word weighting every other word](../../assets/anim/attention.svg)
+![Attention: who should this word look at?: The word sat scores every word. Higher weight means more attention.](../../assets/anim/attention.svg)
 
-*The diagram plays on a loop. Read the caption in the box, one step at a time.*
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#attention).*
 
 ## How it works
 The formula from *Attention Is All You Need*:

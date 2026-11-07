@@ -24,6 +24,12 @@ Words to know:
 - **PII:** personally identifiable information, such as names, phone numbers, or ID numbers.
 - **Audit log:** a record of every call and decision, kept for review.
 
+<!-- anim:16-agent-guardrails -->
+## Watch it
+![Agent guardrails: Code-level limits on what an agent can see and do.](../../assets/anim/16-agent-guardrails.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#16-agent-guardrails).*
+
 ## How it works
 Layers, from outside in:
 

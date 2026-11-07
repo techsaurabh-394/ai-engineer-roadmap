@@ -20,6 +20,12 @@ Plain definitions:
 - **Nonlinearity** (activation): a bend in the function (for example "negative numbers become zero"). Without it, stacked matrix multiplies would collapse into a single one and the model could not learn complex patterns.
 - **d_model:** the width of each token's vector (4096 in many 7B-class models).
 
+<!-- anim:23-inside-a-transformer-block -->
+## Watch it
+![Inside a transformer block: Attention plus three supporting parts.](../../assets/anim/23-inside-a-transformer-block.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#23-inside-a-transformer-block).*
+
 ## How it works
 Here is one block in the common modern layout, called **pre-norm**:
 

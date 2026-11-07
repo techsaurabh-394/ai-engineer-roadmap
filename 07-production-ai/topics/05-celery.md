@@ -19,6 +19,12 @@ Words to know:
 - **Dead-letter list:** where tasks go after they fail every retry, so you can inspect them.
 - **Serialize:** turn a function call into text or bytes that can travel through the broker.
 
+<!-- anim:05-celery -->
+## Watch it
+![Celery: Run slow jobs in the background so the API answers fast.](../../assets/anim/05-celery.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#05-celery).*
+
 ## How it works
 1. The API calls `ingest_document.delay(path)`.
 2. Celery serializes the call and sends it to the broker.

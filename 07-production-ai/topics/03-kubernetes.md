@@ -20,6 +20,12 @@ Key words:
 **Words to know:**
 -
 
+<!-- anim:03-kubernetes -->
+## Watch it
+![Kubernetes: Run many containers across many machines and keep them healthy.](../../assets/anim/03-kubernetes.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#03-kubernetes).*
+
 ## How it works
 1. You build and push an image to a registry.
 2. You apply a Deployment and a Service with `kubectl apply -f`.

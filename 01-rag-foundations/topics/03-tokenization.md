@@ -25,6 +25,12 @@ Words to know:
 - **Corpus:** the big collection of text used to train or build something.
 - **Context window:** the maximum number of tokens a model can take in at once.
 
+<!-- anim:03-tokenization -->
+## Watch it
+![Tokenization: Text is cut into tokens, and tokens become ID numbers.](../../assets/anim/03-tokenization.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#03-tokenization).*
+
 ## How it works
 Most modern models use **Byte-Pair Encoding (BPE)** or a close relative (WordPiece, Unigram). BPE learns its vocabulary by repeatedly merging the pair of symbols that appears together most often.
 

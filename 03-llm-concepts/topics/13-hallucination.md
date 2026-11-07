@@ -23,6 +23,12 @@ Common forms:
 
 Researchers often split these into **factuality** errors (wrong about the world) and **faithfulness** errors (not supported by the given context).
 
+<!-- anim:13-hallucination -->
+## Watch it
+![Hallucination: Fluent, confident text that is not true.](../../assets/anim/13-hallucination.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#13-hallucination).*
+
 ## How it works
 Why it happens, step by step:
 1. **Training goal:** predict likely text. "Likely" and "true" usually overlap, but not always.

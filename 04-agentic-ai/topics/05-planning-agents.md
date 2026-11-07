@@ -20,6 +20,12 @@ Words to know:
 - **Re-planning:** after each step, check results and update the remaining plan.
 - **Task decomposition:** breaking a big goal into smaller sub-goals.
 
+<!-- anim:05-planning-agents -->
+## Watch it
+![Planning agents: Write the whole plan first, then carry it out.](../../assets/anim/05-planning-agents.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#05-planning-agents).*
+
 ## How it works
 1. **Plan.** Ask the model for a list of steps in a structured format (for example JSON: `[{"step": 1, "tool": "...", "goal": "..."}]`).
 2. **Validate the plan.** Check tools exist, the number of steps is reasonable, and risky steps are flagged for approval.

@@ -17,6 +17,12 @@ Imagine you're choosing a restaurant from reviews. Instead of saying "only look 
 
 That is top-p. The group of kept tokens is called the **nucleus**. Its size **adapts**: small when the model is confident, large when it is unsure. The idea and name come from the paper *The Curious Case of Neural Text Degeneration*. It showed that greedy and beam decoding give repetitive text. It also showed that pure sampling gives text that is too random. It proposed nucleus sampling as a middle path.
 
+<!-- anim:top-p -->
+## Watch it
+![Top-p (nucleus) sampling: Keep the smallest group of tokens whose probabilities reach p.](../../assets/anim/top-p.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#top-p).*
+
 ## How it works
 1. Compute probabilities (after [temperature](09-temperature.md)).
 2. Sort tokens from most to least likely.

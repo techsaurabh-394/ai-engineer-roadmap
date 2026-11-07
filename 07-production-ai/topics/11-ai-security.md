@@ -23,6 +23,12 @@ The **OWASP Top 10 for LLM Applications** (OWASP is a nonprofit security communi
 - **Defence in depth:** several weak protections stacked, so one miss is not a disaster.
 - **SQL:** the language used to ask a database for data.
 
+<!-- anim:11-ai-security -->
+## Watch it
+![AI security: Assume anything the model reads or writes can be hostile or wrong.](../../assets/anim/11-ai-security.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#11-ai-security).*
+
 ## How it works
 No single filter stops these attacks. You use layers ("defence in depth").
 

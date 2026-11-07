@@ -16,6 +16,12 @@ You will build a **notes server**. A fuller, finished version lives in [mcp-note
 - **Least privilege:** give the server only the access it needs, such as one folder.
 - **Host config:** the file where you tell the host which servers to start.
 
+<!-- anim:07-build-a-custom-mcp-server -->
+## Watch it
+![Build a custom MCP server: A notes server, from idea to a connected host.](../../assets/anim/07-build-a-custom-mcp-server.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#07-build-a-custom-mcp-server).*
+
 ## How it works
 1. **Pick the job.** "Let the model save and find my notes."
 2. **Design narrow tools.** `create_note(title, body)`, `list_notes()`, `search_notes(query)`. No raw SQL, no shell.

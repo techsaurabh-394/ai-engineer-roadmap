@@ -22,6 +22,12 @@ At each step, an LLM outputs a raw score called a **logit** for every possible n
 
 Temperature does not make the model smarter or more knowledgeable. It only changes how it picks among options it already scored.
 
+<!-- anim:temperature -->
+## Watch it
+![Temperature: A dial for randomness: low is predictable, high is varied.](../../assets/anim/temperature.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#temperature).*
+
 ## How it works
 ```text
 p_i = exp(logit_i / T) / sum_j exp(logit_j / T)

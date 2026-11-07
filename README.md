@@ -66,7 +66,7 @@ Hard ideas are easier to follow when you can watch them. This animation plays on
 
 ![Animated RAG pipeline: documents, chunks, vectors, store, retrieve, generate](assets/anim/rag-flow.svg)
 
-**12 animated explainers** (RAG, chunking, cosine similarity, attention, ReAct, tool calling, MCP and more) are in the [animation gallery](docs/animations.md) and inside the matching topic pages.
+**An animation for every one of the 113 topics** (110 animations; a few topics share one). Open the **[interactive viewer](https://techsaurabh-394.github.io/ai-engineer-roadmap/)** to step through them with Previous, Play and Next, search by name, or jump straight to a topic. The same animations are in the [animation gallery](docs/animations.md) and in the **Watch it** block at the top of each topic page.
 
 ## The big picture
 
@@ -275,7 +275,7 @@ Legend: 🟢 beginner · 🟡 intermediate · 🔴 advanced.
 | [docs/what-is-ai-engineering.md](docs/what-is-ai-engineering.md) | A 5-minute, no-code explanation of the whole field for complete beginners |
 | [docs/learning-paths.md](docs/learning-paths.md) | Five day-by-day plans with reading times: RAG app, agents and MCP, all 113 topics in 8 weeks, interview week |
 | [docs/practice.md](docs/practice.md) | 61 practice questions with answers: warm-up, calculations, run-the-demo and design scenarios, plus build challenges |
-| [docs/animations.md](docs/animations.md) | 12 animated explainers: watch RAG, attention, the agent loop and MCP step by step |
+| [docs/animations.md](docs/animations.md) | Gallery of all 110 animated explainers, one for every topic; the [interactive viewer](https://techsaurabh-394.github.io/ai-engineer-roadmap/) adds Previous, Play and Next |
 | [docs/how-to-study.md](docs/how-to-study.md) | A study routine: pace, and what to do for each topic |
 | [docs/glossary.md](docs/glossary.md) | Plain-English definitions of the key terms |
 | `*/code/` | Runnable, tested demos for every phase (see "What you'll need") |

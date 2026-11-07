@@ -19,6 +19,12 @@ Words to know:
 - **Schema:** a written description of what shape the arguments must have.
 - **Parse:** turn a JSON string into a Python dict you can use.
 
+<!-- anim:tool-calling-flow -->
+## Watch it
+![Tool calling, step by step: The model asks, your code acts.](../../assets/anim/tool-calling-flow.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#tool-calling-flow).*
+
 ## How it works
 1. **Describe** each function with a name, description, and a JSON Schema for its **parameters**.
 2. The model returns a call: function name and an **arguments** value. In the OpenAI Chat Completions API, the arguments arrive as a JSON **string** you must parse.

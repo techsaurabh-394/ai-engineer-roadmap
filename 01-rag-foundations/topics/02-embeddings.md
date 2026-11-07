@@ -22,6 +22,12 @@ Words to know:
 - **Cosine similarity:** a score for how closely two vectors point the same way (1.0 means same direction).
 - **Normalize:** rescale a vector so its length is 1.
 
+<!-- anim:02-embeddings -->
+## Watch it
+![Embeddings: Text becomes a list of numbers that carries its meaning.](../../assets/anim/02-embeddings.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#02-embeddings).*
+
 ## How it works
 1. Text goes into the embedding model. The model first splits it into **tokens** (word pieces; see [Tokenization](03-tokenization.md)).
 2. The model processes the tokens and outputs one vector for the whole text (often by averaging token vectors, called **pooling**).

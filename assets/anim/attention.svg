@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 380" width="880" height="380" role="img" aria-labelledby="t d" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
 <title id="t">Attention: who should this word look at?</title>
-<desc id="d">The word 'sat' scores every word. Higher weight = more attention.</desc>
+<desc id="d">The word sat scores every word. Higher weight means more attention.</desc>
 <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9DA7B3"/></marker></defs>
 <rect width="880" height="380" rx="16" fill="#0D1117"/>
 <text x="440.0" y="40" font-size="22" fill="#E6EDF3" font-weight="700" text-anchor="middle">Attention: who should this word look at?</text>
-<text x="440.0" y="64" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">The word 'sat' scores every word. Higher weight = more attention.</text>
+<text x="440.0" y="64" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">The word sat scores every word. Higher weight means more attention.</text>
 <rect x="42" y="256" width="96" height="44" rx="10" fill="#161B22" stroke="#30363D" stroke-width="2"/><text x="90" y="285" font-size="18" fill="#E6EDF3" font-weight="700" text-anchor="middle">The</text>
 <rect x="182" y="256" width="96" height="44" rx="10" fill="#161B22" stroke="#30363D" stroke-width="2"/><text x="230" y="285" font-size="18" fill="#E6EDF3" font-weight="700" text-anchor="middle">cat</text>
 <rect x="322" y="256" width="96" height="44" rx="10" fill="#161B22" stroke="#F5B042" stroke-width="3"/><text x="370" y="285" font-size="18" fill="#E6EDF3" font-weight="700" text-anchor="middle">sat</text>
@@ -12,24 +12,24 @@
 <rect x="602" y="256" width="96" height="44" rx="10" fill="#161B22" stroke="#30363D" stroke-width="2"/><text x="650" y="285" font-size="18" fill="#E6EDF3" font-weight="700" text-anchor="middle">the</text>
 <rect x="742" y="256" width="96" height="44" rx="10" fill="#161B22" stroke="#30363D" stroke-width="2"/><text x="790" y="285" font-size="18" fill="#E6EDF3" font-weight="700" text-anchor="middle">mat</text>
 <text x="370" y="324" font-size="13" fill="#F5B042" font-weight="700" text-anchor="middle">query (asking)</text>
-<path d="M370,256 Q230.0,102 90,256" fill="none" stroke="#2DD4BF" stroke-width="1.5" stroke-linecap="round" opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0;0.15;0.2;0.9;0.96;1" values="0;0;1;1;0;0"/></path>
-<g opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0;0.3;0.36;0.9;0.96;1" values="0;0;1;1;0;0"/><rect x="66" y="124" width="48" height="26" rx="8" fill="#0D1117" stroke="#2DD4BF"/><text x="90" y="142" font-size="14" fill="#2DD4BF" font-weight="700" text-anchor="middle">0.05</text>
+<path d="M370,256 Q230.0,102 90,256" fill="none" stroke="#2DD4BF" stroke-width="1.5" stroke-linecap="round" opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0;0.15;0.20;0.9;0.96;1" values="0;0;1;1;0;0"/></path>
+<g opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0;0.3;0.35;0.9;0.96;1" values="0;0;1;1;0;0"/><rect x="66" y="124" width="48" height="26" rx="8" fill="#0D1117" stroke="#2DD4BF"/><text x="90" y="142" font-size="14" fill="#2DD4BF" font-weight="700" text-anchor="middle">0.05</text>
 </g>
-<path d="M370,256 Q300.0,119 230,256" fill="none" stroke="#2DD4BF" stroke-width="6.3" stroke-linecap="round" opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0;0.15;0.2;0.9;0.96;1" values="0;0;1;1;0;0"/></path>
-<g opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0;0.3;0.36;0.9;0.96;1" values="0;0;1;1;0;0"/><rect x="206" y="124" width="48" height="26" rx="8" fill="#0D1117" stroke="#2DD4BF"/><text x="230" y="142" font-size="14" fill="#2DD4BF" font-weight="700" text-anchor="middle">0.45</text>
+<path d="M370,256 Q300.0,119 230,256" fill="none" stroke="#2DD4BF" stroke-width="6.3" stroke-linecap="round" opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0;0.15;0.20;0.9;0.96;1" values="0;0;1;1;0;0"/></path>
+<g opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0;0.3;0.35;0.9;0.96;1" values="0;0;1;1;0;0"/><rect x="206" y="124" width="48" height="26" rx="8" fill="#0D1117" stroke="#2DD4BF"/><text x="230" y="142" font-size="14" fill="#2DD4BF" font-weight="700" text-anchor="middle">0.45</text>
 </g>
-<path d="M346,256 C310,200 430,200 394,256" fill="none" stroke="#2DD4BF" stroke-width="2.1" stroke-linecap="round" opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0;0.15;0.2;0.9;0.96;1" values="0;0;1;1;0;0"/></path>
-<g opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0;0.3;0.36;0.9;0.96;1" values="0;0;1;1;0;0"/><rect x="346" y="124" width="48" height="26" rx="8" fill="#0D1117" stroke="#2DD4BF"/><text x="370" y="142" font-size="14" fill="#2DD4BF" font-weight="700" text-anchor="middle">0.15</text>
+<path d="M346,256 C310,200 430,200 394,256" fill="none" stroke="#2DD4BF" stroke-width="2.1" stroke-linecap="round" opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0;0.15;0.20;0.9;0.96;1" values="0;0;1;1;0;0"/></path>
+<g opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0;0.3;0.35;0.9;0.96;1" values="0;0;1;1;0;0"/><rect x="346" y="124" width="48" height="26" rx="8" fill="#0D1117" stroke="#2DD4BF"/><text x="370" y="142" font-size="14" fill="#2DD4BF" font-weight="700" text-anchor="middle">0.15</text>
 </g>
-<path d="M370,256 Q440.0,119 510,256" fill="none" stroke="#2DD4BF" stroke-width="1.5" stroke-linecap="round" opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0;0.15;0.2;0.9;0.96;1" values="0;0;1;1;0;0"/></path>
-<g opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0;0.3;0.36;0.9;0.96;1" values="0;0;1;1;0;0"/><rect x="486" y="124" width="48" height="26" rx="8" fill="#0D1117" stroke="#2DD4BF"/><text x="510" y="142" font-size="14" fill="#2DD4BF" font-weight="700" text-anchor="middle">0.05</text>
+<path d="M370,256 Q440.0,119 510,256" fill="none" stroke="#2DD4BF" stroke-width="1.5" stroke-linecap="round" opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0;0.15;0.20;0.9;0.96;1" values="0;0;1;1;0;0"/></path>
+<g opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0;0.3;0.35;0.9;0.96;1" values="0;0;1;1;0;0"/><rect x="486" y="124" width="48" height="26" rx="8" fill="#0D1117" stroke="#2DD4BF"/><text x="510" y="142" font-size="14" fill="#2DD4BF" font-weight="700" text-anchor="middle">0.05</text>
 </g>
-<path d="M370,256 Q510.0,102 650,256" fill="none" stroke="#2DD4BF" stroke-width="1.5" stroke-linecap="round" opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0;0.15;0.2;0.9;0.96;1" values="0;0;1;1;0;0"/></path>
-<g opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0;0.3;0.36;0.9;0.96;1" values="0;0;1;1;0;0"/><rect x="626" y="124" width="48" height="26" rx="8" fill="#0D1117" stroke="#2DD4BF"/><text x="650" y="142" font-size="14" fill="#2DD4BF" font-weight="700" text-anchor="middle">0.05</text>
+<path d="M370,256 Q510.0,102 650,256" fill="none" stroke="#2DD4BF" stroke-width="1.5" stroke-linecap="round" opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0;0.15;0.20;0.9;0.96;1" values="0;0;1;1;0;0"/></path>
+<g opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0;0.3;0.35;0.9;0.96;1" values="0;0;1;1;0;0"/><rect x="626" y="124" width="48" height="26" rx="8" fill="#0D1117" stroke="#2DD4BF"/><text x="650" y="142" font-size="14" fill="#2DD4BF" font-weight="700" text-anchor="middle">0.05</text>
 </g>
-<path d="M370,256 Q580.0,86 790,256" fill="none" stroke="#2DD4BF" stroke-width="3.5" stroke-linecap="round" opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0;0.15;0.2;0.9;0.96;1" values="0;0;1;1;0;0"/></path>
-<g opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0;0.3;0.36;0.9;0.96;1" values="0;0;1;1;0;0"/><rect x="766" y="124" width="48" height="26" rx="8" fill="#0D1117" stroke="#2DD4BF"/><text x="790" y="142" font-size="14" fill="#2DD4BF" font-weight="700" text-anchor="middle">0.25</text>
+<path d="M370,256 Q580.0,86 790,256" fill="none" stroke="#2DD4BF" stroke-width="3.5" stroke-linecap="round" opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0;0.15;0.20;0.9;0.96;1" values="0;0;1;1;0;0"/></path>
+<g opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0;0.3;0.35;0.9;0.96;1" values="0;0;1;1;0;0"/><rect x="766" y="124" width="48" height="26" rx="8" fill="#0D1117" stroke="#2DD4BF"/><text x="790" y="142" font-size="14" fill="#2DD4BF" font-weight="700" text-anchor="middle">0.25</text>
 </g>
-<g opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0;0.5;0.56;0.9;0.96;1" values="0;0;1;1;0;0"/><text x="440.0" y="98" font-size="15" fill="#F5B042" font-weight="700" text-anchor="middle">Weights add up to 1.00. 'sat' mostly looks at 'cat' (who sat) and 'mat' (where).</text>
+<g opacity="0"><animate attributeName="opacity" dur="10s" repeatCount="indefinite" keyTimes="0;0.5;0.55;0.9;0.96;1" values="0;0;1;1;0;0"/><text x="440.0" y="98" font-size="15" fill="#F5B042" font-weight="700" text-anchor="middle">Weights add up to 1.00. 'sat' mostly looks at 'cat' (who sat) and 'mat' (where).</text>
 </g>
 </svg>

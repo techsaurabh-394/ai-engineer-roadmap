@@ -24,9 +24,9 @@ The model reads these descriptions and, when useful, replies with a tool call in
 
 <!-- anim:tool-calling-flow -->
 ## Watch it
-![Tool calling: the model asks, your code runs the tool](../../assets/anim/tool-calling-flow.svg)
+![Tool calling, step by step: The model asks, your code acts.](../../assets/anim/tool-calling-flow.svg)
 
-*The diagram plays on a loop. Read the caption in the box, one step at a time.*
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#tool-calling-flow).*
 
 ## How it works
 Using the Anthropic Messages API as the example (other providers are similar):

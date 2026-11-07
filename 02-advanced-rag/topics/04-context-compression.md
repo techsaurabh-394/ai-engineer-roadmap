@@ -27,6 +27,12 @@ Context compression is the highlighting step. It sits between retrieval and gene
 - **Summarising / abstractive compression:** ask a model to rewrite the chunk shorter, focused on the question.
 - **Token pruning:** methods like LLMLingua drop low-information tokens using a small language model.
 
+<!-- anim:04-context-compression -->
+## Watch it
+![Context compression: Trim retrieved chunks to the parts that actually help.](../../assets/anim/04-context-compression.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#04-context-compression).*
+
 ## How it works
 
 1. Retrieve top *k* chunks as usual.

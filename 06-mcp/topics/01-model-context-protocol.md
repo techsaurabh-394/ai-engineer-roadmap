@@ -25,9 +25,9 @@ A server can offer three kinds of things (called **primitives**): **tools** (act
 
 <!-- anim:mcp-flow -->
 ## Watch it
-![MCP: host, connect, list tools, call tool, result](../../assets/anim/mcp-flow.svg)
+![MCP: how an AI app uses a tool server: One standard way to plug tools into any AI app.](../../assets/anim/mcp-flow.svg)
 
-*The diagram plays on a loop. Read the caption in the box, one step at a time.*
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#mcp-flow).*
 
 ## How it works
 1. The host starts a client for each configured server.

@@ -19,6 +19,12 @@ The model has no memory between requests. Each API call starts with a blank boar
 
 Sizes are measured in **tokens**, not words. In English a token is often about three-quarters of a word, but it varies by language and tokenizer. Code, numbers, and non-English text often use more tokens per word.
 
+<!-- anim:08-context-window -->
+## Watch it
+![Context window: The most tokens a model can handle in one request, input and output together.](../../assets/anim/08-context-window.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#08-context-window).*
+
 ## How it works
 1. Your request is turned into tokens: `system prompt + messages + tool definitions + documents`.
 2. The model also reserves room for output, often set by a `max_tokens` parameter.

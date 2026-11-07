@@ -16,6 +16,12 @@ A tool is a button on a remote control. The label (description) tells the model 
 - **Protocol error:** the request itself was wrong, such as an unknown tool name. It comes back as a JSON-RPC `error`.
 - **Tool error:** the tool ran but failed. It comes back as a normal result with `isError` set to true.
 
+<!-- anim:04-mcp-tools -->
+## Watch it
+![MCP tools: Actions the model can choose to call.](../../assets/anim/04-mcp-tools.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#04-mcp-tools).*
+
 ## How it works
 1. Client sends `tools/list`.
 2. Server replies with tools: `name`, `description`, `inputSchema` (and optional `title`, `annotations`).

@@ -18,9 +18,9 @@ An LLM (large language model) is that friend, built from arithmetic. Some plain 
 
 <!-- anim:llm-flow -->
 ## Watch it
-![Inside an LLM: text, tokens, embeddings, attention, next token](../../assets/anim/llm-flow.svg)
+![From text to answer inside an LLM: What happens to your prompt, in order.](../../assets/anim/llm-flow.svg)
 
-*The diagram plays on a loop. Read the caption in the box, one step at a time.*
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#llm-flow).*
 
 ## How it works
 ```mermaid

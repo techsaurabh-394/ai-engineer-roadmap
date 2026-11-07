@@ -21,6 +21,12 @@ Words to know:
 
 The most common way to merge is **Reciprocal Rank Fusion (RRF)**. It ignores raw scores (which are hard to compare across queries) and looks only at positions. Documents that rank well in many lists win.
 
+<!-- anim:06-multi-query-retrieval -->
+## Watch it
+![Multi-query retrieval: One question becomes several, and the results are merged.](../../assets/anim/06-multi-query-retrieval.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#06-multi-query-retrieval).*
+
 ## How it works
 
 1. Prompt an LLM: "Write 3 different search queries for this question, one per line."

@@ -26,9 +26,9 @@ Words to know:
 
 <!-- anim:hybrid-search-flow -->
 ## Watch it
-![Hybrid search: keyword and meaning results merged](../../assets/anim/hybrid-search-flow.svg)
+![Hybrid search: Keyword search and meaning search, merged.](../../assets/anim/hybrid-search-flow.svg)
 
-*The diagram plays on a loop. Read the caption in the box, one step at a time.*
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#hybrid-search-flow).*
 
 ## How it works
 1. Run the query through BM25 → ranked list A.

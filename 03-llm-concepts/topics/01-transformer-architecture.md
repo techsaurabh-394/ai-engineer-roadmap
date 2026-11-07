@@ -21,6 +21,12 @@ A **token** is a piece of text the model works with, often a word or part of a w
 
 Before transformers (2017), most language models were **recurrent neural networks (RNNs)**. They read one word at a time, left to right, like reading through a straw. That was slow to train and they forgot early words in long text. The paper *Attention Is All You Need* removed the recurrence and kept only attention plus simple feed-forward layers. Because every position is processed at the same time, training runs well on GPUs. Every major LLM today (GPT, Claude, Llama, Gemini) is built on this design.
 
+<!-- anim:01-transformer-architecture -->
+## Watch it
+![Transformer architecture: The design behind modern LLMs, from tokens to a next-token guess.](../../assets/anim/01-transformer-architecture.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#01-transformer-architecture).*
+
 ## How it works
 1. **Tokenize.** Split text into tokens and map each to an ID.
 2. **Embed.** Look up a vector for each token ID.

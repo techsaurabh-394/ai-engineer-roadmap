@@ -22,6 +22,12 @@ Words to know:
 - **Top-k:** the k best matches. With `k=2` you get the two best.
 - **Embedding:** a list of numbers that represents the meaning of a text, so similar meanings land close together.
 
+<!-- anim:09-long-term-memory -->
+## Watch it
+![Long-term memory: Facts saved outside the model and found again later.](../../assets/anim/09-long-term-memory.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#09-long-term-memory).*
+
 ## How it works
 1. **Extract.** After a turn or a task, decide what to save. Options: save everything; save only what the user explicitly asks ("remember that…"); or ask the LLM to extract key facts.
 2. **Store** each item with metadata: `user_id`, timestamp, source, and type (fact, note, episode).
