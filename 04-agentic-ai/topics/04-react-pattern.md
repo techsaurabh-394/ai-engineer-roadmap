@@ -22,6 +22,12 @@ Words to know:
 - **Chain-of-thought:** prompting the model to write out its reasoning step by step before answering.
 - **Parse:** read the model's text and pull out the tool name and input.
 
+<!-- anim:react-loop -->
+## Watch it
+![ReAct loop: thought, action, observation, final answer](../../assets/anim/react-loop.svg)
+
+*The diagram plays on a loop. Read the caption in the box, one step at a time.*
+
 ## How it works
 The model writes text in a fixed format, and your code parses it:
 

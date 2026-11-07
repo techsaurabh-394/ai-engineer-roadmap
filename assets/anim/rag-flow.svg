@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 330" width="880" height="330" role="img" aria-labelledby="t d" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+<title id="t">RAG, step by step</title>
+<desc id="d">Watch one question travel through the whole pipeline.</desc>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9DA7B3"/></marker></defs>
+<rect width="880" height="330" rx="16" fill="#0D1117"/>
+<text x="440.0" y="40" font-size="22" fill="#E6EDF3" font-weight="700" text-anchor="middle">RAG, step by step</text>
+<text x="440.0" y="64" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">Watch one question travel through the whole pipeline.</text>
+<line x1="150.0" y1="150" x2="166.4" y2="150" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="290.4" y1="150" x2="306.8" y2="150" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="430.8" y1="150" x2="447.20000000000005" y2="150" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="571.2" y1="150" x2="587.6" y2="150" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="711.6" y1="150" x2="728.0" y2="150" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<rect x="30.0" y="104" width="118" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1667;0.1787;1" values="#2DD4BF;#30363D;#30363D;#30363D"/></rect>
+<circle cx="48.0" cy="104" r="13" fill="#2DD4BF"/><text x="48.0" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">1</text>
+<text x="89.0" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Documents</text>
+<text x="89.0" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">your files</text>
+<rect x="170.4" y="104" width="118" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1547;0.1667;0.3333;0.3453;1" values="#30363D;#30363D;#2DD4BF;#2DD4BF;#30363D;#30363D"/></rect>
+<circle cx="188.4" cy="104" r="13" fill="#2DD4BF"/><text x="188.4" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">2</text>
+<text x="229.4" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Chunk</text>
+<text x="229.4" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">small pieces</text>
+<rect x="310.8" y="104" width="118" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.3213;0.3333;0.5;0.512;1" values="#30363D;#30363D;#30363D;#2DD4BF;#30363D;#30363D"/></rect>
+<circle cx="328.8" cy="104" r="13" fill="#2DD4BF"/><text x="328.8" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">3</text>
+<text x="369.8" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Embed</text>
+<text x="369.8" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">text to numbers</text>
+<rect x="451.20000000000005" y="104" width="118" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.488;0.5;0.6667;0.6787;1" values="#30363D;#30363D;#2DD4BF;#30363D;#30363D;#30363D"/></rect>
+<circle cx="469.20000000000005" cy="104" r="13" fill="#2DD4BF"/><text x="469.20000000000005" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">4</text>
+<text x="510.20000000000005" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Store</text>
+<text x="510.20000000000005" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">vector database</text>
+<rect x="591.6" y="104" width="118" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.6547;0.6667;0.8333;0.8453;1" values="#30363D;#30363D;#2DD4BF;#2DD4BF;#30363D;#30363D"/></rect>
+<circle cx="609.6" cy="104" r="13" fill="#2DD4BF"/><text x="609.6" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">5</text>
+<text x="650.6" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Retrieve</text>
+<text x="650.6" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">top matches</text>
+<rect x="732.0" y="104" width="118" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.8213;0.8333;1.0" values="#30363D;#30363D;#30363D;#2DD4BF"/></rect>
+<circle cx="750.0" cy="104" r="13" fill="#2DD4BF"/><text x="750.0" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">6</text>
+<text x="791.0" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Generate</text>
+<text x="791.0" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">answer + cites</text>
+<circle r="9" fill="#F5B042" cx="89.0" cy="88"><animate attributeName="cx" dur="14.4s" repeatCount="indefinite" keyTimes="0.0;0.0083;0.1667;0.225;0.3333;0.3917;0.5;0.5583;0.6667;0.725;0.8333;0.8917;1.0" values="89.0;89.0;89.0;229.4;229.4;369.8;369.8;510.20000000000005;510.20000000000005;650.6;650.6;791.0;791.0"/><animate attributeName="cy" dur="14.4s" repeatCount="indefinite" keyTimes="0.0;0.0083;0.1667;0.225;0.3333;0.3917;0.5;0.5583;0.6667;0.725;0.8333;0.8917;1.0" values="88;88;88;88;88;88;88;88;88;88;88;88;88"/></circle>
+<rect x="30" y="226" width="820" height="84" rx="12" fill="#161B22" stroke="#30363D"/>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">1. Start with your own documents<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1667;0.1787;1" values="1;0;0;0"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">PDFs, wiki pages, docs. The model has never seen these.<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1667;0.1787;1" values="1;0;0;0"/></text>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">2. Cut them into small chunks<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1547;0.1667;0.3333;0.3453;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">Small pieces are easier to match to a question.<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1547;0.1667;0.3333;0.3453;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">3. Turn each chunk into a vector<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.3213;0.3333;0.5;0.512;1" values="0;0;0;1;0;0"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">Similar meaning gives similar numbers.<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.3213;0.3333;0.5;0.512;1" values="0;0;0;1;0;0"/></text>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">4. Save the vectors in a vector database<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.488;0.5;0.6667;0.6787;1" values="0;0;1;0;0;0"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">Done once, ahead of time.<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.488;0.5;0.6667;0.6787;1" values="0;0;1;0;0;0"/></text>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">5. Embed the question and find the closest chunks<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.6547;0.6667;0.8333;0.8453;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">Cosine similarity picks the best 3 to 5.<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.6547;0.6667;0.8333;0.8453;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">6. Give the chunks to the LLM with the question<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.8213;0.8333;1.0" values="0;0;0;1"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">It answers from them and cites the source.<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.8213;0.8333;1.0" values="0;0;0;1"/></text>
+</svg>

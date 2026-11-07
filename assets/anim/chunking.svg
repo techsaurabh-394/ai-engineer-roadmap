@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 360" width="880" height="360" role="img" aria-labelledby="t d" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+<title id="t">Chunking with overlap</title>
+<desc id="d">A long text is cut into overlapping pieces so no idea is split in half.</desc>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9DA7B3"/></marker></defs>
+<rect width="880" height="360" rx="16" fill="#0D1117"/>
+<text x="440.0" y="40" font-size="22" fill="#E6EDF3" font-weight="700" text-anchor="middle">Chunking with overlap</text>
+<text x="440.0" y="64" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">A long text is cut into overlapping pieces so no idea is split in half.</text>
+<text x="30" y="100" font-size="13" fill="#9DA7B3" font-weight="700" text-anchor="start">Document</text>
+<rect x="30" y="108" width="52" height="30" rx="6" fill="#161B22" stroke="#30363D"/><text x="56.0" y="128" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">Multi-s</text>
+<rect x="85" y="108" width="52" height="30" rx="6" fill="#161B22" stroke="#30363D"/><text x="111.0" y="128" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">builds</text>
+<rect x="140" y="108" width="52" height="30" rx="6" fill="#161B22" stroke="#30363D"/><text x="166.0" y="128" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">compile</text>
+<rect x="195" y="108" width="52" height="30" rx="6" fill="#161B22" stroke="#30363D"/><text x="221.0" y="128" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">code</text>
+<rect x="250" y="108" width="52" height="30" rx="6" fill="#161B22" stroke="#30363D"/><text x="276.0" y="128" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">in</text>
+<rect x="305" y="108" width="52" height="30" rx="6" fill="#161B22" stroke="#30363D"/><text x="331.0" y="128" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">one</text>
+<rect x="360" y="108" width="52" height="30" rx="6" fill="#161B22" stroke="#30363D"/><text x="386.0" y="128" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">stage</text>
+<rect x="415" y="108" width="52" height="30" rx="6" fill="#161B22" stroke="#30363D"/><text x="441.0" y="128" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">and</text>
+<rect x="470" y="108" width="52" height="30" rx="6" fill="#161B22" stroke="#30363D"/><text x="496.0" y="128" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">copy</text>
+<rect x="525" y="108" width="52" height="30" rx="6" fill="#161B22" stroke="#30363D"/><text x="551.0" y="128" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">only</text>
+<rect x="580" y="108" width="52" height="30" rx="6" fill="#161B22" stroke="#30363D"/><text x="606.0" y="128" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">the</text>
+<rect x="635" y="108" width="52" height="30" rx="6" fill="#161B22" stroke="#30363D"/><text x="661.0" y="128" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">final</text>
+<rect x="690" y="108" width="52" height="30" rx="6" fill="#161B22" stroke="#30363D"/><text x="716.0" y="128" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">artifac</text>
+<rect x="745" y="108" width="52" height="30" rx="6" fill="#161B22" stroke="#30363D"/><text x="771.0" y="128" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">into</text>
+<rect x="800" y="108" width="52" height="30" rx="6" fill="#161B22" stroke="#30363D"/><text x="826.0" y="128" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">a</text>
+<g opacity="0"><animate attributeName="opacity" dur="12s" repeatCount="indefinite" keyTimes="0;0.12;0.16;0.9;0.96;1" values="0;0;1;1;0;0"/><text x="30" y="172" font-size="13" fill="#2DD4BF" font-weight="700" text-anchor="start">Chunk 1  (words 1 to 6)</text>
+<rect x="30" y="180" width="52" height="30" rx="6" fill="#161B22" stroke="#2DD4BF" stroke-width="1.5"/><text x="56.0" y="200" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">Multi-s</text>
+<rect x="85" y="180" width="52" height="30" rx="6" fill="#161B22" stroke="#2DD4BF" stroke-width="1.5"/><text x="111.0" y="200" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">builds</text>
+<rect x="140" y="180" width="52" height="30" rx="6" fill="#161B22" stroke="#2DD4BF" stroke-width="1.5"/><text x="166.0" y="200" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">compile</text>
+<rect x="195" y="180" width="52" height="30" rx="6" fill="#161B22" stroke="#2DD4BF" stroke-width="1.5"/><text x="221.0" y="200" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">code</text>
+<rect x="250" y="180" width="52" height="30" rx="6" fill="#161B22" stroke="#2DD4BF" stroke-width="1.5"/><text x="276.0" y="200" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">in</text>
+<rect x="305" y="180" width="52" height="30" rx="6" fill="#161B22" stroke="#2DD4BF" stroke-width="1.5"/><text x="331.0" y="200" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">one</text>
+</g>
+<g opacity="0"><animate attributeName="opacity" dur="12s" repeatCount="indefinite" keyTimes="0;0.33999999999999997;0.37999999999999995;0.9;0.96;1" values="0;0;1;1;0;0"/><text x="30" y="224" font-size="13" fill="#6EA8FE" font-weight="700" text-anchor="start">Chunk 2  (words 6 to 11)</text>
+<rect x="305" y="232" width="52" height="30" rx="6" fill="#161B22" stroke="#F5B042" stroke-width="3"/><text x="331.0" y="252" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">one</text>
+<rect x="360" y="232" width="52" height="30" rx="6" fill="#161B22" stroke="#6EA8FE" stroke-width="1.5"/><text x="386.0" y="252" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">stage</text>
+<rect x="415" y="232" width="52" height="30" rx="6" fill="#161B22" stroke="#6EA8FE" stroke-width="1.5"/><text x="441.0" y="252" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">and</text>
+<rect x="470" y="232" width="52" height="30" rx="6" fill="#161B22" stroke="#6EA8FE" stroke-width="1.5"/><text x="496.0" y="252" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">copy</text>
+<rect x="525" y="232" width="52" height="30" rx="6" fill="#161B22" stroke="#6EA8FE" stroke-width="1.5"/><text x="551.0" y="252" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">only</text>
+<rect x="580" y="232" width="52" height="30" rx="6" fill="#161B22" stroke="#6EA8FE" stroke-width="1.5"/><text x="606.0" y="252" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">the</text>
+</g>
+<g opacity="0"><animate attributeName="opacity" dur="12s" repeatCount="indefinite" keyTimes="0;0.56;0.6000000000000001;0.9;0.96;1" values="0;0;1;1;0;0"/><text x="30" y="276" font-size="13" fill="#F472B6" font-weight="700" text-anchor="start">Chunk 3  (words 11 to 15)</text>
+<rect x="580" y="284" width="52" height="30" rx="6" fill="#161B22" stroke="#F5B042" stroke-width="3"/><text x="606.0" y="304" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">the</text>
+<rect x="635" y="284" width="52" height="30" rx="6" fill="#161B22" stroke="#F472B6" stroke-width="1.5"/><text x="661.0" y="304" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">final</text>
+<rect x="690" y="284" width="52" height="30" rx="6" fill="#161B22" stroke="#F472B6" stroke-width="1.5"/><text x="716.0" y="304" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">artifac</text>
+<rect x="745" y="284" width="52" height="30" rx="6" fill="#161B22" stroke="#F472B6" stroke-width="1.5"/><text x="771.0" y="304" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">into</text>
+<rect x="800" y="284" width="52" height="30" rx="6" fill="#161B22" stroke="#F472B6" stroke-width="1.5"/><text x="826.0" y="304" font-size="11" fill="#E6EDF3" font-weight="400" text-anchor="middle">a</text>
+</g>
+<g opacity="0"><animate attributeName="opacity" dur="12s" repeatCount="indefinite" keyTimes="0;0.66;0.7;0.9;0.96;1" values="0;0;1;1;0;0"/><text x="440.0" y="346" font-size="14" fill="#F5B042" font-weight="700" text-anchor="middle">Amber outline = overlap: the shared words keep context across the cut.</text>
+</g>
+</svg>

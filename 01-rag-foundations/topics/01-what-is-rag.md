@@ -22,6 +22,12 @@ Words to know:
 - **Vector database:** storage that can quickly find the vectors closest to a given vector.
 - **Top-k:** the *k* best matches, for example the top 2.
 
+<!-- anim:rag-flow -->
+## Watch it
+![RAG step by step: documents, chunks, vectors, retrieval, answer](../../assets/anim/rag-flow.svg)
+
+*The diagram plays on a loop. Read the caption in the box, one step at a time.*
+
 ## How it works
 RAG has two phases.
 

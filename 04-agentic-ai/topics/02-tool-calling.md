@@ -22,6 +22,12 @@ Words to know:
 
 The model reads these descriptions and, when useful, replies with a tool call instead of plain text. Your code runs the function and sends back a tool result.
 
+<!-- anim:tool-calling-flow -->
+## Watch it
+![Tool calling: the model asks, your code runs the tool](../../assets/anim/tool-calling-flow.svg)
+
+*The diagram plays on a loop. Read the caption in the box, one step at a time.*
+
 ## How it works
 Using the Anthropic Messages API as the example (other providers are similar):
 

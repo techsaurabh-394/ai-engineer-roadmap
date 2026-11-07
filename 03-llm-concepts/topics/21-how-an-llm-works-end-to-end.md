@@ -16,6 +16,12 @@ An LLM (large language model) is that friend, built from arithmetic. Some plain 
 - **Logit:** a raw score. The model produces one logit per vocabulary word. Bigger means "more likely next". Logits can be negative and do not add up to 1.
 - **Vocabulary:** the fixed list of every token the model knows. Real ones have 30,000 to 250,000 entries. Our toy has 8.
 
+<!-- anim:llm-flow -->
+## Watch it
+![Inside an LLM: text, tokens, embeddings, attention, next token](../../assets/anim/llm-flow.svg)
+
+*The diagram plays on a loop. Read the caption in the box, one step at a time.*
+
 ## How it works
 ```mermaid
 flowchart LR

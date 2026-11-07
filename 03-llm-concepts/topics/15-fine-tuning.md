@@ -19,6 +19,12 @@ A new chef already knows how to cook. You can do three things to get the food yo
 
 Training takes time and money, and what the chef learned stays fixed. If the recipe changes next week, you need another round of training. A recipe book is easy to update. That is why fine-tuning is for **behaviour** (style, format, a narrow task), and RAG is for **facts**.
 
+<!-- anim:fine-tuning-flow -->
+## Watch it
+![Fine-tuning: data, clean, train, evaluate, deploy](../../assets/anim/fine-tuning-flow.svg)
+
+*The diagram plays on a loop. Read the caption in the box, one step at a time.*
+
 ## How it works
 1. **Collect examples:** pairs of "input" and "the answer you wanted". Quality matters more than quantity.
 2. **Clean them:** remove empty answers, duplicates and wrong answers. This is where most projects go wrong.

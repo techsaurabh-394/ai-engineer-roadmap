@@ -24,6 +24,12 @@ Words to know:
 - **Metadata:** facts about a chunk, such as its source file and page.
 - **Embed:** turn text into a vector (a list of numbers) that stands for its meaning.
 
+<!-- anim:chunking -->
+## Watch it
+![Chunking with overlap: three overlapping pieces cut from one text](../../assets/anim/chunking.svg)
+
+*The diagram plays on a loop. Read the caption in the box, one step at a time.*
+
 ## How it works
 1. Clean the text (remove headers, footers, repeated menus).
 2. Choose a strategy (the next topics cover each one):

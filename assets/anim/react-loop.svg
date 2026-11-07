@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420" role="img" aria-labelledby="t d" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+<title id="t">ReAct loop: Think, Act, Observe</title>
+<desc id="d">Like a detective: each clue changes the next step.</desc>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9DA7B3"/></marker></defs>
+<rect width="880" height="420" rx="16" fill="#0D1117"/>
+<text x="440.0" y="40" font-size="22" fill="#E6EDF3" font-weight="700" text-anchor="middle">ReAct loop: Think, Act, Observe</text>
+<text x="440.0" y="64" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">Like a detective: each clue changes the next step.</text>
+<line x1="440" y1="135" x2="690" y2="240" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)" opacity="0.9"/>
+<line x1="690" y1="240" x2="440" y2="345" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)" opacity="0.9"/>
+<line x1="440" y1="345" x2="190" y2="240" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)" opacity="0.9"/>
+<line x1="190" y1="240" x2="440" y2="135" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)" opacity="0.9"/>
+<rect x="365" y="110" width="150" height="50" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="9.6s" repeatCount="indefinite" keyTimes="0;0.25;0.262;1" values="#2DD4BF;#2DD4BF;#30363D;#30363D"/></rect>
+<text x="440" y="141" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Thought</text>
+<rect x="615" y="215" width="150" height="50" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="9.6s" repeatCount="indefinite" keyTimes="0;0.238;0.25;0.5;0.512;1" values="#30363D;#30363D;#2DD4BF;#2DD4BF;#30363D;#30363D"/></rect>
+<text x="690" y="246" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Action</text>
+<rect x="365" y="320" width="150" height="50" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="9.6s" repeatCount="indefinite" keyTimes="0;0.488;0.5;0.75;0.762;1" values="#30363D;#30363D;#2DD4BF;#2DD4BF;#30363D;#30363D"/></rect>
+<text x="440" y="351" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Observation</text>
+<rect x="115" y="215" width="150" height="50" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="9.6s" repeatCount="indefinite" keyTimes="0;0.738;0.75;1.0" values="#30363D;#30363D;#2DD4BF;#2DD4BF"/></rect>
+<text x="190" y="246" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Final Answer</text>
+<circle r="9" fill="#F5B042" cx="440.0" cy="99.0"><animate attributeName="cx" dur="9.6s" repeatCount="indefinite" keyTimes="0.0;0.0125;0.25;0.3375;0.5;0.5875;0.75;0.8375;1.0" values="440.0;440.0;440.0;690.0;690.0;440.0;440.0;190.0;190.0"/><animate attributeName="cy" dur="9.6s" repeatCount="indefinite" keyTimes="0.0;0.0125;0.25;0.3375;0.5;0.5875;0.75;0.8375;1.0" values="99.0;99.0;99.0;204.0;204.0;309.0;309.0;204.0;204.0"/></circle>
+<text x="440" y="232" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">1. Think: what do I need?<animate attributeName="opacity" dur="9.6s" repeatCount="indefinite" keyTimes="0;0.25;0.262;1" values="1;1;0;0"/></text>
+<text x="440" y="256" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">Example: I need France's population.<animate attributeName="opacity" dur="9.6s" repeatCount="indefinite" keyTimes="0;0.25;0.262;1" values="1;1;0;0"/></text>
+<text x="440" y="232" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">2. Act: choose a tool + input<animate attributeName="opacity" dur="9.6s" repeatCount="indefinite" keyTimes="0;0.238;0.25;0.5;0.512;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="256" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">Example: lookup({topic: france}).<animate attributeName="opacity" dur="9.6s" repeatCount="indefinite" keyTimes="0;0.238;0.25;0.5;0.512;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="232" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">3. Observe: your code runs the tool<animate attributeName="opacity" dur="9.6s" repeatCount="indefinite" keyTimes="0;0.488;0.5;0.75;0.762;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="256" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">Result: about 68 million.<animate attributeName="opacity" dur="9.6s" repeatCount="indefinite" keyTimes="0;0.488;0.5;0.75;0.762;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="232" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">4. Enough facts? Write the answer<animate attributeName="opacity" dur="9.6s" repeatCount="indefinite" keyTimes="0;0.738;0.75;1.0" values="0;0;1;1"/></text>
+<text x="440" y="256" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">If not, loop again (up to a max number of steps).<animate attributeName="opacity" dur="9.6s" repeatCount="indefinite" keyTimes="0;0.738;0.75;1.0" values="0;0;1;1"/></text>
+</svg>

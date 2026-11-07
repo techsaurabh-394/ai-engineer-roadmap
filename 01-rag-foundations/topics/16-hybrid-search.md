@@ -24,6 +24,12 @@ Words to know:
 - **RRF:** Reciprocal Rank Fusion, a merge method that uses only ranks.
 - **Normalize:** rescale scores onto a common range, such as 0 to 1.
 
+<!-- anim:hybrid-search-flow -->
+## Watch it
+![Hybrid search: keyword and meaning results merged](../../assets/anim/hybrid-search-flow.svg)
+
+*The diagram plays on a loop. Read the caption in the box, one step at a time.*
+
 ## How it works
 1. Run the query through BM25 → ranked list A.
 2. Embed the query and run vector search → ranked list B.

@@ -23,6 +23,12 @@ A server can offer three kinds of things (called **primitives**): **tools** (act
 - **Capability:** a feature a side says it supports, such as `tools`.
 - **Handshake:** the first exchange where both sides say hello and agree on what they support.
 
+<!-- anim:mcp-flow -->
+## Watch it
+![MCP: host, connect, list tools, call tool, result](../../assets/anim/mcp-flow.svg)
+
+*The diagram plays on a loop. Read the caption in the box, one step at a time.*
+
 ## How it works
 1. The host starts a client for each configured server.
 2. The client opens a **transport** (stdio or Streamable HTTP).

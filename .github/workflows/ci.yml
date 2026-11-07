@@ -39,7 +39,7 @@ jobs:
         run: |
           python - <<'PY'
           import glob, xml.etree.ElementTree as ET
-          files = sorted(glob.glob("assets/*.svg"))
+          files = sorted(glob.glob("assets/*.svg") + glob.glob("assets/anim/*.svg"))
           assert files, "no SVG files found"
           for f in files:
               ET.parse(f)
@@ -82,3 +82,8 @@ jobs:
         run: |
           python scripts/gen_learning_paths.py
           git diff --exit-code docs/learning-paths.md || (echo "Run: python scripts/gen_learning_paths.py and commit the result" && exit 1)
+      - name: assets/anim must match the generator and be embedded in topic pages
+        run: |
+          python scripts/gen_animations.py
+          python scripts/embed_animations.py
+          git diff --exit-code assets/anim 01-rag-foundations 02-advanced-rag 03-llm-concepts 04-agentic-ai 06-mcp || (echo "Run: python scripts/gen_animations.py && python scripts/embed_animations.py and commit" && exit 1)
