@@ -68,3 +68,4 @@ def test_built_page_embeds_valid_json_and_counts(tmp_path, monkeypatch):
     assert m is not None
     assert len(data) == len(qc.build())
     assert "__QUESTIONS__" not in page and "__REPO__" not in page and "__COUNT__" not in page
+    assert 'rel="icon"' in page  # no favicon.ico 404 in the console

@@ -21,6 +21,7 @@ PAGE = r"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AI Engineer Roadmap: checkpoint quizzes</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232DD4BF'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' font-family='sans-serif' font-weight='700' fill='%230D1117'%3EAI%3C/text%3E%3C/svg%3E">
 <meta name="description" content="__COUNT__ self-check questions across 7 phases: RAG, LLMs, agents, MCP and production AI. Reveal the answer, mark yourself, track progress. Free and open source.">
 <style>
 :root{--bg:#0D1117;--card:#161B22;--line:#30363D;--text:#E6EDF3;--muted:#9DA7B3;--teal:#2DD4BF;--amber:#F5B042;--green:#3FB950;--red:#F85149}
