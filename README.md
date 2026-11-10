@@ -68,6 +68,8 @@ Hard ideas are easier to follow when you can watch them. This animation plays on
 
 **An animation for every one of the 113 topics** (110 animations; a few topics share one). Open the **[interactive viewer](https://techsaurabh-394.github.io/ai-engineer-roadmap/)** to step through them with Previous, Play and Next, search by name, or jump straight to a topic. The same animations are in the [animation gallery](docs/animations.md) and in the **Watch it** block at the top of each topic page.
 
+**Test yourself:** the [interactive quizzes](https://techsaurabh-394.github.io/ai-engineer-roadmap/quiz/) turn the 75 checkpoint questions of the seven phases into flash cards. Think of your own answer, reveal the real one, mark "I knew it" or "Not yet", and review the ones you missed. Your progress stays in your browser only.
+
 ## The big picture
 
 How the pieces fit together (the number is the phase that teaches it):
@@ -275,6 +277,7 @@ Legend: 🟢 beginner · 🟡 intermediate · 🔴 advanced.
 | [docs/what-is-ai-engineering.md](docs/what-is-ai-engineering.md) | A 5-minute, no-code explanation of the whole field for complete beginners |
 | [docs/learning-paths.md](docs/learning-paths.md) | Five day-by-day plans with reading times: RAG app, agents and MCP, all 113 topics in 8 weeks, interview week |
 | [docs/practice.md](docs/practice.md) | 61 practice questions with answers: warm-up, calculations, run-the-demo and design scenarios, plus build challenges |
+| [Interactive quizzes](https://techsaurabh-394.github.io/ai-engineer-roadmap/quiz/) | The 75 phase checkpoint questions as flash cards with progress tracking; built from the phase READMEs by `scripts/build_quiz.py` |
 | [docs/animations.md](docs/animations.md) | Gallery of all 110 animated explainers, one for every topic; the [interactive viewer](https://techsaurabh-394.github.io/ai-engineer-roadmap/) adds Previous, Play and Next |
 | [docs/how-to-study.md](docs/how-to-study.md) | A study routine: pace, and what to do for each topic |
 | [docs/glossary.md](docs/glossary.md) | Plain-English definitions of the key terms |
