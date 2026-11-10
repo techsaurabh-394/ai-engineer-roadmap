@@ -629,3 +629,28 @@ mark { background: var(--warn-soft); color: inherit; border-radius: 3px; padding
 .toy-body h3 { font-size: var(--fs-md); line-height: 32px; }
 .toy-body .line { color: var(--text-2); font-size: var(--fs-sm); margin-bottom: var(--s2); max-width: 62em; }
 .seq sub { font-size: 11px; color: var(--muted); font-family: var(--font); }
+
+/* ---------------------------------------------------- guided tour */
+.lab-actions { display: flex; gap: var(--s2); flex-wrap: wrap; align-items: center; }
+.tour-on { position: relative; z-index: 45; border-radius: var(--r2); box-shadow: 0 0 0 10px var(--surface), 0 0 0 13px var(--accent), 0 0 0 100vmax rgba(5, 8, 12, .42) !important; background-color: var(--surface); transition: box-shadow var(--dur) var(--ease); }
+.tour-card { position: fixed; z-index: 50; left: 50%; bottom: 24px; transform: translateX(-50%); width: min(440px, calc(100vw - 24px)); background: var(--surface); color: var(--text);
+  border: 1px solid var(--line); border-radius: var(--r3); box-shadow: var(--shadow-lg); padding: var(--s4) var(--s5) var(--s4); outline: none; animation: rise 200ms var(--ease); }
+.tour-card .tour-top { display: flex; justify-content: space-between; align-items: center; margin: -6px -10px 2px 0; }
+.tour-card .k { font-size: var(--fs-xs); font-weight: 750; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.tour-card h3 { font-size: var(--fs-lg); margin-bottom: 6px; }
+.tour-card p { color: var(--text-2); font-size: var(--fs-sm); line-height: 1.55; }
+.tour-dots { display: flex; gap: 5px; margin: var(--s3) 0; }
+.tour-dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--surface-3); }
+.tour-dots i.done { background: var(--accent-line); } .tour-dots i.on { background: var(--accent); width: 18px; border-radius: 4px; }
+.tour-nav { display: flex; justify-content: space-between; }
+body.touring .transport-dock { display: none; }
+@keyframes rise { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translate(-50%, 0); } }
+.answer { animation-name: rise-y; }
+@keyframes rise-y { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* ---------------------------------------------------- lesson complete */
+.finish { display: flex; align-items: center; gap: var(--s4); padding: var(--s4) var(--s5); margin-top: var(--s4); border-color: var(--accent-line); background: linear-gradient(90deg, var(--accent-soft), var(--surface) 70%); flex-wrap: wrap; animation: rise-y 220ms var(--ease); }
+.finish > div:nth-child(2) { flex: 1 1 260px; }
+.finish .t { font-weight: 780; font-size: var(--fs-lg); }
+.finish .muted { font-size: var(--fs-sm); }
+.finish-ic { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: var(--accent-ink); flex: none; }

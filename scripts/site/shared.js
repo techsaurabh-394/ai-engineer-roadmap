@@ -191,6 +191,56 @@
     });
   }
 
-  AIER.ui = { store: store, h: h, clear: clear, esc: esc, icon: icon, initTheme: initTheme, applyTheme: applyTheme, isDark: isDark,
+
+  // ---------------------------------------------------------------- guided tour
+  /** Step-by-step cards that spotlight parts of a lab. steps: [{el: () => Element, title, text, before: fn}] */
+  function tour(steps, opts) {
+    opts = opts || {};
+    var i = 0, lit = null, prevFocus = doc.activeElement;
+    var title = h('h3'), text = h('p'), count = h('span.k');
+    var back = h('button.btn.small', { type: 'button', onclick: function () { go(i - 1); } }, icon('prev', 'sm'), 'Back');
+    var next = h('button.btn.small.primary', { type: 'button', onclick: function () { if (i === steps.length - 1) end(); else go(i + 1); } });
+    var card = h('div.tour-card', { role: 'dialog', 'aria-modal': 'false', 'aria-label': (opts.label || 'Guided tour'), tabindex: '-1' },
+      h('div.tour-top', count, h('button.icon-btn', { type: 'button', 'aria-label': 'Close the tour', onclick: end }, icon('close', 'sm'))),
+      title, text, h('div.tour-dots', { 'aria-hidden': 'true' }, steps.map(function () { return h('i'); })), h('div.tour-nav', back, next));
+    function onKey(e) {
+      if (e.key === 'Escape') { end(); e.preventDefault(); }
+      else if (e.key === 'ArrowRight' && e.target === card) go(i + 1);
+      else if (e.key === 'ArrowLeft' && e.target === card) go(i - 1);
+    }
+    function go(n) {
+      if (n < 0 || n >= steps.length) return;
+      i = n;
+      var st = steps[i];
+      if (st.before) { try { st.before(); } catch (e) { /* keep touring */ } }
+      if (lit) lit.classList.remove('tour-on');
+      lit = st.el ? st.el() : null;
+      if (lit) {
+        lit.classList.add('tour-on');
+        lit.scrollIntoView({ block: root.innerWidth < 700 ? 'start' : 'center', behavior: reducedMotion() ? 'auto' : 'smooth' });
+      }
+      count.textContent = 'Step ' + (i + 1) + ' of ' + steps.length;
+      title.textContent = st.title; text.textContent = st.text;
+      back.disabled = i === 0;
+      clear(next).appendChild(doc.createTextNode(i === steps.length - 1 ? 'Finish' : 'Next'));
+      if (i < steps.length - 1) next.appendChild(icon('next', 'sm'));
+      card.querySelectorAll('.tour-dots i').forEach(function (d, k) { d.className = k === i ? 'on' : k < i ? 'done' : ''; });
+      card.focus({ preventScroll: true });
+    }
+    function end() {
+      if (lit) lit.classList.remove('tour-on');
+      doc.removeEventListener('keydown', onKey, true);
+      if (card.parentNode) card.parentNode.removeChild(card);
+      doc.body.classList.remove('touring');
+      if (prevFocus && prevFocus.focus) prevFocus.focus({ preventScroll: true });
+      if (opts.onend) opts.onend();
+    }
+    doc.body.appendChild(card); doc.body.classList.add('touring');
+    doc.addEventListener('keydown', onKey, true);
+    go(0);
+    return end;
+  }
+
+  AIER.ui = { tour: tour, store: store, h: h, clear: clear, esc: esc, icon: icon, initTheme: initTheme, applyTheme: applyTheme, isDark: isDark,
     reducedMotion: reducedMotion, id: id, slider: slider, seg: seg, disclosure: disclosure, honest: honest, matrix: matrix, bars: bars };
 })(typeof self !== 'undefined' ? self : globalThis);

@@ -200,4 +200,19 @@
       layout(); render();
     }
   };
+
+  AIER.labs.sampling.tour = function (el) {
+    var q = function (s) { return function () { return el.querySelector(s); }; };
+    var ctl = function (n) { return function () { var r = el.querySelectorAll('input[type=range]')[n]; return r ? r.closest('.control') : null; }; };
+    var set = function (n, v) { return function () { var r = el.querySelectorAll('input[type=range]')[n]; if (r) { r.value = v; r.dispatchEvent(new root.Event('input')); } }; };
+    return [
+      { el: q('.bars'), title: 'The model\u2019s guesses', text: 'Every bar is one possible next token and its chance of being picked. The dashed line marks the odds before you touch anything.' },
+      { el: ctl(0), before: set(0, 0.3), title: 'Turn the temperature down', text: 'At 0.3 the top token takes almost everything. This is why low temperature gives repeatable answers.' },
+      { el: ctl(0), before: set(0, 2.5), title: 'Now turn it up', text: 'At 2.5 the odds flatten. Unlikely tokens get a real chance, which is where creative and wrong answers come from.' },
+      { el: ctl(1), before: function () { set(0, 1)(); set(1, 2)(); }, title: 'Top-k cuts the tail', text: 'With k = 2 only the two best tokens survive. The others are greyed out and the survivors are rescaled to add up to 1.' },
+      { el: ctl(2), before: function () { var r = el.querySelectorAll('input[type=range]'); set(1, r[1].max)(); set(2, 0.8)(); }, title: 'Top-p adapts', text: 'Top-p keeps the smallest group of tokens whose odds reach p. A confident model keeps few tokens, an unsure one keeps more.' },
+      { el: function () { return el.querySelector('.btn.primary').closest('.result'); }, title: 'Roll the dice', text: 'Sample a token, or a hundred. The seed makes it repeatable: the same seed gives the same picks as Python\u2019s random.Random.' },
+      { el: q('details.math'), before: function () { var d = el.querySelector('details.math'); if (d) d.open = true; set(2, 1)(); }, title: 'The real numbers', text: 'Every step of the calculation, from raw score to final probability. Change a slider and watch this table move.' }
+    ];
+  };
 })(typeof self !== 'undefined' ? self : globalThis);

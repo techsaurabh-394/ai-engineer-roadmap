@@ -112,4 +112,17 @@
       render();
     }
   };
+
+  AIER.labs.search.tour = function (el) {
+    var q = function (s) { return function () { return el.querySelector(s); }; };
+    var query = function (v) { return function () { var i = el.querySelector('input[type=search]'); i.value = v; i.dispatchEvent(new root.Event('input')); }; };
+    var col = function (n) { return function () { return el.querySelectorAll('.search-col')[n]; }; };
+    return [
+      { el: q('.control'), before: query('rotate refresh token'), title: 'One query, three searches', text: 'Five short documents. Type a query or tap an example.' },
+      { el: col(0), title: 'Keyword search is literal', text: '"token" does not match "tokens", and "rotate" does not match "rotated". BM25 only finds exact words.' },
+      { el: col(1), title: 'Vector search is fuzzy', text: 'This toy compares 3-letter pieces of words, so near matches still score. Real systems use embeddings.' },
+      { el: col(2), title: 'Hybrid merges the rankings', text: 'Reciprocal rank fusion adds 1 / (60 + rank) from each list. Documents high in both lists win.' },
+      { el: function () { return el.querySelectorAll('.control')[1]; }, title: 'Filter before ranking', text: 'Metadata filters remove documents before any scoring, which is how permission rules should work.' }
+    ];
+  };
 })(typeof self !== 'undefined' ? self : globalThis);

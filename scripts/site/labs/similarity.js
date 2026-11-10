@@ -151,4 +151,14 @@
       render();
     }
   };
+
+  AIER.labs.similarity.tour = function (el) {
+    var q = function (s) { return function () { return el.querySelector(s); }; };
+    return [
+      { el: q('.vec-plane'), title: 'Two vectors', text: 'Drag the handles a and b. Real embeddings have hundreds of numbers; two are enough to see the idea.' },
+      { el: q('.metric.main'), title: 'Cosine looks at direction', text: 'Make b longer without turning it: cosine stays the same. 1 means same direction, 0 unrelated, -1 opposite.' },
+      { el: q('.metric-grid'), title: 'Dot product and distance', text: 'The dot product grows with length too, and distance measures the gap between the tips. They can disagree.' },
+      { el: function () { return el.querySelector('.data').closest('.result'); }, before: function () { var b = el.querySelectorAll('.row-btns .btn')[0]; if (b) b.click(); }, title: 'Three metrics, three rankings', text: 'With the demo query, dot product prefers the long vector D1 while cosine and distance prefer D0.' }
+    ];
+  };
 })(typeof self !== 'undefined' ? self : globalThis);

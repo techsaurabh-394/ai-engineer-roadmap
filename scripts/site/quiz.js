@@ -130,7 +130,7 @@
       watchLinks(q));
     var showBtn = h('button.btn.primary', { type: 'button', id: 'show', hidden: session.shown, 'aria-controls': answerId, 'aria-expanded': String(session.shown), onclick: reveal }, 'Show answer', h('kbd', 'Space'));
 
-    function reveal() { session.shown = true; answer.hidden = false; showBtn.hidden = true; showBtn.setAttribute('aria-expanded', 'true'); answer.focus(); }
+    function reveal() { session.shown = true; answer.hidden = false; showBtn.hidden = true; showBtn.setAttribute('aria-expanded', 'true'); answer.focus({ preventScroll: true }); }
     function mark(knew) {
       var r = grade(id, knew);
       if (session.first[id] === undefined) session.first[id] = knew ? 'k' : 'n';

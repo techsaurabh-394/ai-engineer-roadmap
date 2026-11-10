@@ -163,4 +163,16 @@
       return function () { root.removeEventListener('resize', onResize); };
     }
   };
+
+  AIER.labs.attention.tour = function (el) {
+    var q = function (s) { return function () { return el.querySelector(s); }; };
+    var tok = function (i) { return function () { var b = el.querySelectorAll('.att-token')[i]; if (b) b.click(); }; };
+    return [
+      { el: q('.att-wrap'), before: tok(2), title: 'Pick the word that asks', text: 'The highlighted word asks "which other words help me?". Arcs show where its attention goes: thicker means more.' },
+      { el: q('.att-wrap'), before: tok(0), title: 'The first word sees only itself', text: 'With the causal mask a word cannot look ahead. The first word has nothing before it, so it gives itself 100%.' },
+      { el: q('.att-map'), before: tok(2), title: 'All the weights at once', text: 'Each row is one word asking. Each row adds up to 1. Dashes are hidden future words.' },
+      { el: function () { return el.querySelectorAll('details.math')[0]; }, title: 'Where the weights come from', text: 'Q is what a word looks for, K is how it advertises itself, V is what it hands over. Step through the calculation from X to the output.' },
+      { el: function () { var d = el.querySelectorAll('details.math')[1]; if (d) d.open = true; return d; }, title: 'Change the input', text: 'Nudge any number of a word\u2019s vector and every matrix, weight and arc recomputes.' }
+    ];
+  };
 })(typeof self !== 'undefined' ? self : globalThis);

@@ -115,4 +115,16 @@
       layout(); render();
     }
   };
+
+  AIER.labs.chunking.tour = function (el) {
+    var q = function (s) { return function () { return el.querySelector(s); }; };
+    var mode = function (i) { return function () { var b = el.querySelectorAll('.seg button')[i]; if (b) b.click(); }; };
+    return [
+      { el: q('.seg'), before: mode(0), title: 'Four ways to cut', text: 'Fixed size, sliding window, recursive and a toy semantic chunker, all ported from rag_chunkers.py.' },
+      { el: function () { return el.querySelectorAll('input[type=range]')[1].closest('.control'); }, title: 'Overlap', text: 'Neighbouring chunks share these characters, highlighted in each chunk, so an idea cut in half still appears whole somewhere.' },
+      { el: q('.chunk-map'), title: 'Where the cuts land', text: 'Each bar is one chunk across the text. Overlapping bars are text stored twice: more context, more to embed.' },
+      { el: q('.seg'), before: mode(2), title: 'Recursive respects structure', text: 'It splits on paragraphs first and only goes smaller when a piece is too big.' },
+      { el: q('textarea'), title: 'Bring your own text', text: 'Paste anything here and every chunker runs on it straight away.' }
+    ];
+  };
 })(typeof self !== 'undefined' ? self : globalThis);

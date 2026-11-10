@@ -30,8 +30,7 @@
 .qcard .actions { margin-top: var(--s4); }
 .qcard .actions .btn { width: 100%; min-height: 52px; font-size: var(--fs-lg); }
 .btn kbd { margin-left: 4px; opacity: .8; color: inherit; background: transparent; border-color: currentColor; }
-.answer { margin-top: var(--s4); padding-top: var(--s4); border-top: 1px solid var(--line); outline: none; animation: rise 220ms var(--ease); }
-@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.answer { margin-top: var(--s4); padding-top: var(--s4); border-top: 1px solid var(--line); outline: none; animation: rise-y 220ms var(--ease); }
 .answer .k { font-size: var(--fs-xs); font-weight: 750; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
 .answer .a, .qrow .a { font-size: var(--fs-md); line-height: 1.6; color: var(--text); }
 .answer .self { margin-top: var(--s4); font-size: var(--fs-sm); color: var(--muted); }

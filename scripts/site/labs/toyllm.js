@@ -75,4 +75,15 @@
       render();
     }
   };
+
+  AIER.labs.toyllm.tour = function (el) {
+    var st = function (n) { return function () { return el.querySelectorAll('.toy-stage')[n]; }; };
+    return [
+      { el: function () { return el.querySelector('.control'); }, title: 'Write a sentence', text: 'This toy model knows 8 words. Tap them to build a sentence, or type.' },
+      { el: st(0), title: 'Words become numbers', text: 'Each word is replaced by its ID in the vocabulary. The model never sees letters.' },
+      { el: st(3), title: 'Attention inside a block', text: 'The bars show where the last word looks. Two blocks repeat the same idea, each refining the vectors.' },
+      { el: st(5), title: 'Odds for every word', text: 'The last vector is turned into one score per word, then softmax makes them probabilities.' },
+      { el: st(6), title: 'Pick, append, repeat', text: 'The most likely word is added and the whole sentence runs through again. That loop is how every LLM writes.' }
+    ];
+  };
 })(typeof self !== 'undefined' ? self : globalThis);

@@ -84,6 +84,19 @@ def main():
       lab.querySelectorAll('.seg button, .wordchips button, .row-btns button, .att-token, .pool button').forEach(b => { try { b.click(); } catch (e) { out.push(e.message); } });
       lab.querySelectorAll('details').forEach(x => x.open = true);
       return out.join('; ');"""
+    run_tour = """
+      const b = [...document.querySelectorAll('.lab-actions button')].find(x => x.textContent.includes('Guided tour'));
+      if (!b) return 'no guided tour button';
+      b.click();
+      const card = document.querySelector('.tour-card'); if (!card) return 'tour did not open';
+      const n = card.querySelectorAll('.tour-dots i').length, bad = [];
+      for (let i = 0; i < n; i++) {
+        if (!document.querySelector('.tour-on')) bad.push('step ' + (i + 1) + ' highlights nothing');
+        card.querySelector('.tour-nav .btn.primary').click();
+      }
+      if (document.querySelector('.tour-card')) bad.push('Finish did not close the tour');
+      if (document.querySelector('.tour-on')) bad.push('highlight left behind');
+      return bad.join('; ');"""
     lesson_steps = """
       const n = document.querySelectorAll('.steps button').length; if (!n) return 'no steps';
       for (let i = 0; i < n; i++) document.querySelector('[data-act=next]').click();
@@ -106,6 +119,7 @@ def main():
                 if theme == "light":
                     for lab in LABS:
                         visit(f"#lab/{lab}", f"lab-{lab}", click_all, width, theme)
+                        visit(f"#lab/{lab}", f"tour-{lab}", run_tour, width, theme)
         setup(1280, 900, "light")
         names = d.execute_script("return AIER_DATA.lessons.map(l => l.name)") if d.get(base) is None else []
         for n in names:                                    # every lesson opens without errors

@@ -100,6 +100,8 @@
     if (step === cur.steps.length - 1 && !progress.seen[cur.name]) {
       progress.seen[cur.name] = 1; saveProgress(); renderSidebar(cur);
     }
+    var fin = doc.getElementById('finish');
+    if (fin) fin.hidden = step !== cur.steps.length - 1;
   }
 
   // ---------------------------------------------------------------- diagrams
@@ -231,7 +233,11 @@
     var body = h('div');
     var section = h('section.card.lab', { id: 'lab-' + id, 'aria-labelledby': 'lab-h-' + id },
       h('div.lab-head', h('div', h(standalone ? 'h1' : 'h2', { id: 'lab-h-' + id, style: standalone ? { 'font-size': 'var(--fs-2xl)' } : null }, icon('flask'), meta.title), h('p', meta.blurb)),
-        standalone ? null : h('a.btn.small.ghost', { href: '#lab/' + id }, 'Open on its own page')),
+        h('div.lab-actions', AIER.labs[id].tour ? h('button.btn.small.primary', { type: 'button', onclick: function () {
+          var steps = AIER.labs[id].tour(body);
+          if (steps && steps.length) cleanup.push(ui.tour(steps, { label: meta.title + ': guided tour' }));
+        } }, icon('spark', 'sm'), 'Guided tour') : null,
+          standalone ? null : h('a.btn.small.ghost', { href: '#lab/' + id }, 'Open on its own page'))),
       body);
     try {
       var stop = AIER.labs[id].mount(body, { data: D.labs.data, repo: D.repo, lesson: cur });
@@ -301,6 +307,13 @@
     panel.appendChild(links);
 
     main.appendChild(h('div.lesson-wrap', h('div.lesson-grid', stageCard, panel)));
+    var nextL0 = LESSONS[lesson.index + 1], phaseItems = LESSONS.filter(function (x) { return x.phase === lesson.phase; });
+    main.appendChild(h('div.card.finish', { id: 'finish', hidden: true, role: 'status' },
+      h('span.finish-ic', { 'aria-hidden': 'true' }, icon('check')),
+      h('div', h('p.t', 'Lesson complete'), h('p.muted', 'You have seen ' + (seenIn(lesson.phase) + (progress.seen[lesson.name] ? 0 : 1)) + ' of ' + phaseItems.length + ' lessons in Phase ' + p.n + '. Check yourself below, or keep going.')),
+      h('div.row-btns', { style: { 'margin-top': '0' } },
+        h('a.btn.small', { href: '#check-h', onclick: function (e) { e.preventDefault(); var c = doc.getElementById('check-h'); if (c) c.scrollIntoView({ behavior: ui.reducedMotion() ? 'auto' : 'smooth', block: 'center' }); } }, icon('shuffle', 'sm'), 'Check yourself'),
+        nextL0 ? h('a.btn.small.primary', { href: '#' + nextL0.name }, 'Next: ' + nextL0.title, icon('next', 'sm')) : null)));
     main.appendChild(h('p.kbd-hint', 'Keyboard: ', h('kbd', '←'), ' ', h('kbd', '→'), ' move one step, ', h('kbd', 'Space'), ' plays or pauses, ', h('kbd', '/'), ' searches.'));
     main.appendChild(checkCard(lesson));
     labsFor(lesson).forEach(function (id) { main.appendChild(labSection(id, false)); });
