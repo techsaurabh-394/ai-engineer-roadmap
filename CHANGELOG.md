@@ -5,6 +5,9 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Thi
 
 ## [Unreleased]
 
+### Added
+- Interactive quizzes at `/quiz/` on the Pages site: the 75 checkpoint questions of Phases 1 to 7 as flash cards (think, reveal, mark "I knew it" or "Not yet", review the ones you missed), with a tab per phase, keyboard shortcuts and progress kept in the browser (localStorage; nothing is sent anywhere). It is self-assessment, because the answers are free text and are not graded. The questions are read from the phase READMEs by `scripts/quiz_core.py`, so the READMEs stay the single source and the three formats used there all parse. `scripts/build_quiz.py` builds the page and `build_site.py` calls it. 7 tests in `scripts/test_quiz.py` (also run by `pytest`) check the counts, all three README shapes, that answer links point at real files, and that text is escaped. The animation viewer has a Quizzes link.
+
 ### Changed
 - All 113 topic pages now follow one beginner-friendly shape: a **Before you start** line that links the pages to read first, a **Words to know** list that defines every term, a **Worked example** that follows one small case number by number (taken from the repo's own demos), and a three-point **Recap**. Reading times were raised to match and `docs/learning-paths.md` was regenerated (992 minutes in total).
 - `00-start-here/README.md` explains the shape of a topic page and how to master a topic.

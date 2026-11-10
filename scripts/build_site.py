@@ -57,7 +57,7 @@ button:disabled{opacity:.4;cursor:default}button.primary{background:var(--teal);
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
 </style></head><body>
 <header><h1>AI Engineer Roadmap: animated lessons</h1>
-<a href="__REPO__">GitHub repo</a><a href="__REPO__/blob/main/README.md#start-in-5-minutes">Start here</a></header>
+<a href="__REPO__">GitHub repo</a><a href="__REPO__/blob/main/README.md#start-in-5-minutes">Start here</a><a href="quiz/">Quizzes</a></header>
 <div class="wrap">
 <nav aria-label="Animations"><input id="q" type="search" placeholder="Search __COUNT__ animations" aria-label="Search animations"><div id="list"></div></nav>
 <main><div class="card">
@@ -155,6 +155,8 @@ def main():
     (OUT / "index.html").write_text(page, encoding="utf-8")
     (OUT / ".nojekyll").write_text("")
     print(f"site: {len(manifest)} animations -> {OUT}  (title safe: {html.escape(manifest[0]['title'])})")
+    import build_quiz  # after the wipe above: the quiz lives in _site/quiz/
+    build_quiz.main()
 
 
 if __name__ == "__main__":
