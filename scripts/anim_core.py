@@ -275,7 +275,7 @@ def render_bars(a):
     dur = round(n * BAR_SLOT, 2)
     bw, gap = 90, 36
     x0 = (W - (m * bw + (m - 1) * gap)) / 2
-    base, scale = 238, 150
+    base, scale = 238, 140
     s = head(W, H, a["title"], a["subtitle"])
     s += txt(W / 2, 40, a["title"], 22, TEXT, 700) + txt(W / 2, 64, a["subtitle"], 14, MUTED)
     s += f'<line x1="{_f(x0 - 20)}" y1="{base}" x2="{_f(x0 + m * bw + (m - 1) * gap + 20)}" y2="{base}" stroke="{LINE}" stroke-width="2"/>\n'
@@ -295,7 +295,8 @@ def render_bars(a):
                   f'font-weight="700" text-anchor="middle" opacity="0">{fr[1][j]:.2f}'
                   f'{slot_anim("opacity", "1", "0", i, n, dur)}</text>\n')
     for i, fr in enumerate(frames):
-        s += (f'<text x="40" y="100" font-size="18" fill="{color}" font-weight="700" opacity="0">{escape(fr[0])}'
+        # top right: the tallest bar is on the left in every chart, so the label never sits on a bar
+        s += (f'<text x="{W - 40}" y="100" font-size="18" fill="{color}" font-weight="700" text-anchor="end" opacity="0">{escape(fr[0])}'
               f'{slot_anim("opacity", "1", "0", i, n, dur)}</text>\n')
     s += f'<rect x="30" y="272" width="{W - 60}" height="78" rx="12" fill="{CARD}" stroke="{LINE}"/>\n'
     for i, fr in enumerate(frames):

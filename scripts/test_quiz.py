@@ -58,14 +58,24 @@ def test_untrusted_text_is_escaped():
     assert "<script>" not in out and "&lt;script&gt;" in out and "<code>a&lt;b</code>" in out
 
 
-def test_built_page_embeds_valid_json_and_counts(tmp_path, monkeypatch):
-    import build_quiz
-    monkeypatch.setattr(build_quiz, "OUT", tmp_path / "quiz")
-    build_quiz.main()
-    page = (tmp_path / "quiz" / "index.html").read_text(encoding="utf-8")
-    m = re.search(r"const Q=(\[.*?\]),PH=", page, re.S)
-    data = json.loads(m.group(1).replace("<\\/", "</")) if m else []
-    assert m is not None
-    assert len(data) == len(qc.build())
-    assert "__QUESTIONS__" not in page and "__REPO__" not in page and "__COUNT__" not in page
+def test_built_site_embeds_every_question_with_an_animation(tmp_path, monkeypatch):
+    import build_site
+    monkeypatch.setattr(build_site, "OUT", tmp_path / "site")
+    build_site.main()
+    data = (tmp_path / "site" / "assets" / "data.js").read_text(encoding="utf-8")
+    assert data.startswith("window.AIER_DATA=")
+    d = json.loads(data[len("window.AIER_DATA="):].rstrip().rstrip(";"))
+    assert len(d["quiz"]) == len(qc.build())
+    names = {l["name"] for l in d["lessons"]}
+    assert all(q["anims"] and set(q["anims"]) <= names for q in d["quiz"])
+    page = (tmp_path / "site" / "quiz" / "index.html").read_text(encoding="utf-8")
+    assert "__SCRIPTS__" not in page and "__REPO__" not in page and "__COUNT__" not in page
     assert 'rel="icon"' in page  # no favicon.ico 404 in the console
+    assert (tmp_path / "site" / "assets" / "quiz.js").exists()
+
+
+def test_quiz_links_cover_every_question_and_nothing_else():
+    import build_quiz
+    links = build_quiz.load_links()
+    questions = [q["q"] for q in qc.build()]
+    assert set(links) == set(questions), "update scripts/quiz_links.json: " + repr(set(links) ^ set(questions))

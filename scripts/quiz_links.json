@@ -1,0 +1,249 @@
+{
+ "_about": "Which animation explains each quiz question. Key: the question exactly as it appears in the phase README. Value: animation names (the #deep-link on the site), best match first. Checked by hand; scripts/test_quiz.py fails if a question is missing, renamed or points at an animation that does not exist.",
+ "links": {
+  "Why retrieve first instead of pasting every document into the prompt?": [
+   "rag-flow"
+  ],
+  "What is an embedding, and why must queries and documents use the same model?": [
+   "02-embeddings"
+  ],
+  "Why should chunk sizes be measured in tokens rather than characters?": [
+   "03-tokenization"
+  ],
+  "What problem does parent-child chunking solve?": [
+   "07-parent-child-chunking"
+  ],
+  "Vectors a = [1, 2, 3] and b = [2, 4, 6]. What are their dot product, cosine similarity and Euclidean distance?": [
+   "cosine-similarity",
+   "13-dot-product",
+   "12-euclidean-distance"
+  ],
+  "When do cosine, dot product and Euclidean distance give the same ranking?": [
+   "12-euclidean-distance",
+   "cosine-similarity"
+  ],
+  "How do HNSW and IVF make search faster than brute force, and which knob trades speed for recall in each?": [
+   "14-hnsw",
+   "15-ivf-index"
+  ],
+  "What is the difference between sparse, dense and hybrid retrieval?": [
+   "hybrid-search-flow",
+   "18-sparse-retrieval",
+   "19-dense-retrieval"
+  ],
+  "In BM25, what do IDF, k1 and b do?": [
+   "17-bm25"
+  ],
+  "Why must permission filters be applied at retrieval time, and why is post-filtering risky?": [
+   "20-metadata-filtering"
+  ],
+  "Why do production systems retrieve with a bi-encoder and then rerank with a cross-encoder, instead of using one of them?": [
+   "02-reranking",
+   "02-cross-encoder",
+   "03-bi-encoder"
+  ],
+  "What is Reciprocal Rank Fusion and why is it popular?": [
+   "12-ensemble-retrieval"
+  ],
+  "How does HyDE differ from multi-query retrieval?": [
+   "07-hyde",
+   "06-multi-query-retrieval"
+  ],
+  "What problem does the parent-document retriever solve?": [
+   "11-parent-document-retriever"
+  ],
+  "Why combine BM25 with vector search?": [
+   "hybrid-search-flow",
+   "12-ensemble-retrieval"
+  ],
+  "When would you choose GraphRAG over standard vector RAG?": [
+   "14-graphrag"
+  ],
+  "Name three safety controls for SQL RAG.": [
+   "16-sql-rag"
+  ],
+  "How does incremental indexing avoid re-embedding everything, and what must it not forget?": [
+   "18-incremental-indexing"
+  ],
+  "Faithfulness is high but context recall is low. Where is the problem?": [
+   "eval-loop"
+  ],
+  "Name two pitfalls of LLM-as-judge evaluation.": [
+   "21-llm-as-a-judge"
+  ],
+  "In one sentence, what does self-attention compute?": [
+   "attention",
+   "22-qkv-explained-from-scratch"
+  ],
+  "Why do transformers need positional encoding?": [
+   "04-positional-encoding"
+  ],
+  "What is the causal mask, and which models use it?": [
+   "05-decoder-only-models"
+  ],
+  "What does the KV cache store, and what is its main cost?": [
+   "07-kv-cache"
+  ],
+  "Your 8k-token model gets a 7,500-token prompt and max_tokens = 1,000. What happens?": [
+   "08-context-window"
+  ],
+  "Temperature 0.2 vs 1.5: which for extracting invoice totals, and why?": [
+   "temperature"
+  ],
+  "How does top-p differ from top-k?": [
+   "top-p",
+   "top-k"
+  ],
+  "Why can beam search find a better sequence than greedy decoding?": [
+   "12-beam-search"
+  ],
+  "Name two causes of hallucination and two ways to reduce it.": [
+   "13-hallucination"
+  ],
+  "What is prompt injection, and why can't one clever prompt fully stop it?": [
+   "11-ai-security"
+  ],
+  "What are Q, K and V, and why three separate matrices instead of one?": [
+   "22-qkv-explained-from-scratch"
+  ],
+  "In one sentence each, what do the residual connection, LayerNorm and the feed-forward network do?": [
+   "23-inside-a-transformer-block"
+  ],
+  "What is the training loss for next-token prediction, and what does a loss of 1.386 mean?": [
+   "24-how-llms-are-trained"
+  ],
+  "Why does Grouped-Query Attention shrink the KV cache?": [
+   "25-modern-attention-variants"
+  ],
+  "A Mixture-of-Experts model has far more parameters than a dense one, yet is not slower per token. Why?": [
+   "26-mixture-of-experts-and-scaling-laws"
+  ],
+  "Agent or fixed workflow: when is each right?": [
+   "agent-loop-anim"
+  ],
+  "Who executes a tool call, the model or your code? Why does it matter?": [
+   "tool-calling-flow"
+  ],
+  "What makes a tool easy for a model to use?": [
+   "tool-calling-flow"
+  ],
+  "Describe one ReAct step.": [
+   "react-loop"
+  ],
+  "When does reflection actually improve results?": [
+   "reflection-loop"
+  ],
+  "Name the four memory types in this phase and one use for each.": [
+   "07-memory"
+  ],
+  "List the stop conditions every agent loop should have.": [
+   "agent-loop-anim"
+  ],
+  "Which actions need human approval, and how should the gate be built?": [
+   "14-human-in-the-loop"
+  ],
+  "How do you evaluate an agent beyond \"the final answer looks right\"?": [
+   "eval-loop"
+  ],
+  "Name three controls that make agents safe to run.": [
+   "16-agent-guardrails"
+  ],
+  "What do all these frameworks wrap?": [
+   "05-langchain-flow"
+  ],
+  "When is no framework the best choice?": [
+   "05-langchain-flow"
+  ],
+  "What does a | b | c mean in LangChain?": [
+   "05-langchain-flow"
+  ],
+  "Why use a graph for agents?": [
+   "02-langgraph"
+  ],
+  "What is a \"node\" in LlamaIndex versus LangGraph?": [
+   "03-llamaindex",
+   "02-langgraph"
+  ],
+  "What three objects define the OpenAI Agents SDK?": [
+   "04-openai-agents-sdk"
+  ],
+  "What must you have before DSPy helps?": [
+   "07-dspy"
+  ],
+  "Why can multi-agent frameworks be worse than one agent?": [
+   "05-crewai",
+   "06-autogen"
+  ],
+  "Why must multi-agent chats have a termination condition?": [
+   "06-autogen"
+  ],
+  "How do you protect yourself from API churn?": [
+   "05-langchain-flow"
+  ],
+  "What problem does MCP solve?": [
+   "mcp-flow"
+  ],
+  "Who controls tools, resources and prompts?": [
+   "04-mcp-tools",
+   "05-mcp-resources",
+   "06-mcp-prompts"
+  ],
+  "What is the message format?": [
+   "mcp-flow"
+  ],
+  "Describe the initialize handshake.": [
+   "03-mcp-client",
+   "mcp-flow"
+  ],
+  "stdio vs Streamable HTTP?": [
+   "02-mcp-server"
+  ],
+  "Why must a stdio server not log to stdout?": [
+   "02-mcp-server"
+  ],
+  "Protocol error vs isError?": [
+   "04-mcp-tools"
+  ],
+  "MCP vs function calling vs A2A?": [
+   "mcp-flow"
+  ],
+  "Name two MCP security risks and a defense for each.": [
+   "04-mcp-tools",
+   "03-mcp-client"
+  ],
+  "What does resources/read return?": [
+   "05-mcp-resources"
+  ],
+  "Why put document ingestion in a Celery worker?": [
+   "05-celery"
+  ],
+  "What is the difference between a container and a Kubernetes pod setup?": [
+   "03-kubernetes",
+   "02-docker"
+  ],
+  "What should a cache key include?": [
+   "04-redis"
+  ],
+  "Why track p95 latency, not just the average?": [
+   "07-monitoring"
+  ],
+  "Why version prompts?": [
+   "10-prompt-versioning"
+  ],
+  "What is indirect prompt injection?": [
+   "11-ai-security"
+  ],
+  "Name two limits of keyword guardrails.": [
+   "12-guardrails"
+  ],
+  "Give three ways to cut LLM cost.": [
+   "14-cost-optimization"
+  ],
+  "What do you record on every LLM call?": [
+   "13-observability"
+  ],
+  "What should CI run for an AI app?": [
+   "15-deploy-a-production-ai-application"
+  ]
+ }
+}
