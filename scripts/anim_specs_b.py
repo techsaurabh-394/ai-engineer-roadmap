@@ -4,7 +4,7 @@ Pipeline step: "Label|sub label|caption line 1|caption line 2".
 Loop step:     "Label|caption line 1|caption line 2".
 Bars step:     see B() in anim_core.
 """
-from anim_core import P, L, B
+from anim_core import P, L, B, ROOT
 
 # ---------------- Phase 3: LLM concepts ----------------
 P("01-transformer-architecture", "Transformer architecture", "The design behind modern LLMs, from tokens to a next-token guess.", """
@@ -65,11 +65,26 @@ Full|limit reached|4. When it is full, something must go|Older text is cut, or t
 Plan|budget tokens|5. Budget your tokens|Retrieve less, summarise old turns, set a max output.
 """)
 
+# The 0.2 and 2.0 rows are computed from the 1.0 row with the repo's own apply_temperature(),
+# so the three frames are one distribution at three temperatures (not three made-up pictures).
+_T1 = dict(zip(["cat", "dog", "car", "sky", "pie"], [0.50, 0.25, 0.12, 0.08, 0.05]))
+
+
+def _at(temperature):
+    import importlib.util
+    path = ROOT / "03-llm-concepts" / "code" / "llm_decoding.py"
+    spec = importlib.util.spec_from_file_location("aier_anim_llm_decoding", path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    out = mod.apply_temperature(_T1, temperature)
+    return [out[t] for t in _T1]
+
+
 B("temperature", "Temperature", "A dial for randomness: low is predictable, high is varied.",
-  ["cat", "dog", "car", "sky", "pie"], [
-    ("Temperature 0.2", [0.90, 0.07, 0.02, 0.01, 0.00], None, "1. Low temperature (0.2): the top choice wins almost every time", "Safe and repeatable. Good for facts and code."),
-    ("Temperature 1.0", [0.50, 0.25, 0.12, 0.08, 0.05], None, "2. Normal temperature (1.0): the model's own probabilities", "The top choice wins often, but others get a chance."),
-    ("Temperature 2.0", [0.28, 0.24, 0.20, 0.15, 0.13], None, "3. High temperature (2.0): the choices flatten out", "More surprising, and more likely to go wrong."),
+  list(_T1), [
+    ("Temperature 0.2", _at(0.2), None, "1. Low temperature (0.2): the top choice wins almost every time", "Safe and repeatable. Good for facts and code."),
+    ("Temperature 1.0", list(_T1.values()), None, "2. Normal temperature (1.0): the model's own probabilities", "The top choice wins often, but others get a chance."),
+    ("Temperature 2.0", _at(2.0), None, "3. High temperature (2.0): the choices flatten out", "More surprising, and more likely to go wrong."),
   ], topic="09-temperature")
 
 B("top-k", "Top-k sampling", "Keep only the k most likely tokens, then pick from those.",

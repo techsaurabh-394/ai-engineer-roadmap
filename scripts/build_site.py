@@ -2,139 +2,194 @@
 """Build the GitHub Pages site into _site/ (standard library only).
 
     python scripts/build_site.py
-The site is one static page: a searchable list of every animation and a viewer
-with Previous / Play / Next, a step slider, a speed control and arrow-key support.
+
+What gets built:
+  _site/index.html         the lessons viewer: home, one page per animation (#rag-flow ...), labs (#lab/sampling ...)
+  _site/quiz/index.html    the quiz (scripts/build_quiz.py)
+  _site/assets/            theme.css, the JavaScript from scripts/site/, and data.js
+  _site/anim/*.svg         the animated SVGs (same files as assets/anim/)
+
+The page skeleton is the PAGE string below. Styles and scripts live in scripts/site/ as plain files, so
+the tests can run exactly the JavaScript the browser runs. data.js is generated here from the animation
+specs, the topic pages and the demo code (scripts/site_data.py). No framework, no CDN, no build step.
 """
+import hashlib
 import html
 import json
 import pathlib
+import re
 import shutil
 import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import gen_animations as g  # noqa: E402
+import site_data  # noqa: E402
 
 ROOT = g.core.ROOT
 OUT = ROOT / "_site"
-REPO = "https://github.com/techsaurabh-394/ai-engineer-roadmap"
+SRC = pathlib.Path(__file__).resolve().parent / "site"
+REPO = site_data.REPO
+FAVICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' "
+           "fill='%230F766E'/%3E%3Ctext x='16' y='22' font-size='15' text-anchor='middle' font-family='sans-serif' font-weight='700' "
+           "fill='%23fff'%3EAI%3C/text%3E%3C/svg%3E")
+# Runs before first paint so a saved Light/Dark choice does not flash the other theme.
+THEME_BOOT = ("<script>try{var t=JSON.parse(localStorage.getItem('aier-theme'));"
+              "if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>")
+IC_MENU = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>'
+IC_SEARCH = '<svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>'
 
 PAGE = r"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AI Engineer Roadmap: animated lessons</title>
-<meta name="description" content="Step through RAG, LLMs, agents, MCP and production AI with animated explainers. Previous, Play and Next controls. Free and open source.">
-<meta property="og:title" content="AI Engineer Roadmap: animated lessons">
-<meta property="og:description" content="__COUNT__ animated explainers for RAG, LLMs, agents, MCP and production AI.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232DD4BF'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' font-family='sans-serif' font-weight='700' fill='%230D1117'%3EAI%3C/text%3E%3C/svg%3E">
-<style>
-:root{--bg:#0D1117;--card:#161B22;--line:#30363D;--text:#E6EDF3;--muted:#9DA7B3;--teal:#2DD4BF;--amber:#F5B042}
-*{box-sizing:border-box}html,body{margin:0;height:100%}
-body{background:var(--bg);color:var(--text);font:16px/1.5 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;display:flex;flex-direction:column}
-header{padding:14px 20px;border-bottom:1px solid var(--line);display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-header h1{font-size:18px;margin:0;flex:1;min-width:200px}header a{color:var(--teal);text-decoration:none;font-size:14px}
-header a:hover{text-decoration:underline}
-.wrap{flex:1;display:flex;min-height:0}
-nav{width:300px;border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0}
-nav input{margin:12px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);font-size:15px}
-nav input:focus{outline:2px solid var(--teal)}
-#list{overflow:auto;padding:0 8px 16px;flex:1}
-#list h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:16px 8px 6px}
-#list a{display:block;padding:7px 10px;border-radius:8px;color:var(--text);text-decoration:none;font-size:14.5px}
-#list a:hover{background:var(--card)}#list a.on{background:var(--card);box-shadow:inset 3px 0 var(--teal)}
-main{flex:1;overflow:auto;padding:20px;min-width:0}
-.card{max-width:960px;margin:0 auto}
-h2#title{margin:0 0 4px;font-size:24px}#sub{color:var(--muted);margin:0 0 14px}
-#stage{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:8px;min-height:200px}
-#stage svg{width:100%;height:auto;display:block}
-.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:14px 0}
-button,select{background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:9px 16px;font-size:15px;cursor:pointer}
-button:hover:not(:disabled){border-color:var(--teal)}button:focus-visible,select:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
-button:disabled{opacity:.4;cursor:default}button.primary{background:var(--teal);color:#0D1117;border-color:var(--teal);font-weight:700;min-width:96px}
-#slider{flex:1;min-width:140px;accent-color:var(--teal)}#count{color:var(--muted);font-size:14px;min-width:92px;text-align:right}
-.links{margin-top:6px;font-size:15px}.links a{color:var(--teal)}
-.hint{color:var(--muted);font-size:13px;margin-top:10px}
-@media(max-width:760px){.wrap{flex-direction:column}nav{width:100%;max-height:34vh;border-right:0;border-bottom:1px solid var(--line)}}
-@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
-</style></head><body>
-<header><h1>AI Engineer Roadmap: animated lessons</h1>
-<a href="__REPO__">GitHub repo</a><a href="__REPO__/blob/main/README.md#start-in-5-minutes">Start here</a><a href="quiz/">Quizzes</a></header>
-<div class="wrap">
-<nav aria-label="Animations"><input id="q" type="search" placeholder="Search __COUNT__ animations" aria-label="Search animations"><div id="list"></div></nav>
-<main><div class="card">
-<h2 id="title"></h2><p id="sub"></p>
-<div id="stage" aria-live="polite"></div>
-<div class="bar">
-<button id="prev" aria-label="Previous step">&larr; Previous</button>
-<button id="play" class="primary" aria-label="Play or pause">Play</button>
-<button id="next" aria-label="Next step">Next &rarr;</button>
-<input id="slider" type="range" min="0" value="0" aria-label="Step">
-<span id="count"></span>
-<label for="speed" style="color:var(--muted);font-size:14px">Speed</label>
-<select id="speed"><option value="1.6">Slow</option><option value="1" selected>Normal</option><option value="0.6">Fast</option></select>
+<title>AI Engineer Roadmap: interactive lessons</title>
+<meta name="description" content="__COUNT__ step-by-step lessons and hands-on labs for RAG, LLMs, agents, MCP and production AI. Free and open source.">
+<meta property="og:title" content="AI Engineer Roadmap: interactive lessons">
+<meta property="og:description" content="__COUNT__ step-by-step lessons and hands-on labs for RAG, LLMs, agents, MCP and production AI.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="__FAVICON__">
+__THEME_BOOT__
+<link rel="stylesheet" href="assets/theme.css?v=__V__">
+</head><body>
+<a class="skip" href="#main">Skip to the content</a>
+<header class="topbar">
+<button id="menu" class="icon-btn only-narrow" type="button" aria-label="Open the list of lessons" aria-expanded="false" aria-controls="sidebar">__IC_MENU__</button>
+<a class="brand" href="#"><span class="logo" aria-hidden="true">AI</span><span><span class="name-long">AI Engineer </span>Roadmap</span></a>
+<nav class="topnav" aria-label="Sections"><a href="#" aria-current="page">Lessons</a><a href="quiz/">Quiz</a><a href="__REPO__/blob/main/README.md#start-in-5-minutes">Start here</a></nav>
+<span class="grow"></span>
+<div class="searchbox">__IC_SEARCH__<input id="q" type="search" placeholder="Search __COUNT__ lessons" aria-label="Search lessons" autocomplete="off"><kbd aria-hidden="true">/</kbd></div>
+<a class="icon-btn only-narrow" href="quiz/">Quiz</a>
+<button id="theme" class="icon-btn" type="button" aria-label="Change theme"></button>
+<a class="icon-btn" href="__REPO__" rel="noopener"><span class="name-long">GitHub</span><span class="sr-only">repository</span></a>
+</header>
+<div class="layout">
+<aside class="sidebar" id="sidebar" aria-label="All lessons">
+<div class="mobile-search"><input id="q2" type="search" placeholder="Search __COUNT__ lessons" aria-label="Search lessons" autocomplete="off"></div>
+<div id="nav"></div>
+</aside>
+<main id="main" tabindex="-1"><div class="wrap"><noscript><p>This page needs JavaScript to show the interactive lessons. Everything is also readable as plain text in the <a href="__REPO__">GitHub repo</a>.</p></noscript></div></main>
 </div>
-<div class="links" id="links"></div>
-<p class="hint">Keys: left and right arrows move one step, space plays or pauses. The picture is a plain SVG, so it works offline once loaded.</p>
-</div></main></div>
-<script>
-const M=__MANIFEST__;
-const $=s=>document.querySelector(s);
-const PH=__PHASES__;
-let cur=null,step=0,timer=null,svg=null;
-const list=$('#list');
-function renderList(f){
-  list.innerHTML='';const q=(f||'').toLowerCase();
-  for(const ph of Object.keys(PH)){
-    const items=M.filter(a=>a.phase===ph&&(a.title+' '+a.subtitle).toLowerCase().includes(q));
-    if(!items.length)continue;
-    const h=document.createElement('h2');h.textContent=PH[ph];list.appendChild(h);
-    for(const a of items){const l=document.createElement('a');l.href='#'+a.name;l.textContent=a.title;l.dataset.n=a.name;
-      if(cur&&cur.name===a.name)l.className='on';list.appendChild(l);}
-  }
-}
-$('#q').addEventListener('input',e=>renderList(e.target.value));
-function pause(){clearInterval(timer);timer=null;$('#play').textContent='Play';}
-function show(i){
-  step=Math.max(0,Math.min(cur.marks.length-1,i));
-  if(svg){svg.pauseAnimations();svg.setCurrentTime(cur.marks[step]);}
-  $('#slider').value=step;$('#count').textContent='Step '+(step+1)+' of '+cur.marks.length;
-  $('#prev').disabled=step===0;
-}
-function play(){
-  if(timer){pause();return;}
-  if(step>=cur.marks.length-1)show(0);
-  $('#play').textContent='Pause';
-  timer=setInterval(()=>{if(step>=cur.marks.length-1){pause();return;}show(step+1);},2600*parseFloat($('#speed').value));
-}
-async function open(name){
-  const a=M.find(x=>x.name===name)||M[0];cur=a;pause();
-  document.title=a.title+' | AI Engineer Roadmap';
-  $('#title').textContent=a.title;$('#sub').textContent=a.subtitle;
-  $('#slider').max=a.marks.length-1;
-  $('#links').innerHTML='Full lesson: '+a.topics.map(t=>'<a href="__REPO__/blob/main/'+t.path+'">'+t.title+'</a>').join(' &middot; ');
-  const st=$('#stage');st.textContent='Loading...';svg=null;
-  try{
-    const r=await fetch('anim/'+a.name+'.svg');if(!r.ok)throw 0;
-    const txt=await r.text();if(cur!==a)return;
-    st.innerHTML=txt;svg=st.querySelector('svg');svg.removeAttribute('width');svg.removeAttribute('height');
-  }catch(e){st.innerHTML='<img alt="'+a.title+'" src="anim/'+a.name+'.svg" style="width:100%">';}
-  show(0);renderList($('#q').value);
-  const on=list.querySelector('a.on');if(on)on.scrollIntoView({block:'nearest'});
-}
-$('#prev').onclick=()=>{pause();show(step-1)};
-$('#next').onclick=()=>{pause();show(step+1)};
-$('#play').onclick=play;
-$('#slider').oninput=e=>{pause();show(+e.target.value)};
-$('#speed').onchange=()=>{if(timer){pause();play();}};
-addEventListener('keydown',e=>{
-  if(e.target.tagName==='INPUT'&&e.target.type==='search')return;
-  if(e.key==='ArrowRight'){pause();show(step+1);e.preventDefault();}
-  else if(e.key==='ArrowLeft'){pause();show(step-1);e.preventDefault();}
-  else if(e.key===' '&&e.target.tagName!=='BUTTON'){play();e.preventDefault();}
-});
-addEventListener('hashchange',()=>open(location.hash.slice(1)));
-renderList();open(location.hash.slice(1));
-</script></body></html>
+<div class="scrim" hidden></div>
+<div class="transport-dock" id="dock" hidden></div>
+__SCRIPTS__
+</body></html>
 """
+
+
+# ------------------------------------------------------------------ topic pages
+def inline_md(text: str) -> str:
+    """One line of topic Markdown -> a small safe HTML subset (code, strong, em). Links become their text."""
+    text = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", text)
+    tokens = []
+
+    def stash(m):
+        tokens.append(f"<code>{html.escape(m.group(1))}</code>")
+        return f"\x00{len(tokens) - 1}\x00"
+
+    text = re.sub(r"`([^`]+)`", stash, text)
+    text = html.escape(text, quote=False)
+    text = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", text)
+    text = re.sub(r"(?<![\w*])\*([^*\n]+)\*(?![\w*])", r"<em>\1</em>", text)
+    return re.sub(r"\x00(\d+)\x00", lambda m: tokens[int(m.group(1))], text)
+
+
+def plain_md(text: str) -> str:
+    text = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", text)
+    return re.sub(r"[*`]", "", text)
+
+
+def topic_info(rel: str) -> dict:
+    """Title, level, reading time and the "In one line" summary of a topic page."""
+    text = (ROOT / rel).read_text(encoding="utf-8")
+    m = re.search(r"\*\*Level:\*\* (\w+).*?\*\*Reading time:\*\* (\d+) min", text)
+    if not m:
+        raise SystemExit(f"{rel}: no '**Level:** ... **Reading time:** N min' line")
+    one = re.search(r"^\*\*In one line:\*\*\s*(.+)$", text, re.M)
+    return dict(path=rel, title=text.split("\n")[0].lstrip("# ").strip(), level=m.group(1), min=int(m.group(2)),
+                one=inline_md(one.group(1).strip()) if one else "", plain=plain_md(one.group(1).strip()) if one else "",
+                demos=site_data.topic_demos(text, rel.split("/")[0]))
+
+
+def phases() -> list:
+    out = []
+    for pid, label in sorted(g.PHASES.items()):
+        dirs = sorted(p.name for p in ROOT.glob(f"{pid}-*") if p.is_dir())
+        out.append(dict(id=pid, n=int(pid), name=label.split(": ", 1)[1], dir=dirs[0] if dirs else ""))
+    return out
+
+
+def lessons(anims) -> list:
+    out = []
+    for a in anims:
+        topics = [topic_info(t) for t in a["topics"]]
+        demos = []
+        for t in topics:
+            demos += [d for d in t.pop("demos") if d not in demos]
+        item = dict(name=a["name"], title=a["title"], sub=a["subtitle"], phase=a["phase"], kind=a["kind"], marks=a["marks"],
+                    steps=[[s["label"], s["sub"], s["c1"], s["c2"]] for s in a["steps"]], topics=topics, demos=demos)
+        if a["kind"] == "bars":
+            item["labels"] = a["labels"]
+            item["frames"] = [dict(name=f[0], probs=f[1], keep=f[2]) for f in a["frames"]]
+        out.append(item)
+    out.sort(key=lambda m: (m["phase"], m["topics"][0]["path"]))
+    return out
+
+
+def site_payload(anims, extra=None) -> dict:
+    items = lessons(anims)
+    names = {m["name"] for m in items}
+    for lab, meta in site_data.LAB_META.items():
+        missing = [n for n in meta["lessons"] if n not in names]
+        if missing:
+            raise SystemExit(f"lab {lab!r} is attached to lessons that do not exist: {missing}")
+    demos = site_data.demo_outputs()
+    used = {d for m in items for d in m["demos"]}
+    data = dict(repo=REPO, phases=phases(), lessons=items,
+                labs=dict(meta=site_data.LAB_META, data=site_data.labs()),
+                demos={k: v for k, v in demos.items() if k in used},
+                counts=dict(lessons=len(items), questions=0))
+    data.update(extra or {})
+    data["counts"]["questions"] = len(data.get("quiz", []))
+    return data
+
+
+# ------------------------------------------------------------------ assets
+def asset_files() -> list:
+    """Source files copied to _site/assets/, in the order the page loads the scripts."""
+    js = [SRC / "core" / "py.js", SRC / "shared.js"]
+    js += sorted(p for p in (SRC / "core").glob("*.js") if p.name != "py.js")
+    js += sorted((SRC / "labs").glob("*.js"))
+    return [SRC / "theme.css"] + js
+
+
+def copy_assets(out: pathlib.Path) -> str:
+    """Copy scripts/site/ into out/assets/ and return a short content hash for cache busting."""
+    digest = hashlib.sha256()
+    for src in asset_files() + [SRC / "app.js", SRC / "quiz.js", SRC / "quiz.css"]:
+        if not src.exists():
+            continue
+        dst = out / "assets" / src.relative_to(SRC)
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(src, dst)
+        digest.update(src.read_bytes())
+    return digest.hexdigest()[:10]
+
+
+def script_tags(prefix: str, version: str, entry: str) -> str:
+    files = ["data.js"] + [p.relative_to(SRC).as_posix() for p in asset_files() if p.suffix == ".js"] + [entry]
+    return "\n".join(f'<script defer src="{prefix}assets/{f}?v={version}"></script>' for f in files)
+
+
+def write_data(out: pathlib.Path, data: dict) -> str:
+    text = "window.AIER_DATA=" + json.dumps(data, separators=(",", ":"), ensure_ascii=False) + ";\n"
+    (out / "assets").mkdir(parents=True, exist_ok=True)
+    (out / "assets" / "data.js").write_text(text, encoding="utf-8")
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()[:10]
+
+
+def fill(page: str, version: str, count: int, prefix: str, entry: str) -> str:
+    return (page.replace("__SCRIPTS__", script_tags(prefix, version, entry)).replace("__THEME_BOOT__", THEME_BOOT)
+            .replace("__FAVICON__", FAVICON).replace("__IC_MENU__", IC_MENU).replace("__IC_SEARCH__", IC_SEARCH)
+            .replace("__REPO__", REPO).replace("__COUNT__", str(count)).replace("__V__", version))
 
 
 def main():
@@ -142,21 +197,15 @@ def main():
     if OUT.exists():
         shutil.rmtree(OUT)
     (OUT / "anim").mkdir(parents=True)
-    manifest = []
     for a in anims:
         (OUT / "anim" / f"{a['name']}.svg").write_text(a["svg"], encoding="utf-8")
-        manifest.append(dict(
-            name=a["name"], title=a["title"], subtitle=a["subtitle"], phase=a["phase"], marks=a["marks"],
-            topics=[dict(path=t, title=g.title_of_topic(t)) for t in a["topics"]]))
-    manifest.sort(key=lambda m: (m["phase"], m["topics"][0]["path"]))
-    page = (PAGE.replace("__MANIFEST__", json.dumps(manifest, separators=(",", ":")).replace("</", "<\\/"))
-            .replace("__PHASES__", json.dumps(g.PHASES)).replace("__REPO__", REPO)
-            .replace("__COUNT__", str(len(manifest))))
-    (OUT / "index.html").write_text(page, encoding="utf-8")
+    import build_quiz  # the quiz adds its questions to the shared data file
+    data = site_payload(anims, build_quiz.payload(anims))
+    version = copy_assets(OUT) + write_data(OUT, data)[:4]
+    (OUT / "index.html").write_text(fill(PAGE, version, len(data["lessons"]), "", "app.js"), encoding="utf-8")
     (OUT / ".nojekyll").write_text("")
-    print(f"site: {len(manifest)} animations -> {OUT}  (title safe: {html.escape(manifest[0]['title'])})")
-    import build_quiz  # after the wipe above: the quiz lives in _site/quiz/
-    build_quiz.main()
+    print(f"site: {len(data['lessons'])} lessons, {len(data['labs']['meta'])} labs, {len(data['demos'])} demo outputs -> {OUT}")
+    build_quiz.write_page(OUT, data, version)
 
 
 if __name__ == "__main__":
