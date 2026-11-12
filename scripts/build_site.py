@@ -24,6 +24,7 @@ import sys
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import gen_animations as g  # noqa: E402
 import site_data  # noqa: E402
+import roadmap_data  # noqa: E402
 
 ROOT = g.core.ROOT
 OUT = ROOT / "_site"
@@ -54,7 +55,7 @@ __THEME_BOOT__
 <header class="topbar">
 <button id="menu" class="icon-btn only-narrow" type="button" aria-label="Open the list of lessons" aria-expanded="false" aria-controls="sidebar">__IC_MENU__</button>
 <a class="brand" href="#"><span class="logo" aria-hidden="true">AI</span><span><span class="name-long">AI Engineer </span>Roadmap</span></a>
-<nav class="topnav" aria-label="Sections"><a href="#" aria-current="page">Lessons</a><a href="quiz/">Quiz</a><a href="__REPO__/blob/main/README.md#start-in-5-minutes">Start here</a></nav>
+<nav class="topnav" aria-label="Sections"><a href="#" data-nav="lessons" aria-current="page">Lessons</a><a href="#roadmap" data-nav="roadmap">Roadmap</a><a href="quiz/">Quiz</a><a href="__REPO__/blob/main/README.md#start-in-5-minutes">Start here</a></nav>
 <span class="grow"></span>
 <div class="searchbox">__IC_SEARCH__<input id="q" type="search" placeholder="Search __COUNT__ lessons" aria-label="Search lessons" autocomplete="off"><kbd aria-hidden="true">/</kbd></div>
 <a class="icon-btn only-narrow" href="quiz/">Quiz</a>
@@ -143,7 +144,9 @@ def site_payload(anims, extra=None) -> dict:
             raise SystemExit(f"lab {lab!r} is attached to lessons that do not exist: {missing}")
     demos = site_data.demo_outputs()
     used = {d for m in items for d in m["demos"]}
-    data = dict(repo=REPO, phases=phases(), lessons=items,
+    road = dict(steps=[list(s) for s in roadmap_data.STEPS], after=[list(a) for a in roadmap_data.AFTER],
+                phases={k: v for k, v in roadmap_data.PHASES.items()})
+    data: dict = dict(repo=REPO, phases=phases(), lessons=items, roadmap=road,
                 labs=dict(meta=site_data.LAB_META, data=site_data.labs()),
                 demos={k: v for k, v in demos.items() if k in used},
                 counts=dict(lessons=len(items), questions=0))

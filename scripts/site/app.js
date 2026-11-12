@@ -412,6 +412,7 @@
         h('p.lead', D.counts.lessons + ' short step-by-step lessons' + (labs.length ? ', ' + labs.length + ' hands-on labs' : '') + ' and ' + D.counts.questions + ' quiz questions on RAG, LLMs, agents, MCP and production AI.'),
         h('div.cta', h('a.btn.primary', { href: '#' + first.name }, icon('play'), 'Start with lesson 1'),
           labs.length ? h('a.btn', { href: '#lab/' + labs[0] }, icon('flask'), 'Open a lab') : null,
+          h('a.btn', { href: '#roadmap' }, icon('spark'), 'See the roadmap'),
           h('a.btn', { href: 'quiz/' }, icon('quiz'), 'Take the quiz')),
         labs.length ? h('p.note', icon('info', 'sm'), h('span', 'The labs run small teaching models with hand-picked numbers from this repo’s Python demos. They are not real LLMs.')) : null),
       heroArt()));
@@ -430,7 +431,7 @@
       })));
     }
 
-    main.appendChild(h('div.section-head', h('h2', 'The roadmap'), h('p', 'Seven phases, from your first RAG pipeline to running AI in production.')));
+    main.appendChild(h('div.section-head', h('h2', 'The roadmap'), h('p', 'Seven phases, from your first RAG pipeline to running AI in production. ', h('a', { href: '#roadmap' }, 'See the full explanation'))));
     main.appendChild(h('div.grid-phases', D.phases.map(function (p) {
       var items = LESSONS.filter(function (x) { return x.phase === p.id; }), mins = 0, lv = { Beginner: 0, Intermediate: 0, Advanced: 0 };
       items.forEach(function (x) { mins += minutes(x); if (lv[level(x)] !== undefined) lv[level(x)] += 1; });
@@ -453,9 +454,79 @@
   }
 
   // ---------------------------------------------------------------- router
+  // ---------------------------------------------------------------- roadmap
+  function hours(mins) { return mins >= 90 ? AIER.py.fixed(mins / 60, 1) + ' h' : mins + ' min'; }
+  function renderRoadmap() {
+    teardown(); cur = null;
+    var R = D.roadmap || { steps: [], after: [], phases: {} };
+    var main = ui.clear($('#main'));
+    $('#dock').hidden = true;
+    doc.title = 'Roadmap · AI Engineer Roadmap';
+    var total = 0;
+    LESSONS.forEach(function (l) { total += minutes(l); });
+    main.appendChild(h('section.road-intro',
+      h('span.eyebrow', icon('spark', 'sm'), 'The whole path on one page'),
+      h('h1', 'From your first RAG app to AI running in production'),
+      h('p.lead', 'Seven phases, done in order. Each one ends with something you can do, and with code you can run. About ' + hours(total) + ' of reading in total, plus the labs and the code.'),
+      h('div.road-stats',
+        h('div', h('b', String(D.phases.length)), h('span', 'phases')),
+        h('div', h('b', String(LESSONS.length)), h('span', 'lessons')),
+        h('div', h('b', String(availableLabs().length)), h('span', 'hands-on labs')),
+        h('div', h('b', String(D.counts.questions)), h('span', 'quiz questions')))));
+
+    main.appendChild(h('div.section-head', h('h2', 'How every lesson works'), h('p', 'The same four steps each time.')));
+    main.appendChild(h('ol.road-steps', R.steps.map(function (s, i) {
+      return h('li', h('span.num', String(i + 1)), h('div', h('b', s[0]), h('p', s[1])));
+    })));
+
+    main.appendChild(h('div.section-head', h('h2', 'The seven phases'), h('p', 'Click a card to open the lessons, or start from the top.')));
+    var line = h('ol.timeline');
+    D.phases.forEach(function (p) {
+      var info = R.phases[p.id] || {}, items = LESSONS.filter(function (x) { return x.phase === p.id; });
+      var mins = 0, lv = { Beginner: 0, Intermediate: 0, Advanced: 0 };
+      items.forEach(function (x) { mins += minutes(x); if (lv[level(x)] !== undefined) lv[level(x)] += 1; });
+      var seen = seenIn(p.id), next = items.filter(function (x) { return !progress.seen[x.name]; })[0] || items[0];
+      var labIds = (info.labs || []).filter(function (id) { return AIER.labs[id] && LABS[id]; });
+      var body = h('div.rcard', { dataset: { phase: p.id } },
+        h('p.ph', 'Phase ' + p.n), h('h3', p.name), info.tagline ? h('p.tagline', info.tagline) : null,
+        h('p.meta', h('span', items.length + ' lessons'), h('span', '≈ ' + hours(mins)), h('span', lv.Beginner + ' beginner · ' + lv.Intermediate + ' intermediate · ' + lv.Advanced + ' advanced'),
+          seen ? h('span.chip.good', seen + ' of ' + items.length + ' viewed') : null),
+        info.why ? h('p.why', info.why) : null,
+        info.outcomes && info.outcomes.length ? h('div.block', h('h4', 'After this phase you can'), h('ul.ticks', info.outcomes.map(function (t) { return h('li', t); }))) : null,
+        info.ideas && info.ideas.length ? h('div.block', h('h4', 'Ideas you will meet'), h('div.chips', info.ideas.map(function (t) { return h('span.chip', t); }))) : null,
+        (info.demos && info.demos.length) || labIds.length ? h('div.block', h('h4', 'Try it'),
+          h('div.chips', labIds.map(function (id) { return h('a.chip.accent', { href: '#lab/' + id }, icon('flask', 'sm'), LABS[id].title); })
+            .concat((info.demos || []).map(function (d) { return h('a.chip.code', { href: D.repo + '/blob/main/' + d, rel: 'noopener' }, d.split('/').pop()); })))) : null,
+        info.needs ? h('p.needs', h('b', 'Before you start: '), info.needs) : null,
+        h('div.actions',
+          h('a.btn.small.primary', { href: '#' + next.name }, seen ? 'Continue' : 'Start phase ' + p.n, icon('next', 'sm')),
+          h('a.btn.small', { href: 'quiz/#phase=' + p.dir }, icon('quiz', 'sm'), 'Phase quiz'),
+          h('a.btn.small', { href: D.repo + '/tree/main/' + p.dir, rel: 'noopener' }, 'Read on GitHub')),
+        h('details', h('summary', icon('chevron', 'sm'), 'All ' + items.length + ' lessons'), h('ul.topic-rows', items.map(topicRow))));
+      line.appendChild(h('li.tl', { dataset: { phase: p.id } }, h('span.node', { 'aria-hidden': 'true' }, String(p.n)), body));
+    });
+    main.appendChild(line);
+
+    if (R.after && R.after.length) {
+      main.appendChild(h('div.section-head', h('h2', 'After the seven phases'), h('p', 'Turn what you learned into proof.')));
+      main.appendChild(h('div.grid-labs', R.after.map(function (a) {
+        return h('a.card.lab-card', { href: D.repo + '/tree/main/' + a[1], rel: 'noopener' }, h('h3', a[0]), h('p', a[2]));
+      })));
+    }
+    main.appendChild(footer());
+    renderSidebar(null); root.scrollTo(0, 0);
+  }
+
+  // ---------------------------------------------------------------- router
   function route() {
     closeNav();
     var hash = decodeURIComponent(root.location.hash.slice(1));
+    ['lessons', 'roadmap'].forEach(function (k) {
+      var a = doc.querySelector('[data-nav="' + k + '"]');
+      if (!a) return;
+      if ((k === 'roadmap') === (hash === 'roadmap')) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+    if (hash === 'roadmap' && !BY.roadmap) { renderRoadmap(); return; }
     if (hash.indexOf('lab/') === 0 && LABS[hash.slice(4)] && AIER.labs[hash.slice(4)]) { renderLab(hash.slice(4)); return; }
     if (BY[hash]) { renderLesson(BY[hash]); return; }
     renderHome();
