@@ -35,7 +35,7 @@ __THEME_BOOT__
 <a class="skip" href="#view">Skip to the quiz</a>
 <header class="topbar">
 <a class="brand" href="../"><span class="logo" aria-hidden="true">AI</span><span><span class="name-long">AI Engineer </span>Roadmap</span></a>
-<nav class="topnav" aria-label="Sections"><a href="../">Lessons</a><a href="./" aria-current="page">Quiz</a><a href="__REPO__/blob/main/README.md#start-in-5-minutes">Start here</a></nav>
+<nav class="topnav" aria-label="Sections"><a href="../">Lessons</a><a href="../#roadmap">Roadmap</a><a href="./" aria-current="page">Quiz</a><a href="__REPO__/blob/main/README.md#start-in-5-minutes">Start here</a></nav>
 <span class="grow"></span>
 <a class="icon-btn only-narrow" href="../">Lessons</a>
 <button id="theme" class="icon-btn" type="button" aria-label="Change theme"></button>
