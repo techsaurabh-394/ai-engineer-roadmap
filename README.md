@@ -68,6 +68,8 @@ Hard ideas are easier to follow when you can watch them. This animation plays on
 
 **An animation for every one of the 113 topics** (110 animations; a few topics share one). Open the **[interactive viewer](https://techsaurabh-394.github.io/ai-engineer-roadmap/)** to step through them with Previous, Play and Next, search by name, or jump straight to a topic. The same animations are in the [animation gallery](docs/animations.md) and in the **Watch it** block at the top of each topic page.
 
+**Read it, not just watch it:** every lesson on the [interactive viewer](https://techsaurabh-394.github.io/ai-engineer-roadmap/) now shows the full topic text under the animation: what it is, how it works, the formulas, worked examples with numbers, diagrams, code you can copy, and the interview questions.
+
 **Test yourself:** the [interactive quizzes](https://techsaurabh-394.github.io/ai-engineer-roadmap/quiz/) turn the 75 checkpoint questions of the seven phases into flash cards. Think of your own answer, reveal the real one, mark "I knew it" or "Not yet", and review the ones you missed. Your progress stays in your browser only.
 
 ## The big picture

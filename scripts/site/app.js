@@ -249,6 +249,38 @@
     return section;
   }
 
+  // ---------------------------------------------------------------- full lesson text (what it is, how it works, formulas, code)
+  function readingSection(lesson) {
+    var box = h('section.card.reading-card', { id: 'read', 'aria-label': 'Read the full lesson' },
+      h('header.reading-head', h('p.k', 'Read it properly'), h('h2', 'What it is, how it works, and the math')));
+    lesson.topics.forEach(function (t) {
+      var holder = h('div.reading-body', { 'aria-busy': 'true' }, h('p.muted', 'Loading the lesson text…'));
+      if (lesson.topics.length > 1) box.appendChild(h('h3.reading-topic', t.title));
+      box.appendChild(holder);
+      var dead = false; cleanup.push(function () { dead = true; });
+      root.fetch('topic/' + t.frag + '.html').then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+        .then(function (txt) {
+          if (dead) return;
+          holder.innerHTML = txt; holder.removeAttribute('aria-busy');
+          holder.querySelectorAll('.copy').forEach(function (b) {
+            b.addEventListener('click', function () {
+              var code = b.closest('.code').querySelector('code').textContent;
+              var done = function () { b.textContent = 'Copied'; root.setTimeout(function () { b.textContent = 'Copy'; }, 1500); };
+              if (root.navigator && root.navigator.clipboard) root.navigator.clipboard.writeText(code).then(done, function () {});
+            });
+          });
+          holder.querySelectorAll('[data-jump]').forEach(function (a) {
+            a.addEventListener('click', function (e) { e.preventDefault(); var el = holder.querySelector('#' + a.getAttribute('data-jump')); if (el) el.scrollIntoView({ behavior: ui.reducedMotion() ? 'auto' : 'smooth', block: 'start' }); });
+          });
+        })
+        .catch(function () {
+          holder.removeAttribute('aria-busy'); ui.clear(holder);
+          holder.appendChild(h('p', 'Could not load the lesson text here. ', h('a', { href: D.repo + '/blob/main/' + t.path, rel: 'noopener' }, 'Read it on GitHub'), '.'));
+        });
+    });
+    return box;
+  }
+
   // ---------------------------------------------------------------- lesson page
   function renderLesson(lesson) {
     teardown(); cur = lesson; step = 0;
@@ -307,6 +339,7 @@
     panel.appendChild(links);
 
     main.appendChild(h('div.lesson-wrap', h('div.lesson-grid', stageCard, panel)));
+    main.appendChild(readingSection(lesson));
     var nextL0 = LESSONS[lesson.index + 1], phaseItems = LESSONS.filter(function (x) { return x.phase === lesson.phase; });
     main.appendChild(h('div.card.finish', { id: 'finish', hidden: true, role: 'status' },
       h('span.finish-ic', { 'aria-hidden': 'true' }, icon('check')),

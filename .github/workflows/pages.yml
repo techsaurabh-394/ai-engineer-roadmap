@@ -7,6 +7,7 @@ on:
       - "scripts/anim_*.py"
       - "scripts/gen_animations.py"
       - "scripts/build_site.py"
+      - "scripts/md_render.py"
       - "scripts/build_quiz.py"
       - "scripts/quiz_core.py"
       - "scripts/quiz_links.json"
