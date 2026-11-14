@@ -25,6 +25,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import gen_animations as g  # noqa: E402
 import site_data  # noqa: E402
 import roadmap_data  # noqa: E402
+import md_render  # noqa: E402
 
 ROOT = g.core.ROOT
 OUT = ROOT / "_site"
@@ -50,6 +51,7 @@ PAGE = r"""<!doctype html>
 <link rel="icon" href="__FAVICON__">
 __THEME_BOOT__
 <link rel="stylesheet" href="assets/theme.css?v=__V__">
+<link rel="stylesheet" href="assets/reading.css?v=__V__">
 </head><body>
 <a class="skip" href="#main">Skip to the content</a>
 <header class="topbar">
@@ -132,7 +134,31 @@ def lessons(anims) -> list:
             item["frames"] = [dict(name=f[0], probs=f[1], keep=f[2]) for f in a["frames"]]
         out.append(item)
     out.sort(key=lambda m: (m["phase"], m["topics"][0]["path"]))
+    for m in out:
+        for t in m["topics"]:
+            t["frag"] = frag_name(t["path"])
     return out
+
+
+def frag_name(path: str) -> str:
+    return path.replace("/topics/", "__").removesuffix(".md")
+
+
+def write_topic_fragments(out: pathlib.Path, items: list) -> int:
+    """One HTML fragment per topic page (the full lesson text), fetched when a lesson is opened."""
+    lesson_of = {}
+    for m in items:
+        for t in m["topics"]:
+            lesson_of.setdefault(t["path"], m["name"])
+    d = out / "topic"
+    d.mkdir(parents=True, exist_ok=True)
+    seen = set()
+    for m in items:
+        for t in m["topics"]:
+            if t["path"] not in seen:
+                seen.add(t["path"])
+                (d / (t["frag"] + ".html")).write_text(md_render.topic_html(t["path"], lesson_of), encoding="utf-8")
+    return len(seen)
 
 
 def site_payload(anims, extra=None) -> dict:
@@ -167,7 +193,7 @@ def asset_files() -> list:
 def copy_assets(out: pathlib.Path) -> str:
     """Copy scripts/site/ into out/assets/ and return a short content hash for cache busting."""
     digest = hashlib.sha256()
-    for src in asset_files() + [SRC / "app.js", SRC / "quiz.js", SRC / "quiz.css"]:
+    for src in asset_files() + [SRC / "app.js", SRC / "quiz.js", SRC / "quiz.css", SRC / "reading.css"]:
         if not src.exists():
             continue
         dst = out / "assets" / src.relative_to(SRC)
@@ -204,10 +230,11 @@ def main():
         (OUT / "anim" / f"{a['name']}.svg").write_text(a["svg"], encoding="utf-8")
     import build_quiz  # the quiz adds its questions to the shared data file
     data = site_payload(anims, build_quiz.payload(anims))
+    n_frag = write_topic_fragments(OUT, data["lessons"])
     version = copy_assets(OUT) + write_data(OUT, data)[:4]
     (OUT / "index.html").write_text(fill(PAGE, version, len(data["lessons"]), "", "app.js"), encoding="utf-8")
     (OUT / ".nojekyll").write_text("")
-    print(f"site: {len(data['lessons'])} lessons, {len(data['labs']['meta'])} labs, {len(data['demos'])} demo outputs -> {OUT}")
+    print(f"site: {len(data['lessons'])} lessons, {len(data['labs']['meta'])} labs, {len(data['demos'])} demo outputs, {n_frag} full lesson texts -> {OUT}")
     build_quiz.write_page(OUT, data, version)
 
 
