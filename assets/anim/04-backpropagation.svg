@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420" role="img" aria-labelledby="t d" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+<title id="t">Backpropagation</title>
+<desc id="d">The chain rule, run backward from the loss.</desc>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9DA7B3"/></marker></defs>
+<rect width="880" height="420" rx="16" fill="#0D1117"/>
+<text x="440.0" y="40" font-size="22" fill="#E6EDF3" font-weight="700" text-anchor="middle">Backpropagation</text>
+<text x="440.0" y="64" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">The chain rule, run backward from the loss.</text>
+<line x1="440" y1="135" x2="678" y2="208" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="678" y1="208" x2="587" y2="325" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="587" y1="325" x2="293" y2="325" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="293" y1="325" x2="202" y2="208" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="202" y1="208" x2="440" y2="135" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<rect x="365" y="110" width="150" height="50" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.2;0.212;1" values="#F472B6;#F472B6;#30363D;#30363D"/></rect>
+<text x="440" y="141" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Forward</text>
+<rect x="603" y="183" width="150" height="50" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.188;0.2;0.4;0.412;1" values="#30363D;#30363D;#F472B6;#F472B6;#30363D;#30363D"/></rect>
+<text x="678" y="214" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Output delta</text>
+<rect x="512" y="300" width="150" height="50" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.388;0.4;0.6;0.612;1" values="#30363D;#30363D;#F472B6;#F472B6;#30363D;#30363D"/></rect>
+<text x="587" y="331" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Hidden deltas</text>
+<rect x="218" y="300" width="150" height="50" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.588;0.6;0.8;0.812;1" values="#30363D;#30363D;#F472B6;#F472B6;#30363D;#30363D"/></rect>
+<text x="293" y="331" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Gradients</text>
+<rect x="127" y="183" width="150" height="50" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.788;0.8;1.0" values="#30363D;#30363D;#F472B6;#F472B6"/></rect>
+<text x="202" y="214" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Update</text>
+<circle r="9" fill="#F5B042" cx="440" cy="99"><animate attributeName="cx" dur="12.0s" repeatCount="indefinite" keyTimes="0.0;0.01;0.2;0.27;0.4;0.47;0.6;0.67;0.8;0.87;1.0" values="440;440;440;677.8;677.8;586.9;586.9;293.1;293.1;202.2;202.2"/><animate attributeName="cy" dur="12.0s" repeatCount="indefinite" keyTimes="0.0;0.01;0.2;0.27;0.4;0.47;0.6;0.67;0.8;0.87;1.0" values="99;99;99;171.6;171.6;288.9;288.9;288.9;288.9;171.6;171.6"/></circle>
+<text x="440" y="234" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">1. Run forward and save every z and a<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.2;0.212;1" values="1;1;0;0"/></text>
+<text x="440" y="256" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">Prediction 0.4901, loss 0.1300.<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.2;0.212;1" values="1;1;0;0"/></text>
+<text x="440" y="223" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">2. Output delta: d2 = (a2 - y) * a2 * (1<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.188;0.2;0.4;0.412;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="245" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">- a2)<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.188;0.2;0.4;0.412;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="267" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">Here d2 = -0.1274.<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.188;0.2;0.4;0.412;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="223" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">3. Push the delta back through the<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.388;0.4;0.6;0.612;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="245" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">weights<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.388;0.4;0.6;0.612;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="267" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">Deltas: -0.0218 and +0.0175.<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.388;0.4;0.6;0.612;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="223" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">4. Each weight's gradient is delta times<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.588;0.6;0.8;0.812;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="245" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">its input<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.588;0.6;0.8;0.812;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="267" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">Reuse of results keeps it fast.<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.588;0.6;0.8;0.812;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="223" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">5. Update every weight: w = w - lr *<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.788;0.8;1.0" values="0;0;1;1"/></text>
+<text x="440" y="245" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">gradient<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.788;0.8;1.0" values="0;0;1;1"/></text>
+<text x="440" y="267" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">Loss on this example falls to 0.1166.<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.788;0.8;1.0" values="0;0;1;1"/></text>
+</svg>

@@ -21,6 +21,12 @@ Words to know:
 
 The fake answer is **never shown to the user** and never used as evidence. It is only a better search key. The final answer is still generated from the real retrieved chunks.
 
+<!-- anim:07-hyde -->
+## Watch it
+![HyDE: Search with a made-up answer, because it looks like real documents.](../../assets/anim/07-hyde.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#07-hyde).*
+
 ## How it works
 
 1. Prompt the LLM: "Write a short passage that answers this question."

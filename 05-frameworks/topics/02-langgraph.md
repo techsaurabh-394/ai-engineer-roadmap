@@ -24,6 +24,12 @@ A plain agent loop (Phase 4) is `while not done: think, act`. That works until y
 - **Router** — a small function that looks at the state and returns the name of the next node.
 - **Compile** — freeze the graph definition into something you can run. It also checks the wiring.
 
+<!-- anim:02-langgraph -->
+## Watch it
+![LangGraph: a graph of steps: Nodes do the work, edges decide what comes next, state is shared.](../../assets/anim/02-langgraph.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#02-langgraph).*
+
 ## How it works
 
 1. Define the state shape.

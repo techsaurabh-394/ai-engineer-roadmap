@@ -19,6 +19,12 @@ Words to know:
 - **Human labels:** grades from real people, used as the reference for checking the judge.
 - **Agreement / kappa:** how often judge and human match, and the same measure corrected for luck.
 
+<!-- anim:21-llm-as-a-judge -->
+## Watch it
+![LLM-as-a-judge: A model grades answers, but only with a good rubric and checks.](../../assets/anim/21-llm-as-a-judge.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#21-llm-as-a-judge).*
+
 ## How it works
 1. **Pick a mode.**
    - **Pointwise:** grade one answer on its own, such as "score 1 to 5". Good for tracking quality over time.

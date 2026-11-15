@@ -14,6 +14,12 @@ Imagine a paper form with boxes: Name, Category (tick one), Priority (1 to 3). A
 
 Free text is like a letter. A human can read it, but your program cannot reliably find the "category" in it. A model might write "Sure! Here is the JSON:" before the data, or call the field `type` one day and `category` the next. Structured outputs give you the form, and the validate-and-repair loop is the clerk.
 
+<!-- anim:17-structured-outputs -->
+## Watch it
+![Structured outputs: Make the model return JSON your code can use, and still check it.](../../assets/anim/17-structured-outputs.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#17-structured-outputs).*
+
 ## How it works
 1. **Define a schema.** Say which fields exist, their types, which are required, and which values are allowed.
 2. **Ask for it.** There are three common ways, from weakest to strongest:

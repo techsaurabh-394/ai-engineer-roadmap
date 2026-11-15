@@ -23,6 +23,12 @@ There are three common ways to stamp:
 - **Learned absolute**: a trainable vector per position (used in GPT-2 and BERT).
 - **Rotary (RoPE)**: rotates the Q and K vectors by an angle that depends on position. Used in many current open LLMs such as Llama.
 
+<!-- anim:04-positional-encoding -->
+## Watch it
+![Positional encoding: Attention has no sense of order, so position is added to each token.](../../assets/anim/04-positional-encoding.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#04-positional-encoding).*
+
 ## How it works
 **Sinusoidal formula** for position `pos` and dimension index `i`:
 

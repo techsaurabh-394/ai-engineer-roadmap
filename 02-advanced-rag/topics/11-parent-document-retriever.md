@@ -25,6 +25,12 @@ Words to know:
 - **Docstore:** a simple store that keeps the parent texts under IDs.
 - **LLM (large language model):** the AI that reads and writes text.
 
+<!-- anim:11-parent-document-retriever -->
+## Watch it
+![Parent document retriever: Search small chunks, return the larger section they came from.](../../assets/anim/11-parent-document-retriever.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#11-parent-document-retriever).*
+
 ## How it works
 
 1. Split each document into parent chunks (e.g. ~2,000 characters, or by heading).

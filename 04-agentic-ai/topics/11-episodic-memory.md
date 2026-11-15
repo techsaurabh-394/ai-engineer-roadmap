@@ -25,6 +25,12 @@ Words to know:
 - **Recall:** find the saved episodes most similar to the new task.
 - **Prune:** delete old or useless records so recall stays clean.
 
+<!-- anim:11-episodic-memory -->
+## Watch it
+![Episodic memory: A log of what the agent tried and how it turned out.](../../assets/anim/11-episodic-memory.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#11-episodic-memory).*
+
 ## How it works
 1. **Record** at the end of each task (or each attempt): task description, key actions, outcome, timestamp, and an optional lesson. The lesson can come from a reflection step.
 2. **Index** by task similarity (keywords or embeddings) and time.

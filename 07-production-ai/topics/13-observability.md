@@ -25,6 +25,12 @@ LLM apps add three things to watch on every request: **tokens** (the units a mod
 - **Token:** a small piece of text a model reads or writes. Price is per token.
 - **Alert:** an automatic message when a number crosses a limit.
 
+<!-- anim:13-observability -->
+## Watch it
+![Observability: Record enough per request to explain why the system did what it did.](../../assets/anim/13-observability.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#13-observability).*
+
 ## How it works
 1. Give each request a **request ID** and pass it through every step.
 2. Wrap each step (retrieval, rerank, LLM call, guardrail) in a span.

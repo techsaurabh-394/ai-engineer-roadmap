@@ -22,6 +22,12 @@ Without notes, AI work becomes chaos: "Which chunk size gave that good score las
 
 MLflow started with classic machine learning and also has features for LLM apps (tracing, evaluation). Check the [MLflow docs](https://mlflow.org/docs/latest/) for current GenAI features.
 
+<!-- anim:09-mlflow -->
+## Watch it
+![MLflow: Record experiments so the best run can be compared and reproduced.](../../assets/anim/09-mlflow.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#09-mlflow).*
+
 ## How it works
 1. Start a run.
 2. Log parameters (what you changed).

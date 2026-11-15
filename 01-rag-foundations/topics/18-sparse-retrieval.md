@@ -24,6 +24,12 @@ Words to know:
 - **Term frequency (TF):** how many times a word appears in a document.
 - **Stop words / stemming:** dropping very common words, and cutting words to a base form ("tokens" to "token").
 
+<!-- anim:18-sparse-retrieval -->
+## Watch it
+![Sparse retrieval: Very long vectors, mostly zeros, one slot per vocabulary word.](../../assets/anim/18-sparse-retrieval.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#18-sparse-retrieval).*
+
 ## How it works
 1. **Tokenize** every document (lowercase, split into words, maybe remove stop words and apply stemming).
 2. **Build an inverted index**: `word → [(doc_id, count), ...]`. Store document lengths too.

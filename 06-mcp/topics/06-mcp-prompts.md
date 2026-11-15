@@ -15,6 +15,12 @@ Why not just paste text? Because a good server author knows the best wording for
 - **Argument:** a blank in the template that the user fills in, such as `text`.
 - **Message:** one item with a `role` (such as user) and some `content`.
 
+<!-- anim:06-mcp-prompts -->
+## Watch it
+![MCP prompts: Reusable message templates the user picks, like slash commands.](../../assets/anim/06-mcp-prompts.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#06-mcp-prompts).*
+
 ## How it works
 1. Server declares the `prompts` capability.
 2. Client sends `prompts/list`. Each prompt has a `name`, `description` and `arguments` (each with a name and whether it is required).

@@ -16,6 +16,12 @@ In MCP, "server" does not mean a big machine in the cloud. Most servers are smal
 - **Notification:** a message with no `id`. Nobody replies to it.
 - **stdio:** the server reads messages from standard input and writes replies to standard output. The host starts it as a child process.
 
+<!-- anim:02-mcp-server -->
+## Watch it
+![MCP server: A small program that offers tools, resources and prompts.](../../assets/anim/02-mcp-server.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#02-mcp-server).*
+
 ## How it works
 1. The server starts and waits for messages.
 2. It receives `initialize` with the client's protocol version and capabilities.

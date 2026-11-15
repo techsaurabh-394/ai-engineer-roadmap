@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 330" width="880" height="330" role="img" aria-labelledby="t d" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+<title id="t">Multi-agent systems</title>
+<desc id="d">Several agents with different roles pass work to each other.</desc>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9DA7B3"/></marker></defs>
+<rect width="880" height="330" rx="16" fill="#0D1117"/>
+<text x="440.0" y="40" font-size="22" fill="#E6EDF3" font-weight="700" text-anchor="middle">Multi-agent systems</text>
+<text x="440.0" y="64" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">Several agents with different roles pass work to each other.</text>
+<line x1="160" y1="150" x2="199" y2="150" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="333" y1="150" x2="372" y2="150" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="506" y1="150" x2="545" y2="150" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="679" y1="150" x2="718" y2="150" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<rect x="30" y="104" width="128" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.2;0.212;1" values="#F5B042;#F5B042;#30363D;#30363D"/></rect>
+<circle cx="48" cy="104" r="13" fill="#F5B042"/><text x="48" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">1</text>
+<text x="94" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Task</text>
+<text x="94" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">a big job</text>
+<rect x="203" y="104" width="128" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.188;0.2;0.4;0.412;1" values="#30363D;#30363D;#F5B042;#F5B042;#30363D;#30363D"/></rect>
+<circle cx="221" cy="104" r="13" fill="#F5B042"/><text x="221" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">2</text>
+<text x="267" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Planner</text>
+<text x="267" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">splits it</text>
+<rect x="376" y="104" width="128" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.388;0.4;0.6;0.612;1" values="#30363D;#30363D;#F5B042;#F5B042;#30363D;#30363D"/></rect>
+<circle cx="394" cy="104" r="13" fill="#F5B042"/><text x="394" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">3</text>
+<text x="440" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Workers</text>
+<text x="440" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">each a role</text>
+<rect x="549" y="104" width="128" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.588;0.6;0.8;0.812;1" values="#30363D;#30363D;#F5B042;#F5B042;#30363D;#30363D"/></rect>
+<circle cx="567" cy="104" r="13" fill="#F5B042"/><text x="567" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">4</text>
+<text x="613" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Hand off</text>
+<text x="613" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">messages</text>
+<rect x="722" y="104" width="128" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.788;0.8;1.0" values="#30363D;#30363D;#F5B042;#F5B042"/></rect>
+<circle cx="740" cy="104" r="13" fill="#F5B042"/><text x="740" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">5</text>
+<text x="786" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Result</text>
+<text x="786" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">combined</text>
+<circle r="9" fill="#F5B042" cx="94" cy="88"><animate attributeName="cx" dur="12.0s" repeatCount="indefinite" keyTimes="0.0;0.01;0.2;0.27;0.4;0.47;0.6;0.67;0.8;0.87;1.0" values="94;94;94;267;267;440;440;613;613;786;786"/><animate attributeName="cy" dur="12.0s" repeatCount="indefinite" keyTimes="0.0;0.01;0.2;0.27;0.4;0.47;0.6;0.67;0.8;0.87;1.0" values="88;88;88;88;88;88;88;88;88;88;88"/></circle>
+<rect x="30" y="226" width="820" height="84" rx="12" fill="#161B22" stroke="#30363D"/>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">1. A big job comes in<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.2;0.212;1" values="1;1;0;0"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">Too broad for one agent.<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.2;0.212;1" values="1;1;0;0"/></text>
+<text x="836" y="300" font-size="12" fill="#9DA7B3" text-anchor="end" opacity="0">Step 1 of 5<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.2;0.212;1" values="1;1;0;0"/></text>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">2. A planner agent splits it into parts<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.188;0.2;0.4;0.412;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">One part per specialist.<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.188;0.2;0.4;0.412;1" values="0;0;1;1;0;0"/></text>
+<text x="836" y="300" font-size="12" fill="#9DA7B3" text-anchor="end" opacity="0">Step 2 of 5<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.188;0.2;0.4;0.412;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">3. Worker agents each handle one part<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.388;0.4;0.6;0.612;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">Each has its own prompt and tools.<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.388;0.4;0.6;0.612;1" values="0;0;1;1;0;0"/></text>
+<text x="836" y="300" font-size="12" fill="#9DA7B3" text-anchor="end" opacity="0">Step 3 of 5<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.388;0.4;0.6;0.612;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">4. They pass results to each other as messages<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.588;0.6;0.8;0.812;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">For example: researcher to writer to reviewer.<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.588;0.6;0.8;0.812;1" values="0;0;1;1;0;0"/></text>
+<text x="836" y="300" font-size="12" fill="#9DA7B3" text-anchor="end" opacity="0">Step 4 of 5<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.588;0.6;0.8;0.812;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">5. The results are combined into one answer<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.788;0.8;1.0" values="0;0;1;1"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">Set limits so the agents cannot loop forever.<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.788;0.8;1.0" values="0;0;1;1"/></text>
+<text x="836" y="300" font-size="12" fill="#9DA7B3" text-anchor="end" opacity="0">Step 5 of 5<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.788;0.8;1.0" values="0;0;1;1"/></text>
+</svg>

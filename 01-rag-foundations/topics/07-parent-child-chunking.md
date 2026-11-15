@@ -23,6 +23,12 @@ Words to know:
 - **Key-value store:** simple storage where you look an item up by its key (here, `parent_id`).
 - **Retriever:** the component that takes a question and returns matching chunks.
 
+<!-- anim:07-parent-child-chunking -->
+## Watch it
+![Parent-child chunking: Search small pieces, answer with the big piece around them.](../../assets/anim/07-parent-child-chunking.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#07-parent-child-chunking).*
+
 ## How it works
 1. Split each document into parent chunks (by section or with a large [recursive](05-recursive-chunking.md) split).
 2. Split each parent into child chunks.

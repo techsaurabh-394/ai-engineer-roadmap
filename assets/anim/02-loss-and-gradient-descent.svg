@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420" role="img" aria-labelledby="t d" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+<title id="t">Loss and gradient descent</title>
+<desc id="d">Walk downhill on the loss, one small step at a time.</desc>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9DA7B3"/></marker></defs>
+<rect width="880" height="420" rx="16" fill="#0D1117"/>
+<text x="440.0" y="40" font-size="22" fill="#E6EDF3" font-weight="700" text-anchor="middle">Loss and gradient descent</text>
+<text x="440.0" y="64" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">Walk downhill on the loss, one small step at a time.</text>
+<line x1="440" y1="135" x2="678" y2="208" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="678" y1="208" x2="587" y2="325" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="587" y1="325" x2="293" y2="325" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="293" y1="325" x2="202" y2="208" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="202" y1="208" x2="440" y2="135" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<rect x="365" y="110" width="150" height="50" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.2;0.212;1" values="#F5B042;#F5B042;#30363D;#30363D"/></rect>
+<text x="440" y="141" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Predict</text>
+<rect x="603" y="183" width="150" height="50" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.188;0.2;0.4;0.412;1" values="#30363D;#30363D;#F5B042;#F5B042;#30363D;#30363D"/></rect>
+<text x="678" y="214" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Loss</text>
+<rect x="512" y="300" width="150" height="50" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.388;0.4;0.6;0.612;1" values="#30363D;#30363D;#F5B042;#F5B042;#30363D;#30363D"/></rect>
+<text x="587" y="331" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Gradient</text>
+<rect x="218" y="300" width="150" height="50" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.588;0.6;0.8;0.812;1" values="#30363D;#30363D;#F5B042;#F5B042;#30363D;#30363D"/></rect>
+<text x="293" y="331" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Step</text>
+<rect x="127" y="183" width="150" height="50" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.788;0.8;1.0" values="#30363D;#30363D;#F5B042;#F5B042"/></rect>
+<text x="202" y="214" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Repeat</text>
+<circle r="9" fill="#F5B042" cx="440" cy="99"><animate attributeName="cx" dur="12.0s" repeatCount="indefinite" keyTimes="0.0;0.01;0.2;0.27;0.4;0.47;0.6;0.67;0.8;0.87;1.0" values="440;440;440;677.8;677.8;586.9;586.9;293.1;293.1;202.2;202.2"/><animate attributeName="cy" dur="12.0s" repeatCount="indefinite" keyTimes="0.0;0.01;0.2;0.27;0.4;0.47;0.6;0.67;0.8;0.87;1.0" values="99;99;99;171.6;171.6;288.9;288.9;288.9;288.9;171.6;171.6"/></circle>
+<text x="440" y="234" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">1. The model makes a prediction<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.2;0.212;1" values="1;1;0;0"/></text>
+<text x="440" y="256" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">With its current weights.<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.2;0.212;1" values="1;1;0;0"/></text>
+<text x="440" y="234" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">2. Loss turns the error into one number<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.188;0.2;0.4;0.412;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="256" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">MSE for numbers, cross-entropy for classes.<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.188;0.2;0.4;0.412;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="223" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">3. The gradient gives the slope for each<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.388;0.4;0.6;0.612;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="245" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">weight<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.388;0.4;0.6;0.612;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="267" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">It points toward higher loss.<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.388;0.4;0.6;0.612;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="223" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">4. Move each weight against the slope: w<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.588;0.6;0.8;0.812;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="245" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">= w - lr * g<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.588;0.6;0.8;0.812;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="267" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">Too big a step overshoots and diverges.<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.588;0.6;0.8;0.812;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="234" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">5. Repeat until the loss stops falling<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.788;0.8;1.0" values="0;0;1;1"/></text>
+<text x="440" y="256" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">Example: w goes 0, 0.6, 1.08 toward 3.<animate attributeName="opacity" dur="12.0s" repeatCount="indefinite" keyTimes="0;0.788;0.8;1.0" values="0;0;1;1"/></text>
+</svg>

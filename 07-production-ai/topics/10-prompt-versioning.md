@@ -20,6 +20,12 @@ A prompt change can alter answers as much as a code change. A one-word edit can 
 - **Golden set:** a fixed list of test questions with known good answers. You run it on every new prompt to catch regressions (answers that got worse).
 - **Git:** a tool that stores every saved version of your files, so you can see changes and go back.
 
+<!-- anim:10-prompt-versioning -->
+## Watch it
+![Prompt versioning: Treat prompts like code: version, compare, roll out slowly, roll back.](../../assets/anim/10-prompt-versioning.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#10-prompt-versioning).*
+
 ## How it works
 1. Store prompts in files in Git, or in a registry.
 2. Give each change a version and hash.

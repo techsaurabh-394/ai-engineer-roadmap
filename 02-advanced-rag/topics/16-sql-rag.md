@@ -21,6 +21,12 @@ Words to know:
 - **Read-only user:** a database login that can look at data but cannot change or delete it.
 - **`LIMIT`:** a SQL clause that caps how many rows come back.
 
+<!-- anim:16-sql-rag -->
+## Watch it
+![SQL RAG (text-to-SQL): The model writes a query, your database answers.](../../assets/anim/16-sql-rag.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#16-sql-rag).*
+
 ## How it works
 
 1. **Schema context:** give the LLM the relevant tables and columns (for big databases, retrieve only relevant tables first).

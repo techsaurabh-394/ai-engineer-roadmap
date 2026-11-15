@@ -20,6 +20,12 @@ Words to know:
 - **Dead-letter queue (DLQ):** where messages go after repeated failure or expiry, so you can inspect them.
 - **Nack (negative acknowledgement):** the consumer says "I failed". The broker can requeue the message or send it to the DLQ.
 
+<!-- anim:06-rabbitmq -->
+## Watch it
+![RabbitMQ: A broker that routes messages from producers to queues to consumers.](../../assets/anim/06-rabbitmq.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#06-rabbitmq).*
+
 ## How it works
 1. A producer publishes a message to an **exchange** with a routing key.
 2. The exchange routes it to matching **queues**. Common types: *direct* (exact key), *fanout* (all queues), *topic* (key patterns).

@@ -20,6 +20,12 @@ A **KV cache** is like keeping notes. After reading a word once, you write down 
 
 Why keys and values? In [self-attention](02-self-attention.md), the new token's **query** must be compared to the **keys** of all earlier tokens and then mix their **values**. Thanks to the [causal mask](05-decoder-only-models.md), earlier tokens never change when new ones are added, so their K and V stay the same. We can safely compute them once and keep them.
 
+<!-- anim:07-kv-cache -->
+## Watch it
+![KV cache: Remember each token's keys and values so they are never recomputed.](../../assets/anim/07-kv-cache.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#07-kv-cache).*
+
 ## How it works
 1. **Prefill.** Run the whole prompt through the model in one parallel pass. Save K and V for every token, in every layer and every head.
 2. **Decode step.** For the new token only: compute its Q, K, V. Append K and V to the cache.

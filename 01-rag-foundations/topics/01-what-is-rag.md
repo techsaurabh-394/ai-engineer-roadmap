@@ -24,9 +24,9 @@ Words to know:
 
 <!-- anim:rag-flow -->
 ## Watch it
-![RAG step by step: documents, chunks, vectors, retrieval, answer](../../assets/anim/rag-flow.svg)
+![RAG, step by step: Watch one question travel through the whole pipeline.](../../assets/anim/rag-flow.svg)
 
-*The diagram plays on a loop. Read the caption in the box, one step at a time.*
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#rag-flow).*
 
 ## How it works
 RAG has two phases.

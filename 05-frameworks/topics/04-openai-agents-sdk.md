@@ -24,6 +24,12 @@ It keeps the number of concepts low. You do not write the loop. The Runner calls
 - **System prompt** — standing instructions given to the model before the user's message.
 - **Docstring** — the text in triple quotes under a Python function that explains what it does.
 
+<!-- anim:04-openai-agents-sdk -->
+## Watch it
+![OpenAI Agents SDK: the Runner loop: Agent plus Runner: the Runner repeats until there is a final output.](../../assets/anim/04-openai-agents-sdk.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#04-openai-agents-sdk).*
+
 ## How it works
 
 1. You define an agent with instructions and tools.

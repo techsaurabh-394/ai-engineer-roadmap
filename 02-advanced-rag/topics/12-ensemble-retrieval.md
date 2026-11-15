@@ -25,6 +25,12 @@ Words to know:
 - **RRF (Reciprocal Rank Fusion):** fusion that uses only each document's rank, not its raw score.
 - **Normalise:** rescale scores to a common range, such as 0 to 1, so they can be added fairly.
 
+<!-- anim:12-ensemble-retrieval -->
+## Watch it
+![Ensemble retrieval: Several retrievers run together and their rankings are fused.](../../assets/anim/12-ensemble-retrieval.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#12-ensemble-retrieval).*
+
 ## How it works
 
 1. Send the query to each retriever (in parallel).

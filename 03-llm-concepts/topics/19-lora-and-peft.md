@@ -15,6 +15,12 @@ Imagine a huge printed textbook. Full fine-tuning means reprinting the whole boo
 
 **PEFT** (parameter-efficient fine-tuning) is the family of methods that train only a small part of the model. LoRA is the most popular one. The [fine-tuning overview](15-fine-tuning.md) says *when* to fine-tune. This page shows *how the maths saves memory*.
 
+<!-- anim:19-lora-and-peft -->
+## Watch it
+![LoRA and PEFT: Fine-tune a tiny add-on instead of the whole model.](../../assets/anim/19-lora-and-peft.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#19-lora-and-peft).*
+
 ## How it works
 1. **Why full fine-tuning is expensive.** For each trained parameter you keep the weight (2 bytes in 16-bit), its gradient (2 bytes), and the optimizer state. The common Adam optimizer keeps two extra 32-bit numbers (8 bytes). That is about 12 bytes per parameter, so a 7B model needs roughly 84 GB before counting activations. Many setups use even more.
 2. **Freeze the weight matrix W** (size d × d). It never changes.

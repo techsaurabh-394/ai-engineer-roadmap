@@ -24,6 +24,12 @@ Words to know:
 
 Why bother? The language model only sees what you put in the prompt. If the right chunk sits at position 14, it never gets used. Models also pay less attention to text buried in the middle of long prompts, so order matters too.
 
+<!-- anim:02-reranking -->
+## Watch it
+![Reranking: A slower, more careful second pass that fixes the order.](../../assets/anim/02-reranking.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#02-reranking).*
+
 ## How it works
 
 1. User asks a question.

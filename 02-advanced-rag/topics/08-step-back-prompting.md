@@ -21,6 +21,12 @@ Words to know:
 - **Step-back question:** a broader, more general version of the user's question.
 - **RRF (Reciprocal Rank Fusion):** a simple way to merge several ranked lists. A document ranked high in any list ends up high in the merged list.
 
+<!-- anim:08-step-back-prompting -->
+## Watch it
+![Step-back prompting: Also ask the broader question behind the specific one.](../../assets/anim/08-step-back-prompting.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#08-step-back-prompting).*
+
 ## How it works
 
 1. Prompt the LLM to write a more general question.
