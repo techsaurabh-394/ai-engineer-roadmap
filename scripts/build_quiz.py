@@ -25,7 +25,7 @@ PAGE = r"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AI Engineer Roadmap: quiz</title>
-<meta name="description" content="__COUNT__ self-check questions across 7 phases: RAG, LLMs, agents, MCP and production AI. Reveal the answer, mark yourself, see your weak topics. Free and open source.">
+<meta name="description" content="__COUNT__ self-check questions across every phase: ML basics, RAG, LLMs, agents, MCP, production AI, fine-tuning and multimodal AI. Reveal the answer, mark yourself, see your weak topics. Free and open source.">
 <meta name="color-scheme" content="light dark">
 <link rel="icon" href="__FAVICON__">
 __THEME_BOOT__
@@ -43,7 +43,7 @@ __THEME_BOOT__
 </header>
 <main class="quiz-main" id="main">
 <div class="quiz-head"><h1>Check what stuck</h1>
-<p>__COUNT__ questions from the seven phases. Say your answer, reveal the model answer, and mark yourself. Cards you miss come back sooner, and every card links to the animation that explains it.</p></div>
+<p>__COUNT__ questions from every phase. Say your answer, reveal the model answer, and mark yourself. Cards you miss come back sooner, and every card links to the animation that explains it.</p></div>
 <nav class="tabs" id="tabs" aria-label="Quiz views"></nav>
 <div class="filters" id="filters" role="group" aria-label="Filter by phase"></div>
 <div id="view" tabindex="-1"><noscript><p>The quiz needs JavaScript. The same questions and answers are in each phase README in the <a href="__REPO__">GitHub repo</a>.</p></noscript></div>

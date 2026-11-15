@@ -10,15 +10,15 @@
   <a href="https://github.com/techsaurabh-394/ai-engineer-roadmap/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/techsaurabh-394/ai-engineer-roadmap/ci.yml?style=flat&label=CI" alt="CI status"/></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green?style=flat" alt="MIT license"/></a>
   <img src="https://img.shields.io/badge/python-3.10%2B-3776AB?style=flat&logo=python&logoColor=white" alt="Python 3.10 or newer"/>
-  <img src="https://img.shields.io/badge/topics-118-2DD4BF?style=flat" alt="118 topics"/>
+  <img src="https://img.shields.io/badge/topics-132-2DD4BF?style=flat" alt="132 topics"/>
   <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat" alt="PRs welcome"/></a>
   <a href="https://github.com/techsaurabh-394/ai-engineer-roadmap"><img src="https://img.shields.io/github/stars/techsaurabh-394/ai-engineer-roadmap?style=flat&logo=github&color=6ea8fe" alt="GitHub stars"/></a>
   <a href="https://github.com/techsaurabh-394/ai-engineer-roadmap/commits/main"><img src="https://img.shields.io/github/last-commit/techsaurabh-394/ai-engineer-roadmap?style=flat" alt="Last commit"/></a>
 </p>
 
-**118 topics in 8 phases (Phase 0 to 7)**, each explained in plain English with an everyday analogy, a diagram, Python code, 3 interview questions and links to the original papers or official docs. If you know basic Python, you can start today. The demo scripts run offline with no API key.
+**132 topics in 10 phases (Phase 0 to 9)**, each explained in plain English with an everyday analogy, a diagram, Python code, 3 interview questions and links to the original papers or official docs. If you know basic Python, you can start today. The demo scripts run offline with no API key.
 
-![The 7 phases from zero to production, with topic counts](assets/learning-path.svg)
+![The 10 phases from zero to production, with topic counts](assets/learning-path.svg)
 
 ## Start in 5 minutes
 
@@ -66,13 +66,13 @@ Hard ideas are easier to follow when you can watch them. This animation plays on
 
 ![Animated RAG pipeline: documents, chunks, vectors, store, retrieve, generate](assets/anim/rag-flow.svg)
 
-**Also live at [mernstackdev.com/ai-engineer-roadmap](https://mernstackdev.com/ai-engineer-roadmap/)** (same content as the GitHub Pages site). Press **Ctrl/Cmd + K** to jump to any lesson, or open **[All topics](https://techsaurabh-394.github.io/ai-engineer-roadmap/#topics)** to filter all 115 lessons by phase, level and status.
+**Also live at [mernstackdev.com/ai-engineer-roadmap](https://mernstackdev.com/ai-engineer-roadmap/)** (same content as the GitHub Pages site). Press **Ctrl/Cmd + K** to jump to any lesson, or open **[All topics](https://techsaurabh-394.github.io/ai-engineer-roadmap/#topics)** to filter all 129 lessons by phase, level and status.
 
-**An animation for every one of the 118 topics** (115 animations; a few topics share one). Open the **[interactive viewer](https://techsaurabh-394.github.io/ai-engineer-roadmap/)** to step through them with Previous, Play and Next, search by name, or jump straight to a topic. The same animations are in the [animation gallery](docs/animations.md) and in the **Watch it** block at the top of each topic page.
+**An animation for every one of the 132 topics** (129 animations; a few topics share one). Open the **[interactive viewer](https://techsaurabh-394.github.io/ai-engineer-roadmap/)** to step through them with Previous, Play and Next, search by name, or jump straight to a topic. The same animations are in the [animation gallery](docs/animations.md) and in the **Watch it** block at the top of each topic page.
 
 **Read it, not just watch it:** every lesson on the [interactive viewer](https://techsaurabh-394.github.io/ai-engineer-roadmap/) now shows the full topic text under the animation: what it is, how it works, the formulas, worked examples with numbers, diagrams, code you can copy, and the interview questions.
 
-**Test yourself:** the [interactive quizzes](https://techsaurabh-394.github.io/ai-engineer-roadmap/quiz/) turn the 75 checkpoint questions of the seven phases into flash cards. Think of your own answer, reveal the real one, mark "I knew it" or "Not yet", and review the ones you missed. Your progress stays in your browser only.
+**Test yourself:** the [interactive quizzes](https://techsaurabh-394.github.io/ai-engineer-roadmap/quiz/) turn the 122 checkpoint questions of all ten phases into flash cards. Think of your own answer, reveal the real one, mark "I knew it" or "Not yet", and review the ones you missed. Your progress stays in your browser only.
 
 ## The big picture
 
@@ -124,7 +124,19 @@ Legend: 🟢 beginner · 🟡 intermediate · 🔴 advanced.
 | 5 Frameworks | 8 | 2 | 4 | 2 | 0 / 8 |
 | 6 MCP | 7 | 2 | 4 | 1 | 0 / 7 |
 | 7 Production AI | 15 | 2 | 12 | 1 | 0 / 15 |
-| **Total** | **118** | **31** | **62** | **25** | **0 / 118** |
+| 8 Fine-tuning | 7 | 1 | 4 | 2 | 0 / 7 |
+| 9 Multimodal AI | 7 | 0 | 5 | 2 | 0 / 7 |
+| **Total** | **132** | **32** | **71** | **29** | **0 / 132** |
+
+### Phase 0 — ML Foundations (optional warm-up)
+
+[📖 Phase overview](00-ml-foundations/README.md) · *Beginner*
+
+- [ ] 🟢 [AI, Machine Learning and Deep Learning](00-ml-foundations/topics/01-ai-ml-deep-learning.md)
+- [ ] 🟢 [Loss and Gradient Descent](00-ml-foundations/topics/02-loss-and-gradient-descent.md)
+- [ ] 🟢 [Neurons and Forward Propagation](00-ml-foundations/topics/03-neurons-and-forward-propagation.md)
+- [ ] 🟡 [Backpropagation](00-ml-foundations/topics/04-backpropagation.md)
+- [ ] 🟡 [Overfitting and Regularization](00-ml-foundations/topics/05-overfitting-and-regularization.md)
 
 ### Phase 1 — RAG Foundations
 
@@ -274,21 +286,45 @@ Legend: 🟢 beginner · 🟡 intermediate · 🔴 advanced.
 - [ ] 🟡 [Cost Optimization](07-production-ai/topics/14-cost-optimization.md)
 - [ ] 🔴 [Deploy a Production AI Application](07-production-ai/topics/15-deploy-a-production-ai-application.md)
 
+### Phase 8 — Fine-tuning
+
+[📖 Phase overview](10-fine-tuning/README.md) · *Intermediate*
+
+- [ ] 🟢 [Prompting vs RAG vs Fine-Tuning](10-fine-tuning/topics/01-prompting-vs-rag-vs-fine-tuning.md)
+- [ ] 🟡 [Supervised and Instruction Tuning](10-fine-tuning/topics/02-supervised-and-instruction-tuning.md)
+- [ ] 🟡 [Dataset Preparation](10-fine-tuning/topics/03-dataset-preparation.md)
+- [ ] 🟡 [LoRA in Depth](10-fine-tuning/topics/04-lora-in-depth.md)
+- [ ] 🔴 [QLoRA and Quantized Training](10-fine-tuning/topics/05-qlora-and-quantized-training.md)
+- [ ] 🟡 [Training Pipelines and Hyperparameters](10-fine-tuning/topics/06-training-pipelines-and-hyperparameters.md)
+- [ ] 🔴 [Evaluating Fine-Tuned Models](10-fine-tuning/topics/07-evaluating-fine-tuned-models.md)
+
+### Phase 9 — Multimodal AI
+
+[📖 Phase overview](11-multimodal-ai/README.md) · *Intermediate*
+
+- [ ] 🟡 [Vision Language Models](11-multimodal-ai/topics/01-vision-language-models.md)
+- [ ] 🟡 [How Models See Images](11-multimodal-ai/topics/02-how-models-see-images.md)
+- [ ] 🟡 [Audio and Speech to Text](11-multimodal-ai/topics/03-audio-and-speech-to-text.md)
+- [ ] 🟡 [Text to Speech](11-multimodal-ai/topics/04-text-to-speech.md)
+- [ ] 🔴 [Video Understanding](11-multimodal-ai/topics/05-video-understanding.md)
+- [ ] 🟡 [Multimodal Embeddings and CLIP](11-multimodal-ai/topics/06-multimodal-embeddings-and-clip.md)
+- [ ] 🔴 [Multimodal RAG](11-multimodal-ai/topics/07-multimodal-rag.md)
+
 ## Extras
 | Folder | What is inside |
 |---|---|
 | [08-interview-prep](08-interview-prep/README.md) | 43 curated questions plus 4 system-design prompts, in 5 files |
 | [09-projects](09-projects/README.md) | Portfolio project ideas from beginner to advanced |
 | [docs/what-is-ai-engineering.md](docs/what-is-ai-engineering.md) | A 5-minute, no-code explanation of the whole field for complete beginners |
-| [docs/learning-paths.md](docs/learning-paths.md) | Five day-by-day plans with reading times: RAG app, agents and MCP, all 118 topics in 8 weeks, interview week |
+| [docs/learning-paths.md](docs/learning-paths.md) | Five day-by-day plans with reading times: RAG app, agents and MCP, all 132 topics in 10 weeks, interview week |
 | [docs/practice.md](docs/practice.md) | 61 practice questions with answers: warm-up, calculations, run-the-demo and design scenarios, plus build challenges |
-| [Interactive quizzes](https://techsaurabh-394.github.io/ai-engineer-roadmap/quiz/) | The 75 phase checkpoint questions as flash cards with progress tracking; built from the phase READMEs by `scripts/build_quiz.py` |
-| [docs/animations.md](docs/animations.md) | Gallery of all 115 animated explainers, one for every topic; the [interactive viewer](https://techsaurabh-394.github.io/ai-engineer-roadmap/) adds Previous, Play and Next |
+| [Interactive quizzes](https://techsaurabh-394.github.io/ai-engineer-roadmap/quiz/) | The 122 phase checkpoint questions as flash cards with progress tracking; built from the phase READMEs by `scripts/build_quiz.py` |
+| [docs/animations.md](docs/animations.md) | Gallery of all 129 animated explainers, one for every topic; the [interactive viewer](https://techsaurabh-394.github.io/ai-engineer-roadmap/) adds Previous, Play and Next |
 | [docs/how-to-study.md](docs/how-to-study.md) | A study routine: pace, and what to do for each topic |
 | [docs/glossary.md](docs/glossary.md) | Plain-English definitions of the key terms |
 | `*/code/` | Runnable, tested demos for every phase (see "What you'll need") |
 
-Interview questions in total: **354** at the end of the 118 topic pages (3 each), plus the 43 + 4 in `08-interview-prep`.
+Interview questions in total: **396** at the end of the 132 topic pages (3 each), plus the 43 + 4 in `08-interview-prep`.
 
 ## What makes this different
 - **Plain English first.** Every term is defined where it first appears.

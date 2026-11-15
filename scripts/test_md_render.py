@@ -7,7 +7,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 import md_render  # noqa: E402
 
 ROOT = md_render.ROOT
-TOPICS = sorted(glob.glob(str(ROOT / "0[0-7]-*" / "topics" / "*.md")))
+TOPICS = sorted(glob.glob(str(ROOT / "[01][0-9]-*" / "topics" / "*.md")))
 
 
 def test_all_topics_render_clean():

@@ -36,6 +36,15 @@ LAB_META = {
     "ragpipe": dict(title="RAG pipeline lab", phase="01", verb="Ask a question",
                     blurb="Ask a question and click through every stage of a small RAG pipeline: query, embedding, search, rerank, context, answer.",
                     lessons=["rag-flow", "02-embeddings", "02-reranking"]),
+    "agent": dict(title="Agent loop lab", phase="04", verb="Step through",
+                  blurb="Watch an agent think, call tools, read results and stop. Deny an action, lower the step limit, or break a tool on purpose.",
+                  lessons=["agent-loop-anim", "tool-calling-flow", "react-loop", "14-human-in-the-loop", "16-agent-guardrails"]),
+    "mcp": dict(title="MCP lab", phase="06", verb="Read the wire",
+                blurb="See the exact JSON-RPC messages between an MCP client and server: handshake, tool discovery, calls, resources, prompts, and what errors look like.",
+                lessons=["mcp-flow", "02-mcp-server", "03-mcp-client", "04-mcp-tools", "05-mcp-resources", "06-mcp-prompts"]),
+    "reqsim": dict(title="Request lifecycle lab", phase="07", verb="Change the traffic",
+                   blurb="Replay a stream of requests through a rate limiter, a cache and a model. See hit rate, rejections, latency and spend move.",
+                   lessons=["04-redis", "14-cost-optimization", "13-observability", "01-fastapi-for-ai"]),
     "chunking": dict(title="Chunking lab", phase="01", verb="Sliders",
                      blurb="Paste a paragraph, change chunk size and overlap, and see exactly where the cuts land.",
                      lessons=["chunking", "05-recursive-chunking", "06-semantic-chunking", "08-sliding-window-chunking"]),
@@ -96,6 +105,9 @@ def labs() -> dict:
                    "POS_SCALE": e2e.POS_SCALE, "example": e2e_main["text"],
                    "src": "03-llm-concepts/code/llm_e2e_walkthrough.py"},
         "ragpipe": {"DOCS": rp.DOCS, "STOP": sorted(rp.STOP), "src": "01-rag-foundations/code/rag_pipeline.py"},
+        "agent": {"src": "04-agentic-ai/code/agent_trace.py"},
+        "mcp": {"src": "06-mcp/code/mcp_mini_jsonrpc.py"},
+        "reqsim": {"src": "07-production-ai/code/prod_request_sim.py"},
         "chunking": {"SAMPLE": ch.SAMPLE, "src": "01-rag-foundations/code/rag_chunkers.py"},
         "vectors": {"docs": vec_main["docs"], "q": vec_main["q"], "worked": pairs(vm.worked_examples()),
                     "src": "01-rag-foundations/code/rag_vector_math.py"},
@@ -105,7 +117,7 @@ def labs() -> dict:
 
 # ----------------------------------------------------------------- demo output
 def demo_scripts() -> list:
-    return sorted(p for p in ROOT.glob("0[0-7]-*/code/*.py") if not p.name.startswith("test_"))
+    return sorted(p for p in ROOT.glob("[01][0-9]-*/code/*.py") if not p.name.startswith("test_"))
 
 
 def _run(path: pathlib.Path):

@@ -11,11 +11,12 @@ import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import anim_core as core  # noqa: E402
-import anim_specs_a, anim_specs_b, anim_specs_c, anim_specs_d  # noqa: E402,F401  (registers animations)
+import anim_specs_a, anim_specs_b, anim_specs_c, anim_specs_d, anim_specs_e, anim_specs_f  # noqa: E402,F401  (registers animations)
 
 OUT = core.ROOT / "assets" / "anim"
 PHASES = {"00": "Phase 0: ML foundations", "01": "Phase 1: RAG foundations", "02": "Phase 2: Advanced RAG", "03": "Phase 3: LLM concepts",
-          "04": "Phase 4: Agentic AI", "05": "Phase 5: Frameworks", "06": "Phase 6: MCP", "07": "Phase 7: Production AI"}
+          "04": "Phase 4: Agentic AI", "05": "Phase 5: Frameworks", "06": "Phase 6: MCP", "07": "Phase 7: Production AI",
+          "10": "Phase 8: Fine-tuning", "11": "Phase 9: Multimodal AI"}
 
 
 def phase_of(a):
@@ -68,7 +69,7 @@ def main():
         (OUT / f"{a['name']}.svg").write_text(a["svg"], encoding="utf-8")
     (core.ROOT / "docs" / "animations.md").write_text(gallery(anims), encoding="utf-8")
     covered = {t for a in anims for t in a["topics"]}
-    all_topics = {p.relative_to(core.ROOT).as_posix() for p in core.ROOT.glob("0[0-7]*/topics/*.md")}
+    all_topics = {p.relative_to(core.ROOT).as_posix() for p in core.ROOT.glob("[01][0-9]*/topics/*.md")}
     print(f"wrote {len(anims)} svgs; {len(covered)} of {len(all_topics)} topic pages covered")
     missing = sorted(all_topics - covered)
     if missing:

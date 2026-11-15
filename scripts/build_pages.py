@@ -367,7 +367,7 @@ def page(**kw) -> str:
 def write(out: pathlib.Path, data: dict, version: str, favicon: str, theme_boot: str) -> int:
     repo, site = data["repo"], env("SITE_URL")
     phases = {p["id"]: p for p in data["phases"]}
-    files = sorted(ROOT.glob("0[0-7]-*/topics/*.md"))
+    files = sorted(ROOT.glob("[01][0-9]-*/topics/*.md"))
     taken, slugs = set(), {}
     for f in files:
         slugs[f.relative_to(ROOT).as_posix()] = topic_slug(f, taken)

@@ -5,11 +5,11 @@
 'use strict';
 const path = require('path');
 const fs = require('fs');
-for (const f of ['py', 'sampling', 'attention', 'toyllm', 'rag', 'search', 'ragpipe']) {
+for (const f of ['py', 'sampling', 'attention', 'toyllm', 'rag', 'search', 'ragpipe', 'sims']) {
   const file = path.join(__dirname, 'core', f + '.js');
   if (fs.existsSync(file)) require(file);
 }
-const { py, sampling: S, attention: A, toyllm: T, rag: R, search: Q, ragpipe: RP } = globalThis.AIER;
+const { py, sampling: S, attention: A, toyllm: T, rag: R, search: Q, ragpipe: RP, agent: AG, mcp: MC, reqsim: RS } = globalThis.AIER;
 
 const enc = v => (v === -Infinity ? '-inf' : v === Infinity ? 'inf' : Array.isArray(v) ? v.map(enc)
   : v instanceof Map ? Array.from(v.entries()).map(enc)
@@ -81,6 +81,12 @@ function run(D, op, a) {
       return { terms: r.terms, chunks: r.index.items.map(i => [i.doc, i.text]), vocab: r.index.vocab, qv: r.queryVector,
                hits: r.hits, ranked: r.ranked, ids: r.contextIds, context: r.context, prompt: r.prompt, answer: r.answer,
                vecs: r.index.items.map(i => i.vector) }; }
+    // agent_trace.py, mcp_mini_jsonrpc.py / mcp_session.py, prod_request_sim.py
+    case 'calc': return AG.calculator(a[0]);
+    case 'agent_trace': return AG.runTrace(a[0], a[1], a[2], a[3], a[4]);
+    case 'mcp_replay': return MC.replay(a[0]).map(x => x.out);
+    case 'traffic': return RS.makeTraffic(a[0], a[1], a[2]);
+    case 'reqsim': return RS.simulate(a[0], a[1]);
     default: throw new Error('unknown op ' + op);
   }
 }

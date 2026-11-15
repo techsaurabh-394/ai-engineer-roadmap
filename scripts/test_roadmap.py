@@ -10,7 +10,7 @@ ROOT = R.ROOT
 
 
 def test_every_phase_has_text_for_all_fields():
-    assert sorted(R.PHASES) == ["01", "02", "03", "04", "05", "06", "07"]
+    assert sorted(R.PHASES) == ["01", "02", "03", "04", "05", "06", "07", "10", "11"]
     for pid, p in R.PHASES.items():
         for key in ("tagline", "why", "outcomes", "ideas", "builds", "demos", "labs", "needs"):
             assert key in p, (pid, key)
