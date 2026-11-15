@@ -430,7 +430,7 @@
   }
 
   function footer() {
-    return h('footer.site', h('span', 'Free and open source. No tracking, no sign-up. Your progress stays in this browser.'),
+    return h('footer.site', h('span', 'Free and open source. No sign-up. Your progress stays in this browser. Ads, where shown, come from the hosting site, not from this app.'),
       h('span', h('a', { href: D.repo, rel: 'noopener' }, 'GitHub repo'), ' · ', h('a', { href: D.repo + '/issues', rel: 'noopener' }, 'Report a mistake')));
   }
 
@@ -489,7 +489,7 @@
     var marks = LESSONS.filter(function (l) { return progress.marks[l.name]; });
     var recent = progress.recent.filter(function (n) { return BY[n]; }).map(function (n) { return BY[n]; });
     var box = h('section.card.dash', { 'aria-labelledby': 'dash-h' },
-      h('div.dash-top', h('div', h('h2', { id: 'dash-h' }, 'Your progress'), h('p.muted', 'Saved in this browser only (localStorage). Nothing is sent anywhere, and clearing your browser data erases it.')),
+      h('div.dash-top', h('div', h('h2', { id: 'dash-h' }, 'Your progress'), h('p.muted', 'Your progress is saved in this browser only (localStorage). This app never uploads it, and clearing your browser data erases it.')),
         h('span.ring.big', { style: { '--v': String(pct) }, role: 'img', 'aria-label': done + ' of ' + total + ' lessons completed' }, pct + '%')),
       h('div.dash-stats', h('div', h('b', done + ' / ' + total), h('span', 'lessons completed')), h('div', h('b', hours(minsLeft)), h('span', 'reading left')),
         h('div', h('b', String(qs.known)), h('span', 'quiz cards known')), h('div', h('b', String(qs.review)), h('span', 'to review')),
@@ -517,6 +517,7 @@
         h('p.lead', D.counts.lessons + ' short step-by-step lessons' + (labs.length ? ', ' + labs.length + ' hands-on labs' : '') + ' and ' + D.counts.questions + ' quiz questions on RAG, LLMs, agents, MCP and production AI.'),
         h('div.cta', h('a.btn.primary', { href: '#' + first.name }, icon('play'), 'Start with lesson 1'),
           labs.length ? h('a.btn', { href: '#lab/' + labs[0] }, icon('flask'), 'Open a lab') : null,
+          h('a.btn', { href: '#topics' }, icon('book'), 'Browse all topics'),
           h('a.btn', { href: '#roadmap' }, icon('spark'), 'See the roadmap'),
           h('a.btn', { href: 'quiz/' }, icon('quiz'), 'Take the quiz')),
         labs.length ? h('p.note', icon('info', 'sm'), h('span', 'The labs run small teaching models with hand-picked numbers from this repo’s Python demos. They are not real LLMs.')) : null),
@@ -558,6 +559,127 @@
     })));
     main.appendChild(footer());
     renderSidebar(null); root.scrollTo(0, 0);
+  }
+
+
+  // ---------------------------------------------------------------- browse every topic
+  function hayOf(l) { return (l.title + ' ' + l.sub + ' ' + l.topics.map(function (t) { return t.title + ' ' + t.plain; }).join(' ')).toLowerCase(); }
+  var B = { q: '', phase: '', level: '', lab: false, todo: false, marks: false };
+  function renderBrowse() {
+    teardown(); cur = null;
+    var main = ui.clear($('#main'));
+    $('#dock').hidden = true;
+    doc.title = 'All topics | AI Engineer Roadmap';
+    var results = h('div'), count = h('p.summary-line', { role: 'status' });
+    var qid = ui.id('bq');
+    var input = h('input.textin', { id: qid, type: 'search', value: B.q, placeholder: 'Search ' + LESSONS.length + ' lessons: try "attention", "chunk", "MCP"', autocomplete: 'off' });
+    input.addEventListener('input', function () { B.q = input.value; paint(); });
+    var phaseSeg = h('div.seg.wrap', { role: 'group', 'aria-label': 'Phase' });
+    [['', 'All phases']].concat(D.phases.map(function (p) { return [p.id, 'Phase ' + p.n]; })).forEach(function (o) {
+      phaseSeg.appendChild(h('button', { type: 'button', 'aria-pressed': String(B.phase === o[0]), dataset: { v: o[0] }, onclick: function () { B.phase = o[0]; paint(); } }, o[1]));
+    });
+    var lvl = h('select', { 'aria-label': 'Level', onchange: function () { B.level = lvl.value; paint(); } }, h('option', { value: '' }, 'Any level'),
+      ['Beginner', 'Intermediate', 'Advanced'].map(function (v) { return h('option', { value: v, selected: v === B.level }, v); }));
+    function toggle(key, text, ic) {
+      var b = h('button.chip.tg', { type: 'button', 'aria-pressed': String(B[key]), onclick: function () { B[key] = !B[key]; paint(); } }, icon(ic, 'sm'), text);
+      b.sync = function () { b.setAttribute('aria-pressed', String(B[key])); };
+      return b;
+    }
+    var tgs = [toggle('lab', 'Has a lab', 'flask'), toggle('todo', 'Not done yet', 'check'), toggle('marks', 'Bookmarked', 'star')];
+    function paint() {
+      var q = B.q.trim().toLowerCase(), words = q ? q.split(/\s+/) : [];
+      phaseSeg.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.v === B.phase)); });
+      tgs.forEach(function (t) { t.sync(); });
+      var list = LESSONS.filter(function (l) {
+        if (B.phase && l.phase !== B.phase) return false;
+        if (B.level && level(l) !== B.level) return false;
+        if (B.lab && !labsFor(l).length) return false;
+        if (B.todo && isDone(l.name)) return false;
+        if (B.marks && !progress.marks[l.name]) return false;
+        var hay = hayOf(l);
+        return words.every(function (w) { return hay.indexOf(w) !== -1; });
+      });
+      ui.clear(results);
+      count.textContent = list.length + ' of ' + LESSONS.length + ' lessons' + (list.length ? '' : '. Nothing matches: clear a filter or shorten the search.');
+      D.phases.forEach(function (p) {
+        var items = list.filter(function (l) { return l.phase === p.id; });
+        if (!items.length) return;
+        var all = LESSONS.filter(function (l) { return l.phase === p.id; }), done = all.filter(function (l) { return isDone(l.name); }).length;
+        results.appendChild(h('section.bsec', { dataset: { phase: p.id } },
+          h('h2', h('span.phase-dot'), 'Phase ' + p.n + ': ' + p.name, h('small', done + '/' + all.length + ' done')),
+          h('div.bgrid', items.map(function (l) {
+            return h('a.card.bcard' + (isDone(l.name) ? '.is-done' : ''), { href: '#' + l.name },
+              h('span.bt', l.title, isDone(l.name) ? h('span.tick', { title: 'Completed' }, icon('check', 'sm')) : null, progress.marks[l.name] ? h('span.star', { title: 'Bookmarked' }, icon('star', 'sm')) : null),
+              h('span.bs', l.sub),
+              h('span.bf', levelEl(level(l)), h('span.m', icon('clock', 'sm'), minutes(l) + ' min'), labsFor(l).length ? h('span.chip.accent', icon('flask', 'sm'), 'lab') : null));
+          }))));
+      });
+    }
+    main.appendChild(h('section.browse-head', h('span.eyebrow', icon('book', 'sm'), 'Every lesson in one place'),
+      h('h1', 'All topics'), h('p.lead', 'Filter by phase, level or status, or just type what you want to learn. Click any card to open the lesson.')));
+    main.appendChild(h('div.card.browse-bar', h('div.control', h('label', { 'for': qid }, h('span', 'Search')), input), phaseSeg,
+      h('div.browse-row', lvl, tgs, h('button.btn.small.ghost', { type: 'button', onclick: function () { B = { q: '', phase: '', level: '', lab: false, todo: false, marks: false }; input.value = ''; lvl.value = ''; paint(); } }, icon('redo', 'sm'), 'Clear'))));
+    main.appendChild(count); main.appendChild(results);
+    main.appendChild(footer());
+    paint(); renderSidebar(null); root.scrollTo(0, 0);
+  }
+
+  // ---------------------------------------------------------------- command palette (Ctrl/Cmd + K)
+  function openPalette() {
+    if ($('.palette')) return;
+    var prev = doc.activeElement, sel = 0, shown = [];
+    var input = h('input', { type: 'search', placeholder: 'Jump to a lesson or lab…', 'aria-label': 'Search lessons and labs', autocomplete: 'off', role: 'combobox', 'aria-expanded': 'true', 'aria-controls': 'pal-list' });
+    var list = h('ul', { id: 'pal-list', role: 'listbox' });
+    var box = h('div.palette', { role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Quick search' },
+      h('div.pal-card', h('div.pal-in', icon('search', 'sm'), input, h('kbd', 'Esc')), list,
+        h('p.pal-foot', h('kbd', '↑'), h('kbd', '↓'), ' to move  ', h('kbd', 'Enter'), ' to open')));
+    function items(q) {
+      var w = q.trim().toLowerCase().split(/\s+/).filter(Boolean), out = [];
+      Object.keys(LABS).filter(function (id) { return AIER.labs[id]; }).forEach(function (id) {
+        var hay = (LABS[id].title + ' ' + LABS[id].blurb).toLowerCase();
+        if (w.every(function (x) { return hay.indexOf(x) !== -1; })) out.push({ href: '#lab/' + id, t: LABS[id].title, k: 'Lab', s: LABS[id].blurb });
+      });
+      LESSONS.forEach(function (l) {
+        var hay = hayOf(l);
+        if (w.every(function (x) { return hay.indexOf(x) !== -1; })) out.push({ href: '#' + l.name, t: l.title, k: 'Phase ' + PHASE[l.phase].n, s: l.sub, boost: l.title.toLowerCase().indexOf(w[0] || '~') === 0 ? 0 : 1 });
+      });
+      out.sort(function (a, b) { return (a.boost || 0) - (b.boost || 0); });
+      return out.slice(0, 8);
+    }
+    function paint() {
+      shown = items(input.value); sel = Math.min(sel, Math.max(0, shown.length - 1));
+      ui.clear(list);
+      if (!shown.length) list.appendChild(h('li.none', 'No match. Try a shorter word.'));
+      shown.forEach(function (it, i) {
+        list.appendChild(h('li', { role: 'option', id: 'pal-' + i, 'aria-selected': String(i === sel), onclick: function () { go(it); }, onmousemove: function () { sel = i; mark(); } },
+          h('span.pk', it.k), h('span.pt', h('b', it.t), h('small', it.s))));
+      });
+      input.setAttribute('aria-activedescendant', shown.length ? 'pal-' + sel : '');
+    }
+    function mark() { list.querySelectorAll('[role=option]').forEach(function (o, i) { o.setAttribute('aria-selected', String(i === sel)); }); input.setAttribute('aria-activedescendant', 'pal-' + sel); }
+    function close() { if (box.parentNode) box.parentNode.removeChild(box); doc.removeEventListener('keydown', onKey, true); if (prev && prev.focus) prev.focus(); }
+    function go(it) { close(); root.location.hash = it.href; }
+    function onKey(e) {
+      if (e.key === 'Escape') { e.preventDefault(); close(); }
+      else if (e.key === 'ArrowDown') { e.preventDefault(); sel = Math.min(shown.length - 1, sel + 1); mark(); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); sel = Math.max(0, sel - 1); mark(); }
+      else if (e.key === 'Enter' && shown[sel]) { e.preventDefault(); go(shown[sel]); }
+    }
+    input.addEventListener('input', function () { sel = 0; paint(); });
+    box.addEventListener('mousedown', function (e) { if (e.target === box) close(); });
+    doc.body.appendChild(box); doc.addEventListener('keydown', onKey, true); paint(); input.focus();
+  }
+
+  // ---------------------------------------------------------------- reading progress bar + back to top
+  function initScrollUi() {
+    var bar = h('div.readbar', { 'aria-hidden': 'true' }, h('i')), top = h('button.to-top', { type: 'button', 'aria-label': 'Back to top', hidden: true, onclick: function () { root.scrollTo({ top: 0, behavior: ui.reducedMotion() ? 'auto' : 'smooth' }); } }, icon('prev', 'sm'));
+    doc.body.appendChild(bar); doc.body.appendChild(top);
+    function upd() {
+      var d = doc.documentElement, max = d.scrollHeight - d.clientHeight, y = root.pageYOffset || d.scrollTop;
+      bar.firstChild.style.width = (max > 0 && cur ? Math.min(100, y / max * 100) : 0) + '%';
+      top.hidden = y < 700;
+    }
+    root.addEventListener('scroll', upd, { passive: true }); root.addEventListener('hashchange', function () { root.setTimeout(upd, 0); });
   }
 
   // ---------------------------------------------------------------- router
@@ -628,11 +750,13 @@
   function route() {
     closeNav();
     var hash = decodeURIComponent(root.location.hash.slice(1));
-    ['lessons', 'roadmap'].forEach(function (k) {
+    ['lessons', 'roadmap', 'topics'].forEach(function (k) {
       var a = doc.querySelector('[data-nav="' + k + '"]');
       if (!a) return;
-      if ((k === 'roadmap') === (hash === 'roadmap')) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+      var on = k === 'lessons' ? (hash !== 'roadmap' && hash !== 'topics') : hash === k;
+      if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
     });
+    if (hash === 'topics' && !BY.topics) { renderBrowse(); return; }
     if (hash === 'roadmap' && !BY.roadmap) { renderRoadmap(); return; }
     if (hash.indexOf('lab/') === 0 && LABS[hash.slice(4)] && AIER.labs[hash.slice(4)]) { renderLab(hash.slice(4)); return; }
     if (BY[hash]) { renderLesson(BY[hash]); return; }
@@ -665,6 +789,7 @@
       var t = e.target, tag = t && t.tagName;
       var typing = tag === 'INPUT' && t.type !== 'range' || tag === 'TEXTAREA' || tag === 'SELECT' || (t && t.isContentEditable);
       if (e.key === 'Escape') { closeNav(); return; }
+      if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')) { e.preventDefault(); openPalette(); return; }
       if (typing || e.metaKey || e.ctrlKey || e.altKey) return;
       if (e.key === '/') {
         e.preventDefault();
@@ -680,6 +805,8 @@
       else if (e.key === ' ' && tag !== 'BUTTON' && tag !== 'A' && tag !== 'SUMMARY') { play(); e.preventDefault(); }
     });
     root.addEventListener('hashchange', route);
+    initScrollUi();
+    var pb = $('#palette-btn'); if (pb) pb.addEventListener('click', openPalette);
     route();
   }
   if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', init); else init();
