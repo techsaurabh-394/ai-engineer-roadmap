@@ -239,10 +239,17 @@ def main():
     build_quiz.write_page(OUT, data, version)
     import build_pages  # static, indexable article per topic + sitemap.xml + robots.txt when SITE_URL is set
     n = build_pages.write(OUT, data, version, FAVICON, THEME_BOOT)
+    crawl = []
+    for p in sorted((OUT / "learn").glob("*/index.html")):
+        if p.parent.name.startswith("phase-"):
+            continue
+        txt = p.read_text(encoding="utf-8")
+        if "<h1>" in txt:
+            crawl.append((p.parent.name, txt.split("<h1>", 1)[1].split("</h1>", 1)[0]))
     for rel, path in (("index.html", ""), ("quiz/index.html", "quiz/")):
         f = OUT / rel
         if f.exists():
-            f.write_text(build_pages.add_head_tags(f.read_text(encoding="utf-8"), path), encoding="utf-8")
+            f.write_text(build_pages.add_head_tags(f.read_text(encoding="utf-8"), path, data=dict(data, _crawl=crawl)), encoding="utf-8")
     print(f"pages: {n} articles -> {OUT / 'learn'}")
 
 
