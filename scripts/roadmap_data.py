@@ -23,6 +23,20 @@ STEPS = [
 ]
 
 PHASES = {
+    "00": dict(
+        tagline="Learn how machines learn, from scratch, in plain numbers",
+        why="Every model in the later phases is trained with the same few ideas: a loss that says how wrong it is, gradient descent that nudges the "
+            "weights, a small network that turns inputs into outputs, and backpropagation that tells each weight how to change. This optional warm-up "
+            "teaches them with tiny examples you can check by hand, so nothing later feels like magic.",
+        outcomes=["Explain AI, machine learning and deep learning, and split data into train, validation and test sets",
+                  "Compute a loss and take gradient-descent steps by hand",
+                  "Follow a forward and backward pass through a tiny neural network and spot overfitting"],
+        ideas=["supervised and unsupervised learning", "loss functions", "gradient descent", "neurons and activations", "backpropagation", "overfitting and regularization"],
+        builds=["ml_gradient_descent.py", "ml_tiny_network.py: backprop with a finite-difference check", "ml_overfitting.py"],
+        demos=["00-ml-foundations/code/ml_gradient_descent.py", "00-ml-foundations/code/ml_tiny_network.py", "00-ml-foundations/code/ml_overfitting.py"],
+        labs=[],
+        needs="Basic Python and school maths. Skip this phase if you already know gradient descent and backpropagation.",
+    ),
     "01": dict(
         tagline="Make an AI answer from your own documents",
         why="A model only knows what it was trained on. RAG (retrieval-augmented generation) fetches the right pieces of your "

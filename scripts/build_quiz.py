@@ -25,7 +25,7 @@ PAGE = r"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AI Engineer Roadmap: quiz</title>
-<meta name="description" content="__COUNT__ self-check questions across every phase: ML basics, RAG, LLMs, agents, MCP, production AI, fine-tuning and multimodal AI. Reveal the answer, mark yourself, see your weak topics. Free and open source.">
+<meta name="description" content="__COUNT__ self-check flash cards on ML basics, RAG, LLMs, agents, MCP, production AI, fine-tuning and multimodal AI. Free, with spaced repetition.">
 <meta name="color-scheme" content="light dark">
 <link rel="icon" href="__FAVICON__">
 __THEME_BOOT__
