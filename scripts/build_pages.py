@@ -482,9 +482,11 @@ def add_head_tags(page_html: str, path: str, extra_nav: bool = True) -> str:
     if site:
         page_html = page_html.replace("</head>", f'<link rel="canonical" href="{site}/{path}">\n'
                                                   f'<meta property="og:url" content="{site}/{path}">\n</head>', 1)
+    ads = env("ADSENSE_CLIENT")
+    if ads and "adsbygoogle.js" not in page_html:
+        page_html = page_html.replace("</head>", f'<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={html.escape(ads)}"\n     crossorigin="anonymous"></script>\n</head>', 1)
     parent_url, parent_name = env("PARENT_SITE_URL"), env("PARENT_SITE_NAME") or "Main site"
     if parent_url:
-        page_html = page_html.replace('<nav class="topnav" aria-label="Sections">',
-                                      f'<nav class="topnav" aria-label="Sections"><a href="{html.escape(parent_url)}">'
-                                      f'{html.escape(parent_name)}</a>', 1)
+        page_html = page_html.replace('<span class="grow"></span>',
+                                      f'<a class="parent-link" href="{html.escape(parent_url)}" rel="noopener">&larr; {html.escape(parent_name)}</a><span class="grow"></span>', 1)
     return page_html

@@ -57,9 +57,10 @@ __THEME_BOOT__
 <header class="topbar">
 <button id="menu" class="icon-btn only-narrow" type="button" aria-label="Open the list of lessons" aria-expanded="false" aria-controls="sidebar">__IC_MENU__</button>
 <a class="brand" href="#"><span class="logo" aria-hidden="true">AI</span><span><span class="name-long">AI Engineer </span>Roadmap</span></a>
-<nav class="topnav" aria-label="Sections"><a href="#" data-nav="lessons" aria-current="page">Lessons</a><a href="#roadmap" data-nav="roadmap">Roadmap</a><a href="learn/">Articles</a><a href="quiz/">Quiz</a><a href="__REPO__/blob/main/README.md#start-in-5-minutes">Start here</a></nav>
+<nav class="topnav" aria-label="Sections"><a href="#" data-nav="lessons" aria-current="page">Lessons</a><a href="#topics" data-nav="topics">All topics</a><a href="#roadmap" data-nav="roadmap">Roadmap</a><a href="learn/">Articles</a><a href="quiz/">Quiz</a><a href="__REPO__/blob/main/README.md#start-in-5-minutes">Start here</a></nav>
 <span class="grow"></span>
 <div class="searchbox">__IC_SEARCH__<input id="q" type="search" placeholder="Search __COUNT__ lessons" aria-label="Search lessons" autocomplete="off"><kbd aria-hidden="true">/</kbd></div>
+<button id="palette-btn" class="icon-btn" type="button" aria-label="Quick search (Ctrl or Cmd plus K)" title="Quick search (Ctrl/Cmd+K)">__IC_SEARCH__<kbd aria-hidden="true" class="only-wide">Ctrl K</kbd></button>
 <a class="icon-btn only-narrow" href="quiz/">Quiz</a>
 <button id="theme" class="icon-btn" type="button" aria-label="Change theme"></button>
 <a class="icon-btn" href="__REPO__" rel="noopener"><span class="name-long">GitHub</span><span class="sr-only">repository</span></a>
