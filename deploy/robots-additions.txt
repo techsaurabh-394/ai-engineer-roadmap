@@ -1,2 +1,2 @@
 # Add to https://mernstackdev.com/robots.txt (the file already lists the main sitemap index)
-Sitemap: https://mernstackdev.com/ai-engineer-roadmap/sitemap.xml
+Sitemap: https://mernstackdev.com/ai-roadmap/sitemap.xml
