@@ -427,3 +427,20 @@ def test_site_data_comes_from_the_demo_modules():
     assert DATA["qkv"]["X"] == qkv.X and DATA["qkv"]["W_V"] == qkv.W_V and DATA["toyllm"]["W_OUT"] == e2e.W_OUT
     assert DATA["chunking"]["SAMPLE"] == ch.SAMPLE and DATA["search"]["DOCS"] == bm.DOCS
     json.dumps(DATA)      # must be plain JSON
+
+
+# --------------------------------------------------------------- rag_pipeline.py
+def test_rag_pipeline_matches_python():
+    rp = sd.load(P1 / "rag_pipeline.py")
+    queries = ["How should refresh tokens be stored?", "What is an ETag?", "cap the steps of an agent loop", "quantum entanglement",
+               "reranker reorders results", "How long does a refresh token last?", "multi-stage docker images", ""]
+    for size in (60, 160, 400):
+        cases, want = [], []
+        for q in queries:
+            cases.append(["pipe_run", q, rp.DOCS, sorted(rp.STOP), size, 3, 2])
+            r = rp.run(q, size=size)
+            want.append({"terms": r["terms"], "chunks": [[i["doc"], i["text"]] for i in r["index"]["items"]], "vocab": r["index"]["vocab"],
+                         "qv": r["query_vector"], "hits": r["hits"], "ranked": r["ranked"], "ids": r["context_ids"],
+                         "context": r["context"], "prompt": r["prompt"], "answer": r["answer"],
+                         "vecs": [i["vector"] for i in r["index"]["items"]]})
+        check(cases, want, exact=False)

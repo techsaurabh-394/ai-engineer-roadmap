@@ -33,6 +33,9 @@ LAB_META = {
     "toyllm": dict(title="Toy LLM, end to end", phase="03", verb="Build a sentence",
                    blurb="Build a sentence from 8 words and follow it through every stage of a tiny transformer to the next word.",
                    lessons=["llm-flow", "01-transformer-architecture", "05-decoder-only-models"]),
+    "ragpipe": dict(title="RAG pipeline lab", phase="01", verb="Ask a question",
+                    blurb="Ask a question and click through every stage of a small RAG pipeline: query, embedding, search, rerank, context, answer.",
+                    lessons=["rag-flow", "02-embeddings", "02-reranking"]),
     "chunking": dict(title="Chunking lab", phase="01", verb="Sliders",
                      blurb="Paste a paragraph, change chunk size and overlap, and see exactly where the cuts land.",
                      lessons=["chunking", "05-recursive-chunking", "06-semantic-chunking", "08-sliding-window-chunking"]),
@@ -77,6 +80,7 @@ def labs() -> dict:
     sd, dec = load(P3 / "sampling_demo.py"), load(P3 / "llm_decoding.py")
     qkv, e2e = load(P3 / "llm_qkv.py"), load(P3 / "llm_e2e_walkthrough.py")
     ch, bm, vm = load(P1 / "rag_chunkers.py"), load(P1 / "rag_bm25.py"), load(P1 / "rag_vector_math.py")
+    rp = load(P1 / "rag_pipeline.py")
     att_main = main_globals(P3 / "llm_attention.py")
     vec_main = main_globals(P1 / "rag_vector_math.py")
     e2e_main = main_globals(P3 / "llm_e2e_walkthrough.py")
@@ -91,6 +95,7 @@ def labs() -> dict:
                    "W_FF": e2e.W_FF, "W_OUT": e2e.W_OUT, "N_BLOCKS": e2e.N_BLOCKS, "D_MODEL": e2e.D_MODEL,
                    "POS_SCALE": e2e.POS_SCALE, "example": e2e_main["text"],
                    "src": "03-llm-concepts/code/llm_e2e_walkthrough.py"},
+        "ragpipe": {"DOCS": rp.DOCS, "STOP": sorted(rp.STOP), "src": "01-rag-foundations/code/rag_pipeline.py"},
         "chunking": {"SAMPLE": ch.SAMPLE, "src": "01-rag-foundations/code/rag_chunkers.py"},
         "vectors": {"docs": vec_main["docs"], "q": vec_main["q"], "worked": pairs(vm.worked_examples()),
                     "src": "01-rag-foundations/code/rag_vector_math.py"},
@@ -100,7 +105,7 @@ def labs() -> dict:
 
 # ----------------------------------------------------------------- demo output
 def demo_scripts() -> list:
-    return sorted(p for p in ROOT.glob("0[1-7]-*/code/*.py") if not p.name.startswith("test_"))
+    return sorted(p for p in ROOT.glob("0[0-7]-*/code/*.py") if not p.name.startswith("test_"))
 
 
 def _run(path: pathlib.Path):

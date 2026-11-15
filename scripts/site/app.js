@@ -15,9 +15,17 @@
   var PKEY = 'aier-progress-v1';
   var progress = ui.store.get(PKEY, {});
   if (!progress || typeof progress !== 'object') progress = {};
-  progress.seen = progress.seen || {}; progress.aced = progress.aced || {};
+  progress.seen = progress.seen || {}; progress.aced = progress.aced || {}; progress.done = progress.done || {};
+  progress.marks = progress.marks || {}; progress.recent = Array.isArray(progress.recent) ? progress.recent : [];
   function saveProgress() { ui.store.set(PKEY, progress); }
-  function seenIn(phaseId) { return LESSONS.filter(function (l) { return l.phase === phaseId && progress.seen[l.name]; }).length; }
+  function isDone(name) { return !!(progress.seen[name] || progress.done[name]); }
+  function toggleDone(l) {
+    if (isDone(l.name)) { delete progress.done[l.name]; delete progress.seen[l.name]; } else progress.done[l.name] = 1;
+    saveProgress(); renderSidebar(cur);
+  }
+  function toggleMark(l) { if (progress.marks[l.name]) delete progress.marks[l.name]; else progress.marks[l.name] = 1; saveProgress(); renderSidebar(cur); }
+  function remember(l) { progress.recent = [l.name].concat(progress.recent.filter(function (n) { return n !== l.name; })).slice(0, 6); }
+  function seenIn(phaseId) { return LESSONS.filter(function (l) { return l.phase === phaseId && isDone(l.name); }).length; }
 
   // ---------------------------------------------------------------- small pieces
   function labsFor(lesson) {
@@ -39,8 +47,10 @@
   }
 
   // ---------------------------------------------------------------- sidebar
-  var open = {}, query = '';
+  var open = {}, query = '', fLevel = '', fMarks = false;
   function matches(l, q) {
+    if (fLevel && level(l) !== fLevel) return false;
+    if (fMarks && !progress.marks[l.name]) return false;
     if (!q) return true;
     var hay = (l.title + ' ' + l.sub + ' ' + l.topics.map(function (t) { return t.title + ' ' + t.plain; }).join(' ')).toLowerCase();
     return q.split(/\s+/).every(function (w) { return hay.indexOf(w) !== -1; });
@@ -48,11 +58,12 @@
   function renderSidebar(current) {
     var list = $('#nav'), q = query.trim().toLowerCase(), total = 0;
     ui.clear(list);
+    list.appendChild(filterBar());
     D.phases.forEach(function (p) {
       var items = LESSONS.filter(function (l) { return l.phase === p.id && matches(l, q); });
       if (!items.length) return;
       total += items.length;
-      var expanded = q ? true : (open[p.id] !== undefined ? open[p.id] : (current ? current.phase === p.id : p.id === '01'));
+      var expanded = (q || fLevel || fMarks) ? true : (open[p.id] !== undefined ? open[p.id] : (current ? current.phase === p.id : p.id === '01'));
       var listId = 'nav-' + p.id;
       var btn = h('button', { type: 'button', 'aria-expanded': String(expanded), 'aria-controls': listId,
         onclick: function () { open[p.id] = !expanded; renderSidebar(current); } },
@@ -62,13 +73,20 @@
         ul.appendChild(h('li', h('a', { href: '#' + l.name, 'aria-current': current && current.name === l.name ? 'page' : null },
           h('span.t', l.title),
           labsFor(l).length ? h('span.has-lab', { title: 'Has a hands-on lab' }, icon('flask', 'sm'), h('span.sr-only', ' (has a lab)')) : null,
-          progress.seen[l.name] ? h('span.tick', { title: 'Viewed' }, icon('check', 'sm'), h('span.sr-only', ' (viewed)')) : h('span.m', minutes(l) + ' min'))));
+          progress.marks[l.name] ? h('span.star', { title: 'Bookmarked' }, icon('star', 'sm'), h('span.sr-only', ' (bookmarked)')) : null,
+          isDone(l.name) ? h('span.tick', { title: 'Completed' }, icon('check', 'sm'), h('span.sr-only', ' (completed)')) : h('span.m', minutes(l) + ' min'))));
       });
       list.appendChild(h('div.nav-phase', { dataset: { phase: p.id } }, btn, ul));
     });
-    if (!total) list.appendChild(h('p.nav-empty', 'No lesson matches "' + query + '". Try a shorter word, for example "chunk" or "agent".'));
+    if (!total) list.appendChild(h('p.nav-empty', fMarks && !query ? 'No bookmarks yet. Open a lesson and press Bookmark.' : 'No lesson matches' + (query ? ' "' + query + '"' : ' these filters') + '. Try a shorter word, for example "chunk" or "agent".'));
     var cur = list.querySelector('a[aria-current="page"]');
     if (cur && cur.scrollIntoView) cur.scrollIntoView({ block: 'nearest' });
+  }
+  function filterBar() {
+    var sel = h('select', { 'aria-label': 'Filter by level', onchange: function () { fLevel = sel.value; renderSidebar(cur); } },
+      h('option', { value: '' }, 'All levels'), ['Beginner', 'Intermediate', 'Advanced'].map(function (v) { return h('option', { value: v, selected: v === fLevel }, v); }));
+    var mk = h('button.chip', { type: 'button', 'aria-pressed': String(fMarks), onclick: function () { fMarks = !fMarks; renderSidebar(cur); } }, icon('star', 'sm'), 'Bookmarks');
+    return h('div.nav-filters', sel, mk);
   }
   function setQuery(v, from) {
     query = v;
@@ -97,7 +115,7 @@
     if (!cur || !view) return;
     step = Math.max(0, Math.min(cur.steps.length - 1, i));
     view.setStep(step);
-    if (step === cur.steps.length - 1 && !progress.seen[cur.name]) {
+    if (step === cur.steps.length - 1 && !isDone(cur.name)) {
       progress.seen[cur.name] = 1; saveProgress(); renderSidebar(cur);
     }
     var fin = doc.getElementById('finish');
@@ -286,7 +304,7 @@
     teardown(); cur = lesson; step = 0;
     var main = ui.clear($('#main')), p = PHASE[lesson.phase], n = lesson.steps.length;
     doc.title = lesson.title + ' | AI Engineer Roadmap';
-    progress.last = lesson.name; saveProgress();
+    progress.last = lesson.name; remember(lesson); saveProgress();
 
     var head = h('header.lesson-head',
       h('nav.crumbs', { 'aria-label': 'Breadcrumb' }, h('a', { href: '#' }, 'All lessons'), h('span', { 'aria-hidden': 'true' }, '/'), h('span', 'Phase ' + p.n + ': ' + p.name)),
@@ -295,6 +313,20 @@
         h('span.chip', icon('clock', 'sm'), minutes(lesson) + ' min read'), h('span.chip', n + ' steps'),
         labsFor(lesson).map(function (id) { return h('a.chip.accent', { href: '#lab-' + id, onclick: function (e) { e.preventDefault(); var t = doc.getElementById('lab-' + id); if (t) t.scrollIntoView({ behavior: ui.reducedMotion() ? 'auto' : 'smooth' }); } }, icon('flask', 'sm'), LABS[id].title); })));
     if (lesson.topics.length && lesson.topics[0].one) head.appendChild(h('p.oneliner', h('span', h('b', 'In one line: '), h('span', { html: lesson.topics[0].one }))));
+    var bm = h('button.btn.small', { type: 'button', 'aria-pressed': String(!!progress.marks[lesson.name]) });
+    var dn = h('button.btn.small', { type: 'button', 'aria-pressed': String(isDone(lesson.name)) });
+    function paintActs() {
+      bm.setAttribute('aria-pressed', String(!!progress.marks[lesson.name])); ui.clear(bm); bm.appendChild(icon('star', 'sm')); bm.appendChild(doc.createTextNode(progress.marks[lesson.name] ? 'Bookmarked' : 'Bookmark'));
+      dn.setAttribute('aria-pressed', String(isDone(lesson.name))); ui.clear(dn); dn.appendChild(icon('check', 'sm')); dn.appendChild(doc.createTextNode(isDone(lesson.name) ? 'Completed (click to undo)' : 'Mark as completed'));
+    }
+    bm.addEventListener('click', function () { toggleMark(lesson); paintActs(); toast(progress.marks[lesson.name] ? 'Bookmarked. Find it under Bookmarks in the lesson list.' : 'Bookmark removed.'); });
+    dn.addEventListener('click', function () { toggleDone(lesson); paintActs(); var f = doc.getElementById('finish'); if (f && !isDone(lesson.name)) f.hidden = true; });
+    paintActs();
+    head.appendChild(h('div.row-btns.lesson-acts', dn, bm));
+    var jump = [['Animation', 'stepper-card'], ['Read it', 'read'], ['Check yourself', 'check-h']].concat(labsFor(lesson).map(function (id) { return [LABS[id].title, 'lab-' + id]; }));
+    head.appendChild(h('nav.onpage', { 'aria-label': 'On this page' }, h('span.k', 'On this page'), jump.map(function (j) {
+      return h('a', { href: '#' + j[1], onclick: function (e) { e.preventDefault(); var t = doc.getElementById(j[1]); if (t) t.scrollIntoView({ behavior: ui.reducedMotion() ? 'auto' : 'smooth', block: 'start' }); } }, j[0]);
+    })));
     main.appendChild(head);
 
     // stage
@@ -311,7 +343,7 @@
     var transport = h('div.transport', prevB, playB, nextB, h('div.progress', range, count),
       h('label.speed', { 'for': 'speed' }, 'Speed', h('select', { id: 'speed', onchange: function () { if (timer) { pause(); play(); } } },
         h('option', { value: '1.6' }, 'Slow'), h('option', { value: '1', selected: true }, 'Normal'), h('option', { value: '0.6' }, 'Fast'))));
-    var stageCard = h('div.card.stage-card', stage, transport);
+    var stageCard = h('div.card.stage-card', { id: 'stepper-card' }, stage, transport);
 
     // step panel
     var k = h('p.k'), title = h('h2'), c2 = h('p.c2');
@@ -350,6 +382,18 @@
     main.appendChild(h('p.kbd-hint', 'Keyboard: ', h('kbd', '←'), ' ', h('kbd', '→'), ' move one step, ', h('kbd', 'Space'), ' plays or pauses, ', h('kbd', '/'), ' searches.'));
     main.appendChild(checkCard(lesson));
     labsFor(lesson).forEach(function (id) { main.appendChild(labSection(id, false)); });
+
+    // related lessons: same lab, then same phase neighbours; the one before it is the suggested prerequisite
+    var rel = [], seenRel = {};
+    function addRel(l, why) { if (l && l.name !== lesson.name && !seenRel[l.name] && rel.length < 4) { seenRel[l.name] = 1; rel.push([l, why]); } }
+    var before = LESSONS[lesson.index - 1];
+    if (before && before.phase === lesson.phase) addRel(before, 'Suggested before this one');
+    Object.keys(LABS).forEach(function (id) { if (LABS[id].lessons.indexOf(lesson.name) !== -1) LABS[id].lessons.forEach(function (n) { addRel(BY[n], 'Shares the ' + LABS[id].title); }); });
+    LESSONS.filter(function (x) { return x.phase === lesson.phase; }).forEach(function (x) { if (Math.abs(x.index - lesson.index) <= 2) addRel(x, 'Nearby in Phase ' + p.n); });
+    if (rel.length) {
+      main.appendChild(h('div.section-head', h('h2', 'Related lessons')));
+      main.appendChild(h('div.grid-labs', rel.map(function (r) { return h('a.card.lab-card', { href: '#' + r[0].name }, h('h3', r[0].title), h('p', r[1]), h('div.foot', levelEl(level(r[0])), h('span.m', minutes(r[0]) + ' min'))); })));
+    }
 
     // previous / next lesson
     var prevL = LESSONS[lesson.index - 1], nextL = LESSONS[lesson.index + 1];
@@ -410,7 +454,7 @@
   // ---------------------------------------------------------------- home
   function topicRow(l) {
     return h('li', h('a', { href: '#' + l.name }, h('span.t', l.title, labsFor(l).length ? h('span.chip.accent', { style: { 'margin-left': '8px' } }, icon('flask', 'sm'), 'lab') : null),
-      levelEl(level(l)), h('span.m', progress.seen[l.name] ? 'viewed' : minutes(l) + ' min')));
+      levelEl(level(l)), h('span.m', progress.marks[l.name] ? '★ ' : '', isDone(l.name) ? 'completed' : minutes(l) + ' min')));
   }
   function heroArt() {
     var S = AIER.sampling, sd = D.labs && D.labs.data && D.labs.data.sampling;
@@ -431,6 +475,34 @@
     paint(1);
     return h('div.hero-art.hero-mini', h('p.mini-title', h('span', 'Try it: next word after “The capital of France is”'), h('span.chip', 'toy numbers')),
       sl, list, cap, h('p', { style: { 'margin-top': '12px' } }, h('a.btn.small', { href: '#lab/sampling' }, icon('flask', 'sm'), 'Open the full Sampling lab')));
+  }
+  function quizStats() {
+    var q = ui.store.get('aier-quiz-v2', null), cards = q && q.cards ? Object.keys(q.cards).map(function (k) { return q.cards[k]; }) : [];
+    var seen = 0, right = 0, known = 0, review = 0;
+    cards.forEach(function (c) { seen += c.seen || 0; right += c.right || 0; if (c.last === 'k') known++; else if (c.last === 'n') review++; });
+    return { cards: cards.length, seen: seen, right: right, known: known, review: review };
+  }
+  function dashboard() {
+    var total = LESSONS.length, done = LESSONS.filter(function (l) { return isDone(l.name); }).length, pct = total ? Math.round(done / total * 100) : 0;
+    var qs = quizStats(), minsLeft = 0;
+    LESSONS.forEach(function (l) { if (!isDone(l.name)) minsLeft += minutes(l); });
+    var marks = LESSONS.filter(function (l) { return progress.marks[l.name]; });
+    var recent = progress.recent.filter(function (n) { return BY[n]; }).map(function (n) { return BY[n]; });
+    var box = h('section.card.dash', { 'aria-labelledby': 'dash-h' },
+      h('div.dash-top', h('div', h('h2', { id: 'dash-h' }, 'Your progress'), h('p.muted', 'Saved in this browser only (localStorage). Nothing is sent anywhere, and clearing your browser data erases it.')),
+        h('span.ring.big', { style: { '--v': String(pct) }, role: 'img', 'aria-label': done + ' of ' + total + ' lessons completed' }, pct + '%')),
+      h('div.dash-stats', h('div', h('b', done + ' / ' + total), h('span', 'lessons completed')), h('div', h('b', hours(minsLeft)), h('span', 'reading left')),
+        h('div', h('b', String(qs.known)), h('span', 'quiz cards known')), h('div', h('b', String(qs.review)), h('span', 'to review')),
+        h('div', h('b', qs.seen ? Math.round(qs.right / qs.seen * 100) + '%' : '–'), h('span', 'quiz answers right'))),
+      h('div.dash-lists',
+        h('div', h('h3', icon('clock', 'sm'), 'Recently visited'), recent.length ? h('ul.topic-rows', recent.slice(0, 5).map(topicRow)) : h('p.muted', 'Lessons you open will show up here.')),
+        h('div', h('h3', icon('star', 'sm'), 'Bookmarks'), marks.length ? h('ul.topic-rows', marks.slice(0, 5).map(topicRow)) : h('p.muted', 'Press Bookmark on any lesson to keep it here.'))),
+      h('div.row-btns', qs.review ? h('a.btn.small', { href: 'quiz/' }, icon('quiz', 'sm'), 'Review ' + qs.review + ' missed card' + (qs.review === 1 ? '' : 's')) : null,
+        h('button.btn.small.ghost', { type: 'button', onclick: function () {
+          if (!root.confirm || root.confirm('Erase your lesson progress, bookmarks and history in this browser? Quiz progress is kept.')) {
+            progress = { seen: {}, aced: {}, done: {}, marks: {}, recent: [] }; saveProgress(); renderHome();
+          } } }, icon('redo', 'sm'), 'Reset my progress')));
+    return box;
   }
   function renderHome() {
     teardown(); cur = null;
@@ -455,6 +527,8 @@
       main.appendChild(h('a.card.continue', { href: '#' + l.name }, icon('play'), h('span', h('span.k', 'Continue where you left off'), h('br'), h('span.t', l.title)), h('span.grow', { style: { flex: '1' } }), phaseChip(PHASE[l.phase])));
     }
 
+    main.appendChild(dashboard());
+
     if (labs.length) {
       main.appendChild(h('div.section-head', h('h2', 'Hands-on labs'), h('p', 'Change an input and watch the numbers move.')));
       main.appendChild(h('div.grid-labs', labs.map(function (id) {
@@ -478,7 +552,7 @@
           h('i.b', { style: { flex: String(lv.Beginner) } }), h('i.i', { style: { flex: String(lv.Intermediate) } }), h('i.a', { style: { flex: String(lv.Advanced) } })),
         h('p.muted', { style: { 'font-size': 'var(--fs-xs)' } }, lv.Beginner + ' beginner · ' + lv.Intermediate + ' intermediate · ' + lv.Advanced + ' advanced'),
         h('div', { style: { display: 'flex', gap: '8px', 'flex-wrap': 'wrap', 'margin-top': '12px' } },
-          h('a.btn.small.primary', { href: '#' + (items.filter(function (x) { return !progress.seen[x.name]; })[0] || items[0]).name }, seen ? 'Continue' : 'Start', icon('next', 'sm')),
+          h('a.btn.small.primary', { href: '#' + (items.filter(function (x) { return !isDone(x.name); })[0] || items[0]).name }, seen ? 'Continue' : 'Start', icon('next', 'sm')),
           h('a.btn.small', { href: 'quiz/#phase=' + p.dir }, icon('quiz', 'sm'), 'Quiz')),
         h('details', h('summary', icon('chevron', 'sm'), 'All ' + items.length + ' lessons'), h('ul.topic-rows', items.map(topicRow))));
     })));
@@ -518,7 +592,7 @@
       var info = R.phases[p.id] || {}, items = LESSONS.filter(function (x) { return x.phase === p.id; });
       var mins = 0, lv = { Beginner: 0, Intermediate: 0, Advanced: 0 };
       items.forEach(function (x) { mins += minutes(x); if (lv[level(x)] !== undefined) lv[level(x)] += 1; });
-      var seen = seenIn(p.id), next = items.filter(function (x) { return !progress.seen[x.name]; })[0] || items[0];
+      var seen = seenIn(p.id), next = items.filter(function (x) { return !isDone(x.name); })[0] || items[0];
       var labIds = (info.labs || []).filter(function (id) { return AIER.labs[id] && LABS[id]; });
       var body = h('div.rcard', { dataset: { phase: p.id } },
         h('p.ph', 'Phase ' + p.n), h('h3', p.name), info.tagline ? h('p.tagline', info.tagline) : null,

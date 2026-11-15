@@ -5,11 +5,11 @@
 'use strict';
 const path = require('path');
 const fs = require('fs');
-for (const f of ['py', 'sampling', 'attention', 'toyllm', 'rag', 'search']) {
+for (const f of ['py', 'sampling', 'attention', 'toyllm', 'rag', 'search', 'ragpipe']) {
   const file = path.join(__dirname, 'core', f + '.js');
   if (fs.existsSync(file)) require(file);
 }
-const { py, sampling: S, attention: A, toyllm: T, rag: R, search: Q } = globalThis.AIER;
+const { py, sampling: S, attention: A, toyllm: T, rag: R, search: Q, ragpipe: RP } = globalThis.AIER;
 
 const enc = v => (v === -Infinity ? '-inf' : v === Infinity ? 'inf' : Array.isArray(v) ? v.map(enc)
   : v instanceof Map ? Array.from(v.entries()).map(enc)
@@ -76,6 +76,11 @@ function run(D, op, a) {
     case 'dense': return Q.toyDenseScores(a[0], a[1], a[2]);
     case 'rrf': return Q.reciprocalRankFusion(a[0], a[1]);
     case 'hybrid': return Q.hybridSearch(a[0], a[1], stop, a[2], a[3], a[4]).ids;
+    // rag_pipeline.py
+    case 'pipe_run': { const r = RP.run(a[0], a[1], a[2], a[3], a[4], a[5]);
+      return { terms: r.terms, chunks: r.index.items.map(i => [i.doc, i.text]), vocab: r.index.vocab, qv: r.queryVector,
+               hits: r.hits, ranked: r.ranked, ids: r.contextIds, context: r.context, prompt: r.prompt, answer: r.answer,
+               vecs: r.index.items.map(i => i.vector) }; }
     default: throw new Error('unknown op ' + op);
   }
 }

@@ -57,7 +57,7 @@ __THEME_BOOT__
 <header class="topbar">
 <button id="menu" class="icon-btn only-narrow" type="button" aria-label="Open the list of lessons" aria-expanded="false" aria-controls="sidebar">__IC_MENU__</button>
 <a class="brand" href="#"><span class="logo" aria-hidden="true">AI</span><span><span class="name-long">AI Engineer </span>Roadmap</span></a>
-<nav class="topnav" aria-label="Sections"><a href="#" data-nav="lessons" aria-current="page">Lessons</a><a href="#roadmap" data-nav="roadmap">Roadmap</a><a href="quiz/">Quiz</a><a href="__REPO__/blob/main/README.md#start-in-5-minutes">Start here</a></nav>
+<nav class="topnav" aria-label="Sections"><a href="#" data-nav="lessons" aria-current="page">Lessons</a><a href="#roadmap" data-nav="roadmap">Roadmap</a><a href="learn/">Articles</a><a href="quiz/">Quiz</a><a href="__REPO__/blob/main/README.md#start-in-5-minutes">Start here</a></nav>
 <span class="grow"></span>
 <div class="searchbox">__IC_SEARCH__<input id="q" type="search" placeholder="Search __COUNT__ lessons" aria-label="Search lessons" autocomplete="off"><kbd aria-hidden="true">/</kbd></div>
 <a class="icon-btn only-narrow" href="quiz/">Quiz</a>
@@ -69,7 +69,7 @@ __THEME_BOOT__
 <div class="mobile-search"><input id="q2" type="search" placeholder="Search __COUNT__ lessons" aria-label="Search lessons" autocomplete="off"></div>
 <div id="nav"></div>
 </aside>
-<main id="main" tabindex="-1"><div class="wrap"><noscript><p>This page needs JavaScript to show the interactive lessons. Everything is also readable as plain text in the <a href="__REPO__">GitHub repo</a>.</p></noscript></div></main>
+<main id="main" tabindex="-1"><div class="wrap"><noscript><p>This page needs JavaScript to show the interactive lessons. Every lesson is also available as a <a href="learn/">plain article</a> and in the <a href="__REPO__">GitHub repo</a>.</p></noscript></div></main>
 </div>
 <div class="scrim" hidden></div>
 <div class="transport-dock" id="dock" hidden></div>
@@ -115,7 +115,7 @@ def topic_info(rel: str) -> dict:
 def phases() -> list:
     out = []
     for pid, label in sorted(g.PHASES.items()):
-        dirs = sorted(p.name for p in ROOT.glob(f"{pid}-*") if p.is_dir())
+        dirs = sorted(p.name for p in ROOT.glob(f"{pid}-*") if (p / "topics").is_dir())
         out.append(dict(id=pid, n=int(pid), name=label.split(": ", 1)[1], dir=dirs[0] if dirs else ""))
     return out
 
@@ -236,6 +236,13 @@ def main():
     (OUT / ".nojekyll").write_text("")
     print(f"site: {len(data['lessons'])} lessons, {len(data['labs']['meta'])} labs, {len(data['demos'])} demo outputs, {n_frag} full lesson texts -> {OUT}")
     build_quiz.write_page(OUT, data, version)
+    import build_pages  # static, indexable article per topic + sitemap.xml + robots.txt when SITE_URL is set
+    n = build_pages.write(OUT, data, version, FAVICON, THEME_BOOT)
+    for rel, path in (("index.html", ""), ("quiz/index.html", "quiz/")):
+        f = OUT / rel
+        if f.exists():
+            f.write_text(build_pages.add_head_tags(f.read_text(encoding="utf-8"), path), encoding="utf-8")
+    print(f"pages: {n} articles -> {OUT / 'learn'}")
 
 
 if __name__ == "__main__":
