@@ -22,6 +22,12 @@ Words to know:
 - **Overwrite:** replace the old value with a new one under the same key.
 - **Prompt:** the text sent to the model on each call.
 
+<!-- anim:10-semantic-memory -->
+## Watch it
+![Semantic memory: Stable facts that stay true across conversations.](../../assets/anim/10-semantic-memory.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#10-semantic-memory).*
+
 ## How it works
 1. **Represent** facts in a structured form, for example `(subject, relation) -> value`: `("user", "timezone") -> "IST"`.
 2. **Write:** add facts when the user states them or when an extraction step finds them. If a fact already exists, **overwrite** (or keep history with timestamps).

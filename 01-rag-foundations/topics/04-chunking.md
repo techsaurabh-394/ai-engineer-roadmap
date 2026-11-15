@@ -26,9 +26,9 @@ Words to know:
 
 <!-- anim:chunking -->
 ## Watch it
-![Chunking with overlap: three overlapping pieces cut from one text](../../assets/anim/chunking.svg)
+![Chunking with overlap: A long text is cut into overlapping pieces so no idea is split in half.](../../assets/anim/chunking.svg)
 
-*The diagram plays on a loop. Read the caption in the box, one step at a time.*
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#chunking).*
 
 ## How it works
 1. Clean the text (remove headers, footers, repeated menus).

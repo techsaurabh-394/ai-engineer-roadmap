@@ -25,6 +25,12 @@ Without a framework, you write the glue yourself: build a prompt string, call th
 - **Pipe operator (`|`)** — in Python it can be given a custom meaning. Here `a | b` means "run a, then feed its output into b".
 - **invoke / batch / stream** — run the step once, run it on a list of inputs, or get the reply piece by piece as it is produced.
 
+<!-- anim:05-langchain-flow -->
+## Watch it
+![LangChain: a chain of building blocks: Pieces joined with the pipe operator.](../../assets/anim/05-langchain-flow.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#05-langchain-flow).*
+
 ## How it works
 
 1. Input dict goes into the prompt template, which produces messages.

@@ -22,6 +22,12 @@ An **allowlist** is a list of accepted values. A **schema** describes the expect
 
 Guardrails are **heuristics**: rules of thumb that catch common problems, not all of them. A clever attacker can rephrase. So guardrails are one layer next to least privilege and human approval (topic 11).
 
+<!-- anim:12-guardrails -->
+## Watch it
+![Guardrails: Checks before and after the model call.](../../assets/anim/12-guardrails.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#12-guardrails).*
+
 ## How it works
 1. **Length check:** reject input over a limit. This also controls cost.
 2. **Injection scan:** look for known phrases like "ignore previous instructions". Flag or block.

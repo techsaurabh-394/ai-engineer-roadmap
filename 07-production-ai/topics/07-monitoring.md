@@ -26,6 +26,12 @@ AI services add their own:
 **Words to know:**
 -
 
+<!-- anim:07-monitoring -->
+## Watch it
+![Monitoring: Watch the numbers and alert a human when they go wrong.](../../assets/anim/07-monitoring.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#07-monitoring).*
+
 ## How it works
 1. Your app emits metrics (counters, histograms, gauges).
 2. A collector scrapes or receives them and stores them as time series.

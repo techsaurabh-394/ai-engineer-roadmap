@@ -27,6 +27,12 @@ Query expansion rewrites the query *before* retrieval by adding:
 - **Related terms** from the top results of a first search (called **pseudo-relevance feedback**: assume the top hits are relevant and borrow their words).
 - **LLM-generated terms or passages** (ask a model "what words would a relevant document contain?").
 
+<!-- anim:05-query-expansion -->
+## Watch it
+![Query expansion: Add related words so the search finds documents that phrase it differently.](../../assets/anim/05-query-expansion.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#05-query-expansion).*
+
 ## How it works
 
 1. Take the user query.

@@ -24,6 +24,12 @@ It is data-centric. Where LangChain is a general toolbox, LlamaIndex puts the do
 - **Embed** — turn text into a list of numbers so that similar meanings end up close together ([Embeddings](../../01-rag-foundations/topics/02-embeddings.md)).
 - **Top-k** — the k best matches. With `k=1` you keep only the single best one.
 
+<!-- anim:03-llamaindex -->
+## Watch it
+![LlamaIndex: Connect your documents to an LLM: load, split, index, retrieve, answer.](../../assets/anim/03-llamaindex.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#03-llamaindex).*
+
 ## How it works
 
 1. Load documents.

@@ -19,6 +19,12 @@ Key ideas:
 **Words to know:**
 -
 
+<!-- anim:04-redis -->
+## Watch it
+![Redis: A very fast in-memory store for caching and rate limits.](../../assets/anim/04-redis.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#04-redis).*
+
 ## How it works
 1. A request arrives. Normalize the question (trim, lowercase).
 2. Build a key, such as `sha256(model + prompt_version + question)`.

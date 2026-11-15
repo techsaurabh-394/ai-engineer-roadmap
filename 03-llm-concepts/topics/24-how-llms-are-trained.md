@@ -18,6 +18,12 @@ Plain definitions:
 - **Parameters (weights):** the adjustable numbers inside the model. Training changes them.
 - **Gradient:** for each parameter, which direction and how strongly to change it to reduce loss.
 
+<!-- anim:24-how-llms-are-trained -->
+## Watch it
+![How LLMs are trained: From next-token guessing to following instructions.](../../assets/anim/24-how-llms-are-trained.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#24-how-llms-are-trained).*
+
 ## How it works
 
 ```mermaid

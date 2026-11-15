@@ -15,6 +15,12 @@ Images are built in **layers**. Each Dockerfile instruction makes a layer. Docke
 **Words to know:**
 -
 
+<!-- anim:02-docker -->
+## Watch it
+![Docker: Pack the app and everything it needs into an image.](../../assets/anim/02-docker.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#02-docker).*
+
 ## How it works
 1. Write a `Dockerfile`.
 2. `docker build -t rag-api:1.0 .` builds the image.

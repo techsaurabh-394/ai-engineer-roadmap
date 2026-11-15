@@ -20,6 +20,12 @@ Words to know:
 - **System prompt:** the standing instructions you give the model at the start.
 - **Deque:** a Python list-like container. With `maxlen`, it drops the oldest item when full.
 
+<!-- anim:08-short-term-memory -->
+## Watch it
+![Short-term memory: The recent conversation, re-sent on every turn.](../../assets/anim/08-short-term-memory.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#08-short-term-memory).*
+
 ## How it works
 Common policies:
 

@@ -24,6 +24,12 @@ Words to know:
 - **SSE (Server-Sent Events):** a simple way for a server to push a stream of events to a browser over HTTP.
 - **Change feed:** a stream of "this record was added or changed" messages from a data source.
 
+<!-- anim:19-streaming-retrieval -->
+## Watch it
+![Streaming retrieval: Send results as soon as each piece is ready.](../../assets/anim/19-streaming-retrieval.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#19-streaming-retrieval).*
+
 ## How it works
 
 **Response path:**

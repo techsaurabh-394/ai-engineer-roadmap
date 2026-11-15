@@ -22,6 +22,12 @@ Words to know:
 - **Multi-hop:** a question that needs several links followed in a row.
 - **Entity resolution:** treating different spellings of one thing as a single node.
 
+<!-- anim:13-knowledge-graph-rag -->
+## Watch it
+![Knowledge graph RAG: Store facts as linked entities and retrieve by following the links.](../../assets/anim/13-knowledge-graph-rag.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#13-knowledge-graph-rag).*
+
 ## How it works
 
 **Build (offline):**

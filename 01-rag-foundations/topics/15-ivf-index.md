@@ -23,6 +23,12 @@ Words to know:
 - **`nlist` / `nprobe`:** how many clusters you build, and how many clusters you search per query.
 - **Recall:** the share of searches that still find the true best answer.
 
+<!-- anim:15-ivf-index -->
+## Watch it
+![IVF index: Group vectors into clusters, then search only the nearest clusters.](../../assets/anim/15-ivf-index.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#15-ivf-index).*
+
 ## How it works
 **Training and adding**
 1. Run k-means on a sample of vectors to get `nlist` centroids. This is the **training** step.

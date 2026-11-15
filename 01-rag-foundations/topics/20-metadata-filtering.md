@@ -26,6 +26,12 @@ Words to know:
 - **ANN index:** an index that finds approximately nearest vectors quickly.
 - **Query:** the search text the user types.
 
+<!-- anim:20-metadata-filtering -->
+## Watch it
+![Metadata filtering: Apply rules like team and year first, then search by meaning.](../../assets/anim/20-metadata-filtering.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#20-metadata-filtering).*
+
 ## How it works
 1. At ingest, store clean, typed metadata on every chunk (numbers as numbers, dates comparable).
 2. Index the fields you filter on (most vector databases support payload/metadata indexes).

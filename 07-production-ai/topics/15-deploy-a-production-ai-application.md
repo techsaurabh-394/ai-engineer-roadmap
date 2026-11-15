@@ -26,6 +26,12 @@ This topic ties the whole phase together. Each part solves one problem:
 - **Rollback:** switch back to the previous working version.
 - **Runbook:** a written guide for what to do when something breaks.
 
+<!-- anim:15-deploy-a-production-ai-application -->
+## Watch it
+![Deploy a production AI app: From a working demo to a reliable service.](../../assets/anim/15-deploy-a-production-ai-application.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#15-deploy-a-production-ai-application).*
+
 ## How it works
 ```mermaid
 flowchart LR

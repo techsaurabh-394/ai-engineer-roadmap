@@ -25,6 +25,12 @@ Words to know:
 - **doc_id:** the ID that links each vector back to its original document.
 - **LLM (large language model):** the AI that reads and writes text.
 
+<!-- anim:10-multi-vector-retriever -->
+## Watch it
+![Multi-vector retriever: Many vectors per document, but the full document comes back.](../../assets/anim/10-multi-vector-retriever.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#10-multi-vector-retriever).*
+
 ## How it works
 
 1. For each document `doc_id`, generate representations: `summary`, `questions[]`, `sub_chunks[]`.

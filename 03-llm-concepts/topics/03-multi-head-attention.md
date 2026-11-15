@@ -19,6 +19,12 @@ Multi-head attention works the same way. Instead of one big attention with vecto
 
 The cost is roughly the same as one big head, because each head works on a smaller slice.
 
+<!-- anim:03-multi-head-attention -->
+## Watch it
+![Multi-head attention: Several small attentions side by side, each tracking something different.](../../assets/anim/03-multi-head-attention.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#03-multi-head-attention).*
+
 ## How it works
 1. Start with token vectors `X` of shape `n × d_model`.
 2. Project into Q, K, V with learned matrices (each `d_model × d_model`).

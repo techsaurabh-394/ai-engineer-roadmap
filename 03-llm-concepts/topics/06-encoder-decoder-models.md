@@ -19,6 +19,12 @@ This was the original transformer design from *Attention Is All You Need*, built
 
 The big difference from [decoder-only models](05-decoder-only-models.md): the input gets **bidirectional** attention (every input token sees every other input token), and the input and output are separate sequences.
 
+<!-- anim:06-encoder-decoder-models -->
+## Watch it
+![Encoder-decoder models: One part reads the input, another writes the output.](../../assets/anim/06-encoder-decoder-models.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#06-encoder-decoder-models).*
+
 ## How it works
 1. **Encoder.** The input tokens go through N layers of self-attention **without** a causal mask, plus feed-forward layers. Output: one context-rich vector per input token.
 2. **Decoder.** Generates the output one token at a time. Each decoder layer has three parts:

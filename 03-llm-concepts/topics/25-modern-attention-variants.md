@@ -20,6 +20,12 @@ Five fixes appear in almost every recent model:
 
 Only the first four are about speed and memory. RoPE is a better way to tell the model where words are (compare [positional encoding](04-positional-encoding.md)).
 
+<!-- anim:25-modern-attention-variants -->
+## Watch it
+![Modern attention variants: Faster and smaller attention for long contexts.](../../assets/anim/25-modern-attention-variants.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#25-modern-attention-variants).*
+
 ## How it works
 ### 1. Why vanilla attention is expensive at inference
 Every generated token must read the K and V of all earlier tokens, in every layer and head. The cache size is:

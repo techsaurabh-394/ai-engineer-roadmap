@@ -19,6 +19,12 @@ For language models, a "route" is a sequence of tokens and its "score" is how pr
 
 Beam search is deterministic: same input, same output. It is popular for tasks with one "right" answer, such as translation and speech recognition, and less common for chat.
 
+<!-- anim:12-beam-search -->
+## Watch it
+![Beam search: Keep the few best partial sentences instead of just the best next token.](../../assets/anim/12-beam-search.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#12-beam-search).*
+
 ## How it works
 1. Start with one beam: the empty sequence, score 0.
 2. For every beam, list every possible next token and its new score: `score + log P(token | sequence)`.

@@ -17,6 +17,12 @@ LLM answers can take many seconds. **Streaming** sends the answer in small piece
 **Words to know:**
 -
 
+<!-- anim:01-fastapi-for-ai -->
+## Watch it
+![FastAPI for AI: Wrap your AI function in a validated HTTP API.](../../assets/anim/01-fastapi-for-ai.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#01-fastapi-for-ai).*
+
 ## How it works
 1. The client sends `POST /chat` with a JSON body.
 2. FastAPI parses the body into a Pydantic model. Bad input gets a `422` error automatically.

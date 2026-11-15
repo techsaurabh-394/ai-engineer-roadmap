@@ -26,6 +26,12 @@ Words to know:
 - **VLM (vision-language model):** an LLM that accepts images as well as text.
 - **Parser:** a tool that splits a document into its parts (text blocks, tables, figures).
 
+<!-- anim:15-multi-modal-rag -->
+## Watch it
+![Multi-modal RAG: Retrieve images, tables and charts, not only text.](../../assets/anim/15-multi-modal-rag.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#15-multi-modal-rag).*
+
 ## How it works
 
 1. **Parse** documents into elements: text blocks, tables, figures, page images (layout-aware parsers or OCR).

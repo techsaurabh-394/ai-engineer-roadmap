@@ -21,6 +21,12 @@ Words to know:
 - **Stale chunk:** an old chunk that is still in the index after its source changed.
 - **Upsert:** "update or insert": add the item if new, replace it if it exists.
 
+<!-- anim:18-incremental-indexing -->
+## Watch it
+![Incremental indexing: Re-embed only what changed, delete what disappeared.](../../assets/anim/18-incremental-indexing.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#18-incremental-indexing).*
+
 ## How it works
 
 1. Chunk each document deterministically (same input → same chunks).

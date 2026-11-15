@@ -22,6 +22,12 @@ Words to know:
 - **Nearest neighbour search:** finding the stored vectors closest to the query vector.
 - **ANN index:** an index for approximate nearest neighbour search, which trades a little accuracy for speed.
 
+<!-- anim:19-dense-retrieval -->
+## Watch it
+![Dense retrieval: Short meaning-based vectors find ideas, even with different words.](../../assets/anim/19-dense-retrieval.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#19-dense-retrieval).*
+
 ## How it works
 **Offline (ingest)**
 1. [Chunk](04-chunking.md) the documents.

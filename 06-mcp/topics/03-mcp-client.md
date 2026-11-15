@@ -16,6 +16,12 @@ The host (Claude Desktop, an IDE, your agent) contains the LLM and the user inte
 - **inputSchema:** a description of the arguments a tool accepts, written as JSON Schema.
 - **Untrusted text:** a tool result is text from someone else. Never treat it as instructions.
 
+<!-- anim:03-mcp-client -->
+## Watch it
+![MCP client: The part inside an AI app that talks to one server.](../../assets/anim/03-mcp-client.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#03-mcp-client).*
+
 ## How it works
 1. **Read config.** The host reads a list of servers (see the config below).
 2. **Launch or connect.** For stdio, spawn the process. For Streamable HTTP, connect to the URL.

@@ -22,6 +22,12 @@ Words to know:
 
 Because document embeddings do not depend on the question, you compute them once at ingest time and store them in a **vector index** (a data structure such as HNSW that finds nearest vectors fast). At query time you embed only the question and ask the index for its nearest neighbours. This is what people usually mean by "dense retrieval" or "vector search".
 
+<!-- anim:03-bi-encoder -->
+## Watch it
+![Bi-encoder: Question and documents are encoded separately, then compared as vectors.](../../assets/anim/03-bi-encoder.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#03-bi-encoder).*
+
 ## How it works
 
 1. **Ingest:** for each chunk, `vec = encoder(chunk)`; store `vec` in the index.

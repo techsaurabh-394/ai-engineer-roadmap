@@ -26,6 +26,12 @@ Words to know:
 
 This is where RAG and agents meet. A single fixed API call is RAG. Letting the model choose among many tools in a loop is an agent (Phase 4).
 
+<!-- anim:17-api-rag -->
+## Watch it
+![API RAG: Fetch live data at question time and hand it to the model.](../../assets/anim/17-api-rag.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#17-api-rag).*
+
 ## How it works
 
 1. Define each API as a tool: name, description, JSON schema of parameters.

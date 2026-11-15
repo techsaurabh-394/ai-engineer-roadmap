@@ -27,6 +27,12 @@ Why not use the token's vector `x` directly for all three roles? Because the thr
 
 With one shared vector, a token's need, label and payload would be forced to be the same thing. Three matrices let training learn three views of the same token. The two views Q and K are compared, and the V view is the thing that is mixed. This is also why you can ask a question that looks nothing like the label that answers it.
 
+<!-- anim:22-qkv-explained-from-scratch -->
+## Watch it
+![Q, K and V explained: Every token asks a question, advertises itself, and carries content.](../../assets/anim/22-qkv-explained-from-scratch.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#22-qkv-explained-from-scratch).*
+
 ## How it works
 Let `X` hold one row per token: `n` tokens by `d_model` numbers each. The three matrices turn it into Q, K and V:
 

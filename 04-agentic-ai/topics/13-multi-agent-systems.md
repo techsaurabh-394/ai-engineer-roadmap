@@ -25,6 +25,12 @@ Words to know:
 - **Allowlist:** the list of tools an agent may call. Anything else is refused.
 - **Prompt injection:** hidden instructions in text the agent reads, meant to steer it.
 
+<!-- anim:13-multi-agent-systems -->
+## Watch it
+![Multi-agent systems: Several agents with different roles pass work to each other.](../../assets/anim/13-multi-agent-systems.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#13-multi-agent-systems).*
+
 ## How it works
 Common shapes:
 

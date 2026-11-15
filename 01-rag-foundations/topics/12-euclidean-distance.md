@@ -18,6 +18,12 @@ Words to know:
 
 Unlike [cosine similarity](11-cosine-similarity.md), Euclidean distance cares about **length** too. Two vectors that point the same way but have different lengths are "far apart" by Euclidean distance, yet "identical" by cosine. It is also called the **L2 distance** (after the L2 norm). Vector databases and FAISS often call it `L2`.
 
+<!-- anim:12-euclidean-distance -->
+## Watch it
+![Euclidean distance: The straight-line distance between two points. A worked example.](../../assets/anim/12-euclidean-distance.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#12-euclidean-distance).*
+
 ## How it works
 1. Subtract the vectors element by element.
 2. Square each difference.

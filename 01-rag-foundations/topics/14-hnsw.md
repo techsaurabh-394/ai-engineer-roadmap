@@ -27,6 +27,12 @@ Search starts at the top layer, greedily moves to whichever neighbour is closest
 
 HNSW is one of the most widely used ANN indexes. It is available in FAISS, hnswlib, pgvector, Qdrant, Weaviate, Milvus, Elasticsearch/OpenSearch and others.
 
+<!-- anim:14-hnsw -->
+## Watch it
+![HNSW index: Hop from point to closer point, from a sparse top layer down to all the points.](../../assets/anim/14-hnsw.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#14-hnsw).*
+
 ## How it works
 **Building (insert one vector at a time)**
 1. Pick a random top layer for the new node. Most nodes only live on layer 0; each higher layer has exponentially fewer nodes.

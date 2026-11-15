@@ -22,6 +22,12 @@ Words to know:
 
 The output is a single number, often between 0 and 1 after a sigmoid, meaning "how relevant is this document to this question". There is no reusable vector for the document. That is the price: you must run the model again for every new question.
 
+<!-- anim:02-cross-encoder -->
+## Watch it
+![Cross-encoder: Reads the question and the document together, and gives one score.](../../assets/anim/02-cross-encoder.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#02-cross-encoder).*
+
 ## How it works
 
 1. Join the texts: `[CLS] question [SEP] document [SEP]`. `[CLS]` and `[SEP]` are special marker tokens.

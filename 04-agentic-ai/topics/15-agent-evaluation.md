@@ -24,9 +24,9 @@ Words to know:
 
 <!-- anim:eval-loop -->
 ## Watch it
-![Evaluation loop: test set, run, score, improve](../../assets/anim/eval-loop.svg)
+![The evaluation loop: Measure, change one thing, measure again.](../../assets/anim/eval-loop.svg)
 
-*The diagram plays on a loop. Read the caption in the box, one step at a time.*
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#eval-loop).*
 
 ## How it works
 1. **Collect tasks.** 20-100 realistic tasks to start, including edge cases and known past failures. For each, write what success looks like (expected answer, expected final state, or a rubric).

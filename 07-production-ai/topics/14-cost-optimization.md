@@ -25,6 +25,12 @@ The main levers:
 - **`max_tokens`:** a cap on output length. It limits worst-case cost and latency.
 - **Batching:** group many non-urgent jobs (for example nightly document processing) into one batch. Some providers offer cheaper batch endpoints. Check current docs.
 
+<!-- anim:14-cost-optimization -->
+## Watch it
+![Cost optimisation: Fewer tokens, cheaper models, fewer calls, same quality.](../../assets/anim/14-cost-optimization.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#14-cost-optimization).*
+
 ## How it works
 1. **Measure first** (topic 13). Find which route or step costs most.
 2. Pick the biggest lever for that cost.

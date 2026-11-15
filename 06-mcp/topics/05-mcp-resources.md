@@ -16,6 +16,12 @@ A **URI** is just an address, like `file:///notes/todo.md` or `notes://welcome`.
 - **MIME type:** a label for the kind of content, such as `text/plain`.
 - **Context:** the text the model can see right now. A loaded resource is added to it.
 
+<!-- anim:05-mcp-resources -->
+## Watch it
+![MCP resources: Read-only data identified by a URI.](../../assets/anim/05-mcp-resources.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#05-mcp-resources).*
+
 ## How it works
 1. Server declares the `resources` capability.
 2. Client sends `resources/list`; server returns items with `uri`, `name`, and often `mimeType`.

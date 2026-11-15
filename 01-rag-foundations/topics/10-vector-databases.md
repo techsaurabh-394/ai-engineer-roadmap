@@ -22,6 +22,12 @@ Words to know:
 
 A vector database also handles the boring but vital parts: storing metadata, [filtering](20-metadata-filtering.md), updates and deletes, persistence to disk, and scaling.
 
+<!-- anim:10-vector-databases -->
+## Watch it
+![Vector databases: Store embeddings and find the nearest ones fast, even among millions.](../../assets/anim/10-vector-databases.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#10-vector-databases).*
+
 ## How it works
 1. **Create a collection** with a fixed vector size (e.g. 384) and a distance metric ([cosine](11-cosine-similarity.md), [dot product](13-dot-product.md) or [Euclidean](12-euclidean-distance.md)).
 2. **Upsert** records: `id`, `vector`, `text` (or a pointer to it), `metadata`. ("Upsert" = insert or update.)

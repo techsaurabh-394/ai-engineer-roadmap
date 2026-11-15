@@ -22,6 +22,12 @@ Words to know:
 - **Schema:** the list of metadata fields you allow, with their types.
 - **LLM (large language model):** the AI that reads and writes text.
 
+<!-- anim:09-self-query-retriever -->
+## Watch it
+![Self-query retriever: An LLM splits a question into search text and metadata filters.](../../assets/anim/09-self-query-retriever.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#09-self-query-retriever).*
+
 ## How it works
 
 1. Describe your metadata schema to the LLM: field names, types, allowed values.

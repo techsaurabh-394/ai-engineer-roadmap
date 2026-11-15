@@ -19,6 +19,12 @@ Words to know:
 - **Budget:** a limit on tokens (units of text the model reads and writes), money, or time.
 - **Idempotent:** safe to run twice with the same effect as once. Reading is idempotent; charging a card is not.
 
+<!-- anim:agent-loop-anim -->
+## Watch it
+![The agent loop: An agent is a model plus tools plus memory, in a loop.](../../assets/anim/agent-loop-anim.svg)
+
+*It plays on a loop. Read the caption in the box, one step at a time. Want to go at your own pace? [Step through it with Previous and Next](https://techsaurabh-394.github.io/ai-engineer-roadmap/#agent-loop-anim).*
+
 ## How it works
 1. **Initialize** state: messages (goal + system prompt), step counter, budget.
 2. **Call the model** with messages and tool definitions.
