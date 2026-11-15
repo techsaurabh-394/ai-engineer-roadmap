@@ -10,10 +10,11 @@
 
 ![Animated overview of the learning path](../assets/roadmap.svg)
 
-There are **7 learning phases** with **113 topics**, plus interview prep and projects. Each topic is one short page. Do the phases in order. Inside a phase, do the topics in order.
+There are **8 learning phases** (Phase 0 to 7) with **118 topics**, plus interview prep and projects. Each topic is one short page. Do the phases in order. Inside a phase, do the topics in order.
 
 | Phase | Folder | You will learn | Level |
 |---|---|---|---|
+| 0 | [00-ml-foundations](../00-ml-foundations/README.md) | what a model is, loss, gradient descent, backpropagation, overfitting (optional if you know ML) | Beginner → Intermediate |
 | 1 | [01-rag-foundations](../01-rag-foundations/README.md) | embeddings, chunking, vector search, BM25, hybrid search | Beginner |
 | 2 | [02-advanced-rag](../02-advanced-rag/README.md) | reranking, query rewriting, HyDE, GraphRAG, RAG evaluation | Intermediate → Advanced |
 | 3 | [03-llm-concepts](../03-llm-concepts/README.md) | transformers, attention, KV cache, sampling, prompting | Beginner → Advanced |

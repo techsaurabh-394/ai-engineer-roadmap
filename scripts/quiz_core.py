@@ -13,6 +13,7 @@ import re
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 REPO = "https://github.com/techsaurabh-394/ai-engineer-roadmap"
 PHASES = {
+    "00-ml-foundations": "Phase 0: ML Foundations",
     "01-rag-foundations": "Phase 1: RAG Foundations",
     "02-advanced-rag": "Phase 2: Advanced RAG",
     "03-llm-concepts": "Phase 3: LLM Concepts",

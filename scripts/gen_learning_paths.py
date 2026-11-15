@@ -5,7 +5,7 @@ import glob, os, re
 os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 
 T = {}  # (phase_no, topic_no) -> (title, level, minutes, relpath)
-for f in sorted(glob.glob('0[1-7]-*/topics/*.md')):
+for f in sorted(glob.glob('0[0-7]-*/topics/*.md')):
     t = open(f).read()
     m = re.search(r'\*\*Level:\*\* (\w+).*?\*\*Reading time:\*\* (\d+) min', t)
     assert m, f
@@ -61,6 +61,7 @@ B = [
  ("8-10", [], "Build: a small MCP server for an API you use, with one tool that needs approval. See [mcp-safe-actions](https://github.com/techsaurabh-394/mcp-safe-actions)."),
 ]
 CW = [
+ ("Week 0 (optional)", [(0,n) for n in range(1,PH[0]+1)], "Phase 0. Run the three `ml_*.py` scripts in `00-ml-foundations/code/`. Skip if you already know gradient descent and backpropagation."),
  ("Week 1", [(1,n) for n in range(1,PH[1]+1)], "Phase 1. Do the checkpoint quiz in the phase README."),
  ("Week 2", [(2,n) for n in range(1,PH[2]+1)], "Phase 2. Run every script in `02-advanced-rag/code/`, including `adv_llm_judge.py`."),
  ("Week 3", [(3,n) for n in range(1,PH[3]+1)], "Phase 3. Run `llm_attention.py`, `llm_decoding.py`, `sampling_demo.py`, `llm_finetune_data.py`, `llm_api_basics.py`, `llm_structured.py`, `llm_quantize.py`, `llm_lora_math.py`, `llm_serving_sim.py`, `llm_e2e_walkthrough.py`, `llm_qkv.py`, `llm_block.py`, `llm_training.py`, `llm_attn_variants.py` and `llm_moe_scaling.py`."),

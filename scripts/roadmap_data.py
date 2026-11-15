@@ -30,9 +30,9 @@ PHASES = {
                   "Combine keyword search (BM25) and vector search into a hybrid"],
         ideas=["chunking", "embeddings", "cosine similarity", "BM25", "vector indexes (HNSW, IVF)", "hybrid search"],
         builds=["mini_rag.py: a complete small RAG pipeline", "rag_chunkers.py", "rag_bm25.py", "rag_hnsw_ivf.py"],
-        demos=["01-rag-foundations/code/mini_rag.py", "01-rag-foundations/code/rag_chunkers.py",
+        demos=["01-rag-foundations/code/mini_rag.py", "01-rag-foundations/code/rag_pipeline.py", "01-rag-foundations/code/rag_chunkers.py",
                "01-rag-foundations/code/rag_bm25.py", "01-rag-foundations/code/rag_hnsw_ivf.py"],
-        labs=["chunking", "similarity", "search"],
+        labs=["ragpipe", "chunking", "similarity", "search"],
         needs="Basic Python: lists, dictionaries, functions, loops.",
     ),
     "02": dict(

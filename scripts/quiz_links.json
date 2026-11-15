@@ -1,6 +1,52 @@
 {
  "_about": "Which animation explains each quiz question. Key: the question exactly as it appears in the phase README. Value: animation names (the #deep-link on the site), best match first. Checked by hand; scripts/test_quiz.py fails if a question is missing, renamed or points at an animation that does not exist.",
  "links": {
+  "How are AI, machine learning and deep learning related?": [
+   "01-ai-ml-deep-learning"
+  ],
+  "What separates supervised, unsupervised and reinforcement learning?": [
+   "01-ai-ml-deep-learning"
+  ],
+  "Why keep a test set that you look at only once?": [
+   "01-ai-ml-deep-learning"
+  ],
+  "What is a loss function? Name one for regression and one for classification.": [
+   "02-loss-and-gradient-descent"
+  ],
+  "Write the gradient descent update rule and say what the learning rate does.": [
+   "02-loss-and-gradient-descent"
+  ],
+  "Minimising (w - 3)^2 from w = 0 with learning rate 0.1: what is w after one step?": [
+   "02-loss-and-gradient-descent"
+  ],
+  "With learning rate 1.1 on the same problem, what happens and why?": [
+   "02-loss-and-gradient-descent"
+  ],
+  "What does one neuron compute?": [
+   "03-neurons-and-forward-propagation"
+  ],
+  "Why do networks need non-linear activations?": [
+   "03-neurons-and-forward-propagation"
+  ],
+  "What is the sigmoid's derivative in terms of its output, and why does that matter for deep sigmoid networks?": [
+   "03-neurons-and-forward-propagation",
+   "04-backpropagation"
+  ],
+  "What is backpropagation?": [
+   "04-backpropagation"
+  ],
+  "In the 2-2-1 example, why did the weights on the first input get zero gradient for the input (0, 1)?": [
+   "04-backpropagation"
+  ],
+  "How do you check that a hand-written backward pass is right?": [
+   "04-backpropagation"
+  ],
+  "How do you recognise overfitting, and what are two fixes?": [
+   "05-overfitting-and-regularization"
+  ],
+  "What does an L2 penalty do to the weights, and what happens if lambda is too large?": [
+   "05-overfitting-and-regularization"
+  ],
   "Why retrieve first instead of pasting every document into the prompt?": [
    "rag-flow"
   ],
