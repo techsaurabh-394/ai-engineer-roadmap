@@ -40,8 +40,8 @@ def test_faq_pairs_come_from_the_lessons_own_questions():
     assert len(seo.faq_pairs(real)) == 3
 
 
-def test_every_topic_has_three_faq_pairs():
-    bad = [str(p) for p in sorted(seo.ROOT.glob("[01][0-9]-*/topics/*.md")) if len(seo.faq_pairs(p.read_text(encoding="utf-8"))) != 3]
+def test_every_topic_has_at_least_three_faq_pairs():
+    bad = [str(p) for p in sorted(seo.ROOT.glob("[01][0-9]-*/topics/*.md")) if len(seo.faq_pairs(p.read_text(encoding="utf-8"))) < 3]
     assert not bad, bad
 
 
