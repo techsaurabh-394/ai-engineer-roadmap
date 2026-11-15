@@ -539,7 +539,7 @@
       })));
     }
 
-    main.appendChild(h('div.section-head', h('h2', 'The roadmap'), h('p', 'Seven phases, from your first RAG pipeline to running AI in production. ', h('a', { href: '#roadmap' }, 'See the full explanation'))));
+    main.appendChild(h('div.section-head', h('h2', 'The roadmap'), h('p', D.phases.length + ' phases, from the ML basics and your first RAG pipeline to running, tuning and extending AI in production. ', h('a', { href: '#roadmap' }, 'See the full explanation'))));
     main.appendChild(h('div.grid-phases', D.phases.map(function (p) {
       var items = LESSONS.filter(function (x) { return x.phase === p.id; }), mins = 0, lv = { Beginner: 0, Intermediate: 0, Advanced: 0 };
       items.forEach(function (x) { mins += minutes(x); if (lv[level(x)] !== undefined) lv[level(x)] += 1; });
@@ -696,7 +696,7 @@
     main.appendChild(h('section.road-intro',
       h('span.eyebrow', icon('spark', 'sm'), 'The whole path on one page'),
       h('h1', 'From your first RAG app to AI running in production'),
-      h('p.lead', 'Seven phases, done in order. Each one ends with something you can do, and with code you can run. About ' + hours(total) + ' of reading in total, plus the labs and the code.'),
+      h('p.lead', D.phases.length + ' phases, done in order (Phase 0 is an optional warm-up). Each one ends with something you can do, and with code you can run. About ' + hours(total) + ' of reading in total, plus the labs and the code.'),
       h('div.road-stats',
         h('div', h('b', String(D.phases.length)), h('span', 'phases')),
         h('div', h('b', String(LESSONS.length)), h('span', 'lessons')),
@@ -708,7 +708,7 @@
       return h('li', h('span.num', String(i + 1)), h('div', h('b', s[0]), h('p', s[1])));
     })));
 
-    main.appendChild(h('div.section-head', h('h2', 'The seven phases'), h('p', 'Click a card to open the lessons, or start from the top.')));
+    main.appendChild(h('div.section-head', h('h2', 'The ' + D.phases.length + ' phases'), h('p', 'Click a card to open the lessons, or start from the top.')));
     var line = h('ol.timeline');
     D.phases.forEach(function (p) {
       var info = R.phases[p.id] || {}, items = LESSONS.filter(function (x) { return x.phase === p.id; });
@@ -737,7 +737,7 @@
     main.appendChild(line);
 
     if (R.after && R.after.length) {
-      main.appendChild(h('div.section-head', h('h2', 'After the seven phases'), h('p', 'Turn what you learned into proof.')));
+      main.appendChild(h('div.section-head', h('h2', 'After the ' + D.phases.length + ' phases'), h('p', 'Turn what you learned into proof.')));
       main.appendChild(h('div.grid-labs', R.after.map(function (a) {
         return h('a.card.lab-card', { href: D.repo + '/tree/main/' + a[1], rel: 'noopener' }, h('h3', a[0]), h('p', a[2]));
       })));

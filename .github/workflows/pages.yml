@@ -14,8 +14,8 @@ on:
       - "scripts/site_data.py"
       - "scripts/build_pages.py"
       - "scripts/site/**"
-      - "0[0-7]-*/code/*.py"
-      - "0[0-7]-*/README.md"
+      - "[01][0-9]-*/code/*.py"
+      - "[01][0-9]-*/README.md"
       - "**/topics/*.md"
       - ".github/workflows/pages.yml"
   workflow_dispatch:

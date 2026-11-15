@@ -1,12 +1,12 @@
 # Learning paths
 
-Pick the path that matches what you want to do. Every time below is the **reading time** printed on the topic page, added up by a script from the repo, plus time for running code. The number of topics is 118 and the total reading time is **1039 minutes (about 17 hours)**. Running code and building the project take longer than reading.
+Pick the path that matches what you want to do. Every time below is the **reading time** printed on the topic page, added up by a script from the repo, plus time for running code. The number of topics is 132 and the total reading time is **1182 minutes (about 20 hours)**. Running code and building the project take longer than reading.
 
 | I want to... | Path | Time |
 |---|---|---|
 | Build an app that answers questions from my documents | [Path A: RAG app](#path-a-build-a-rag-app-in-2-weeks) | 2 weeks, about 1 hour a day |
 | Build agents and MCP tools | [Path B: agents and MCP](#path-b-build-agents-and-mcp-tools-in-2-weeks) | 2 weeks, about 1 hour a day |
-| Learn everything | [Path C: full roadmap](#path-c-the-full-roadmap-in-8-weeks) | 8 weeks |
+| Learn everything | [Path C: full roadmap](#path-c-the-full-roadmap-in-10-weeks) | 10 weeks |
 | Prepare for an interview | [Path D: interview week](#path-d-interview-in-one-week) | 1 week |
 | Build with LLM APIs, from first call to serving | [Path E: LLM builder](#path-e-llm-builder-from-first-call-to-serving) | 8 days, about 1 hour a day |
 | Understand how an LLM really works inside (Q, K, V, training, MoE) | [Path F: inside the LLM](#path-f-inside-the-llm-how-it-really-works) | 7 days, about 1 hour a day |
@@ -44,9 +44,9 @@ Not sure? Start with [what AI engineering is](what-is-ai-engineering.md) (5 minu
 | 7 | 🟡 [AI Security](../07-production-ai/topics/11-ai-security.md) (12 min) | 12 min | Read the injection and tool-abuse section, then list which of your tools should need a human to approve. |
 | 8-10 | | | Build: a small MCP server for an API you use, with one tool that needs approval. See [mcp-safe-actions](https://github.com/techsaurabh-394/mcp-safe-actions). |
 
-## Path C: the full roadmap in 8 weeks
+## Path C: the full roadmap in 10 weeks
 
-All 118 topics, one phase a week, with the last week for interview prep and a project. Reading is about 17 hours in total; spread it so that you also run the code. Each week below lists every topic in the phase. Weekly reading time is in the right column.
+All 132 topics, one phase a week (Phase 0 is an optional warm-up), with the last week for interview prep and a project. Reading is about 20 hours in total; spread it so that you also run the code. Each week below lists every topic in the phase. Weekly reading time is in the right column.
 
 | Day | Read | Reading | Then do this |
 |---|---|---|---|
@@ -58,7 +58,9 @@ All 118 topics, one phase a week, with the last week for interview prep and a pr
 | Week 5 | 🟢 [LangChain](../05-frameworks/topics/01-langchain.md) (11 min)<br/>🟡 [LangGraph](../05-frameworks/topics/02-langgraph.md) (12 min)<br/>🟢 [LlamaIndex](../05-frameworks/topics/03-llamaindex.md) (10 min)<br/>🟡 [OpenAI Agents SDK](../05-frameworks/topics/04-openai-agents-sdk.md) (11 min)<br/>🟡 [CrewAI](../05-frameworks/topics/05-crewai.md) (10 min)<br/>🔴 [AutoGen](../05-frameworks/topics/06-autogen.md) (10 min)<br/>🔴 [DSPy](../05-frameworks/topics/07-dspy.md) (11 min)<br/>🟡 [Haystack](../05-frameworks/topics/08-haystack.md) (10 min) | 85 min | Phase 5. Run `fw_mini_chain.py` and `fw_mini_graph.py`, then read the framework comparison. |
 | Week 6 | 🟢 [Model Context Protocol](../06-mcp/topics/01-model-context-protocol.md) (11 min)<br/>🟢 [MCP Server](../06-mcp/topics/02-mcp-server.md) (11 min)<br/>🟡 [MCP Client](../06-mcp/topics/03-mcp-client.md) (11 min)<br/>🟡 [MCP Tools](../06-mcp/topics/04-mcp-tools.md) (12 min)<br/>🟡 [MCP Resources](../06-mcp/topics/05-mcp-resources.md) (9 min)<br/>🟡 [MCP Prompts](../06-mcp/topics/06-mcp-prompts.md) (8 min)<br/>🔴 [Build a Custom MCP Server](../06-mcp/topics/07-build-a-custom-mcp-server.md) (14 min) | 76 min | Phase 6. Build the TypeScript server. |
 | Week 7 | 🟢 [FastAPI for AI](../07-production-ai/topics/01-fastapi-for-ai.md) (10 min)<br/>🟢 [Docker](../07-production-ai/topics/02-docker.md) (9 min)<br/>🟡 [Kubernetes](../07-production-ai/topics/03-kubernetes.md) (11 min)<br/>🟡 [Redis](../07-production-ai/topics/04-redis.md) (10 min)<br/>🟡 [Celery](../07-production-ai/topics/05-celery.md) (9 min)<br/>🟡 [RabbitMQ](../07-production-ai/topics/06-rabbitmq.md) (9 min)<br/>🟡 [Monitoring](../07-production-ai/topics/07-monitoring.md) (9 min)<br/>🟡 [LangSmith](../07-production-ai/topics/08-langsmith.md) (8 min)<br/>🟡 [MLflow](../07-production-ai/topics/09-mlflow.md) (8 min)<br/>🟡 [Prompt Versioning](../07-production-ai/topics/10-prompt-versioning.md) (9 min)<br/>🟡 [AI Security](../07-production-ai/topics/11-ai-security.md) (12 min)<br/>🟡 [Guardrails](../07-production-ai/topics/12-guardrails.md) (10 min)<br/>🟡 [Observability](../07-production-ai/topics/13-observability.md) (11 min)<br/>🟡 [Cost Optimization](../07-production-ai/topics/14-cost-optimization.md) (11 min)<br/>🔴 [Deploy a Production AI Application](../07-production-ai/topics/15-deploy-a-production-ai-application.md) (13 min) | 149 min | Phase 7. Run the five `prod_*.py` scripts. |
-| Week 8 | | | Do [08-interview-prep](../08-interview-prep/README.md) and finish one project from [09-projects](../09-projects/README.md). |
+| Week 8 | 🟢 [Prompting vs RAG vs Fine-Tuning](../10-fine-tuning/topics/01-prompting-vs-rag-vs-fine-tuning.md) (9 min)<br/>🟡 [Supervised and Instruction Tuning](../10-fine-tuning/topics/02-supervised-and-instruction-tuning.md) (10 min)<br/>🟡 [Dataset Preparation](../10-fine-tuning/topics/03-dataset-preparation.md) (10 min)<br/>🟡 [LoRA in Depth](../10-fine-tuning/topics/04-lora-in-depth.md) (11 min)<br/>🔴 [QLoRA and Quantized Training](../10-fine-tuning/topics/05-qlora-and-quantized-training.md) (10 min)<br/>🟡 [Training Pipelines and Hyperparameters](../10-fine-tuning/topics/06-training-pipelines-and-hyperparameters.md) (10 min)<br/>🔴 [Evaluating Fine-Tuned Models](../10-fine-tuning/topics/07-evaluating-fine-tuned-models.md) (12 min) | 72 min | Phase 8 (fine-tuning). Run the four `ft_*.py` scripts in `10-fine-tuning/code/`, then decide for one task of yours whether fine-tuning beats prompting and RAG. |
+| Week 9 | 🟡 [Vision Language Models](../11-multimodal-ai/topics/01-vision-language-models.md) (10 min)<br/>🟡 [How Models See Images](../11-multimodal-ai/topics/02-how-models-see-images.md) (10 min)<br/>🟡 [Audio and Speech to Text](../11-multimodal-ai/topics/03-audio-and-speech-to-text.md) (10 min)<br/>🟡 [Text to Speech](../11-multimodal-ai/topics/04-text-to-speech.md) (9 min)<br/>🔴 [Video Understanding](../11-multimodal-ai/topics/05-video-understanding.md) (10 min)<br/>🟡 [Multimodal Embeddings and CLIP](../11-multimodal-ai/topics/06-multimodal-embeddings-and-clip.md) (11 min)<br/>🔴 [Multimodal RAG](../11-multimodal-ai/topics/07-multimodal-rag.md) (11 min) | 71 min | Phase 9 (multimodal AI). Run the four `mm_*.py` scripts in `11-multimodal-ai/code/`. |
+| Week 10 | | | Do [08-interview-prep](../08-interview-prep/README.md) and finish one project from [09-projects](../09-projects/README.md). |
 
 ## Path D: interview in one week
 

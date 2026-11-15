@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420" role="img" aria-labelledby="t d" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+<title id="t">Video understanding</title>
+<desc id="d">A video is many images: sample, encode, budget, reason.</desc>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9DA7B3"/></marker></defs>
+<rect width="880" height="420" rx="16" fill="#0D1117"/>
+<text x="440.0" y="40" font-size="22" fill="#E6EDF3" font-weight="700" text-anchor="middle">Video understanding</text>
+<text x="440.0" y="64" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">A video is many images: sample, encode, budget, reason.</text>
+<line x1="440" y1="135" x2="657" y2="188" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="657" y1="188" x2="657" y2="292" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="657" y1="292" x2="440" y2="345" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="440" y1="345" x2="223" y2="293" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="223" y1="293" x2="223" y2="188" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="223" y1="188" x2="440" y2="135" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<rect x="365" y="110" width="150" height="50" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1667;0.1787;1" values="#F5B042;#F5B042;#30363D;#30363D"/></rect>
+<text x="440" y="141" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Sample</text>
+<rect x="582" y="162" width="150" height="50" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1547;0.1667;0.3333;0.3453;1" values="#30363D;#30363D;#F5B042;#F5B042;#30363D;#30363D"/></rect>
+<text x="657" y="194" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Encode</text>
+<rect x="582" y="268" width="150" height="50" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.3213;0.3333;0.5;0.512;1" values="#30363D;#30363D;#F5B042;#F5B042;#30363D;#30363D"/></rect>
+<text x="657" y="298" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Budget</text>
+<rect x="365" y="320" width="150" height="50" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.488;0.5;0.6667;0.6787;1" values="#30363D;#30363D;#F5B042;#F5B042;#30363D;#30363D"/></rect>
+<text x="440" y="351" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Order</text>
+<rect x="148" y="268" width="150" height="50" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.6547;0.6667;0.8333;0.8453;1" values="#30363D;#30363D;#F5B042;#F5B042;#30363D;#30363D"/></rect>
+<text x="223" y="299" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Audio</text>
+<rect x="148" y="162" width="150" height="50" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.8213;0.8333;1.0" values="#30363D;#30363D;#F5B042;#F5B042"/></rect>
+<text x="223" y="194" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Answer</text>
+<circle r="9" fill="#F5B042" cx="440" cy="99"><animate attributeName="cx" dur="14.4s" repeatCount="indefinite" keyTimes="0.0;0.0083;0.1667;0.225;0.3333;0.3917;0.5;0.5583;0.6667;0.725;0.8333;0.8917;1.0" values="440;440;440;656.5;656.5;656.5;656.5;440;440;223.5;223.5;223.5;223.5"/><animate attributeName="cy" dur="14.4s" repeatCount="indefinite" keyTimes="0.0;0.0083;0.1667;0.225;0.3333;0.3917;0.5;0.5583;0.6667;0.725;0.8333;0.8917;1.0" values="99;99;99;151.5;151.5;256.5;256.5;309;309;256.5;256.5;151.5;151.5"/></circle>
+<text x="440" y="223" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">1. Pick frames, for example one per<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1667;0.1787;1" values="1;1;0;0"/></text>
+<text x="440" y="245" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">second<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1667;0.1787;1" values="1;1;0;0"/></text>
+<text x="440" y="267" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">You cannot afford every frame.<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1667;0.1787;1" values="1;1;0;0"/></text>
+<text x="440" y="234" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">2. Encode each frame like a normal image<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1547;0.1667;0.3333;0.3453;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="256" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">197 tokens each at 224 pixels.<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1547;0.1667;0.3333;0.3453;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="223" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">3. Add up tokens: 60 frames is 11,820<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.3213;0.3333;0.5;0.512;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="245" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">tokens<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.3213;0.3333;0.5;0.512;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="267" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">More fps or pixels costs more.<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.3213;0.3333;0.5;0.512;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="223" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">4. Keep time order with positions or<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.488;0.5;0.6667;0.6787;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="245" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">timestamps<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.488;0.5;0.6667;0.6787;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="267" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">Otherwise before and after are lost.<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.488;0.5;0.6667;0.6787;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="234" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">5. Add the transcript of the audio track<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.6547;0.6667;0.8333;0.8453;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="256" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">Speech often carries the plot.<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.6547;0.6667;0.8333;0.8453;1" values="0;0;1;1;0;0"/></text>
+<text x="440" y="223" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">6. The model answers from frames and<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.8213;0.8333;1.0" values="0;0;1;1"/></text>
+<text x="440" y="245" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">words<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.8213;0.8333;1.0" values="0;0;1;1"/></text>
+<text x="440" y="267" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">Short events can fall between samples.<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.8213;0.8333;1.0" values="0;0;1;1"/></text>
+</svg>

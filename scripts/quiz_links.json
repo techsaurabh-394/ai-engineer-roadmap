@@ -290,6 +290,105 @@
   ],
   "What should CI run for an AI app?": [
    "15-deploy-a-production-ai-application"
+  ],
+  "A client wants to fine-tune the model on a price list that changes weekly. What do you recommend?": [
+   "ft-decision"
+  ],
+  "In this phase's illustrative scenario, a 1,200-token prompt shrinks to 150 tokens at 200,000 requests a month. How is break-even computed, and what is it?": [
+   "ft-decision"
+  ],
+  "Why mask the prompt tokens in supervised fine-tuning?": [
+   "ft-sft-masking"
+  ],
+  "Why is the end-of-turn token included in the trained labels?": [
+   "ft-sft-masking"
+  ],
+  "Why does supervised fine-tuning teach format and behaviour better than facts?": [
+   "ft-sft-masking",
+   "ft-decision"
+  ],
+  "Why split a fine-tuning dataset by group id instead of by row?": [
+   "ft-dataset-prep"
+  ],
+  "What is the right order of the data-prep steps, and why?": [
+   "ft-dataset-prep"
+  ],
+  "How many trainable parameters does a LoRA adapter on one 4096 x 4096 matrix have at r = 8, and what share is that?": [
+   "ft-lora-in-depth"
+  ],
+  "Why does B start at zero in LoRA, and why is the update's rank at most r?": [
+   "ft-lora-in-depth"
+  ],
+  "How do alpha and rank interact, and why does merging work?": [
+   "ft-lora-in-depth"
+  ],
+  "What is frozen and what is trained in QLoRA?": [
+   "ft-qlora"
+  ],
+  "Name two memory tricks in the QLoRA paper besides NF4 and what each does.": [
+   "ft-qlora"
+  ],
+  "Micro-batch 4, accumulation 8, one device, 1,000 examples. What is the effective batch, and how many steps in 3 epochs?": [
+   "ft-training-loop"
+  ],
+  "Training loss keeps falling but validation loss turns up. What is it called and what do you do?": [
+   "ft-training-loop",
+   "05-overfitting-and-regularization"
+  ],
+  "Why report a bootstrap interval, and what can an average hide?": [
+   "ft-evaluation"
+  ],
+  "Write the DPO loss in words. What is its value when the policy equals the reference?": [
+   "ft-evaluation"
+  ],
+  "How does a vision transformer turn an image into tokens?": [
+   "mm-how-models-see-images"
+  ],
+  "How many tokens does a 224 x 224 image give with 16 x 16 patches, and what happens at 448 x 448?": [
+   "mm-how-models-see-images"
+  ],
+  "What are the three parts of a vision-language model?": [
+   "mm-vision-language-models"
+  ],
+  "How do LLaVA-style and Flamingo-style designs differ?": [
+   "mm-vision-language-models"
+  ],
+  "Why do speech models use a log-mel spectrogram rather than the raw waveform?": [
+   "mm-audio-and-speech-to-text"
+  ],
+  "How many analysis frames does 1 second of 16 kHz audio give with a 25 ms window and 10 ms hop?": [
+   "mm-audio-and-speech-to-text"
+  ],
+  "Reference \"the quick brown fox jumps\", output \"the quick brown box jumps over\". What is the word error rate?": [
+   "mm-audio-and-speech-to-text"
+  ],
+  "What are the stages of text to speech?": [
+   "mm-text-to-speech"
+  ],
+  "What is the main safety concern with voice cloning, and what should you do?": [
+   "mm-text-to-speech"
+  ],
+  "A 60-second video is sampled at 1 frame per second at 224 px (197 tokens per frame). What is the token cost, and what if you sample at 2 fps?": [
+   "mm-video-understanding"
+  ],
+  "What do you lose with sparse frame sampling, and how do you reduce the risk?": [
+   "mm-video-understanding"
+  ],
+  "Explain the CLIP training objective in two sentences.": [
+   "mm-multimodal-embeddings-and-clip"
+  ],
+  "How does zero-shot classification with CLIP work, and what are its limits?": [
+   "mm-multimodal-embeddings-and-clip"
+  ],
+  "Why index both captions and image embeddings in multimodal RAG?": [
+   "mm-multimodal-rag"
+  ],
+  "How does reciprocal rank fusion score an item, and why use it?": [
+   "mm-multimodal-rag",
+   "hybrid-search-flow"
+  ],
+  "Your multimodal RAG answers chart questions wrongly. Where do you look first?": [
+   "mm-multimodal-rag"
   ]
  }
 }

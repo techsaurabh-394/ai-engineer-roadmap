@@ -24,6 +24,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 import site_data as sd  # noqa: E402
 
 SITE = pathlib.Path(__file__).resolve().parent / "site"
+ROOT_CODE = pathlib.Path(__file__).resolve().parent.parent
 P1, P3 = sd.P1, sd.P3
 dec, sdemo = sd.load(P3 / "llm_decoding.py"), sd.load(P3 / "sampling_demo.py")
 att, qkv, e2e = sd.load(P3 / "llm_attention.py"), sd.load(P3 / "llm_qkv.py"), sd.load(P3 / "llm_e2e_walkthrough.py")
@@ -444,3 +445,58 @@ def test_rag_pipeline_matches_python():
                          "context": r["context"], "prompt": r["prompt"], "answer": r["answer"],
                          "vecs": [i["vector"] for i in r["index"]["items"]]})
         check(cases, want, exact=False)
+
+
+# --------------------------------------------------------------- agent_trace.py
+def test_agent_calculator_and_traces_match_python():
+    at = sd.load(ROOT_CODE / "04-agentic-ai" / "code" / "agent_trace.py")
+    exprs = ["12*7+5", "2+3*4", "(2+3)*4", "7/2", "-3+5", "10/0", "1.2.3", "2+", "(2+3", "", "abc", "__import__('os')",
+             "1/3", "0.1+0.2", "2*(3+4)*5", "-(2+3)", "100/8", "3 + 4 * 2", "9" * 200 + "*" + "9" * 200, "5-", "((1))"]
+    check([["calc", e] for e in exprs], [at.calculator(e) for e in exprs], exact=True)
+    cases, want = [], []
+    for key, sc in at.SCENARIOS.items():
+        for decide in ({}, {"save_note": False}):
+            for cap in (2, 4, 6):
+                cases.append(["agent_trace", sc["script"], sc["goal"], cap, sc["approve"], decide])
+                want.append(at.run_trace(sc["script"], sc["goal"], cap, sc["approve"], decide))
+    check(cases, want, exact=True)
+
+
+# --------------------------------------------------------------- mcp
+def test_mcp_server_matches_python():
+    ms = sd.load(ROOT_CODE / "06-mcp" / "code" / "mcp_session.py")
+    cases, want = [], []
+    raws = [json.dumps(m) for _, _, m in ms.LIFECYCLE]
+    cases.append(["mcp_replay", raws]); want.append([e["out"] for e in ms.replay(raws)])
+    for key, m in ms.MISTAKES.items():
+        if key == "tool_fails":
+            continue          # the error text of a failure INSIDE a tool is language-specific; checked below
+        rr = ([json.dumps(x) for x in ms.init_messages()] if m["init"] else []) + [m.get("raw") or json.dumps(m["msg"])]
+        cases.append(["mcp_replay", rr]); want.append([e["out"] for e in ms.replay(rr)])
+    extra = [json.dumps({"jsonrpc": "2.0", "id": 1, "method": "ping"}), "[]", json.dumps({"id": 1}),
+             json.dumps({"jsonrpc": "2.0", "id": 2, "method": "resources/read", "params": {"uri": "x://no"}}),
+             json.dumps({"jsonrpc": "2.0", "id": 3, "method": "prompts/get", "params": {"name": "summarize"}}),
+             json.dumps({"jsonrpc": "2.0", "id": 4, "method": "prompts/list"}), json.dumps({"jsonrpc": "2.0", "id": 5, "method": "resources/list"}),
+             json.dumps({"jsonrpc": "2.0", "id": 6, "method": "tools/call", "params": {"name": "word_count", "arguments": {"text": "a b  c"}}})]
+    rr = [json.dumps(x) for x in ms.init_messages()] + extra
+    cases.append(["mcp_replay", rr]); want.append([e["out"] for e in ms.replay(rr)])
+    check(cases, want, exact=True)
+    m = ms.MISTAKES["tool_fails"]
+    rr = [json.dumps(x) for x in ms.init_messages()] + [json.dumps(m["msg"])]
+    got = js([["mcp_replay", rr]])[0]["ok"][-1]
+    assert got["result"]["isError"] is True and got["result"]["content"][0]["text"].startswith("Tool failed")
+
+
+# --------------------------------------------------------------- prod_request_sim.py
+def test_request_simulator_matches_python():
+    rs = sd.load(ROOT_CODE / "07-production-ai" / "code" / "prod_request_sim.py")
+    cases, want = [], []
+    for name in rs.PATTERNS:
+        for seed in (1, 7):
+            tr = rs.make_traffic(name, 70, seed)
+            cases.append(["traffic", name, 70, seed]); want.append(tr)
+            for order in ("limit_first", "cache_first"):
+                for ttl, rate, cap in ((30.0, 1.0, 3), (5.0, 0.5, 1), (0.0, 100.0, 100), (120.0, 2.0, 5)):
+                    cases.append(["reqsim", tr, {"ttl": ttl, "rate": rate, "capacity": cap, "order": order, "llmMs": 1800, "cacheMs": 15, "price": 0.01}])
+                    want.append(rs.simulate(tr, ttl=ttl, rate=rate, capacity=cap, order=order))
+    check(cases, want, exact=False)

@@ -25,7 +25,7 @@ REGISTRY: dict[str, dict] = {}
 # ----------------------------------------------------------------- topics
 def topic_index() -> dict[str, str]:
     idx: dict[str, str] = {}
-    for f in sorted(glob.glob(str(ROOT / "0[0-7]*/topics/*.md"))):
+    for f in sorted(glob.glob(str(ROOT / "[01][0-9]*/topics/*.md"))):
         rel = pathlib.Path(f).relative_to(ROOT).as_posix()
         stem = rel.rsplit("/", 1)[1][:-3]
         if stem in idx:

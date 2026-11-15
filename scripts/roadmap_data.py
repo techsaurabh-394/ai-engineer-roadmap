@@ -9,6 +9,9 @@ demo file and lab named here exists, so this file cannot point at something that
     python scripts/roadmap_data.py     # prints a one-line summary per phase
 """
 import pathlib
+import sys
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
@@ -73,9 +76,9 @@ PHASES = {
                   "Split work across several agents and add guardrails"],
         ideas=["tool calling", "ReAct", "memory", "planning", "multi-agent", "guardrails"],
         builds=["agent.py: a minimal agent", "agent_react.py", "agent_memory.py", "agent_multi.py"],
-        demos=["04-agentic-ai/code/agent.py", "04-agentic-ai/code/agent_react.py",
+        demos=["04-agentic-ai/code/agent.py", "04-agentic-ai/code/agent_trace.py", "04-agentic-ai/code/agent_react.py",
                "04-agentic-ai/code/agent_memory.py", "04-agentic-ai/code/agent_multi.py"],
-        labs=[],
+        labs=["agent"],
         needs="Phase 3, especially context windows, hallucination and prompting. Python functions, dicts and JSON.",
     ),
     "05": dict(
@@ -100,8 +103,8 @@ PHASES = {
                   "Build a small custom MCP server"],
         ideas=["the protocol", "servers and clients", "tools", "resources", "prompts", "building a custom server"],
         builds=["mcp_mini_jsonrpc.py", "hello-mcp-server (TypeScript)"],
-        demos=["06-mcp/code/mcp_mini_jsonrpc.py"],
-        labs=[],
+        demos=["06-mcp/code/mcp_mini_jsonrpc.py", "06-mcp/code/mcp_session.py"],
+        labs=["mcp"],
         needs="Phases 4 and 5. Basic JSON. Node.js 18 or newer only if you build the TypeScript server.",
     ),
     "07": dict(
@@ -114,11 +117,17 @@ PHASES = {
         ideas=["FastAPI", "Docker and Kubernetes", "caching", "queues", "observability", "security", "cost control"],
         builds=["prod_cache_ratelimit.py", "prod_task_queue.py", "prod_observability.py", "prod_guardrails.py"],
         demos=["07-production-ai/code/prod_cache_ratelimit.py", "07-production-ai/code/prod_task_queue.py",
-               "07-production-ai/code/prod_observability.py", "07-production-ai/code/prod_guardrails.py"],
-        labs=[],
+               "07-production-ai/code/prod_observability.py", "07-production-ai/code/prod_guardrails.py",
+               "07-production-ai/code/prod_request_sim.py"],
+        labs=["reqsim"],
         needs="Basic Python and the earlier phases, especially MCP. No cloud account is needed for the code here.",
     ),
 }
+
+# Phases 8 and 9 live in their own files so they can be edited independently.
+import roadmap_p10, roadmap_p11  # noqa: E402
+PHASES["10"] = roadmap_p10.PHASE
+PHASES["11"] = roadmap_p11.PHASE
 
 AFTER = [
     ("Interview prep", "08-interview-prep", "Questions with model answers, grouped by topic. Practise saying them out loud."),

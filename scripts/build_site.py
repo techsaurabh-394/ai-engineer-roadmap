@@ -117,7 +117,7 @@ def phases() -> list:
     out = []
     for pid, label in sorted(g.PHASES.items()):
         dirs = sorted(p.name for p in ROOT.glob(f"{pid}-*") if (p / "topics").is_dir())
-        out.append(dict(id=pid, n=int(pid), name=label.split(": ", 1)[1], dir=dirs[0] if dirs else ""))
+        out.append(dict(id=pid, n=int(re.search(r"Phase (\d+)", label).group(1)), name=label.split(": ", 1)[1], dir=dirs[0] if dirs else ""))
     return out
 
 
