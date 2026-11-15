@@ -1,6 +1,6 @@
 ## AI Engineer Roadmap (free course)
 
-- [AI Engineer Roadmap](https://mernstackdev.com/ai-engineer-roadmap/): Free interactive course on RAG, LLM internals, agents, MCP, production AI, fine-tuning and multimodal AI
-- [All lessons](https://mernstackdev.com/ai-engineer-roadmap/learn/): 132 lessons, each a plain HTML page with worked examples, code and interview questions
-- [Course index for AI assistants](https://mernstackdev.com/ai-engineer-roadmap/llms.txt): llms.txt for this course; the full text is at https://mernstackdev.com/ai-engineer-roadmap/llms-full.txt
-- [Glossary](https://mernstackdev.com/ai-engineer-roadmap/glossary/): 57 AI engineering terms in plain English
+- [AI Engineer Roadmap](https://mernstackdev.com/ai-roadmap/): Free interactive course on RAG, LLM internals, agents, MCP, production AI, fine-tuning and multimodal AI
+- [All lessons](https://mernstackdev.com/ai-roadmap/learn/): 132 lessons, each a plain HTML page with worked examples, code and interview questions
+- [Course index for AI assistants](https://mernstackdev.com/ai-roadmap/llms.txt): llms.txt for this course; the full text is at https://mernstackdev.com/ai-roadmap/llms-full.txt
+- [Glossary](https://mernstackdev.com/ai-roadmap/glossary/): 57 AI engineering terms in plain English

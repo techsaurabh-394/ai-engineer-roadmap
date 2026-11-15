@@ -66,7 +66,7 @@ Hard ideas are easier to follow when you can watch them. This animation plays on
 
 ![Animated RAG pipeline: documents, chunks, vectors, store, retrieve, generate](assets/anim/rag-flow.svg)
 
-**Also live at [mernstackdev.com/ai-engineer-roadmap](https://mernstackdev.com/ai-engineer-roadmap/)** (same content as the GitHub Pages site). Press **Ctrl/Cmd + K** to jump to any lesson, or open **[All topics](https://techsaurabh-394.github.io/ai-engineer-roadmap/#topics)** to filter all 129 lessons by phase, level and status.
+**Also live at [mernstackdev.com/ai-roadmap](https://mernstackdev.com/ai-roadmap/)** (same content as the GitHub Pages site). Press **Ctrl/Cmd + K** to jump to any lesson, or open **[All topics](https://techsaurabh-394.github.io/ai-engineer-roadmap/#topics)** to filter all 129 lessons by phase, level and status.
 
 **An animation for every one of the 132 topics** (129 animations; a few topics share one). Open the **[interactive viewer](https://techsaurabh-394.github.io/ai-engineer-roadmap/)** to step through them with Previous, Play and Next, search by name, or jump straight to a topic. The same animations are in the [animation gallery](docs/animations.md) and in the **Watch it** block at the top of each topic page.
 

@@ -243,5 +243,5 @@ def llms_full(site, summary, articles):
 
 def robots(site):
     return (f"# This file only has an effect when the site is served from a domain root.\n"
-            f"# On a sub-folder (for example mernstackdev.com/ai-engineer-roadmap/) merge deploy/robots-additions.txt into the root robots.txt.\n"
+            f"# On a sub-folder (for example mernstackdev.com/ai-roadmap/) merge deploy/robots-additions.txt into the root robots.txt.\n"
             f"User-agent: *\nAllow: /\n\nSitemap: {site}/sitemap.xml\n")

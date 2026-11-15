@@ -2,11 +2,8 @@
 <IfModule mod_rewrite.c>
 RewriteEngine On
 
-# 1. Old location -> new location, permanent, path kept (/ai-roadmap/learn/x/ -> /ai-engineer-roadmap/learn/x/)
-RewriteRule ^ai-roadmap/?(.*)$ /ai-engineer-roadmap/$1 [R=301,L]
-
-# 2. Serve the roadmap's real files and folders directly, so WordPress never rewrites them
-RewriteCond %{REQUEST_URI} ^/ai-engineer-roadmap/
+# Serve the roadmap's real files and folders directly, so WordPress never rewrites them
+RewriteCond %{REQUEST_URI} ^/ai-roadmap/
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
