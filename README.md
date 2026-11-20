@@ -10,15 +10,15 @@
   <a href="https://github.com/techsaurabh-394/ai-engineer-roadmap/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/techsaurabh-394/ai-engineer-roadmap/ci.yml?style=flat&label=CI" alt="CI status"/></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green?style=flat" alt="MIT license"/></a>
   <img src="https://img.shields.io/badge/python-3.10%2B-3776AB?style=flat&logo=python&logoColor=white" alt="Python 3.10 or newer"/>
-  <img src="https://img.shields.io/badge/topics-132-2DD4BF?style=flat" alt="132 topics"/>
+  <img src="https://img.shields.io/badge/topics-138-2DD4BF?style=flat" alt="138 topics"/>
   <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat" alt="PRs welcome"/></a>
   <a href="https://github.com/techsaurabh-394/ai-engineer-roadmap"><img src="https://img.shields.io/github/stars/techsaurabh-394/ai-engineer-roadmap?style=flat&logo=github&color=6ea8fe" alt="GitHub stars"/></a>
   <a href="https://github.com/techsaurabh-394/ai-engineer-roadmap/commits/main"><img src="https://img.shields.io/github/last-commit/techsaurabh-394/ai-engineer-roadmap?style=flat" alt="Last commit"/></a>
 </p>
 
-**132 topics in 10 phases (Phase 0 to 9)**, each explained in plain English with an everyday analogy, a diagram, Python code, 3 interview questions and links to the original papers or official docs. If you know basic Python, you can start today. The demo scripts run offline with no API key.
+**138 topics in 11 phases (Phase 0 to 10)**, each explained in plain English with an everyday analogy, a diagram, Python code, 3 interview questions and links to the original papers or official docs. If you know basic Python, you can start today. The demo scripts run offline with no API key.
 
-![The 10 phases from zero to production, with topic counts](assets/learning-path.svg)
+![The 11 phases from zero to production, with topic counts](assets/learning-path.svg)
 
 ## Start in 5 minutes
 
@@ -68,11 +68,11 @@ Hard ideas are easier to follow when you can watch them. This animation plays on
 
 **Also live at [mernstackdev.com/ai-roadmap](https://mernstackdev.com/ai-roadmap/)** (same content as the GitHub Pages site). Press **Ctrl/Cmd + K** to jump to any lesson, or open **[All topics](https://techsaurabh-394.github.io/ai-engineer-roadmap/#topics)** to filter all 129 lessons by phase, level and status.
 
-**An animation for every one of the 132 topics** (129 animations; a few topics share one). Open the **[interactive viewer](https://techsaurabh-394.github.io/ai-engineer-roadmap/)** to step through them with Previous, Play and Next, search by name, or jump straight to a topic. The same animations are in the [animation gallery](docs/animations.md) and in the **Watch it** block at the top of each topic page.
+**An animation for every one of the 138 topics** (135 animations; a few topics share one). Open the **[interactive viewer](https://techsaurabh-394.github.io/ai-engineer-roadmap/)** to step through them with Previous, Play and Next, search by name, or jump straight to a topic. The same animations are in the [animation gallery](docs/animations.md) and in the **Watch it** block at the top of each topic page.
 
 **Read it, not just watch it:** every lesson on the [interactive viewer](https://techsaurabh-394.github.io/ai-engineer-roadmap/) now shows the full topic text under the animation: what it is, how it works, the formulas, worked examples with numbers, diagrams, code you can copy, and the interview questions.
 
-**Test yourself:** the [interactive quizzes](https://techsaurabh-394.github.io/ai-engineer-roadmap/quiz/) turn the 122 checkpoint questions of all ten phases into flash cards. Think of your own answer, reveal the real one, mark "I knew it" or "Not yet", and review the ones you missed. Your progress stays in your browser only.
+**Test yourself:** the [interactive quizzes](https://techsaurabh-394.github.io/ai-engineer-roadmap/quiz/) turn the 140 checkpoint questions of all eleven phases into flash cards. Think of your own answer, reveal the real one, mark "I knew it" or "Not yet", and review the ones you missed. Your progress stays in your browser only.
 
 ## The big picture
 
@@ -126,7 +126,8 @@ Legend: 🟢 beginner · 🟡 intermediate · 🔴 advanced.
 | 7 Production AI | 15 | 2 | 12 | 1 | 0 / 15 |
 | 8 Fine-tuning | 7 | 1 | 4 | 2 | 0 / 7 |
 | 9 Multimodal AI | 7 | 0 | 5 | 2 | 0 / 7 |
-| **Total** | **132** | **32** | **71** | **29** | **0 / 132** |
+| 10 Frontier AI Engineering | 6 | 0 | 2 | 4 | 0 / 6 |
+| **Total** | **138** | **32** | **73** | **33** | **0 / 138** |
 
 ### Phase 0 — ML Foundations (optional warm-up)
 
@@ -310,21 +311,32 @@ Legend: 🟢 beginner · 🟡 intermediate · 🔴 advanced.
 - [ ] 🟡 [Multimodal Embeddings and CLIP](11-multimodal-ai/topics/06-multimodal-embeddings-and-clip.md)
 - [ ] 🔴 [Multimodal RAG](11-multimodal-ai/topics/07-multimodal-rag.md)
 
+### Phase 10 — Frontier AI Engineering
+
+[📖 Phase overview](12-frontier-ai/README.md) · *Advanced*
+
+- [ ] 🔴 [Reasoning Models and Test-Time Compute](12-frontier-ai/topics/01-reasoning-models-and-test-time-compute.md)
+- [ ] 🟡 [Context Engineering and Prompt Caching](12-frontier-ai/topics/02-context-engineering-and-prompt-caching.md)
+- [ ] 🔴 [Speculative Decoding](12-frontier-ai/topics/03-speculative-decoding.md)
+- [ ] 🔴 [Preference Tuning: RLHF and DPO](12-frontier-ai/topics/04-preference-tuning-rlhf-and-dpo.md)
+- [ ] 🟡 [Distillation and Synthetic Data](12-frontier-ai/topics/05-distillation-and-synthetic-data.md)
+- [ ] 🔴 [Evaluating Generative Models and Benchmarks](12-frontier-ai/topics/06-evaluating-generative-models-and-benchmarks.md)
+
 ## Extras
 | Folder | What is inside |
 |---|---|
 | [08-interview-prep](08-interview-prep/README.md) | 43 curated questions plus 4 system-design prompts, in 5 files |
 | [09-projects](09-projects/README.md) | Portfolio project ideas from beginner to advanced |
 | [docs/what-is-ai-engineering.md](docs/what-is-ai-engineering.md) | A 5-minute, no-code explanation of the whole field for complete beginners |
-| [docs/learning-paths.md](docs/learning-paths.md) | Five day-by-day plans with reading times: RAG app, agents and MCP, all 132 topics in 10 weeks, interview week |
+| [docs/learning-paths.md](docs/learning-paths.md) | Five day-by-day plans with reading times: RAG app, agents and MCP, all 138 topics in 11 weeks, interview week |
 | [docs/practice.md](docs/practice.md) | 61 practice questions with answers: warm-up, calculations, run-the-demo and design scenarios, plus build challenges |
 | [Interactive quizzes](https://techsaurabh-394.github.io/ai-engineer-roadmap/quiz/) | The 122 phase checkpoint questions as flash cards with progress tracking; built from the phase READMEs by `scripts/build_quiz.py` |
-| [docs/animations.md](docs/animations.md) | Gallery of all 129 animated explainers, one for every topic; the [interactive viewer](https://techsaurabh-394.github.io/ai-engineer-roadmap/) adds Previous, Play and Next |
+| [docs/animations.md](docs/animations.md) | Gallery of all 135 animated explainers, one for every topic; the [interactive viewer](https://techsaurabh-394.github.io/ai-engineer-roadmap/) adds Previous, Play and Next |
 | [docs/how-to-study.md](docs/how-to-study.md) | A study routine: pace, and what to do for each topic |
 | [docs/glossary.md](docs/glossary.md) | Plain-English definitions of the key terms |
 | `*/code/` | Runnable, tested demos for every phase (see "What you'll need") |
 
-Interview questions in total: **397** at the end of the 132 topic pages (3 each, plus a 4th on AI Security), plus the 43 + 4 in `08-interview-prep`.
+Interview questions in total: **415** at the end of the 138 topic pages (3 each, plus a 4th on AI Security), plus the 43 + 4 in `08-interview-prep`.
 
 ## What makes this different
 - **Plain English first.** Every term is defined where it first appears.

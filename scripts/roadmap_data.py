@@ -139,9 +139,10 @@ PHASES = {
 }
 
 # Phases 8 and 9 live in their own files so they can be edited independently.
-import roadmap_p10, roadmap_p11  # noqa: E402
+import roadmap_p10, roadmap_p11, roadmap_p12  # noqa: E402
 PHASES["10"] = roadmap_p10.PHASE
 PHASES["11"] = roadmap_p11.PHASE
+PHASES["12"] = roadmap_p12.PHASE
 
 AFTER = [
     ("Interview prep", "08-interview-prep", "Questions with model answers, grouped by topic. Practise saying them out loud."),

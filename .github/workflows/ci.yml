@@ -89,7 +89,7 @@ jobs:
         run: |
           python scripts/gen_animations.py
           python scripts/embed_animations.py
-          git diff --exit-code assets/anim docs/animations.md 00-ml-foundations 01-rag-foundations 02-advanced-rag 03-llm-concepts 04-agentic-ai 05-frameworks 06-mcp 07-production-ai 10-fine-tuning 11-multimodal-ai || (echo "Run: python scripts/gen_animations.py && python scripts/embed_animations.py and commit" && exit 1)
+          git diff --exit-code assets/anim docs/animations.md 00-ml-foundations 01-rag-foundations 02-advanced-rag 03-llm-concepts 04-agentic-ai 05-frameworks 06-mcp 07-production-ai 10-fine-tuning 11-multimodal-ai 12-frontier-ai || (echo "Run: python scripts/gen_animations.py && python scripts/embed_animations.py and commit" && exit 1)
       - name: every animation shows the right caption at the right step
         run: python scripts/check_animations.py
       - name: the site builds

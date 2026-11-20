@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 330" width="880" height="330" role="img" aria-labelledby="t d" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+<title id="t">Prompt caching</title>
+<desc id="d">Only an identical prefix is reused, so order matters.</desc>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9DA7B3"/></marker></defs>
+<rect width="880" height="330" rx="16" fill="#0D1117"/>
+<text x="440.0" y="40" font-size="22" fill="#E6EDF3" font-weight="700" text-anchor="middle">Prompt caching</text>
+<text x="440.0" y="64" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">Only an identical prefix is reused, so order matters.</text>
+<line x1="150" y1="150" x2="166.4" y2="150" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="290.4" y1="150" x2="306.8" y2="150" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="430.8" y1="150" x2="447.2" y2="150" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="571.2" y1="150" x2="587.6" y2="150" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="711.6" y1="150" x2="728" y2="150" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<rect x="30" y="104" width="118" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1667;0.1787;1" values="#2DD4BF;#2DD4BF;#30363D;#30363D"/></rect>
+<circle cx="48" cy="104" r="13" fill="#2DD4BF"/><text x="48" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">1</text>
+<text x="89" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Layers</text>
+<text x="89" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">stable first</text>
+<rect x="170.4" y="104" width="118" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1547;0.1667;0.3333;0.3453;1" values="#30363D;#30363D;#2DD4BF;#2DD4BF;#30363D;#30363D"/></rect>
+<circle cx="188.4" cy="104" r="13" fill="#2DD4BF"/><text x="188.4" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">2</text>
+<text x="229.4" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Hash</text>
+<text x="229.4" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">prefix match</text>
+<rect x="310.8" y="104" width="118" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.3213;0.3333;0.5;0.512;1" values="#30363D;#30363D;#2DD4BF;#2DD4BF;#30363D;#30363D"/></rect>
+<circle cx="328.8" cy="104" r="13" fill="#2DD4BF"/><text x="328.8" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">3</text>
+<text x="369.8" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Hit</text>
+<text x="369.8" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">2001 of 2002</text>
+<rect x="451.2" y="104" width="118" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.488;0.5;0.6667;0.6787;1" values="#30363D;#30363D;#2DD4BF;#2DD4BF;#30363D;#30363D"/></rect>
+<circle cx="469.2" cy="104" r="13" fill="#2DD4BF"/><text x="469.2" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">4</text>
+<text x="510.2" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Miss</text>
+<text x="510.2" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">0 of 2002</text>
+<rect x="591.6" y="104" width="118" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.6547;0.6667;0.8333;0.8453;1" values="#30363D;#30363D;#2DD4BF;#2DD4BF;#30363D;#30363D"/></rect>
+<circle cx="609.6" cy="104" r="13" fill="#2DD4BF"/><text x="609.6" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">5</text>
+<text x="650.6" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Cost</text>
+<text x="650.6" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">$0.61 to $0.10</text>
+<rect x="732" y="104" width="118" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.8213;0.8333;1.0" values="#30363D;#30363D;#2DD4BF;#2DD4BF"/></rect>
+<circle cx="750" cy="104" r="13" fill="#2DD4BF"/><text x="750" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">6</text>
+<text x="791" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Measure</text>
+<text x="791" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">hit ratio</text>
+<circle r="9" fill="#F5B042" cx="89" cy="88"><animate attributeName="cx" dur="14.4s" repeatCount="indefinite" keyTimes="0.0;0.0083;0.1667;0.225;0.3333;0.3917;0.5;0.5583;0.6667;0.725;0.8333;0.8917;1.0" values="89;89;89;229.4;229.4;369.8;369.8;510.2;510.2;650.6;650.6;791;791"/><animate attributeName="cy" dur="14.4s" repeatCount="indefinite" keyTimes="0.0;0.0083;0.1667;0.225;0.3333;0.3917;0.5;0.5583;0.6667;0.725;0.8333;0.8917;1.0" values="88;88;88;88;88;88;88;88;88;88;88;88;88"/></circle>
+<rect x="30" y="226" width="820" height="84" rx="12" fill="#161B22" stroke="#30363D"/>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">1. Build the prompt from stable to changing<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1667;0.1787;1" values="1;1;0;0"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">System, tools, examples, history, then the new message.<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1667;0.1787;1" values="1;1;0;0"/></text>
+<text x="836" y="300" font-size="12" fill="#9DA7B3" text-anchor="end" opacity="0">Step 1 of 6<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1667;0.1787;1" values="1;1;0;0"/></text>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">2. The server matches the leading tokens it has seen<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1547;0.1667;0.3333;0.3453;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">Only an unbroken identical prefix counts.<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1547;0.1667;0.3333;0.3453;1" values="0;0;1;1;0;0"/></text>
+<text x="836" y="300" font-size="12" fill="#9DA7B3" text-anchor="end" opacity="0">Step 2 of 6<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1547;0.1667;0.3333;0.3453;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">3. Edit only the end and nearly all tokens are reused<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.3213;0.3333;0.5;0.512;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">These are billed at the cheaper cached rate.<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.3213;0.3333;0.5;0.512;1" values="0;0;1;1;0;0"/></text>
+<text x="836" y="300" font-size="12" fill="#9DA7B3" text-anchor="end" opacity="0">Step 3 of 6<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.3213;0.3333;0.5;0.512;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">4. Put a timestamp first and nothing is reused<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.488;0.5;0.6667;0.6787;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">One early change voids every token after it.<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.488;0.5;0.6667;0.6787;1" values="0;0;1;1;0;0"/></text>
+<text x="836" y="300" font-size="12" fill="#9DA7B3" text-anchor="end" opacity="0">Step 4 of 6<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.488;0.5;0.6667;0.6787;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">5. A 20-turn chat falls from $0.6120 to $0.1047<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.6547;0.6667;0.8333;0.8453;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">Demo prices are illustrative.<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.6547;0.6667;0.8333;0.8453;1" values="0;0;1;1;0;0"/></text>
+<text x="836" y="300" font-size="12" fill="#9DA7B3" text-anchor="end" opacity="0">Step 5 of 6<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.6547;0.6667;0.8333;0.8453;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">6. Log cached versus uncached tokens<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.8213;0.8333;1.0" values="0;0;1;1"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">A sudden drop after a deploy points to a moved timestamp.<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.8213;0.8333;1.0" values="0;0;1;1"/></text>
+<text x="836" y="300" font-size="12" fill="#9DA7B3" text-anchor="end" opacity="0">Step 6 of 6<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.8213;0.8333;1.0" values="0;0;1;1"/></text>
+</svg>
