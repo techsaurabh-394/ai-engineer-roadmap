@@ -37,6 +37,7 @@ KEYWORDS_BY_PHASE = {
     "07": "production AI, LLMOps, deploying LLM apps",
     "10": "fine-tuning, LoRA, QLoRA, DPO",
     "11": "multimodal AI, vision language models, CLIP, speech",
+    "12": "reasoning models, prompt caching, speculative decoding, DPO, evals",
 }
 
 

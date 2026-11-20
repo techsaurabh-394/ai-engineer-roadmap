@@ -389,6 +389,60 @@
   ],
   "Your multimodal RAG answers chart questions wrongly. Where do you look first?": [
    "mm-multimodal-rag"
+  ],
+  "Why can majority voting turn a 40 percent model into a 90 percent one, and when does it fail?": [
+   "fa-reasoning-test-time-compute"
+  ],
+  "How would you decide whether a task deserves extended thinking?": [
+   "fa-reasoning-test-time-compute"
+  ],
+  "What is the difference between voting and verifying?": [
+   "fa-reasoning-test-time-compute"
+  ],
+  "Your cache-hit ratio fell from 90 percent to 2 percent after a release. What do you check first?": [
+   "fa-context-and-prompt-caching"
+  ],
+  "What does context engineering mean, beyond writing a good prompt?": [
+   "fa-context-and-prompt-caching"
+  ],
+  "Why can too much context hurt accuracy?": [
+   "fa-context-and-prompt-caching"
+  ],
+  "Why is checking k tokens about as cheap as generating one?": [
+   "fa-speculative-decoding"
+  ],
+  "Does speculative decoding reduce output quality?": [
+   "fa-speculative-decoding"
+  ],
+  "A team reports a 0.8x speed-up after enabling it. What do you suspect?": [
+   "fa-speculative-decoding"
+  ],
+  "Explain the DPO loss in plain words.": [
+   "fa-preference-tuning"
+  ],
+  "What is reward hacking and how does RLHF limit it?": [
+   "fa-preference-tuning"
+  ],
+  "When would you pick DPO over PPO-based RLHF?": [
+   "fa-preference-tuning"
+  ],
+  "Why does a higher temperature help in distillation?": [
+   "fa-distillation-synthetic-data"
+  ],
+  "What is model collapse and how do you reduce the risk?": [
+   "fa-distillation-synthetic-data"
+  ],
+  "How do you check that synthetic data helped?": [
+   "fa-distillation-synthetic-data"
+  ],
+  "Explain pass@k and when pass@1 is more appropriate than pass@5.": [
+   "fa-evaluating-generative-models"
+  ],
+  "Model A scores 72 percent and Model B 70 percent on 50 questions. What do you conclude?": [
+   "fa-evaluating-generative-models"
+  ],
+  "How do you detect and handle benchmark contamination?": [
+   "fa-evaluating-generative-models"
   ]
  }
 }

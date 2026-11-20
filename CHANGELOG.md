@@ -7,6 +7,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Thi
 
 ### Added
 
+- **Phase 10 · Frontier AI Engineering** (`12-frontier-ai/`, 6 topics): reasoning models and test-time compute, context engineering and prompt caching, speculative decoding, preference tuning (RLHF and DPO), distillation and synthetic data, and evaluating generative models (pass@k, bootstrap intervals, contamination). Six offline standard-library demos with 39 tests, six animations and 18 quiz questions. The roadmap now has 138 topics in 11 phases (Phase 0 to 10), 135 animations, 415 topic interview questions and 140 quiz cards. Every number in the lessons is copied from a demo's real output.
 - **SEO and generative-engine (GEO) pass.** One page per phase (`/learn/phase-N/`) with outcomes and a lesson list, a glossary page marked up as
   `DefinedTermSet`, a "Related lessons" block and visible update date on every lesson, an "In short" answer box, FAQ structured data built from each
   lesson's own three interview questions, `TechArticle` with real git dates and word count, Open Graph and Twitter cards with an image, a crawlable

@@ -10,7 +10,7 @@ import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import anim_core as core  # noqa: E402
-import anim_specs_a, anim_specs_b, anim_specs_c, anim_specs_d  # noqa: E402,F401
+import anim_specs_a, anim_specs_b, anim_specs_c, anim_specs_d, anim_specs_e, anim_specs_f, anim_specs_g  # noqa: E402,F401
 
 SITE = "https://techsaurabh-394.github.io/ai-engineer-roadmap/"
 OLD = re.compile(r"<!-- anim:[^\n]*-->\n## Watch it\n.*?\n\n(?=## How it works)", re.S)

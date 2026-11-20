@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 330" width="880" height="330" role="img" aria-labelledby="t d" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+<title id="t">Test-time compute</title>
+<desc id="d">Spend more tokens at answer time to buy accuracy.</desc>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9DA7B3"/></marker></defs>
+<rect width="880" height="330" rx="16" fill="#0D1117"/>
+<text x="440.0" y="40" font-size="22" fill="#E6EDF3" font-weight="700" text-anchor="middle">Test-time compute</text>
+<text x="440.0" y="64" font-size="14" fill="#9DA7B3" font-weight="400" text-anchor="middle">Spend more tokens at answer time to buy accuracy.</text>
+<line x1="150" y1="150" x2="166.4" y2="150" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="290.4" y1="150" x2="306.8" y2="150" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="430.8" y1="150" x2="447.2" y2="150" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="571.2" y1="150" x2="587.6" y2="150" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<line x1="711.6" y1="150" x2="728" y2="150" stroke="#30363D" stroke-width="2.5" marker-end="url(#ah)"/>
+<rect x="30" y="104" width="118" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1667;0.1787;1" values="#F5B042;#F5B042;#30363D;#30363D"/></rect>
+<circle cx="48" cy="104" r="13" fill="#F5B042"/><text x="48" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">1</text>
+<text x="89" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Ask</text>
+<text x="89" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">one question</text>
+<rect x="170.4" y="104" width="118" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1547;0.1667;0.3333;0.3453;1" values="#30363D;#30363D;#F5B042;#F5B042;#30363D;#30363D"/></rect>
+<circle cx="188.4" cy="104" r="13" fill="#F5B042"/><text x="188.4" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">2</text>
+<text x="229.4" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Think</text>
+<text x="229.4" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">longer chain</text>
+<rect x="310.8" y="104" width="118" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.3213;0.3333;0.5;0.512;1" values="#30363D;#30363D;#F5B042;#F5B042;#30363D;#30363D"/></rect>
+<circle cx="328.8" cy="104" r="13" fill="#F5B042"/><text x="328.8" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">3</text>
+<text x="369.8" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Sample</text>
+<text x="369.8" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">n attempts</text>
+<rect x="451.2" y="104" width="118" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.488;0.5;0.6667;0.6787;1" values="#30363D;#30363D;#F5B042;#F5B042;#30363D;#30363D"/></rect>
+<circle cx="469.2" cy="104" r="13" fill="#F5B042"/><text x="469.2" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">4</text>
+<text x="510.2" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Vote</text>
+<text x="510.2" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">most common</text>
+<rect x="591.6" y="104" width="118" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.6547;0.6667;0.8333;0.8453;1" values="#30363D;#30363D;#F5B042;#F5B042;#30363D;#30363D"/></rect>
+<circle cx="609.6" cy="104" r="13" fill="#F5B042"/><text x="609.6" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">5</text>
+<text x="650.6" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Check</text>
+<text x="650.6" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">correlated?</text>
+<rect x="732" y="104" width="118" height="92" rx="12" fill="#161B22" stroke="#30363D" stroke-width="2"><animate attributeName="stroke" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.8213;0.8333;1.0" values="#30363D;#30363D;#F5B042;#F5B042"/></rect>
+<circle cx="750" cy="104" r="13" fill="#F5B042"/><text x="750" y="109" font-size="14" fill="#0D1117" font-weight="700" text-anchor="middle">6</text>
+<text x="791" y="146" font-size="16" fill="#E6EDF3" font-weight="700" text-anchor="middle">Budget</text>
+<text x="791" y="170" font-size="12.5" fill="#9DA7B3" font-weight="400" text-anchor="middle">measure it</text>
+<circle r="9" fill="#F5B042" cx="89" cy="88"><animate attributeName="cx" dur="14.4s" repeatCount="indefinite" keyTimes="0.0;0.0083;0.1667;0.225;0.3333;0.3917;0.5;0.5583;0.6667;0.725;0.8333;0.8917;1.0" values="89;89;89;229.4;229.4;369.8;369.8;510.2;510.2;650.6;650.6;791;791"/><animate attributeName="cy" dur="14.4s" repeatCount="indefinite" keyTimes="0.0;0.0083;0.1667;0.225;0.3333;0.3917;0.5;0.5583;0.6667;0.725;0.8333;0.8917;1.0" values="88;88;88;88;88;88;88;88;88;88;88;88;88"/></circle>
+<rect x="30" y="226" width="820" height="84" rx="12" fill="#161B22" stroke="#30363D"/>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">1. The same question goes to the model<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1667;0.1787;1" values="1;1;0;0"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">Easy ones need no extra thinking.<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1667;0.1787;1" values="1;1;0;0"/></text>
+<text x="836" y="300" font-size="12" fill="#9DA7B3" text-anchor="end" opacity="0">Step 1 of 6<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1667;0.1787;1" values="1;1;0;0"/></text>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">2. A reasoning model writes steps before answering<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1547;0.1667;0.3333;0.3453;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">Thinking tokens are billed and fill the window.<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1547;0.1667;0.3333;0.3453;1" values="0;0;1;1;0;0"/></text>
+<text x="836" y="300" font-size="12" fill="#9DA7B3" text-anchor="end" opacity="0">Step 2 of 6<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.1547;0.1667;0.3333;0.3453;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">3. Or run n independent attempts<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.3213;0.3333;0.5;0.512;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">21 attempts of 800 tokens is 168x one short answer.<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.3213;0.3333;0.5;0.512;1" values="0;0;1;1;0;0"/></text>
+<text x="836" y="300" font-size="12" fill="#9DA7B3" text-anchor="end" opacity="0">Step 3 of 6<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.3213;0.3333;0.5;0.512;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">4. Pick the most common final answer<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.488;0.5;0.6667;0.6787;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">p = 0.6 becomes 0.8256 at n = 21.<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.488;0.5;0.6667;0.6787;1" values="0;0;1;1;0;0"/></text>
+<text x="836" y="300" font-size="12" fill="#9DA7B3" text-anchor="end" opacity="0">Step 4 of 6<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.488;0.5;0.6667;0.6787;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">5. Beware repeated wrong answers<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.6547;0.6667;0.8333;0.8453;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">At p = 0.45 with one wrong value, n = 21 gives 0.321.<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.6547;0.6667;0.8333;0.8453;1" values="0;0;1;1;0;0"/></text>
+<text x="836" y="300" font-size="12" fill="#9DA7B3" text-anchor="end" opacity="0">Step 5 of 6<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.6547;0.6667;0.8333;0.8453;1" values="0;0;1;1;0;0"/></text>
+<text x="440.0" y="258" font-size="15" fill="#E6EDF3" font-weight="700" text-anchor="middle" opacity="0">6. Set a thinking budget and test on your data<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.8213;0.8333;1.0" values="0;0;1;1"/></text>
+<text x="440.0" y="282" font-size="15" fill="#9DA7B3" font-weight="400" text-anchor="middle" opacity="0">Pick the smallest budget where accuracy stops rising.<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.8213;0.8333;1.0" values="0;0;1;1"/></text>
+<text x="836" y="300" font-size="12" fill="#9DA7B3" text-anchor="end" opacity="0">Step 6 of 6<animate attributeName="opacity" dur="14.4s" repeatCount="indefinite" keyTimes="0;0.8213;0.8333;1.0" values="0;0;1;1"/></text>
+</svg>
