@@ -24,6 +24,7 @@ PHASES = {
     "10-fine-tuning": "Phase 8: Fine-tuning",
     "11-multimodal-ai": "Phase 9: Multimodal AI",
     "12-frontier-ai": "Phase 10: Frontier AI engineering",
+    "13-agent-engineering": "Phase 11: Agent engineering",
 }
 
 DETAILS = re.compile(r"<details>\s*<summary>(.*?)</summary>(.*?)</details>", re.S)

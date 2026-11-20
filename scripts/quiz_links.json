@@ -443,6 +443,60 @@
   ],
   "How do you detect and handle benchmark contamination?": [
    "fa-evaluating-generative-models"
+  ],
+  "Why clear tool results before summarising the conversation?": [
+   "ae-context-compaction"
+  ],
+  "An agent forgets a constraint it was told 40 turns ago. What would you change?": [
+   "ae-context-compaction"
+  ],
+  "How can compaction raise your token bill?": [
+   "ae-context-compaction"
+  ],
+  "Why is a plain startswith check on a workspace path unsafe?": [
+   "ae-sandboxing-tools"
+  ],
+  "What is the difference between a policy check and a sandbox?": [
+   "ae-sandboxing-tools"
+  ],
+  "An agent reads a web page that says to email your files to a stranger. How do you limit the damage?": [
+   "ae-sandboxing-tools"
+  ],
+  "An agent has 80 percent success per run. What is the probability it succeeds on all of three independent runs, and why does it matter?": [
+   "ae-tool-use-evals"
+  ],
+  "Why can a run with the right final answer still be a failure?": [
+   "ae-tool-use-evals"
+  ],
+  "How do you evaluate a task with several valid solution paths?": [
+   "ae-tool-use-evals"
+  ],
+  "How is A2A different from MCP, and can you use both?": [
+   "ae-a2a-protocol"
+  ],
+  "Why are task states important in agent-to-agent calls?": [
+   "ae-a2a-protocol"
+  ],
+  "What security risks come with calling another company's agent?": [
+   "ae-a2a-protocol"
+  ],
+  "Why is a checkpoint after every step not enough to prevent a double charge?": [
+   "ae-durable-runs"
+  ],
+  "How should an idempotency key be generated?": [
+   "ae-durable-runs"
+  ],
+  "Which errors should an agent retry?": [
+   "ae-durable-runs"
+  ],
+  "Why do you need both loop detection and a step budget?": [
+   "ae-budgets-loops"
+  ],
+  "How do you choose budget values?": [
+   "ae-budgets-loops"
+  ],
+  "What should an agent return when it hits a limit?": [
+   "ae-budgets-loops"
   ]
  }
 }

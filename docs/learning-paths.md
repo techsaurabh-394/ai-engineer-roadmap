@@ -1,12 +1,12 @@
 # Learning paths
 
-Pick the path that matches what you want to do. Every time below is the **reading time** printed on the topic page, added up by a script from the repo, plus time for running code. The number of topics is 138 and the total reading time is **1241 minutes (about 21 hours)**. Running code and building the project take longer than reading.
+Pick the path that matches what you want to do. Every time below is the **reading time** printed on the topic page, added up by a script from the repo, plus time for running code. The number of topics is 144 and the total reading time is **1301 minutes (about 22 hours)**. Running code and building the project take longer than reading.
 
 | I want to... | Path | Time |
 |---|---|---|
 | Build an app that answers questions from my documents | [Path A: RAG app](#path-a-build-a-rag-app-in-2-weeks) | 2 weeks, about 1 hour a day |
 | Build agents and MCP tools | [Path B: agents and MCP](#path-b-build-agents-and-mcp-tools-in-2-weeks) | 2 weeks, about 1 hour a day |
-| Learn everything | [Path C: full roadmap](#path-c-the-full-roadmap-in-11-weeks) | 11 weeks |
+| Learn everything | [Path C: full roadmap](#path-c-the-full-roadmap-in-12-weeks) | 12 weeks |
 | Prepare for an interview | [Path D: interview week](#path-d-interview-in-one-week) | 1 week |
 | Build with LLM APIs, from first call to serving | [Path E: LLM builder](#path-e-llm-builder-from-first-call-to-serving) | 8 days, about 1 hour a day |
 | Understand how an LLM really works inside (Q, K, V, training, MoE) | [Path F: inside the LLM](#path-f-inside-the-llm-how-it-really-works) | 7 days, about 1 hour a day |
@@ -44,9 +44,9 @@ Not sure? Start with [what AI engineering is](what-is-ai-engineering.md) (5 minu
 | 7 | 🟡 [AI Security](../07-production-ai/topics/11-ai-security.md) (12 min) | 12 min | Read the injection and tool-abuse section, then list which of your tools should need a human to approve. |
 | 8-10 | | | Build: a small MCP server for an API you use, with one tool that needs approval. See [mcp-safe-actions](https://github.com/techsaurabh-394/mcp-safe-actions). |
 
-## Path C: the full roadmap in 11 weeks
+## Path C: the full roadmap in 12 weeks
 
-All 138 topics, one phase a week (Phase 0 is an optional warm-up), with the last week for interview prep and a project. Reading is about 21 hours in total; spread it so that you also run the code. Each week below lists every topic in the phase. Weekly reading time is in the right column.
+All 144 topics, one phase a week (Phase 0 is an optional warm-up), with the last week for interview prep and a project. Reading is about 22 hours in total; spread it so that you also run the code. Each week below lists every topic in the phase. Weekly reading time is in the right column.
 
 | Day | Read | Reading | Then do this |
 |---|---|---|---|
@@ -61,7 +61,8 @@ All 138 topics, one phase a week (Phase 0 is an optional warm-up), with the last
 | Week 8 | 🟢 [Prompting vs RAG vs Fine-Tuning](../10-fine-tuning/topics/01-prompting-vs-rag-vs-fine-tuning.md) (9 min)<br/>🟡 [Supervised and Instruction Tuning](../10-fine-tuning/topics/02-supervised-and-instruction-tuning.md) (10 min)<br/>🟡 [Dataset Preparation](../10-fine-tuning/topics/03-dataset-preparation.md) (10 min)<br/>🟡 [LoRA in Depth](../10-fine-tuning/topics/04-lora-in-depth.md) (11 min)<br/>🔴 [QLoRA and Quantized Training](../10-fine-tuning/topics/05-qlora-and-quantized-training.md) (10 min)<br/>🟡 [Training Pipelines and Hyperparameters](../10-fine-tuning/topics/06-training-pipelines-and-hyperparameters.md) (10 min)<br/>🔴 [Evaluating Fine-Tuned Models](../10-fine-tuning/topics/07-evaluating-fine-tuned-models.md) (12 min) | 72 min | Phase 8 (fine-tuning). Run the four `ft_*.py` scripts in `10-fine-tuning/code/`, then decide for one task of yours whether fine-tuning beats prompting and RAG. |
 | Week 9 | 🟡 [Vision Language Models](../11-multimodal-ai/topics/01-vision-language-models.md) (10 min)<br/>🟡 [How Models See Images](../11-multimodal-ai/topics/02-how-models-see-images.md) (10 min)<br/>🟡 [Audio and Speech to Text](../11-multimodal-ai/topics/03-audio-and-speech-to-text.md) (10 min)<br/>🟡 [Text to Speech](../11-multimodal-ai/topics/04-text-to-speech.md) (9 min)<br/>🔴 [Video Understanding](../11-multimodal-ai/topics/05-video-understanding.md) (10 min)<br/>🟡 [Multimodal Embeddings and CLIP](../11-multimodal-ai/topics/06-multimodal-embeddings-and-clip.md) (11 min)<br/>🔴 [Multimodal RAG](../11-multimodal-ai/topics/07-multimodal-rag.md) (11 min) | 71 min | Phase 9 (multimodal AI). Run the four `mm_*.py` scripts in `11-multimodal-ai/code/`. |
 | Week 10 | 🔴 [Reasoning Models and Test-Time Compute](../12-frontier-ai/topics/01-reasoning-models-and-test-time-compute.md) (10 min)<br/>🟡 [Context Engineering and Prompt Caching](../12-frontier-ai/topics/02-context-engineering-and-prompt-caching.md) (10 min)<br/>🔴 [Speculative Decoding](../12-frontier-ai/topics/03-speculative-decoding.md) (9 min)<br/>🔴 [Preference Tuning: RLHF and DPO](../12-frontier-ai/topics/04-preference-tuning-rlhf-and-dpo.md) (11 min)<br/>🟡 [Distillation and Synthetic Data](../12-frontier-ai/topics/05-distillation-and-synthetic-data.md) (9 min)<br/>🔴 [Evaluating Generative Models and Benchmarks](../12-frontier-ai/topics/06-evaluating-generative-models-and-benchmarks.md) (10 min) | 59 min | Phase 10 (frontier AI engineering). Run the six `fa_*.py` scripts in `12-frontier-ai/code/`. |
-| Week 11 | | | Do [08-interview-prep](../08-interview-prep/README.md) and finish one project from [09-projects](../09-projects/README.md). |
+| Week 11 | 🔴 [Context Compaction for Long-Running Agents](../13-agent-engineering/topics/01-context-compaction-for-long-agents.md) (10 min)<br/>🔴 [Sandboxing Agent Tools](../13-agent-engineering/topics/02-sandboxing-agent-tools.md) (11 min)<br/>🔴 [Evaluating Tool Use and Trajectories](../13-agent-engineering/topics/03-evaluating-tool-use-and-trajectories.md) (10 min)<br/>🔴 [Agent-to-Agent Protocols (A2A)](../13-agent-engineering/topics/04-agent-to-agent-protocols-a2a.md) (10 min)<br/>🔴 [Durable Agent Runs and Idempotency](../13-agent-engineering/topics/05-durable-agent-runs-and-idempotency.md) (10 min)<br/>🟡 [Agent Budgets and Loop Detection](../13-agent-engineering/topics/06-agent-budgets-and-loop-detection.md) (9 min) | 60 min | Phase 11 (agent engineering). Run the six `ae_*.py` scripts in `13-agent-engineering/code/`. |
+| Week 12 | | | Do [08-interview-prep](../08-interview-prep/README.md) and finish one project from [09-projects](../09-projects/README.md). |
 
 ## Path D: interview in one week
 

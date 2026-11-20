@@ -163,7 +163,7 @@ svg.ic.sm { width: 16px; height: 16px; }
 /* phase colour hook: set --pc from data-phase */
 [data-phase="00"] { --pc: var(--muted); } [data-phase="01"] { --pc: var(--p1); } [data-phase="02"] { --pc: var(--p2); } [data-phase="03"] { --pc: var(--p3); }
 [data-phase="04"] { --pc: var(--p4); } [data-phase="05"] { --pc: var(--p5); } [data-phase="06"] { --pc: var(--p6); }
-[data-phase="07"] { --pc: var(--p7); } [data-phase="10"] { --pc: #0e9aa7; } [data-phase="11"] { --pc: #b4468f; } [data-phase="12"] { --pc: #6d5bd0; }
+[data-phase="07"] { --pc: var(--p7); } [data-phase="10"] { --pc: #0e9aa7; } [data-phase="11"] { --pc: #b4468f; } [data-phase="12"] { --pc: #6d5bd0; } [data-phase="13"] { --pc: #d9731f; }
 
 /* ------------------------------------------------------------------- layout */
 .layout { display: grid; grid-template-columns: 300px minmax(0, 1fr); min-height: calc(100vh - 60px); }
