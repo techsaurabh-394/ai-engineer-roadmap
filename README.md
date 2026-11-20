@@ -66,13 +66,13 @@ Hard ideas are easier to follow when you can watch them. This animation plays on
 
 ![Animated RAG pipeline: documents, chunks, vectors, store, retrieve, generate](assets/anim/rag-flow.svg)
 
-**Also live at [mernstackdev.com/ai-roadmap](https://mernstackdev.com/ai-roadmap/)** (same content as the GitHub Pages site). Press **Ctrl/Cmd + K** to jump to any lesson, or open **[All topics](https://techsaurabh-394.github.io/ai-engineer-roadmap/#topics)** to filter all 129 lessons by phase, level and status.
+**Live at [mernstackdev.com/ai-roadmap](https://mernstackdev.com/ai-roadmap/)** (interactive lessons, labs and quizzes). Press **Ctrl/Cmd + K** to jump to any lesson, or open **[All topics](https://mernstackdev.com/ai-roadmap/#topics)** to filter all 144 lessons by phase, level and status.
 
-**An animation for every one of the 144 topics** (141 animations; a few topics share one). Open the **[interactive viewer](https://techsaurabh-394.github.io/ai-engineer-roadmap/)** to step through them with Previous, Play and Next, search by name, or jump straight to a topic. The same animations are in the [animation gallery](docs/animations.md) and in the **Watch it** block at the top of each topic page.
+**An animation for every one of the 144 topics** (141 animations; a few topics share one). Open the **[interactive viewer](https://mernstackdev.com/ai-roadmap/)** to step through them with Previous, Play and Next, search by name, or jump straight to a topic. The same animations are in the [animation gallery](docs/animations.md) and in the **Watch it** block at the top of each topic page.
 
-**Read it, not just watch it:** every lesson on the [interactive viewer](https://techsaurabh-394.github.io/ai-engineer-roadmap/) now shows the full topic text under the animation: what it is, how it works, the formulas, worked examples with numbers, diagrams, code you can copy, and the interview questions.
+**Read it, not just watch it:** every lesson on the [interactive viewer](https://mernstackdev.com/ai-roadmap/) now shows the full topic text under the animation: what it is, how it works, the formulas, worked examples with numbers, diagrams, code you can copy, and the interview questions.
 
-**Test yourself:** the [interactive quizzes](https://techsaurabh-394.github.io/ai-engineer-roadmap/quiz/) turn the 158 checkpoint questions of all twelve phases into flash cards. Think of your own answer, reveal the real one, mark "I knew it" or "Not yet", and review the ones you missed. Your progress stays in your browser only.
+**Test yourself:** the [interactive quizzes](https://mernstackdev.com/ai-roadmap/quiz/) turn the 158 checkpoint questions of all twelve phases into flash cards. Think of your own answer, reveal the real one, mark "I knew it" or "Not yet", and review the ones you missed. Your progress stays in your browser only.
 
 ## The big picture
 
@@ -342,8 +342,8 @@ Legend: 🟢 beginner · 🟡 intermediate · 🔴 advanced.
 | [docs/what-is-ai-engineering.md](docs/what-is-ai-engineering.md) | A 5-minute, no-code explanation of the whole field for complete beginners |
 | [docs/learning-paths.md](docs/learning-paths.md) | Five day-by-day plans with reading times: RAG app, agents and MCP, all 144 topics in 12 weeks, interview week |
 | [docs/practice.md](docs/practice.md) | 61 practice questions with answers: warm-up, calculations, run-the-demo and design scenarios, plus build challenges |
-| [Interactive quizzes](https://techsaurabh-394.github.io/ai-engineer-roadmap/quiz/) | The 122 phase checkpoint questions as flash cards with progress tracking; built from the phase READMEs by `scripts/build_quiz.py` |
-| [docs/animations.md](docs/animations.md) | Gallery of all 141 animated explainers, one for every topic; the [interactive viewer](https://techsaurabh-394.github.io/ai-engineer-roadmap/) adds Previous, Play and Next |
+| [Interactive quizzes](https://mernstackdev.com/ai-roadmap/quiz/) | The 158 phase checkpoint questions as flash cards with progress tracking; built from the phase READMEs by `scripts/build_quiz.py` |
+| [docs/animations.md](docs/animations.md) | Gallery of all 141 animated explainers, one for every topic; the [interactive viewer](https://mernstackdev.com/ai-roadmap/) adds Previous, Play and Next |
 | [docs/how-to-study.md](docs/how-to-study.md) | A study routine: pace, and what to do for each topic |
 | [docs/glossary.md](docs/glossary.md) | Plain-English definitions of the key terms |
 | `*/code/` | Runnable, tested demos for every phase (see "What you'll need") |
