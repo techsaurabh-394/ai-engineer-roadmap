@@ -11,12 +11,12 @@ import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import anim_core as core  # noqa: E402
-import anim_specs_a, anim_specs_b, anim_specs_c, anim_specs_d, anim_specs_e, anim_specs_f, anim_specs_g  # noqa: E402,F401  (registers animations)
+import anim_specs_a, anim_specs_b, anim_specs_c, anim_specs_d, anim_specs_e, anim_specs_f, anim_specs_g, anim_specs_h  # noqa: E402,F401  (registers animations)
 
 OUT = core.ROOT / "assets" / "anim"
 PHASES = {"00": "Phase 0: ML foundations", "01": "Phase 1: RAG foundations", "02": "Phase 2: Advanced RAG", "03": "Phase 3: LLM concepts",
           "04": "Phase 4: Agentic AI", "05": "Phase 5: Frameworks", "06": "Phase 6: MCP", "07": "Phase 7: Production AI",
-          "10": "Phase 8: Fine-tuning", "11": "Phase 9: Multimodal AI", "12": "Phase 10: Frontier AI engineering"}
+          "10": "Phase 8: Fine-tuning", "11": "Phase 9: Multimodal AI", "12": "Phase 10: Frontier AI engineering", "13": "Phase 11: Agent engineering"}
 
 
 def phase_of(a):

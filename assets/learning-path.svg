@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 686" width="1000" height="686" role="img" aria-labelledby="t d" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
-<title id="t">Learning path: 11 phases, 138 topics, from zero to production</title>
-<desc id="d">Eleven phases in order: ML Foundations 5 topics, RAG Foundations 20 topics, Advanced RAG 21 topics, LLM Concepts 26 topics, Agentic AI 16 topics, Frameworks 8 topics, MCP 7 topics, Production AI 15 topics, Fine-tuning 7 topics, Multimodal AI 7 topics, Frontier AI Engineering 6 topics, followed by interview prep and projects.</desc>
+<title id="t">Learning path: 12 phases, 144 topics, from zero to production</title>
+<desc id="d">Twelve phases in order: ML Foundations 5 topics, RAG Foundations 20 topics, Advanced RAG 21 topics, LLM Concepts 26 topics, Agentic AI 16 topics, Frameworks 8 topics, MCP 7 topics, Production AI 15 topics, Fine-tuning 7 topics, Multimodal AI 7 topics, Frontier AI Engineering 6 topics, Agent Engineering 6 topics, followed by interview prep and projects.</desc>
 <rect width="1000" height="686" rx="18" fill="#0D1117"/>
-<text x="40" y="52" font-size="26" font-weight="700" fill="#E6EDF3">From zero to production: 11 phases, 138 topics</text>
+<text x="40" y="52" font-size="26" font-weight="700" fill="#E6EDF3">From zero to production: 12 phases, 144 topics</text>
 <text x="40" y="80" font-size="14" fill="#9DA7B3">Do them in order. Phase 0 is an optional warm-up if you already know basic machine learning.</text>
 <rect x="40" y="110" width="440" height="62" rx="12" fill="#161B22" stroke="#30363D"/>
 <rect x="40" y="110" width="8" height="62" rx="4" fill="#7b8794"/>
@@ -70,5 +70,11 @@
 <text x="106" y="516" font-size="17" font-weight="700" fill="#E6EDF3">Frontier AI Engineering</text>
 <text x="106" y="537" font-size="12.5" fill="#9DA7B3">reasoning, caching, speculative decoding, DPO, evals</text>
 <text x="464" y="516" font-size="13" font-weight="600" text-anchor="end" fill="#6d5bd0">6 topics</text>
+<rect x="520" y="490" width="440" height="62" rx="12" fill="#161B22" stroke="#30363D"/>
+<rect x="520" y="490" width="8" height="62" rx="4" fill="#d9731f"/>
+<circle cx="556" cy="521" r="16" fill="#d9731f"/><text x="556" y="527" font-size="16" font-weight="700" text-anchor="middle" fill="#0D1117">11</text>
+<text x="586" y="516" font-size="17" font-weight="700" fill="#E6EDF3">Agent Engineering</text>
+<text x="586" y="537" font-size="12.5" fill="#9DA7B3">compaction, sandboxing, evals, A2A, durable runs</text>
+<text x="944" y="516" font-size="13" font-weight="600" text-anchor="end" fill="#d9731f">6 topics</text>
 <text x="40" y="584" font-size="14" fill="#9DA7B3">Then practise: 08 Interview prep and 09 Projects</text>
 <text x="40" y="618" font-size="17" font-weight="700" fill="#2DD4BF">Goal: you can build, explain, tune and run an AI app in production</text></svg>

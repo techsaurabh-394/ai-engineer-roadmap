@@ -38,6 +38,7 @@ KEYWORDS_BY_PHASE = {
     "10": "fine-tuning, LoRA, QLoRA, DPO",
     "11": "multimodal AI, vision language models, CLIP, speech",
     "12": "reasoning models, prompt caching, speculative decoding, DPO, evals",
+    "13": "agent engineering, context compaction, sandboxing, A2A, agent evals",
 }
 
 

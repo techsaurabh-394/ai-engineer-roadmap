@@ -72,7 +72,8 @@ CW = [
  ("Week 8", [(10,n) for n in range(1,PH[10]+1)], "Phase 8 (fine-tuning). Run the four `ft_*.py` scripts in `10-fine-tuning/code/`, then decide for one task of yours whether fine-tuning beats prompting and RAG."),
  ("Week 9", [(11,n) for n in range(1,PH[11]+1)], "Phase 9 (multimodal AI). Run the four `mm_*.py` scripts in `11-multimodal-ai/code/`."),
  ("Week 10", [(12,n) for n in range(1,PH[12]+1)], "Phase 10 (frontier AI engineering). Run the six `fa_*.py` scripts in `12-frontier-ai/code/`."),
- ("Week 11", [], "Do [08-interview-prep](../08-interview-prep/README.md) and finish one project from [09-projects](../09-projects/README.md)."),
+ ("Week 11", [(13,n) for n in range(1,PH[13]+1)], "Phase 11 (agent engineering). Run the six `ae_*.py` scripts in `13-agent-engineering/code/`."),
+ ("Week 12", [], "Do [08-interview-prep](../08-interview-prep/README.md) and finish one project from [09-projects](../09-projects/README.md)."),
 ]
 E = [
  ("1", [(3,16),(3,9)], "Run `python 03-llm-concepts/code/llm_api_basics.py`. Change the failure count and watch the retry waits double."),
@@ -107,7 +108,7 @@ Pick the path that matches what you want to do. Every time below is the **readin
 |---|---|---|
 | Build an app that answers questions from my documents | [Path A: RAG app](#path-a-build-a-rag-app-in-2-weeks) | 2 weeks, about 1 hour a day |
 | Build agents and MCP tools | [Path B: agents and MCP](#path-b-build-agents-and-mcp-tools-in-2-weeks) | 2 weeks, about 1 hour a day |
-| Learn everything | [Path C: full roadmap](#path-c-the-full-roadmap-in-11-weeks) | 11 weeks |
+| Learn everything | [Path C: full roadmap](#path-c-the-full-roadmap-in-12-weeks) | 12 weeks |
 | Prepare for an interview | [Path D: interview week](#path-d-interview-in-one-week) | 1 week |
 | Build with LLM APIs, from first call to serving | [Path E: LLM builder](#path-e-llm-builder-from-first-call-to-serving) | 8 days, about 1 hour a day |
 | Understand how an LLM really works inside (Q, K, V, training, MoE) | [Path F: inside the LLM](#path-f-inside-the-llm-how-it-really-works) | 7 days, about 1 hour a day |
@@ -126,7 +127,7 @@ Not sure? Start with [what AI engineering is](what-is-ai-engineering.md) (5 minu
 
 {sb}
 
-## Path C: the full roadmap in 11 weeks
+## Path C: the full roadmap in 12 weeks
 
 All {N} topics, one phase a week (Phase 0 is an optional warm-up), with the last week for interview prep and a project. Reading is about {total/60:.0f} hours in total; spread it so that you also run the code. Each week below lists every topic in the phase. Weekly reading time is in the right column.
 
