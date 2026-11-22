@@ -47,10 +47,11 @@ jobs:
       - run: python scripts/check_animations.py
       - run: python scripts/build_site.py
         env:
-          SITE_URL: https://techsaurabh-394.github.io/ai-engineer-roadmap
+          SITE_URL: https://mernstackdev.com/ai-roadmap
+      - run: python scripts/make_pages_redirects.py _site _pages https://mernstackdev.com/ai-roadmap
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: _pages
       - id: deployment
         uses: actions/deploy-pages@v4
