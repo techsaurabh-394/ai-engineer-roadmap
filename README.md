@@ -20,6 +20,10 @@
 
 ![The 12 phases from zero to production, with topic counts](assets/learning-path.svg)
 
+## Play: AI On-Call
+
+**[Play AI On-Call](https://mernstackdev.com/ai-roadmap/play/)** is a free game where you are the on-call AI engineer. A chatbot is giving wrong answers, an agent is burning the budget: read the logs, trace the failing requests, change the config and deploy a fix. Fewer commands and a lower bill rank higher. Start with the [2-minute drill](https://mernstackdev.com/ai-roadmap/play/#/drill). It runs in your browser with no sign-up, and each incident is a simulation with teaching numbers. There are no accounts or leaderboard yet.
+
 ## Start in 5 minutes
 
 You need Python 3.10 or newer (CI runs 3.12) and git.
